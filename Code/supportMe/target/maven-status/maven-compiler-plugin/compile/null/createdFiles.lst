@@ -1,4 +1,6 @@
-org/supportmeinc/PrimaryController.class
-module-info.class
-org/supportmeinc/SecondaryController.class
-org/supportmeinc/App.class
+org/supportmeinc/View/GuideEditor.class
+org/supportmeinc/View/CardEditor.class
+org/supportmeinc/View/CardViewer.class
+org/supportmeinc/Main.class
+org/supportmeinc/View/Login.class
+org/supportmeinc/View/GuideBrowser.class
