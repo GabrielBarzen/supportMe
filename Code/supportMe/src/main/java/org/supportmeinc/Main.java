@@ -1,16 +1,15 @@
 package org.supportmeinc;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import org.supportmeinc.View.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.Socket;
+
 
 /**
  * JavaFX App
@@ -18,15 +17,15 @@ import java.net.Socket;
 public class Main extends Application {
 
     private static Scene scene;
-    int port;
-    String ip;
-
-    public static void main(String[] args) {
-        launch();
-    }
+    private int port;
+    private String ip;
 
     public Main(){
         readConfig();
+    }
+
+    public static void main(String[] args) {
+        launch();
     }
 
     //Configuration methods//
@@ -36,7 +35,6 @@ public class Main extends Application {
 
             while ((configEntry = bufferedReader.readLine()) != null){
                 String[] entry = configEntry.split("=");
-                System.out.println(entry[1]);
                 switch (entry[0]){
                     case "ip":
                         ip = entry[1];
@@ -44,6 +42,8 @@ public class Main extends Application {
                     case "port":
                         port = Integer.parseInt(entry[1]);
                         break;
+                    default:
+                        System.out.println("Config entry : " + entry[0] + " is not a valid config entry");
                 }
             }
 
@@ -56,20 +56,36 @@ public class Main extends Application {
     //Model methods//
 
     //UI methods//
+    private CardEditor cardEditorController;
+    private CardViewer cardViewerController;
+    private GuideBrowser guideBrowserController;
+    private GuideEditor guideEditorController;
+    private Login loginController;
+
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("cardViewer"));
+        scene = new Scene(loadFXML("login"));
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    private Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        Parent returnParent = fxmlLoader.load();
+        JFXcontroller jfXcontroller = fxmlLoader.getController();
+        jfXcontroller.initData(this);
+        return returnParent;
     }
 
+    public void registerController(JFXcontroller viewController) {
+        if (viewController instanceof Login) loginController = (Login) viewController;
+        if (viewController instanceof GuideBrowser) guideBrowserController = (GuideBrowser) viewController;
+        if (viewController instanceof GuideEditor) guideEditorController = (GuideEditor) viewController;
+        if (viewController instanceof CardViewer) cardViewerController = (CardViewer) viewController;
+        if (viewController instanceof CardEditor) cardEditorController = (CardEditor) viewController;
+    }
 }
