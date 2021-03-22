@@ -214,4 +214,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Lock file 
+*.lck
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,maven,java,macos,linux,windows
