@@ -57,9 +57,9 @@
                      </font>
                   </Label>
                   <ImageView fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <TextArea layoutX="250.0" layoutY="10.0" prefHeight="200.0" prefWidth="600.0" />
+                        <Label layoutX="250.0" layoutY="10.0" prefHeight="200.0" prefWidth="600.0" text="Label" />
                      </children>
                   </AnchorPane>
                </children>
