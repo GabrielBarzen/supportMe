@@ -40,7 +40,7 @@ public class Guide implements Serializable {
 
     public Card getCard(String cardUUID){
         for (Card card : cards) {
-            if(card.getCardUuid().equals(cardUUID)) {
+            if(card.getCardUUID().equals(cardUUID)) {
                 currentCard = card;
                 return card;
             }

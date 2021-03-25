@@ -1,23 +1,21 @@
-package org.supportmeinc.Controller;
-
-import org.supportmeinc.Model.Card;
-import org.supportmeinc.Model.Guide;
-import org.supportmeinc.Model.Thumbnail;
+package org.supportmeinc.Model;
 
 import java.util.UUID;
 
 public class GuideManager {
 
     private Guide currentGuide;
-    private Thumbnail[] thumbnails;
+    private Guide[] guides;
+    private Thumbnail[] thumbnails; // fixa plz
     private Connection connection;
 
-    public GuideManager() {
-         connection = new Connection("localhost", 1028);
+    public GuideManager(Connection connection) {
+        this.connection = connection;
+        thumbnails = connection.getThumbnails();
     }
 
     public Card getGuide(int index) {
-        currentGuide = connection.getGuide(new UUID(555, 111)); //TODO ???
+        currentGuide = connection.getGuide(thumbnails[index].getGuideUUID());
         return currentGuide.getDescriptionCard();
     }
 
@@ -28,5 +26,6 @@ public class GuideManager {
     public Thumbnail[] getThumbnails() {
         return thumbnails;
     }
+
 
 }

@@ -23,7 +23,7 @@ public class CardViewer implements JFXcontroller {
     }
 
     public CardViewer(){
-
+        System.out.println("created cardViewer");
     }
 
     public void setCard(String title, Image image, String text) {
