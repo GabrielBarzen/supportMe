@@ -1,8 +1,8 @@
-package org.supportmeinc.View;
+package org.supportmeinc.view;
 
 import org.supportmeinc.Main;
 
-public class GuideBrowser implements JFXcontroller {
+public class Login implements JFXcontroller {
 
     Main controller;
 
@@ -11,11 +11,5 @@ public class GuideBrowser implements JFXcontroller {
         controller.registerController(this);
     }
 
-    public GuideBrowser(){
-
-    }
-
-
-
-
 }
+

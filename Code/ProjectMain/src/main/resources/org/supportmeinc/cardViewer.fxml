@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.View.CardViewer">
+<AnchorPane prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.CardViewer">
     <children>
         <BorderPane prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: white;">
             <top>
@@ -51,15 +56,15 @@
                 <RowConstraints maxHeight="528.0" minHeight="10.0" prefHeight="195.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" contentDisplay="TOP" text="Rubrik" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="cardTitle" alignment="CENTER" contentDisplay="TOP" text="Rubrik" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <ImageView fx:id="cardImage" fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <Label layoutX="250.0" layoutY="10.0" prefHeight="200.0" prefWidth="600.0" text="Label" />
+                        <Label fx:id="cardText" layoutX="250.0" layoutY="10.0" prefHeight="200.0" prefWidth="600.0" text="Label" />
                      </children>
                   </AnchorPane>
                </children>

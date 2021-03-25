@@ -1,4 +1,4 @@
-package org.supportmeinc.View;
+package org.supportmeinc.view;
 
 import org.supportmeinc.Main;
 

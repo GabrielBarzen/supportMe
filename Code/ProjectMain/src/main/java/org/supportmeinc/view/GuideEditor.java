@@ -1,8 +1,8 @@
-package org.supportmeinc.View;
+package org.supportmeinc.view;
 
 import org.supportmeinc.Main;
 
-public class CardViewer implements JFXcontroller {
+public class GuideEditor implements JFXcontroller {
 
     Main controller;
 
@@ -11,7 +11,7 @@ public class CardViewer implements JFXcontroller {
         controller.registerController(this);
     }
 
-    public CardViewer(){
+    public GuideEditor(){
 
     }
 }

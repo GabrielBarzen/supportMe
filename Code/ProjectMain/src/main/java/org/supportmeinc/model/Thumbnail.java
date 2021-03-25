@@ -1,4 +1,4 @@
-package org.supportmeinc.Model;
+package org.supportmeinc.model;
 
 import javax.swing.*;
 import java.util.UUID;
@@ -12,5 +12,9 @@ public class Thumbnail {
 
     public Thumbnail(UUID guideUUID){
         this.guideUUID = guideUUID;
+    }
+
+    public UUID getGuideUUID() {
+        return guideUUID;
     }
 }
