@@ -12,7 +12,7 @@ Projektet är baserat runt en idé om teknisk support för dina nära och kära.
 
 # Starta projekt i intellij
 
-1. öppna projektet som ligger under code/supportMe inte under repositoryns root
+1. öppna projektet som ligger under code/ProjectMain inte under repositoryns root
 
 2. öppna maven fliken till höger
 
