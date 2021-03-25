@@ -34,6 +34,10 @@ public class Guide implements Serializable {
         return descriptionCard;
     }
 
+    public void setDescriptionCard(Card descriptionCard) {
+        this.descriptionCard = descriptionCard;
+    }
+
     public Card getCard(String cardUUID){
         for (Card card : cards) {
             if(card.getCardUuid().equals(cardUUID)) {

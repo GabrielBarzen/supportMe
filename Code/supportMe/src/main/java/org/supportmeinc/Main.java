@@ -20,8 +20,10 @@ public class Main extends Application {
     private int port;
     private String ip;
 
-    public Main(){
+    public Main() {
         readConfig();
+        guideBrowserController = new GuideBrowser();
+        guideBrowserController.getGuide(0);
     }
 
     public static void main(String[] args) {
@@ -64,7 +66,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("login"));
+        scene = new Scene(loadFXML("cardViewer"));
         stage.setScene(scene);
         stage.show();
     }

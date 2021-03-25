@@ -5,16 +5,16 @@ import java.util.UUID;
 
 public class Card implements Serializable {
 
-    private UUID uuid;
+    private UUID cardUUID;
     private UUID affirmUUID;
     private UUID negUUID;
 
     public Card(){
-        uuid = UUID.randomUUID();
+        cardUUID = UUID.randomUUID();
     }
 
     public String getCardUuid() {
-        return uuid.toString();
+        return cardUUID.toString();
     }
 
     public String getNextAffirmative(){
