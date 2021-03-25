@@ -1,8 +1,8 @@
-package org.supportmeinc.View;
+package org.supportmeinc.view;
 
 import org.supportmeinc.Main;
 
-public class GuideEditor implements JFXcontroller {
+public class Login implements JFXcontroller {
 
     Main controller;
 
@@ -11,7 +11,5 @@ public class GuideEditor implements JFXcontroller {
         controller.registerController(this);
     }
 
-    public GuideEditor(){
-
-    }
 }
+

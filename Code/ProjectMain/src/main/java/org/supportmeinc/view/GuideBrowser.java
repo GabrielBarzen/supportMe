@@ -1,4 +1,4 @@
-package org.supportmeinc.View;
+package org.supportmeinc.view;
 
 import org.supportmeinc.Main;
 
@@ -18,7 +18,7 @@ public class GuideBrowser implements JFXcontroller {
     }
 
     public void getGuide(int index) {
-        controller.getGuide(index);
+        controller.initGuide(index);
     }
 
 }

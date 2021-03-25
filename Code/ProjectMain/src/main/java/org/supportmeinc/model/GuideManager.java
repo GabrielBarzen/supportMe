@@ -1,6 +1,4 @@
-package org.supportmeinc.Model;
-
-import java.util.UUID;
+package org.supportmeinc.model;
 
 public class GuideManager {
 
@@ -14,7 +12,7 @@ public class GuideManager {
         thumbnails = connection.getThumbnails();
     }
 
-    public Card getGuide(int index) {
+    public Card initGuide(int index) {
         currentGuide = connection.getGuide(thumbnails[index].getGuideUUID());
         return currentGuide.getDescriptionCard();
     }

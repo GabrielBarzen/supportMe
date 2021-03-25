@@ -1,11 +1,8 @@
-package org.supportmeinc.View;
+package org.supportmeinc.view;
 
-import javafx.fxml.FXML;
 import org.supportmeinc.Main;
 
-import java.io.IOException;
-
-public class Login implements JFXcontroller {
+public class GuideEditor implements JFXcontroller {
 
     Main controller;
 
@@ -14,5 +11,7 @@ public class Login implements JFXcontroller {
         controller.registerController(this);
     }
 
-}
+    public GuideEditor(){
 
+    }
+}

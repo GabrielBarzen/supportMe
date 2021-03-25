@@ -4,10 +4,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.supportmeinc.Model.Connection;
-import org.supportmeinc.Model.GuideManager;
-import org.supportmeinc.Model.Card;
-import org.supportmeinc.View.*;
+import org.supportmeinc.model.Connection;
+import org.supportmeinc.model.GuideManager;
+import org.supportmeinc.model.Card;
+import org.supportmeinc.view.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,18 +25,16 @@ public class Main extends Application {
     private Connection connection;
     private GuideManager guideManager;
 
-    public Main() {
-        //readConfig();
-        System.out.println("running main");
-    }
-
-    @Override
-    public void init() throws Exception {
-
-    }
-
     public static void main(String[] args) {
         launch();
+    }
+
+    private void startBackend() {
+        System.out.println("running init");
+        connection = new Connection(ip, port);
+        guideManager = new GuideManager(connection);
+        Card card = initGuide(0);
+        cardViewerController.setCard(card.getTitle(),card.getImage(),card.getText());
     }
 
     //Configuration methods//
@@ -66,8 +64,8 @@ public class Main extends Application {
     }
     //Model methods//
 
-    public Card getGuide(int index) {
-        return guideManager.getGuide(index);
+    public Card initGuide(int index) {
+        return guideManager.initGuide(index);
     }
 
     public Card getCard(boolean choice) {
@@ -115,11 +113,4 @@ public class Main extends Application {
         startBackend();
     }
 
-    private void startBackend() {
-        System.out.println("running init");
-        connection = new Connection(ip, port);
-        guideManager = new GuideManager(connection);
-        Card card = getGuide(0);
-        cardViewerController.setCard(card.getTitle(),card.getImage(),card.getText());
-    }
 }
