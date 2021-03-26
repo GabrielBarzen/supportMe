@@ -1,4 +1,4 @@
-package org.supportmeinc.model;
+package shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;

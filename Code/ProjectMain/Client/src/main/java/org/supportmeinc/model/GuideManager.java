@@ -1,4 +1,5 @@
 package org.supportmeinc.model;
+import shared.*;
 
 public class GuideManager {
 

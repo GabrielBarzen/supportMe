@@ -1,4 +1,4 @@
-package org.supportmeinc.model;
+package shared;
 
 import javax.swing.*;
 import java.util.UUID;

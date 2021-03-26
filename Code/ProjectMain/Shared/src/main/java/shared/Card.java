@@ -1,6 +1,4 @@
-package org.supportmeinc.model;
-
-import javafx.scene.image.Image;
+package shared;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -12,7 +10,7 @@ public class Card implements Serializable {
     private UUID negUUID;
     private String title;
     private String text;
-    private Image image;
+    private byte[] image;
 
     public void setAffirmUUID(UUID affirmUUID) {
         this.affirmUUID = affirmUUID;
@@ -50,11 +48,11 @@ public class Card implements Serializable {
         this.text = text;
     }
 
-    public Image getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }
