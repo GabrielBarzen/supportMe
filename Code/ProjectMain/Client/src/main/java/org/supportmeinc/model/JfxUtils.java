@@ -3,7 +3,8 @@ import javafx.scene.image.Image;
 
 import java.io.*;
 
-public class ImageUtils {
+public class JfxUtils {
+
     public static byte[] toBytes(String url) {
         byte[] bytes = new byte[0];
         try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(url))){
@@ -13,7 +14,8 @@ public class ImageUtils {
         }
         return bytes;
     }
-    public  static byte[] toBytes(File file){
+
+    public static byte[] toBytes(File file){
 
         return toBytes(file.getAbsolutePath());
     }

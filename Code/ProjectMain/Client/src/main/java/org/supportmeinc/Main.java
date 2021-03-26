@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.supportmeinc.model.Connection;
 import org.supportmeinc.model.GuideManager;
-import org.supportmeinc.model.ImageUtils;
+import org.supportmeinc.model.JfxUtils;
 import org.supportmeinc.view.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -34,12 +34,12 @@ public class Main extends Application {
         System.out.println("running init");
         connection = new Connection(ip, port);
         guideManager = new GuideManager(connection);
-        //testCard();
+        testCard();
     }
 
     private void testCard() {
         Card testCard = initGuide(0);
-        cardViewerController.setCard(testCard.getTitle(), ImageUtils.fromBytes(testCard.getImage()), testCard.getText());
+        cardViewerController.setCard(testCard.getTitle(), JfxUtils.fromBytes(testCard.getImage()), testCard.getText());
     }
 
     //Configuration methods//
