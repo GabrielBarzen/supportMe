@@ -1,18 +1,19 @@
 package org.supportmeinc;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.supportmeinc.model.Connection;
-import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.model.JfxUtils;
 import org.supportmeinc.view.*;
+import shared.Card;
+import org.supportmeinc.model.*;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import shared.*;
 
 
 /**
