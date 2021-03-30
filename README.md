@@ -11,27 +11,33 @@ Projektet är baserat runt en idé om teknisk support för dina nära och kära.
 
 
 # Starta projekt i intellij
+0. Förutsättningar:
+java --version ger version java 15 elle högre
 
-1. öppna projektet som ligger under code/ProjectMain inte under repositoryns root
+1. git clone projektet, via terminal eller github desktop
 
-2. öppna maven fliken till höger
+![image](https://user-images.githubusercontent.com/71310727/112954385-a0667080-913e-11eb-864a-b7999d6925a7.png)
 
-![image](https://user-images.githubusercontent.com/71310727/112442694-6b2bde00-8d4c-11eb-8dcb-6e455adc5719.png)
+2. öppna projektet i intellij genom att öppna code/ProjectMain
 
-3. expandera java fx under tabben plugins
+![image](https://user-images.githubusercontent.com/71310727/112954606-d6a3f000-913e-11eb-8f5a-881ccab40263.png)
 
-![image](https://user-images.githubusercontent.com/71310727/112442880-99a9b900-8d4c-11eb-9c41-ea7aadfce752.png)
+3. Dubbelkolla att projektstrukturen liknar bilden nedan, annars starta om intellij
 
-4. kör först javafx:compile och sedan javafx:run
+![image](https://user-images.githubusercontent.com/71310727/112954758-fdfabd00-913e-11eb-9820-a183e12d3e41.png)
 
-![image](https://user-images.githubusercontent.com/71310727/112443023-c067ef80-8d4c-11eb-9b4f-12c5d5a013ca.png)
+4. Expandera maven fliken till höger sida av intellij
 
-5. vid ev felsökning går dem att läggas till som configuration
+![image](https://user-images.githubusercontent.com/71310727/112954855-18349b00-913f-11eb-938c-4583e6ffaa41.png)
 
-![image](https://user-images.githubusercontent.com/71310727/112443123-dd042780-8d4c-11eb-9fff-6b098a9c3f83.png)
+5. Installera Shared
 
-![image](https://user-images.githubusercontent.com/71310727/112443429-39ffdd80-8d4d-11eb-8770-39760079e040.png)
+![image](https://user-images.githubusercontent.com/71310727/112954943-30a4b580-913f-11eb-9187-a9ab195d1590.png)
 
-![image](https://user-images.githubusercontent.com/71310727/112443200-f4431500-8d4c-11eb-91d5-4b91c07f4ec5.png)
+6. Kompilera och kör client
 
-![image](https://user-images.githubusercontent.com/71310727/112443259-06bd4e80-8d4d-11eb-827c-32be3cf87421.png)
+![image](https://user-images.githubusercontent.com/71310727/112955090-5af67300-913f-11eb-8476-aefba0de9ac1.png)
+
+7. Njut
+
+![image](https://user-images.githubusercontent.com/71310727/112955188-75305100-913f-11eb-9ed2-540294fc1a13.png)
