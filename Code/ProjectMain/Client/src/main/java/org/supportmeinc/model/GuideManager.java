@@ -1,5 +1,8 @@
 package org.supportmeinc.model;
-import shared.*;
+
+import shared.Card;
+import shared.Guide;
+import shared.Thumbnail;
 
 public class GuideManager {
 
