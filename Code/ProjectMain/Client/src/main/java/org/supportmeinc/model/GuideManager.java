@@ -1,5 +1,9 @@
 package org.supportmeinc.model;
 
+import shared.Card;
+import shared.Guide;
+import shared.Thumbnail;
+
 public class GuideManager {
 
     private Guide currentGuide;
