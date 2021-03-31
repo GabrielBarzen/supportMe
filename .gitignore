@@ -16,10 +16,10 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-.idea/**/compiler.xml
-.idea/**/misc.xml
-.idea/**/unnamed.xml
-.idea/**/shelved.patch
+compiler.xml
+misc.xml
+unnamed.xml
+shelved.patch
 
 # Generated files
 .idea/**/contentModel.xml
@@ -224,7 +224,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Lock file 
+# Lock file
 *.lck
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,maven,java,macos,linux,windows
