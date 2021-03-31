@@ -68,7 +68,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof Thumbnail[]){
             Thumbnail[] oldThumbnails = (Thumbnail[]) object;
             Thumbnail[] newThumbnails = guideManager.getThumbNails(oldThumbnails);
-            userConnection.get(user).send(newThumbnails);
+            userConnection.get(user).sendObject(newThumbnails);
         }
     }
 }
