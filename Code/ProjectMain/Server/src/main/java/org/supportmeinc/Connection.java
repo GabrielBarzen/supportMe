@@ -43,6 +43,7 @@ public class Connection {
         return user;
     }
 
+
     public void sendObject(Object object) {
         send.sendObject(object);
     }

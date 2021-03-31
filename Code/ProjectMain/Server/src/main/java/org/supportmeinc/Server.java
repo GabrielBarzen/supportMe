@@ -45,7 +45,7 @@ public class Server {
 
     Server(int port){
         try {
-            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(1028));
+            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(1028), new GuideManager());
         } catch (IOException e) {
             log(e.getMessage());
         }
