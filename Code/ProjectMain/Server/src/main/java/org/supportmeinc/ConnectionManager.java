@@ -11,10 +11,13 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
     private ServerSocket serverSocket;
     private Thread acceptConnectionThread;
-    HashMap<User,Connection> userConnection;
+    private HashMap<User,Connection> userConnection;
+    private GuideManager guideManager;
+
 
     public ConnectionManager(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
+        guideManager = new GuideManager();
         start();
     }
 
@@ -59,7 +62,9 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         }
 
         if (object instanceof Thumbnail[]){
-
+            Thumbnail[] oldThumbnails = (Thumbnail[]) object;
+            Thumbnail[] newThumbnails = guideManager.getThumbNails(oldThumbnails);
+            userConnection.get(user).send(newThumbnails);
         }
     }
 }
