@@ -1,5 +1,6 @@
 package org.supportmeinc;
 
+import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
 import java.io.IOException;
@@ -11,10 +12,12 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
     private ServerSocket serverSocket;
     private Thread acceptConnectionThread;
+    private GuideManager guideManager;
     HashMap<User,Connection> userConnection;
 
-    public ConnectionManager(ServerSocket serverSocket) {
+    public ConnectionManager(ServerSocket serverSocket, GuideManager guideManager) {
         this.serverSocket = serverSocket;
+        this.guideManager = guideManager;
         start();
     }
 
@@ -55,7 +58,9 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         }
 
         if (object instanceof Thumbnail){
-
+            Thumbnail thumbnail = (Thumbnail) object;
+            Guide guide = guideManager.getGuide(thumbnail.getGuideUUID());
+            userConnection.get(user).sendObject(guide);
         }
 
         if (object instanceof Thumbnail[]){

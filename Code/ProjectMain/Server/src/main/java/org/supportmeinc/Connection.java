@@ -42,6 +42,10 @@ public class Connection {
         return user;
     }
 
+    public void sendObject(Object obj) {
+        send.objectBuffer.put(obj);
+    }
+
     private class Send extends Thread{
 
         Buffer<Object> objectBuffer = new Buffer<>();
