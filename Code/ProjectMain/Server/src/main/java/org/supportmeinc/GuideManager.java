@@ -1,9 +1,10 @@
 package org.supportmeinc;
 
-import shared.Guide;
-import shared.Thumbnail;
-import shared.User;
+import shared.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -27,5 +28,22 @@ public class GuideManager {
 
     public Guide getGuide(UUID guideUUID) {
         return guides.getOrDefault(guideUUID, null);
+    }
+
+    public Thumbnail[] getThumbNails(Thumbnail[] oldArray) {
+
+        ArrayList<Thumbnail> oldThumbnails = new ArrayList<>(Arrays.asList(oldArray));
+        ArrayList<Thumbnail> currentThumbnails = new ArrayList<>();
+
+        for (Guide guide: guides.values()) {
+            currentThumbnails.add(guide.getThumbnail());
+        }
+
+        if (oldThumbnails.equals(currentThumbnails)) {
+            return null;
+        } else {
+            return currentThumbnails.toArray(new Thumbnail[0]);
+        }
+
     }
 }
