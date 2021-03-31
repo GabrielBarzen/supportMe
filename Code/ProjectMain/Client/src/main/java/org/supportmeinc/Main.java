@@ -94,6 +94,7 @@ public class Main extends Application {
         scene = new Scene(loadFXML("cardViewer"));
         stage.setScene(scene);
         stage.show();
+        startBackend();
     }
 
     public void setRoot(String fxml) throws IOException {
@@ -116,7 +117,6 @@ public class Main extends Application {
         if (viewController instanceof GuideEditor) {guideEditorController = (GuideEditor) viewController;}
         if (viewController instanceof CardViewer) { cardViewerController = (CardViewer) viewController;}
         if (viewController instanceof CardEditor) {cardEditorController = (CardEditor) viewController;}
-        startBackend();
     }
 
 }
