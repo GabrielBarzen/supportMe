@@ -1,9 +1,6 @@
 package org.supportmeinc.view;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.supportmeinc.Main;
 
@@ -23,7 +20,8 @@ public class Toolbar implements JFXcontroller {
 
     public void homeButton() throws IOException {
 //        anchorPane.getChildren().setAll(controller.loadFXML("guideBrowser"));
-        borderPane.setCenter(controller.loadFXML("guideBrowser"));
+        borderPane.setCenter(controller.loadFXML("newCardViewer"));
+        controller.testCard();
 //        anchorPane.getChildren().add(controller.loadFXML("guideBrowser"));
     }
 

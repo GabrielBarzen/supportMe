@@ -38,9 +38,9 @@ public class Main extends Application {
 //        testCard();
     }
 
-    private void testCard() { //TODO Stubbe, eliminera
+    public void testCard() { //TODO Stubbe, eliminera
         Card testCard = initGuide(0);
-        cardViewerController.setCard(testCard.getTitle(), JfxUtils.fromBytes(testCard.getImage()), testCard.getText());
+        cardViewerController.setCard(testCard.getTitle(), testCard.getImage(), testCard.getText());
     }
 
     //Configuration methods//
