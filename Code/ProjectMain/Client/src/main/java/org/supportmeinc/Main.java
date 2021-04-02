@@ -35,10 +35,10 @@ public class Main extends Application {
         System.out.println("running init");
         connection = new Connection(ip, port);
         guideManager = new GuideManager(connection);
-        testCard();
+//        testCard();
     }
 
-    private void testCard() {
+    private void testCard() { //TODO Stubbe, eliminera
         Card testCard = initGuide(0);
         cardViewerController.setCard(testCard.getTitle(), JfxUtils.fromBytes(testCard.getImage()), testCard.getText());
     }
@@ -82,41 +82,44 @@ public class Main extends Application {
 
     }
 
-    //UI methods//
+    //UI methods// //TODO Möjligtvis refactor --> Toolbar
     private CardEditor cardEditorController;
     private CardViewer cardViewerController;
     private GuideBrowser guideBrowserController;
     private GuideEditor guideEditorController;
     private Login loginController;
+    private Toolbar toolbarController;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("cardViewer"));
+        scene = new Scene(loadFXML("toolbar"));
+        stage.setTitle("supportMe");
         stage.setScene(scene);
         stage.show();
+        startBackend();
     }
 
-    public void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
+        scene.setRoot(loadFXML(resourceName));
     }
 
-    private Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
-        Parent returnParent = fxmlLoader.load();
-        System.out.println("fxml item : " + returnParent.getClass());
+    public Parent loadFXML(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(resourceName + ".fxml"));
+        Parent root = fxmlLoader.load();
+        System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
         jfXcontroller.initData(this);
         System.out.println("new controller of type : " + jfXcontroller.getClass());
-        return returnParent;
+        return root;
     }
 
-    public void registerController(JFXcontroller viewController) {
+    public void registerController(JFXcontroller viewController) { //TODO Möjligtvis refactor --> Toolbar
         if (viewController instanceof Login) {loginController = (Login) viewController;}
         if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
         if (viewController instanceof GuideEditor) {guideEditorController = (GuideEditor) viewController;}
-        if (viewController instanceof CardViewer) { cardViewerController = (CardViewer) viewController;}
+        if (viewController instanceof CardViewer) {cardViewerController = (CardViewer) viewController;}
         if (viewController instanceof CardEditor) {cardEditorController = (CardEditor) viewController;}
-        startBackend();
+        if (viewController instanceof Toolbar) {toolbarController = (Toolbar) viewController;}
     }
 
 }
