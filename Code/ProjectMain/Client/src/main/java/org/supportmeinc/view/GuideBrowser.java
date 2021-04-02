@@ -3,10 +3,8 @@ package org.supportmeinc.view;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import org.supportmeinc.Main;
 import org.supportmeinc.model.JfxUtils;
 import shared.Thumbnail;
@@ -22,9 +20,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     private Main controller;
     private List<Thumbnail> thumbnails = new ArrayList<>();
-
-    @FXML
-    private GridPane gridPane;
 
     @FXML
     private FlowPane flowPane;
@@ -65,10 +60,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void updateThumbnailView() {
-
-
-        int column = 0;
-        int row = 1;
         try {
             for (int i = 0; i < thumbnails.size(); i++) {
                 FXMLLoader loader = new FXMLLoader();
@@ -77,16 +68,18 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
                 ThumbnailController thumbnailController = loader.getController();
                 Thumbnail thumbnail = thumbnails.get(i);
-                thumbnailController.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
+//                thumbnailController.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
+                thumbnailController.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), i);
 
-                if (column == 4) {
-                    column = 0;
-                    row++;
-                }
-
-//                flowPane.add(anchorPane, column++, row);
-//                flowPane.getChildren().add(anchorPane);
-
+                /**
+                 * flowPane.getChildren() can use several methods to add elements depending on model structure;
+                 * add() - adds one element to end of existing pane
+                 *      add(int index)
+                 * addAll() - adds list of elements to end of existing pane
+                 * set() - removes all current elements and adds a single element to the pane
+                 * setAll() - removes all current elements and adds a list of elements to pane
+                 */
+                flowPane.getChildren().add(anchorPane);
             }
         } catch (IOException e) {
             e.printStackTrace();
