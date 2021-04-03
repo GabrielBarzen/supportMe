@@ -4,6 +4,8 @@ import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.util.UUID;
 
@@ -41,7 +43,11 @@ public class GuideManager {
     public void downloadGuide(Thumbnail thumbnail) {
         Guide guide = getGuide(thumbnail);
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("downloadedGuides.dat")));
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileFilter(new FileNameExtensionFilter("Dat.files", "dat"));
+            chooser.showOpenDialog(null);
+            File file = chooser.getSelectedFile();
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
             oos.writeObject(guide);
         } catch (IOException e) {
             e.printStackTrace();
