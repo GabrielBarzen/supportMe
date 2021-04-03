@@ -4,6 +4,9 @@ import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
+import java.io.*;
+import java.util.UUID;
+
 public class GuideManager {
 
     private Guide currentGuide;
@@ -27,6 +30,22 @@ public class GuideManager {
 
     public Thumbnail[] getThumbnails() {
         return thumbnails;
+    }
+
+    public Guide getGuide(Thumbnail thumbnail) {
+        UUID id = thumbnail.getGuideUUID();
+        Guide guide = connection.getGuide(id);
+        return guide;
+    }
+
+    public void downloadGuide(Thumbnail thumbnail) {
+        Guide guide = getGuide(thumbnail);
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("downloadedGuides.dat")));
+            oos.writeObject(guide);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
