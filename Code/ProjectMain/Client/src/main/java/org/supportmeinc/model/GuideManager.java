@@ -44,12 +44,26 @@ public class GuideManager {
         Guide guide = getGuide(thumbnail);
         try {
             JFileChooser chooser = new JFileChooser();
-            chooser.setFileFilter(new FileNameExtensionFilter("Dat.files", "dat"));
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             chooser.showOpenDialog(null);
-            File file = chooser.getSelectedFile();
-            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-            oos.writeObject(guide);
+            System.out.println(chooser.getCurrentDirectory());
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(chooser.getSelectedFile() + "guides.dat")));
+            oos.writeObject(guides);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadGuides() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("DAT files" , "dat");
+        chooser.setFileFilter(filter);
+        chooser.showOpenDialog(null);
+        File file = chooser.getSelectedFile();
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+            Guide guide = (Guide) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
