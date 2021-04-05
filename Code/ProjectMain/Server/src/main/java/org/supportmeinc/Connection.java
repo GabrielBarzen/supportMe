@@ -1,5 +1,6 @@
 package org.supportmeinc;
 
+import shared.Thumbnail;
 import shared.User;
 
 import java.io.*;
@@ -42,7 +43,13 @@ public class Connection {
         return user;
     }
 
+
+    public void sendObject(Object object) {
+        send.sendObject(object);
+    }
+
     private class Send extends Thread{
+
 
         Buffer<Object> objectBuffer = new Buffer<>();
 
@@ -57,6 +64,10 @@ public class Connection {
                     e.printStackTrace();
                 }
             }
+        }
+
+        public void sendObject(Object object) {
+            objectBuffer.put(object);
         }
     }
 
