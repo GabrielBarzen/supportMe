@@ -19,6 +19,7 @@ public class GuideManager {
     public GuideManager(Connection connection) {
         this.connection = connection;
         thumbnails = connection.getThumbnails();
+        connection.setGuideManager(this);
     }
 
     public Card initGuide(int index) {

@@ -1,6 +1,7 @@
 package org.supportmeinc.model;
 
 
+import java.io.IOException;
 import java.net.Socket;
 import java.util.UUID;
 import shared.*;
@@ -8,6 +9,7 @@ import shared.*;
 public class Connection {
 
     private Socket socket;
+    private GuideManager guideManager;
 
     public Connection(String ip, int port) {
 /*        try {
@@ -33,5 +35,18 @@ public class Connection {
 
     public Thumbnail[] getThumbnails() {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
+    }
+
+    public void disconnect() {
+        try {
+            socket.close();
+            guideManager.loadGuides();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setGuideManager(GuideManager manager) {
+        guideManager = manager;
     }
 }
