@@ -7,7 +7,7 @@ public class Thumbnail {
 
     private String title;
     private String description;
-    private ImageIcon icon;
+    private byte[] icon;
     private UUID guideUUID;
 
     public Thumbnail(UUID guideUUID){

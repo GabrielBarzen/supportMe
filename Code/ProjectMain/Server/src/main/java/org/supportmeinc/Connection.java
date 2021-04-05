@@ -27,8 +27,10 @@ public class Connection {
         inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 
+        System.out.println("Connection : Starting IO threads");
         send.start();
         receive.start();
+        System.out.println("Connection : awaiting clients");
     }
 
     public void setObjectReceivedListener(ObjectReceivedListener listener){

@@ -16,10 +16,13 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     private HashMap<User,Connection> userConnection;
     private GuideManager guideManager;
 
+    private UserDatabaseConnection databaseConnection;
+
 
     public ConnectionManager(ServerSocket serverSocket, GuideManager guideManager) {
         this.serverSocket = serverSocket;
         this.guideManager = guideManager;
+        databaseConnection = new UserDatabaseConnection();
         start();
     }
 
@@ -36,9 +39,12 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
     @Override
     public void run() {
+
         while (!Thread.interrupted()){
+            System.out.println("ConnectionManager : awaiting connection");
             try {
                 Connection connection = new Connection(serverSocket.accept());
+                System.out.println("ConnectionManager : connection received");
                 connection.setObjectReceivedListener(this);
                 newConnections.add(connection);
             } catch (IOException e) {
@@ -52,10 +58,29 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
         if (object instanceof User){
             for (Connection connection: newConnections) {
-                if(connection.getUser() == user){
-                    userConnection.put(user, connection);
-                    newConnections.remove(connection);
+
+                Authenticator auth = new Authenticator(user, databaseConnection);
+
+                boolean lookupSuccess = databaseConnection.lookupUser(user);
+                boolean authSuccess = auth.isLoginSuccess();
+
+                if (user.isNewUser() && lookupSuccess){
+                    Server.log("user already exists"); //TODO: when database exists
                 }
+                else if (user.isNewUser() && !lookupSuccess){
+                    Server.log("Adding new user"); //TODO: when database exists
+                }
+                if(!user.isNewUser() && !lookupSuccess){
+                    Server.log("user does not exist"); //TODO: when database exists
+                }
+                if(!user.isNewUser() && lookupSuccess){
+                    Server.log("Logging in"); //TODO: when database exists
+
+//                    auth.authenticate();
+//                    userConnection.put(user, connection);
+//                    newConnections.remove(connection);
+                }
+
             }
         }
 
@@ -68,7 +93,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof Thumbnail[]){
             Thumbnail[] oldThumbnails = (Thumbnail[]) object;
             Thumbnail[] newThumbnails = guideManager.getThumbNails(oldThumbnails);
-            userConnection.get(user).send(newThumbnails);
+            userConnection.get(user).sendObject(newThumbnails);
         }
     }
 }
