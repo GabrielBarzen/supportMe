@@ -44,6 +44,10 @@ public class GuideManager {
         } else {
             return currentThumbnails.toArray(new Thumbnail[0]);
         }
-
     }
+
+    public void addGuide(Guide guide){
+        guides.put(guide.getGuideUUID(), guide);
+    }
+
 }
