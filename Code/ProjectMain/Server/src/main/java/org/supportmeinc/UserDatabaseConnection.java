@@ -3,7 +3,9 @@ package org.supportmeinc;
 import shared.User;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class UserDatabaseConnection {
@@ -30,22 +32,58 @@ public class UserDatabaseConnection {
     }
 
     public boolean lookupUser(User user) {
-        return false; //todo: database user email lookup
-    }
+        try {
+            String query = "select get_user(" + user.getEmail() + ");";
 
-    public String getSalt(User user) {
-        return null;
-    }
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery(query);
 
-    public boolean registerUser(User user) {
+            return rs.getInt(0) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
+    public String getSalt(User user) {
+        try {
+            String query = "select get_salt(" + user.getEmail() + ");";
+
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            if (rs.next()) {
+                return rs.getString(0);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean login(User user, String passwordHash) {
+        try {
+            String query = "select login(" + user.getEmail() + ", " + passwordHash + ");";
+
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            return rs.getInt(0) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     public boolean registerUser(User user, String passwordHash, String salt) {
+        try {
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery("");
+        } catch (SQLException e) {
+
+        }
         return false;
     }
 }

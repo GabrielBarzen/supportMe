@@ -20,7 +20,8 @@ public class Authenticator {
     }
 
     private boolean newUser(){
-        return databaseConnection.registerUser(user);
+       // return databaseConnection.registerUser(user);
+        return false;
     }
 
     public boolean authenticate()  {
