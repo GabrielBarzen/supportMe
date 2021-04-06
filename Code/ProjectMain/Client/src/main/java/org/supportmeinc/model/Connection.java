@@ -8,33 +8,60 @@ import java.net.Socket;
 import java.util.UUID;
 import shared.*;
 
-public class Connection implements Runnable {
+public class Connection {
 
-    Thread thread = new Thread(this);
     private Socket socket;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private User user;
+    private Receive receive;
+    private Send send;
 
     public Connection(String ip, int port) {
         try {
             socket = new Socket(ip, port);
+
+            receive = new Receive();
+            send = new Send();
+
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
-            thread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        send.start();
+        receive.start();
+
     }
 
-    @Override
-    public void run() {
-        while (!Thread.interrupted()) {
-            try {
-                oos.writeObject(user);
-                oos.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+    private class Receive extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    ois.readObject();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private class Send extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    oos.writeObject();
+                    oos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
