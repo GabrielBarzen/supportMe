@@ -8,6 +8,8 @@ import java.util.Properties;
 
 public class UserDatabaseConnection {
 
+    java.sql.Connection dbConnection;
+
     UserDatabaseConnection(){
         try {
             String url = "jdbc:postgresql://84.55.115.173/supportMeUser";
@@ -15,8 +17,8 @@ public class UserDatabaseConnection {
             Properties connectionProps = new Properties();
             connectionProps.put("user", "postgres");
             connectionProps.put("password", "supportMe");
-            conn = DriverManager.getConnection(url, connectionProps);
-            System.out.println("Connected to database");
+            dbConnection = DriverManager.getConnection(url, connectionProps);
+            ServerLog.log("Connected to database");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -33,10 +35,10 @@ public class UserDatabaseConnection {
         if(user.getEmail().equals("2@2.com")){
             return false;
         }
-        if(user.getEmail().equals("2@2.com")){
+        if(user.getEmail().equals("3@3.com")){
             return false;
         }
-        if(user.getEmail().equals("2@2.com")){
+        if(user.getEmail().equals("4@4.com")){
             return true;
         }
 
