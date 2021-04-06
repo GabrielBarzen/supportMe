@@ -5,7 +5,7 @@ import shared.User;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+import java.util.Random;
 
 
 public class Authenticator {
@@ -20,24 +20,45 @@ public class Authenticator {
     }
 
     private boolean newUser(){
-        return databaseConnection.newUser(user);
+        return databaseConnection.registerUser(user);
     }
 
-    public boolean authenticate() {
-        String salt = databaseConnection.getSalt(user);
-        String pwdString = String.format("%s%s",salt,user.getPassword());
-        String hashedPassword = null;
+    public boolean authenticate()  {
+        String salt = null;
+        String password = null;
+        String passwordHash = null;
 
+        if(user.isNewUser()){
+            StringBuilder saltBuilder = new StringBuilder(20);
+
+            Random random = new Random();
+            char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890".toCharArray();
+
+            for (int i = 0; i < 20; i++) {
+                char c = chars[random.nextInt(chars.length)];
+                saltBuilder.append(c);
+            }
+
+            salt = saltBuilder.toString();
+        } else {
+            salt = databaseConnection.getSalt(user);
+        }
         try {
-            hashedPassword = hashSHA256(pwdString);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            password = String.format("%s%s", salt, user.getPassword());
+            passwordHash = hashSHA256(password);
+        } catch (NoSuchAlgorithmException e){
+            ServerLog.log("ERROR : Authenticator.authenticate() no such algorithm");
         }
 
-        if (!(hashedPassword == null)){
-            loginSuccess = databaseConnection.authenticate(user, hashedPassword);
+        if(user.isNewUser() && user != null && passwordHash != null && salt != null ){
+            boolean success = databaseConnection.registerUser(user,passwordHash,salt);
+            if(!success){
+                ServerLog.log("Could not register user");
+                return false;
+            }
         }
-        return loginSuccess;
+
+        return databaseConnection.login(user,passwordHash);
     }
 
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {

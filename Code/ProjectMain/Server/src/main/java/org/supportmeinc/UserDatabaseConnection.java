@@ -20,6 +20,7 @@ public class UserDatabaseConnection {
             dbConnection = DriverManager.getConnection(url, connectionProps);
             ServerLog.log("Connected to database");
         } catch (SQLException throwables) {
+            ServerLog.log("Unable to connect to database");
             throwables.printStackTrace();
         }
     }
@@ -36,10 +37,15 @@ public class UserDatabaseConnection {
         return null;
     }
 
-    public boolean newUser(User user) {
+    public boolean registerUser(User user) {
         return false;
     }
 
-    public void login(User user) {
+    public boolean login(User user, String passwordHash) {
+        return false;
+    }
+
+    public boolean registerUser(User user, String passwordHash, String salt) {
+        return false;
     }
 }
