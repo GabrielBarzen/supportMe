@@ -62,19 +62,22 @@ public class UserDatabaseConnection {
         return null;
     }
 
-    public boolean login(User user, String passwordHash) {
+    public User login(User user, String passwordHash) {
         try {
             String query = "select login(" + user.getEmail() + ", " + passwordHash + ");";
 
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery(query);
-
-            return rs.getInt(0) == 1;
+            if(rs.next()) {
+                rs.getString(0);
+                user.setImage(rs.getBytes(1));
+                return user;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     public boolean registerUser(User user, String passwordHash, String salt) {
