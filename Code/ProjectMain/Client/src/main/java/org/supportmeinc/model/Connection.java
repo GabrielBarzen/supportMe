@@ -11,11 +11,13 @@ import shared.*;
 public class Connection {
 
     private Socket socket;
+    private GuideManager guideManager;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private User user;
     private Receive receive;
     private Send send;
+
 
     public Connection(String ip, int port) {
         try {
@@ -66,6 +68,14 @@ public class Connection {
         }
     }
 
+    public void send(Guide guide) {
+        try {
+            oos.writeObject(guide);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
@@ -85,5 +95,18 @@ public class Connection {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
 
+
+    public void disconnect() {
+        try {
+            socket.close();
+            guideManager.loadGuides();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setGuideManager(GuideManager manager) {
+        guideManager = manager;
+    }
 
 }
