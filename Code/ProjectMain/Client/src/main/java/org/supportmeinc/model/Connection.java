@@ -1,21 +1,44 @@
 package org.supportmeinc.model;
 
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.UUID;
 import shared.*;
 
-public class Connection {
+public class Connection implements Runnable {
 
+    Thread thread = new Thread(this);
     private Socket socket;
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+    private User user;
 
     public Connection(String ip, int port) {
-/*        try {
+        try {
             socket = new Socket(ip, port);
+            oos = new ObjectOutputStream(socket.getOutputStream());
+            ois = new ObjectInputStream(socket.getInputStream());
+            thread.start();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/ //TODO server
+        }
     }
+
+    @Override
+    public void run() {
+        while (!Thread.interrupted()) {
+            try {
+                oos.writeObject(user);
+                oos.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
@@ -34,4 +57,6 @@ public class Connection {
     public Thumbnail[] getThumbnails() {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
+
+
 }
