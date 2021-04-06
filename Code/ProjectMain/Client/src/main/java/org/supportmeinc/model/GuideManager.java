@@ -52,6 +52,9 @@ public class GuideManager {
     public void createCard(String title, String text, byte[] image) {
         Card newCard = new Card();
         newCard.setTitle(title);
+        while (text.length() > 280) {
+            //text = getTextFromGUI(); //TODO later on
+        }
         newCard.setText(text);
         newCard.setImage(image);
         cardArrayList.add(newCard);
