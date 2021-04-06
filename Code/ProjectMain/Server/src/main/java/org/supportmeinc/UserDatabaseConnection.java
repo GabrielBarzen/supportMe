@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class UserDatabaseConnection {
@@ -68,9 +69,10 @@ public class UserDatabaseConnection {
 
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery(query);
+
             if (rs.next()) {
-                rs.getString(0);
-                user.setImage(rs.getBytes(1));
+                user.setUserName(rs.getString(1));
+                user.setImage(rs.getBytes(2));
                 return user;
             }
         } catch (SQLException e) {
@@ -81,10 +83,17 @@ public class UserDatabaseConnection {
 
     public boolean registerUser(User user, String passwordHash, String salt) {
         try {
-            Statement st = dbConnection.createStatement();
-            ResultSet rs = st.executeQuery("");
-        } catch (SQLException e) {
+            String query = String.format("select register_user('%s', '%s', '%s', '%s', cast(%s as bytea))", user.getEmail(), passwordHash, user.getUserName(), salt, Arrays.toString(user.getImage()));
 
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            if(rs.next()){
+                return rs.getInt(1) == 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
