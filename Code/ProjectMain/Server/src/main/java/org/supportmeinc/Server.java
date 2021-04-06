@@ -9,7 +9,7 @@ public class Server {
     private static int port;
 
     public static void main(String[] args) {
-        port = 1028;
+        port = 1029;
         Server server = new Server(port);
     }
 

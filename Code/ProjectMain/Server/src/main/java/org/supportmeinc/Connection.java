@@ -57,14 +57,16 @@ public class Connection {
 
         @Override
         public void run() {
-            while (!Thread.interrupted()){
-                try {
-                    outputStream.writeObject(objectBuffer.get());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            try {
+                while (!Thread.interrupted()){
+                    try{
+                        outputStream.writeObject(objectBuffer.get());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+            }catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 

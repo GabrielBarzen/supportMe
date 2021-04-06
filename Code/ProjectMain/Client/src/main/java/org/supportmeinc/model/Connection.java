@@ -16,7 +16,8 @@ public class Connection implements Runnable {
     private ObjectInputStream ois;
     private User user;
 
-    public Connection(String ip, int port) {
+    public Connection(String ip, int port, User user) {
+        this.user = user;
         try {
             socket = new Socket(ip, port);
             oos = new ObjectOutputStream(socket.getOutputStream());
@@ -27,13 +28,16 @@ public class Connection implements Runnable {
         }
     }
 
+    public void sendObject(Object object) throws IOException {
+        oos.writeObject(object);
+    }
+
     @Override
     public void run() {
         while (!Thread.interrupted()) {
             try {
-                oos.writeObject(user);
-                oos.flush();
-            } catch (IOException e) {
+                Object object = ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

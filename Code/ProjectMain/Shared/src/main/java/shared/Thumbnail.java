@@ -5,11 +5,8 @@ public class Thumbnail {
 
     private String title;
     private String description;
-<<<<<<< HEAD
-    private byte[] icon;
-=======
+
     private byte[] image;
->>>>>>> main
     private UUID guideUUID;
 
     public Thumbnail(UUID guideUUID){
