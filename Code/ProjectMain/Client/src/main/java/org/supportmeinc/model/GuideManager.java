@@ -1,5 +1,6 @@
 package org.supportmeinc.model;
 
+import org.supportmeinc.view.GuideEditor;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
@@ -34,14 +35,17 @@ public class GuideManager {
     }
 
     public void createGuide() {
-        boolean answer = true;
+        boolean answerToQuit = true;
         String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
-        String text = "woow";
+        String text = "woow"; //CardEditor.getText(); TODO: Add this method to guideEditor so we can get text and title from cardEditor
         byte[] image = {0};
         currentGuide = new Guide();
-        while (answer) {
+        while (answerToQuit) {
+            while (text.length() > 280) {
+                //text = CardEditor.getText();
+            }
             createCard(title, text, image);
-            answer = false;
+            answerToQuit = false;
         }
         cards = new Card[cardArrayList.size()][cardArrayList.size()];
         for (int i = 0; i < cardArrayList.size(); i++) {
