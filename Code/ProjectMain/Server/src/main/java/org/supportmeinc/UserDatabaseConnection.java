@@ -41,8 +41,8 @@ public class UserDatabaseConnection {
         return false;
     }
 
-    public boolean login(User user, String passwordHash) {
-        return false;
+    public User login(User user, String passwordHash) {
+        return null;
     }
 
     public boolean registerUser(User user, String passwordHash, String salt) {
