@@ -23,6 +23,23 @@ public class Authenticator {
         return databaseConnection.newUser(user);
     }
 
+    public boolean authenticate() {
+        String salt = databaseConnection.getSalt(user);
+        String pwdString = String.format("%s%s",salt,user.getPassword());
+        String hashedPassword = null;
+
+        try {
+            hashedPassword = hashSHA256(pwdString);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        if (!(hashedPassword == null)){
+            loginSuccess = databaseConnection.authenticate(user, hashedPassword);
+        }
+        return loginSuccess;
+    }
+
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {
         final MessageDigest digest;
         digest = MessageDigest.getInstance("SHA3-256");
@@ -38,26 +55,6 @@ public class Authenticator {
         }
 
         return hexString.toString();
-    }
-
-    public void authenticate() {
-        String salt = databaseConnection.getSalt(user);
-        String pwdString = String.format("%s%s",salt,user.getPassword());
-        String hashedPassword = null;
-
-        try {
-            hashedPassword = hashSHA256(pwdString);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        if (!(hashedPassword == null)){
-            loginSuccess = databaseConnection.authenticate(user, hashedPassword);
-        }
-    }
-
-    public boolean isLoginSuccess() {
-        return loginSuccess;
     }
 
 }

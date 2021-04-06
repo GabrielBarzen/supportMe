@@ -4,6 +4,7 @@ import org.supportmeinc.view.GuideEditor;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
+import shared.User;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,6 +25,7 @@ public class GuideManager {
         this.connection = connection;
         thumbnails = connection.getThumbnails();
         connection.setGuideManager(this);
+        connection.send(new User("2@2.com","notExist","123456789"));
     }
 
     public Card initGuide(int index) {

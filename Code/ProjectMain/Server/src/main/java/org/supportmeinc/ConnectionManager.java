@@ -52,8 +52,6 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         acceptConnectionThread.start();
     }
 
-    LinkedList<Connection> newConnections = new LinkedList<>();
-
     @Override
     public void run() {
 
@@ -63,7 +61,6 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
                 Connection connection = new Connection(serverSocket.accept());
                 ServerLog.log("connection received");
                 connection.setObjectReceivedListener(this);
-                newConnections.add(connection);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -72,28 +69,15 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
     @Override
     public void objectReceived(Object object, User user) {
-
-        if (object instanceof User){
+        ServerLog.log("Object received from client " + object.getClass());
+        if (object instanceof Connection){
+            ServerLog.log("ConnectionManager attempting auth");
             Authenticator auth = new Authenticator(user, databaseConnection);
-
-            boolean lookupSuccess = databaseConnection.lookupUser(user);
-            boolean authSuccess = auth.isLoginSuccess();
-
-            if (user.isNewUser() && lookupSuccess){
-                ServerLog.log("user already exists"); //TODO: when database exists
-            }
-            else if (user.isNewUser() && !lookupSuccess){
-                ServerLog.log("Adding new user"); //TODO: when database exists
-            }
-            if(!user.isNewUser() && !lookupSuccess){
-                ServerLog.log("user does not exist"); //TODO: when database exists
-            }
-            if(!user.isNewUser() && lookupSuccess){
-                ServerLog.log("Logging in"); //TODO: when database exists
-//                    auth.authenticate();
-//                    userConnection.put(user, connection);
-//                    newConnections.remove(connection);
-
+            boolean success = auth.authenticate();
+            ServerLog.log("Auth status : " + success );
+            if(success){
+                ServerLog.log("Adding user to connections map");
+                userConnection.put(user,(Connection) object);
             }
         }
 

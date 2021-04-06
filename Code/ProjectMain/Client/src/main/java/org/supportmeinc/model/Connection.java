@@ -1,9 +1,7 @@
 package org.supportmeinc.model;
 
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 import shared.*;
@@ -12,8 +10,8 @@ public class Connection {
 
     private Socket socket;
     private GuideManager guideManager;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
     private User user;
     private Receive receive;
     private Send send;
@@ -21,19 +19,24 @@ public class Connection {
     public Connection(String ip, int port, User user) {
         this.user = user;
         try {
+            System.out.println("starting connection");
             socket = new Socket(ip, port);
+            System.out.println("starting connected");
+            System.out.println("opening streams");
+            outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+            inputStream = new ObjectInputStream(this.socket.getInputStream());
+            System.out.println("Starting threads");
 
-            receive = new Receive();
             send = new Send();
+            receive = new Receive();
+            System.out.println("threads created");
 
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
+            send.start();
+            receive.start();
+            System.out.println("threads started");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        send.start();
-        receive.start();
 
     }
 
@@ -41,14 +44,17 @@ public class Connection {
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    ois.readObject();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+            try {
+                while (!Thread.interrupted()) {
+
+                        inputStream.readObject();
+                        System.out.println("loop check receive");
+
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -65,15 +71,12 @@ public class Connection {
         public void run() {
             send(user);
             try {
-                while (true) {
-                    try {
-                        oos.writeObject(objectBuffer.get());
-                        oos.flush();
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
+                while (!Thread.interrupted()) {
+                        outputStream.writeObject(objectBuffer.get());
+                        outputStream.flush();
+                        System.out.println("loop check send");
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }

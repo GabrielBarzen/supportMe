@@ -16,8 +16,6 @@ public class Server {
         Server server = new Server(port);
     }
 
-
-
     public Server(int port){
         try {
             ServerLog.log("Starting cm");

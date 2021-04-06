@@ -1,6 +1,5 @@
 package org.supportmeinc.model;
 import javafx.scene.image.Image;
-
 import java.io.*;
 
 public class JfxUtils {

@@ -25,23 +25,11 @@ public class UserDatabaseConnection {
     }
 
     public boolean authenticate(User user, String hashedPassword){
-        return false;
+        return false; //todo: attempt user authentication
     }
 
     public boolean lookupUser(User user) {
-        if(user.getEmail().equals("1@1.com")){
-            return true;
-        }
-        if(user.getEmail().equals("2@2.com")){
-            return false;
-        }
-        if(user.getEmail().equals("3@3.com")){
-            return false;
-        }
-        if(user.getEmail().equals("4@4.com")){
-            return true;
-        }
-        return false;
+        return false; //todo: database user email lookup
     }
 
     public String getSalt(User user) {
@@ -50,5 +38,8 @@ public class UserDatabaseConnection {
 
     public boolean newUser(User user) {
         return false;
+    }
+
+    public void login(User user) {
     }
 }
