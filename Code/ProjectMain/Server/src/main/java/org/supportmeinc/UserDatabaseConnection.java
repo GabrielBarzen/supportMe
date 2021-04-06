@@ -41,8 +41,6 @@ public class UserDatabaseConnection {
         if(user.getEmail().equals("4@4.com")){
             return true;
         }
-
-
         return false;
     }
 

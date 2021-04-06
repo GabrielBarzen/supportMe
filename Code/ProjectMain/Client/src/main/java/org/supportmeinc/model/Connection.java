@@ -54,10 +54,15 @@ public class Connection {
 
     Buffer<Object> objectBuffer = new Buffer<>();
 
+    public void send(Object object){
+        objectBuffer.put(object);
+    }
+
     private class Send extends Thread {
 
         @Override
         public void run() {
+            send(user);
             try {
                 while (true) {
                     try {

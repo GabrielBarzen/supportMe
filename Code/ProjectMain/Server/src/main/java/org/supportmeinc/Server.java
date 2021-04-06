@@ -21,7 +21,7 @@ public class Server {
     public Server(int port){
         try {
             ServerLog.log("Starting cm");
-            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port), new GuideManager(), true);
+            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port), new GuideManager());
             ServerLog logger = new ServerLog();
         } catch (IOException e) {
             ServerLog.log(e.getMessage());

@@ -58,10 +58,10 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     public void run() {
 
         while (!Thread.interrupted()){
-            System.out.println("ConnectionManager : awaiting connection");
+            ServerLog.log("awaiting connection");
             try {
                 Connection connection = new Connection(serverSocket.accept());
-                System.out.println("ConnectionManager : connection received");
+                ServerLog.log("connection received");
                 connection.setObjectReceivedListener(this);
                 newConnections.add(connection);
             } catch (IOException e) {

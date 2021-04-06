@@ -23,14 +23,15 @@ public class Connection {
         this.socket = socket;
         this.send = new Send();
         this.receive = new Receive();
+        ServerLog.log("New Connection");
 
         inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 
-        System.out.println("Connection : Starting IO threads");
+        ServerLog.log("Starting IO threads");
         send.start();
         receive.start();
-        System.out.println("Connection : awaiting clients");
+        ServerLog.log("awaiting User");
     }
 
     public void setObjectReceivedListener(ObjectReceivedListener listener){
@@ -79,21 +80,20 @@ public class Connection {
 
         @Override
         public void run() {
-            while (!Thread.interrupted()){
-                try {
-                    Object object = inputStream.readObject();
-                    if (object instanceof User){
-                        setUser((User) object);
-                    }
-                    objectReceivedListener.objectReceived(object,getUser());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+            try {
+                while (!Thread.interrupted()){
+                        Object object = inputStream.readObject();
+                        if (object instanceof User){
+                            setUser((User) object);
+                        }
+                        objectReceivedListener.objectReceived(object,getUser());
                 }
-
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
 }
+
