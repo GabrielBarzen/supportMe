@@ -10,6 +10,11 @@ public class Guide implements Serializable {
     private Card descriptionCard;
     private ArrayList<Card> cards;
     private Card currentCard;
+
+    public void setThumbnail(Thumbnail thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     private Thumbnail thumbnail;
 
     public Guide(){
