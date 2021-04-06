@@ -77,18 +77,21 @@ public class GuideManager {
         String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
         String text = "woow"; //CardEditor.getText(); TODO: Add this method to guideEditor so we can get text and title from cardEditor
         byte[] image = {0};
+
         currentGuide = new Guide();
         while (answerToQuit) {
             while (text.length() > 280) {
                 //text = CardEditor.getText();
             }
+
             createCard(title, text, image);
             answerToQuit = false;
         }
         cards = new Card[cardArrayList.size()][cardArrayList.size()];
         for (int i = 0; i < cardArrayList.size(); i++) {
-            currentGuide.setCards(cards[0]);
+            guide.setCards(cards[0]);
         }
+        send(guide);
     }
 
     public void createCard(String title, String text, byte[] image) {
@@ -97,6 +100,10 @@ public class GuideManager {
         newCard.setText(text);
         newCard.setImage(image);
         cardArrayList.add(newCard);
+    }
+
+    public void send(Guide guide) {
+        connection.send(guide);
     }
 
 

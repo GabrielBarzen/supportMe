@@ -41,6 +41,14 @@ public class Connection implements Runnable {
         }
     }
 
+    public void send(Guide guide) {
+        try {
+            oos.writeObject(guide);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
