@@ -25,8 +25,25 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         databaseConnection = new UserDatabaseConnection();
         start();
     }
+    public ConnectionManager(ServerSocket serverSocket, GuideManager guideManager, boolean test){
+        ServerLog.log("Cm started");
+        this.serverSocket = serverSocket;
+        this.guideManager = guideManager;
+        databaseConnection = new UserDatabaseConnection();
+        User existDataUser = new User("1@1.com","exist","123456789");
+        User notExistDataUser = new User("2@2.com","notExist","123456789");
+        User newDataUser = new User("3@3.com","newUser","123456789");
+        newDataUser.setNewUser(true);
+        User newDataUserDuplicate= new User("4@4.com","duplicateNewUser","123456789");
+        newDataUserDuplicate.setNewUser(true);
+        objectReceived(existDataUser, existDataUser);
+        objectReceived(notExistDataUser, notExistDataUser);
+        objectReceived(newDataUser, newDataUser);
+        objectReceived(newDataUserDuplicate, newDataUserDuplicate);
+        ServerLog.log("all users received");
+    }
 
-    private void start(){;
+    private void start(){
         if (acceptConnectionThread == null) {
             acceptConnectionThread = new Thread(this);
         } else {
@@ -57,29 +74,25 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     public void objectReceived(Object object, User user) {
 
         if (object instanceof User){
-            for (Connection connection: newConnections) {
+            Authenticator auth = new Authenticator(user, databaseConnection);
 
-                Authenticator auth = new Authenticator(user, databaseConnection);
+            boolean lookupSuccess = databaseConnection.lookupUser(user);
+            boolean authSuccess = auth.isLoginSuccess();
 
-                boolean lookupSuccess = databaseConnection.lookupUser(user);
-                boolean authSuccess = auth.isLoginSuccess();
-
-                if (user.isNewUser() && lookupSuccess){
-                    Server.log("user already exists"); //TODO: when database exists
-                }
-                else if (user.isNewUser() && !lookupSuccess){
-                    Server.log("Adding new user"); //TODO: when database exists
-                }
-                if(!user.isNewUser() && !lookupSuccess){
-                    Server.log("user does not exist"); //TODO: when database exists
-                }
-                if(!user.isNewUser() && lookupSuccess){
-                    Server.log("Logging in"); //TODO: when database exists
-
+            if (user.isNewUser() && lookupSuccess){
+                ServerLog.log("user already exists"); //TODO: when database exists
+            }
+            else if (user.isNewUser() && !lookupSuccess){
+                ServerLog.log("Adding new user"); //TODO: when database exists
+            }
+            if(!user.isNewUser() && !lookupSuccess){
+                ServerLog.log("user does not exist"); //TODO: when database exists
+            }
+            if(!user.isNewUser() && lookupSuccess){
+                ServerLog.log("Logging in"); //TODO: when database exists
 //                    auth.authenticate();
 //                    userConnection.put(user, connection);
 //                    newConnections.remove(connection);
-                }
 
             }
         }

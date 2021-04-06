@@ -9,7 +9,6 @@ public class User {
     private boolean newUser;
     private byte[] image;
 
-
     public User(String email, String userName, String password, byte[] image) {
         this.email = email;
         this.userName = userName;
@@ -20,7 +19,6 @@ public class User {
     public User(String email, String userName, String password) {
         this(email,userName,password,null);
     }
-
 
     public byte[] getImage() {
         return image;
