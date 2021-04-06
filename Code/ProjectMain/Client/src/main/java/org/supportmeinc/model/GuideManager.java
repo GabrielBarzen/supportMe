@@ -5,6 +5,7 @@ import shared.Guide;
 import shared.Thumbnail;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GuideManager {
 
@@ -12,7 +13,6 @@ public class GuideManager {
     private Guide[] guides;
     private Thumbnail[] thumbnails; // fixa plz
     private Connection connection;
-    private Card[][] cards;
     private ArrayList<Card> cardArrayList;
 
     public GuideManager(Connection connection) {
@@ -43,11 +43,13 @@ public class GuideManager {
             createCard(title, text, image);
             answer = false;
         }
-        cards = new Card[cardArrayList.size()][cardArrayList.size()];
-        for (int i = 0; i < cardArrayList.size(); i++) {
-            guide.setCards(cards[0]);
-        }
+        guide.setCards(cardArrayList);
         send(guide);
+        for (int i = 0; i < cardArrayList.size(); i++) {
+            Card card = guide.getCard(UUID.randomUUID());
+            card.setAffirmUUID(UUID.randomUUID()); //Change to a real UUID
+            card.setNegUUID(UUID.randomUUID()); //Change to a real UUID
+        }
     }
 
     public void createCard(String title, String text, byte[] image) {
