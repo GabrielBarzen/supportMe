@@ -38,15 +38,16 @@ public class GuideManager {
         String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
         String text = "woow";
         byte[] image = {0};
-        currentGuide = new Guide();
+        Guide guide = new Guide();
         while (answer) {
             createCard(title, text, image);
             answer = false;
         }
         cards = new Card[cardArrayList.size()][cardArrayList.size()];
         for (int i = 0; i < cardArrayList.size(); i++) {
-            currentGuide.setCards(cards[0]);
+            guide.setCards(cards[0]);
         }
+        send(guide);
     }
 
     public void createCard(String title, String text, byte[] image) {
@@ -55,6 +56,10 @@ public class GuideManager {
         newCard.setText(text);
         newCard.setImage(image);
         cardArrayList.add(newCard);
+    }
+
+    public void send(Guide guide) {
+        connection.send(guide);
     }
 
 
