@@ -4,6 +4,10 @@ import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
+import java.util.UUID;
 import java.util.ArrayList;
 
 public class GuideManager {
@@ -18,6 +22,7 @@ public class GuideManager {
     public GuideManager(Connection connection) {
         this.connection = connection;
         thumbnails = connection.getThumbnails();
+        connection.setGuideManager(this);
     }
 
     public Card initGuide(int index) {
@@ -32,6 +37,39 @@ public class GuideManager {
     public Thumbnail[] getThumbnails() {
         return thumbnails;
     }
+
+    public Guide getGuide(Thumbnail thumbnail) {
+        UUID id = thumbnail.getGuideUUID();
+        Guide guide = connection.getGuide(id);
+        return guide;
+    }
+
+    public void downloadGuide(Thumbnail thumbnail) {
+        Guide guide = getGuide(thumbnail);
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.showOpenDialog(null);
+            System.out.println(chooser.getCurrentDirectory());
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(chooser.getSelectedFile() + "guides.dat")));
+            oos.writeObject(guides);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadGuides() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("DAT files" , "dat");
+        chooser.setFileFilter(filter);
+        chooser.showOpenDialog(null);
+        File file = chooser.getSelectedFile();
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+            Guide guide = (Guide) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     public void createGuide() {
         boolean answer = true;

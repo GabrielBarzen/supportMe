@@ -10,11 +10,13 @@ import shared.*;
 
 public class Connection implements Runnable {
 
-    Thread thread = new Thread(this);
+    private Thread thread = new Thread(this);
     private Socket socket;
+    private GuideManager guideManager;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private User user;
+
 
     public Connection(String ip, int port) {
         try {
@@ -58,5 +60,18 @@ public class Connection implements Runnable {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
 
+
+    public void disconnect() {
+        try {
+            socket.close();
+            guideManager.loadGuides();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setGuideManager(GuideManager manager) {
+        guideManager = manager;
+    }
 
 }
