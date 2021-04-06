@@ -68,7 +68,7 @@ public class UserDatabaseConnection {
 
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery(query);
-            if(rs.next()) {
+            if (rs.next()) {
                 rs.getString(0);
                 user.setImage(rs.getBytes(1));
                 return user;
@@ -76,7 +76,6 @@ public class UserDatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 

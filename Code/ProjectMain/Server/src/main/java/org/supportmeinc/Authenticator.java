@@ -24,7 +24,7 @@ public class Authenticator {
         return false;
     }
 
-    public boolean authenticate()  {
+    public User authenticate()  {
         String salt = null;
         String password = null;
         String passwordHash = null;
@@ -55,7 +55,7 @@ public class Authenticator {
             boolean success = databaseConnection.registerUser(user,passwordHash,salt);
             if(!success){
                 ServerLog.log("Could not register user");
-                return false;
+                return null;
             }
         }
 
