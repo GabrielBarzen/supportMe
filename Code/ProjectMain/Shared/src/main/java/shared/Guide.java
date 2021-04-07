@@ -8,7 +8,7 @@ public class Guide implements Serializable {
 
     private UUID guideUUID;
     private Card descriptionCard;
-    private Card[] cards;
+    private ArrayList<Card> cards;
     private Card currentCard;
 
     public void setThumbnail(Thumbnail thumbnail) {
@@ -19,7 +19,7 @@ public class Guide implements Serializable {
 
     public Guide(){
         guideUUID = UUID.randomUUID();
-        //cards = new Card[]; Utbytt mot en array för enklare hantering
+        cards = new ArrayList<Card>();
         thumbnail = new Thumbnail(guideUUID);
     }
 
@@ -43,7 +43,7 @@ public class Guide implements Serializable {
         this.descriptionCard = descriptionCard;
     }
 
-    public Card getCard(String cardUUID){
+    public Card getCard(UUID cardUUID){
         for (Card card : cards) {
             if(card.getCardUUID().equals(cardUUID)) {
                 currentCard = card;
@@ -53,7 +53,7 @@ public class Guide implements Serializable {
         return null;
     }
 
-    public void setCards(Card[] cards) {
+    public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
     }
 }

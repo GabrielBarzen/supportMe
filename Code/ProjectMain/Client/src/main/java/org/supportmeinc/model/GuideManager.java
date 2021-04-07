@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.util.UUID;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GuideManager {
 
@@ -18,7 +19,6 @@ public class GuideManager {
     private Guide[] guides;
     private Thumbnail[] thumbnails; // fixa plz
     private Connection connection;
-    private Card[][] cards;
     private ArrayList<Card> cardArrayList;
 
     public GuideManager(Connection connection) {
@@ -41,6 +41,26 @@ public class GuideManager {
         return thumbnails;
     }
 
+
+    public void createGuide() {
+        boolean answer = true;
+        String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
+        String text = "woow";
+        byte[] image = {0};
+        Guide guide = new Guide();
+        while (answer) {
+            createCard(title, text, image);
+            answer = false;
+        }
+        guide.setCards(cardArrayList);
+        send(guide);
+        for (int i = 0; i < cardArrayList.size(); i++) {
+            Card card = guide.getCard(UUID.randomUUID());
+            card.setAffirmUUID(UUID.randomUUID()); //Change to a real UUID
+            card.setNegUUID(UUID.randomUUID()); //Change to a real UUID
+        }
+    }
+  
     public Guide getGuide(Thumbnail thumbnail) {
         UUID id = thumbnail.getGuideUUID();
         Guide guide = connection.getGuide(id);
