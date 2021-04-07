@@ -44,12 +44,27 @@ public class GuideManager {
 
     public void createGuide() {
         boolean answer = true;
-        String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
+        String title = "wow"; //TODO: Exchange them agaisnt values taken from the gui like gui.getTitleFromGUI()
         String text = "woow";
         byte[] image = {0};
         Guide guide = new Guide();
         while (answer) {
             createCard(title, text, image);
+
+            answer = false; //Change to gui.finishGuide();
+        }
+    }
+
+    public void createCard(String title, String text, byte[] image) {
+        Card newCard = new Card();
+        newCard.setTitle(title);
+        while (text.length() > 280) {
+            //text = gui.getTextFromGUI(); //TODO later on
+        }
+        newCard.setText(text);
+        newCard.setImage(image);
+        cardArrayList.add(newCard);
+
             answer = false;
         }
         guide.setCards(cardArrayList);
@@ -65,6 +80,7 @@ public class GuideManager {
         UUID id = thumbnail.getGuideUUID();
         Guide guide = connection.getGuide(id);
         return guide;
+
     }
 
 //    public void downloadGuide(Thumbnail thumbnail) {
