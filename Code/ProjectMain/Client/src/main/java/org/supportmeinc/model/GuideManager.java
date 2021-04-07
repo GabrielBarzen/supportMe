@@ -41,41 +41,6 @@ public class GuideManager {
         return thumbnails;
     }
 
-
-    public void createGuide() {
-        boolean answer = true;
-        String title = "wow"; //TODO: Exchange them agaisnt values taken from the gui like gui.getTitleFromGUI()
-        String text = "woow";
-        byte[] image = {0};
-        Guide guide = new Guide();
-        while (answer) {
-            createCard(title, text, image);
-
-            answer = false; //Change to gui.finishGuide();
-        }
-    }
-
-    public void createCard(String title, String text, byte[] image) {
-        Card newCard = new Card();
-        newCard.setTitle(title);
-        while (text.length() > 280) {
-            //text = gui.getTextFromGUI(); //TODO later on
-        }
-        newCard.setText(text);
-        newCard.setImage(image);
-        cardArrayList.add(newCard);
-
-            answer = false;
-        }
-        guide.setCards(cardArrayList);
-        send(guide);
-        for (int i = 0; i < cardArrayList.size(); i++) {
-            Card card = guide.getCard(UUID.randomUUID());
-            card.setAffirmUUID(UUID.randomUUID()); //Change to a real UUID
-            card.setNegUUID(UUID.randomUUID()); //Change to a real UUID
-        }
-    }
-  
     public Guide getGuide(Thumbnail thumbnail) {
         UUID id = thumbnail.getGuideUUID();
         Guide guide = connection.getGuide(id);
@@ -107,36 +72,6 @@ public class GuideManager {
 //            Guide guide = (Guide) ois.readObject();
 //        } catch (IOException | ClassNotFoundException e) {
 //            e.printStackTrace();
-//        }
-//
-//        public void createGuide () {
-//            boolean answerToQuit = true;
-//            String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
-//            String text = "woow"; //CardEditor.getText(); TODO: Add this method to guideEditor so we can get text and title from cardEditor
-//            byte[] image = {0};
-//
-//            currentGuide = new Guide();
-//            while (answerToQuit) {
-//                while (text.length() > 280) {
-//                    //text = CardEditor.getText();
-//                }
-//
-//                createCard(title, text, image);
-//                answerToQuit = false;
-//            }
-//            cards = new Card[cardArrayList.size()][cardArrayList.size()];
-//            for (int i = 0; i < cardArrayList.size(); i++) {
-//                guide.setCards(cards[0]);
-//            }
-//            send(guide);
-//        }
-//
-//        public void createCard (String title, String text,byte[] image){
-//            Card newCard = new Card();
-//            newCard.setTitle(title);
-//            newCard.setText(text);
-//            newCard.setImage(image);
-//            cardArrayList.add(newCard);
 //        }
 //
 //        public void send(Guide guide) {
