@@ -9,6 +9,7 @@ import org.supportmeinc.model.JfxUtils;
 import org.supportmeinc.view.*;
 import shared.Card;
 import org.supportmeinc.model.*;
+import shared.User;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -22,8 +23,8 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static Scene scene;
-    private int port;
-    private String ip;
+    private int port = 1029;
+    private String ip = "::1";
     private Connection connection;
     private GuideManager guideManager;
 
@@ -33,7 +34,7 @@ public class Main extends Application {
 
     public void startBackend() {
         System.out.println("running init");
-        connection = new Connection(ip, port);
+        connection = new Connection(ip, port, new User("gmb@bmg.com","nice","nicerdicerdeluxeprofusion"));
         guideManager = new GuideManager(connection);
 //        testCard();
     }
@@ -96,6 +97,7 @@ public class Main extends Application {
         stage.setTitle("supportMe");
         stage.setScene(scene);
         stage.show();
+        System.out.println("nice");
         startBackend();
     }
 

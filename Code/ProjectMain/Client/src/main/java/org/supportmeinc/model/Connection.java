@@ -1,44 +1,86 @@
 package org.supportmeinc.model;
 
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 import shared.*;
 
-public class Connection implements Runnable {
+public class Connection {
 
-    Thread thread = new Thread(this);
     private Socket socket;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
+    private GuideManager guideManager;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
     private User user;
+    private Receive receive;
+    private Send send;
 
-    public Connection(String ip, int port) {
+    public Connection(String ip, int port, User user) {
+        this.user = user;
         try {
+            System.out.println("starting connection");
             socket = new Socket(ip, port);
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
-            thread.start();
+            System.out.println("starting connected");
+            System.out.println("opening streams");
+            outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+            inputStream = new ObjectInputStream(this.socket.getInputStream());
+            System.out.println("Starting threads");
+
+            send = new Send();
+            receive = new Receive();
+            System.out.println("threads created");
+
+            send.start();
+            receive.start();
+            System.out.println("threads started");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    @Override
-    public void run() {
-        while (!Thread.interrupted()) {
+    private class Receive extends Thread {
+
+        @Override
+        public void run() {
             try {
-                oos.writeObject(user);
-                oos.flush();
+                while (!Thread.interrupted()) {
+
+                        inputStream.readObject();
+                        System.out.println("loop check receive");
+
+                }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    Buffer<Object> objectBuffer = new Buffer<>();
+
+    public void send(Object object){
+        objectBuffer.put(object);
+    }
+
+    private class Send extends Thread {
+
+        @Override
+        public void run() {
+            send(user);
+            try {
+                while (!Thread.interrupted()) {
+                        outputStream.writeObject(objectBuffer.get());
+                        outputStream.flush();
+                        System.out.println("loop check send");
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
@@ -58,5 +100,17 @@ public class Connection implements Runnable {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
 
+    public void disconnect() {
+        try {
+            socket.close();
+//            guideManager.loadGuides();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setGuideManager(GuideManager manager) {
+        guideManager = manager;
+    }
 
 }
