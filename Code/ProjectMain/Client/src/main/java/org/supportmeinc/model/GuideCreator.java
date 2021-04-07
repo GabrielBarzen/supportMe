@@ -4,6 +4,7 @@ import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class GuideCreator {
@@ -25,6 +26,14 @@ public class GuideCreator {
         }
         currentEditedCard.setTitle(title);
         currentEditedGuide.addCard(currentEditedCard);
+    }
+
+    public void finishGuide() {
+        ArrayList<Card> cards = currentEditedGuide.getCards();
+        for (Card currentCard: cards) {
+            currentCard.setAffirmUUID(UUID.randomUUID());
+            currentCard.setNegUUID(UUID.randomUUID());
+        }
     }
 
 

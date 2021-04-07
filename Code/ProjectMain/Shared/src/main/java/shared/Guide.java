@@ -57,6 +57,10 @@ public class Guide implements Serializable {
         this.cards = cards;
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

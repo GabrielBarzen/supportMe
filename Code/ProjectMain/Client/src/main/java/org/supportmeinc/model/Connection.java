@@ -37,7 +37,6 @@ public class Connection {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private class Receive extends Thread {
