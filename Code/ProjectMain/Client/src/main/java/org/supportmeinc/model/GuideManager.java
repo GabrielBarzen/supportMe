@@ -25,7 +25,6 @@ public class GuideManager {
         this.connection = connection;
         thumbnails = connection.getThumbnails();
         connection.setGuideManager(this);
-        connection.send(new User("2@2.com","notExist","123456789"));
     }
 
     public Card initGuide(int index) {
@@ -53,7 +52,7 @@ public class GuideManager {
             answer = false;
         }
         guide.setCards(cardArrayList);
-        send(guide);
+        connection.send(guide);
         for (int i = 0; i < cardArrayList.size(); i++) {
             Card card = guide.getCard(UUID.randomUUID());
             card.setAffirmUUID(UUID.randomUUID()); //Change to a real UUID
@@ -115,13 +114,13 @@ public class GuideManager {
 //            send(guide);
 //        }
 //
-//        public void createCard (String title, String text,byte[] image){
-//            Card newCard = new Card();
-//            newCard.setTitle(title);
-//            newCard.setText(text);
-//            newCard.setImage(image);
-//            cardArrayList.add(newCard);
-//        }
+        public void createCard (String title, String text,byte[] image){
+            Card newCard = new Card();
+            newCard.setTitle(title);
+            newCard.setText(text);
+            newCard.setImage(image);
+            cardArrayList.add(newCard);
+        }
 //
 //        public void send(Guide guide) {
 //            connection.send(guide);

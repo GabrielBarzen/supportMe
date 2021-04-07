@@ -2,10 +2,7 @@ package org.supportmeinc;
 
 import shared.User;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -18,8 +15,8 @@ public class UserDatabaseConnection {
             String url = "jdbc:postgresql://84.55.115.173/supportMeUser";
             java.sql.Connection conn = null;
             Properties connectionProps = new Properties();
-            connectionProps.put("user", "postgres");
-            connectionProps.put("password", "supportMe");
+            connectionProps.put("user", "server");
+            connectionProps.put("password", "javafx:compile");
             dbConnection = DriverManager.getConnection(url, connectionProps);
             ServerLog.log("Connected to database");
         } catch (SQLException throwables) {
@@ -48,13 +45,14 @@ public class UserDatabaseConnection {
 
     public String getSalt(User user) {
         try {
-            String query = "select get_salt(" + user.getEmail() + ");";
+            String query = String.format("select get_salt('%s')", user.getEmail());
 
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery(query);
 
             if (rs.next()) {
-                return rs.getString(0);
+                String retvalue = rs.getString(1);
+                return retvalue;
             }
 
         } catch (SQLException e) {
@@ -65,14 +63,16 @@ public class UserDatabaseConnection {
 
     public User login(User user, String passwordHash) {
         try {
-            String query = "select login(" + user.getEmail() + ", " + passwordHash + ");";
-
-            Statement st = dbConnection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM login(?, ?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, passwordHash);
+            ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
                 user.setUserName(rs.getString(1));
                 user.setImage(rs.getBytes(2));
+
                 return user;
             }
         } catch (SQLException e) {
@@ -83,15 +83,19 @@ public class UserDatabaseConnection {
 
     public boolean registerUser(User user, String passwordHash, String salt) {
         try {
-            String query = String.format("select register_user('%s', '%s', '%s', '%s', cast(%s as bytea))", user.getEmail(), passwordHash, user.getUserName(), salt, Arrays.toString(user.getImage()));
 
-            Statement st = dbConnection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            String query = "select register_user(?, ?, ?, ?, ?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+            statement.setString(2, passwordHash);
+            statement.setString(3, user.getUserName());
+            statement.setString(4, salt);
+            statement.setBytes(5, user.getImage());
+            ResultSet rs = statement.executeQuery();
 
             if(rs.next()){
                 return rs.getInt(1) == 1;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

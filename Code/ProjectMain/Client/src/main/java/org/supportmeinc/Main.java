@@ -34,9 +34,11 @@ public class Main extends Application {
 
     public void startBackend() {
         System.out.println("running init");
-        connection = new Connection(ip, port, new User("gmb@bmg.com","nice","nicerdicerdeluxeprofusion"));
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
+        replaceWithUserFromLoginScreen.setNewUser(false);
+        connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
-//        testCard();
+//      testCard();
     }
 
     public void testCard() { //TODO Stubbe, eliminera
