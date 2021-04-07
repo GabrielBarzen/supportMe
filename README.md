@@ -9,6 +9,7 @@ Ahmad Toron
 
 Projektet är baserat runt en idé om teknisk support för dina nära och kära. Programmet ska fungera som en central för användare som inte är tekniskt lagda och kan behöva hjälp med sin teknik hemma. Den andra typen av användare är de som är tekniskt lagda som kan skapa och dela skräddarsydda felsökningsguider. Programmet kommer att ha två olika vyer, en för att skapa guider och en för att visa guiderna på ett enkelt och tydligt sätt. Målgruppen för vårt program är personer som ofta får hjälpa personer i sin omgivning med teknisk support och ger de en möjlighet att skapa tydliga guider. 
 
+<iframe width="560" height="315" src='https://dbdiagram.io/embed/5fd4abc09a6c525a03bacb7c'> </iframe>
 
 # Starta projekt i intellij
 0. Förutsättningar:
