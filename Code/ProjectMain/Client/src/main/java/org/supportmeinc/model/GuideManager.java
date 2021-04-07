@@ -35,17 +35,13 @@ public class GuideManager {
 
     public void createGuide() {
         boolean answer = true;
-        String title = "wow"; //TODO: Byt ut dessa mot riktiga värden från gui senare
+        String title = "wow"; //TODO: Exchange them agaisnt values taken from the gui like gui.getTitleFromGUI()
         String text = "woow";
         byte[] image = {0};
         currentGuide = new Guide();
         while (answer) {
             createCard(title, text, image);
-            answer = false;
-        }
-        cards = new Card[cardArrayList.size()][cardArrayList.size()];
-        for (int i = 0; i < cardArrayList.size(); i++) {
-            currentGuide.setCards(cards[0]);
+            answer = false; //Change to gui.finishGuide();
         }
     }
 
@@ -53,7 +49,7 @@ public class GuideManager {
         Card newCard = new Card();
         newCard.setTitle(title);
         while (text.length() > 280) {
-            //text = getTextFromGUI(); //TODO later on
+            //text = gui.getTextFromGUI(); //TODO later on
         }
         newCard.setText(text);
         newCard.setImage(image);
