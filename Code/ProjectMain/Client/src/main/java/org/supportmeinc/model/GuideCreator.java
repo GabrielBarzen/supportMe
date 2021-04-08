@@ -35,17 +35,6 @@ public class GuideCreator {
         }
     }
 
-    public void createCard() {
-        if (currentEditedCard == null) {
-            currentEditedCard = new Card();
-        }
-        String title = "";
-        String text = "";
-        byte[] image = {0};
-        currentEditedCard.setTitle(title);
-        currentEditedGuide.addCard(currentEditedCard);
-    }
-
     public void finishGuide() {
         for (Card currentCard: cards) {
             currentCard.setAffirmUUID(UUID.randomUUID());
@@ -92,6 +81,26 @@ public class GuideCreator {
         currentEditedGuide = guides[index];
         cards = currentEditedGuide.getCards();
         editCard();
+    }
+
+    public void createCard() {
+        if (currentEditedCard == null) {
+            currentEditedCard = new Card();
+        }
+        String title = "";
+        String text = "";
+        byte[] image = {0};
+        String newTitle = ""; //get info from gui
+        String newText = ""; //same
+        byte[] newImage = {0}; //same
+        UUID newAffirmID = UUID.randomUUID(); //change this to another cards UUID
+        UUID newNegativeID = UUID.randomUUID(); //same with this
+        currentEditedCard.setTitle(newTitle);
+        currentEditedCard.setText(newText);
+        currentEditedCard.setImage(newImage);
+        currentEditedCard.setAffirmUUID(newAffirmID);
+        currentEditedCard.setNegUUID(newNegativeID);
+        currentEditedGuide.addCard(currentEditedCard);
     }
 
     public void editCard() {
