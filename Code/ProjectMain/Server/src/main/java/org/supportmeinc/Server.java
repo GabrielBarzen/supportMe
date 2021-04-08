@@ -12,7 +12,8 @@ public class Server {
     private static int port;
 
     public static void main(String[] args) {
-        port = 1029;
+        System.out.println("wtf is happening");
+        port = 1030;
         Server server = new Server(port);
     }
 
@@ -22,7 +23,7 @@ public class Server {
             ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port), new GuideManager());
             ServerLog logger = new ServerLog();
         } catch (IOException e) {
-            ServerLog.log(e.getMessage());
+            e.printStackTrace();
         }
     }
 
