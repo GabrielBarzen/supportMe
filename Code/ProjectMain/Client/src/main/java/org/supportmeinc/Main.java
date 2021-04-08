@@ -38,7 +38,7 @@ public class Main extends Application {
         testCard();
     }
 
-    private void testCard() {
+    public void testCard() {
         Card testCard = initGuide(0);
         cardViewerController.setCard(testCard.getTitle(), JfxUtils.fromBytes(testCard.getImage()), testCard.getText());
     }
@@ -88,6 +88,7 @@ public class Main extends Application {
     private GuideBrowser guideBrowserController;
     private GuideEditor guideEditorController;
     private Login loginController;
+    private Register registerController;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -101,7 +102,7 @@ public class Main extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private Parent loadFXML(String fxml) throws IOException {
+    public Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         Parent returnParent = fxmlLoader.load();
         System.out.println("fxml item : " + returnParent.getClass());
@@ -113,6 +114,7 @@ public class Main extends Application {
 
     public void registerController(JFXcontroller viewController) {
         if (viewController instanceof Login) {loginController = (Login) viewController;}
+        if (viewController instanceof Register) {registerController = (Register) viewController;}
         if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
         if (viewController instanceof GuideEditor) {guideEditorController = (GuideEditor) viewController;}
         if (viewController instanceof CardViewer) { cardViewerController = (CardViewer) viewController;}
