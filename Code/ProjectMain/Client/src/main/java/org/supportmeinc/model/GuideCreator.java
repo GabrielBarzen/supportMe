@@ -43,11 +43,18 @@ public class GuideCreator {
             currentCard.setAffirmUUID(UUID.randomUUID());
             currentCard.setNegUUID(UUID.randomUUID());
         }
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(connection.getSocket().getOutputStream());
-            oos.writeObject(currentEditedGuide);
-        } catch (IOException e) {
-            e.printStackTrace();
+        currentEditedGuide.setAuthor("ändras till release");
+        sendCreatedGuide();
+    }
+
+    public void sendCreatedGuide() {
+        if (currentEditedGuide != null) {
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(connection.getSocket().getOutputStream());
+                oos.writeObject(currentEditedGuide);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
