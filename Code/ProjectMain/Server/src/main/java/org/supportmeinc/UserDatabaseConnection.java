@@ -26,7 +26,12 @@ public class UserDatabaseConnection {
 
     public UserDatabaseConnection(){
         URL pwdUrl = getClass().getClassLoader().getResource(String.format(".%spwd.txt", File.separatorChar));;
-        readConfig(pwdUrl);
+
+        if (pwdUrl != null){
+            readConfig(pwdUrl);
+        } else {
+            ServerLog.log("not able to read db connections");
+        }
 
         try {
             String url = "jdbc:postgresql://"+dbIp+"/support_me_user";

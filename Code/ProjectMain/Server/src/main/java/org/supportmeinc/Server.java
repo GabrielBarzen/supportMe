@@ -12,7 +12,6 @@ public class Server {
     private static int port;
 
     public static void main(String[] args) {
-        System.out.println("wtf is happening");
         port = 1030;
         Server server = new Server(port);
     }
