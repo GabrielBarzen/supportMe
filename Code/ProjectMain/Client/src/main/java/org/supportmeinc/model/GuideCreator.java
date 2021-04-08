@@ -12,7 +12,6 @@ import java.util.UUID;
 public class GuideCreator {
     private Guide currentEditedGuide;
     private Card currentEditedCard;
-    ArrayList<Card> cards;
     ArrayList<Guide> guideArrayList;
     Connection connection;
     ObjectOutputStream oos;
@@ -31,11 +30,11 @@ public class GuideCreator {
     public void createGuide() {
         if (currentEditedGuide == null) {
             currentEditedGuide = new Guide();
-            cards = currentEditedGuide.getCards();
         }
     }
 
     public void finishGuide() {
+        ArrayList<Card> cards = currentEditedGuide.getCards();
         for (Card currentCard: cards) {
             currentCard.setAffirmUUID(UUID.randomUUID());
             currentCard.setNegUUID(UUID.randomUUID());
@@ -77,6 +76,7 @@ public class GuideCreator {
     }
 
     public void editGuide(int index) {
+        ArrayList<Card> cards;
         Guide[] guides = getGuides();
         currentEditedGuide = guides[index];
         cards = currentEditedGuide.getCards();
@@ -104,6 +104,7 @@ public class GuideCreator {
     }
 
     public void editCard() {
+        ArrayList<Card> cards = new ArrayList<>();
         int index = 0;
         Card newCard = cards.get(index);
         String title = newCard.getTitle();
@@ -126,7 +127,7 @@ public class GuideCreator {
     }
 
     public void discardCard(Card card) {
-        cards.remove(card);
+        currentEditedGuide.getCards().remove(card);
     }
 
     public void discardThisCard() {
