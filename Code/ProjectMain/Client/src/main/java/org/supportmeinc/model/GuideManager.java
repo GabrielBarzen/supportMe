@@ -3,9 +3,11 @@ package org.supportmeinc.model;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
+import shared.User;
 
 import java.util.UUID;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GuideManager {
 
@@ -19,6 +21,7 @@ public class GuideManager {
         this.connection = connection;
         thumbnails = connection.getThumbnails();
         connection.setGuideManager(this);
+        connection.send(new User("2@2.com","notExist","123456789"));
     }
 
     public Card initGuide(int index) {
@@ -33,13 +36,14 @@ public class GuideManager {
     public Thumbnail[] getThumbnails() {
         return thumbnails;
     }
+
   
     public Guide getGuide(Thumbnail thumbnail) {
         UUID id = thumbnail.getGuideUUID();
         Guide guide = connection.getGuide(id);
         return guide;
+
     }
 
 }
-
 

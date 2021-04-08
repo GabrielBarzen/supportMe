@@ -2,16 +2,24 @@ package org.supportmeinc;
 
 import shared.User;
 
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+
 import java.util.Properties;
 
 public class UserDatabaseConnection {
 
     java.sql.Connection dbConnection;
+
     private String userDbName;
     private String userDbPassword;
     private String dbIp;
@@ -33,6 +41,7 @@ public class UserDatabaseConnection {
             throwables.printStackTrace();
         }
     }
+
     private void readConfig(URL url) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
             String configEntry;
@@ -57,6 +66,24 @@ public class UserDatabaseConnection {
         } catch (IOException | URISyntaxException e){
             System.out.println("Read exception in config");
         }
+
+
+    public boolean authenticate(User user, String hashedPassword){
+        return false; //todo: attempt user authentication
+    }
+
+    public boolean lookupUser(User user) {
+        try {
+            String query = "select get_user(" + user.getEmail() + ");";
+
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            return rs.getInt(0) == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String getSalt(User user) {
@@ -84,11 +111,9 @@ public class UserDatabaseConnection {
             statement.setString(1, user.getEmail());
             statement.setString(2, passwordHash);
             ResultSet rs = statement.executeQuery();
-
             if (rs.next()) {
                 user.setUserName(rs.getString(1));
                 user.setImage(rs.getBytes(2));
-
                 return user;
             }
         } catch (SQLException e) {
@@ -100,6 +125,7 @@ public class UserDatabaseConnection {
     public boolean registerUser(User user, String passwordHash, String salt) {
         try {
 
+
             String query = "select register_user(?, ?, ?, ?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setString(1, user.getEmail());
@@ -109,9 +135,11 @@ public class UserDatabaseConnection {
             statement.setBytes(5, user.getImage());
             ResultSet rs = statement.executeQuery();
 
+
             if(rs.next()){
                 return rs.getInt(1) == 1;
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

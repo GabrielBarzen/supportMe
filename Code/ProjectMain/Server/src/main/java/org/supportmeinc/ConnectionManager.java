@@ -26,6 +26,23 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         userConnection = new HashMap<>();
         start();
     }
+    public ConnectionManager(ServerSocket serverSocket, GuideManager guideManager, boolean test){
+        ServerLog.log("Cm started");
+        this.serverSocket = serverSocket;
+        this.guideManager = guideManager;
+        databaseConnection = new UserDatabaseConnection();
+        User existDataUser = new User("1@1.com","exist","123456789");
+        User notExistDataUser = new User("2@2.com","notExist","123456789");
+        User newDataUser = new User("3@3.com","newUser","123456789");
+        newDataUser.setNewUser(true);
+        User newDataUserDuplicate= new User("4@4.com","duplicateNewUser","123456789");
+        newDataUserDuplicate.setNewUser(true);
+        objectReceived(existDataUser, existDataUser);
+        objectReceived(notExistDataUser, notExistDataUser);
+        objectReceived(newDataUser, newDataUser);
+        objectReceived(newDataUserDuplicate, newDataUserDuplicate);
+        ServerLog.log("all users received");
+    }
 
     private void start(){
         if (acceptConnectionThread == null) {
@@ -55,6 +72,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     public void objectReceived(Object object, User user) {
         ServerLog.log("Object received from client " + object.getClass());
         if (object instanceof Connection){
+
             Connection connection = (Connection) object;
             ServerLog.log("ConnectionManager attempting auth");
             Authenticator auth = new Authenticator(user, databaseConnection);

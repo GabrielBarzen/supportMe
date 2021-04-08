@@ -45,6 +45,7 @@ public class Connection {
         @Override
         public void run() {
             try {
+
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
                     System.out.println("received user obj from server");
@@ -64,6 +65,7 @@ public class Connection {
                 } catch (IOException ex){
                     System.out.println("Disconnected ");
                 }
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -87,6 +89,7 @@ public class Connection {
                         outputStream.flush();
                         System.out.println("loop check send");
                 }
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e){
@@ -94,6 +97,7 @@ public class Connection {
             }
         }
     }
+
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
@@ -112,6 +116,7 @@ public class Connection {
     public Thumbnail[] getThumbnails() {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
+
 
     public void disconnect() throws IOException{
         send.interrupt();

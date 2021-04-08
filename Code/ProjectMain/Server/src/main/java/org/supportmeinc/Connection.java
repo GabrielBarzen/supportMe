@@ -70,9 +70,11 @@ public class Connection {
                         ServerLog.log("Send waiting for object to send");
                         outputStream.writeObject(objectBuffer.get());
                     } catch (IOException e) {
+
                     }
                 }
             }catch (InterruptedException e) {
+
             }
         }
 
@@ -101,11 +103,13 @@ public class Connection {
                     objectReceivedListener.objectReceived(object,getUser());
                 }
             } catch (IOException e) {
+
                 try {
                     disconnect();
                 } catch (IOException ex){
                     System.out.println(ex.getMessage());
                 }
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
