@@ -43,12 +43,12 @@ public class UserDatabaseConnection {
     }
 
     private void readConfig(URL url) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))) {
             String configEntry;
 
-            while ((configEntry = bufferedReader.readLine()) != null){
+            while ((configEntry = bufferedReader.readLine()) != null) {
                 String[] entry = configEntry.split("=");
-                switch (entry[0]){
+                switch (entry[0]) {
                     case "user":
                         userDbName = entry[1];
                         break;
@@ -61,30 +61,13 @@ public class UserDatabaseConnection {
                 }
             }
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Config file not found");
-        } catch (IOException | URISyntaxException e){
+        } catch (IOException | URISyntaxException e) {
             System.out.println("Read exception in config");
         }
-
-
-    public boolean authenticate(User user, String hashedPassword){
-        return false; //todo: attempt user authentication
     }
 
-    public boolean lookupUser(User user) {
-        try {
-            String query = "select get_user(" + user.getEmail() + ");";
-
-            Statement st = dbConnection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-
-            return rs.getInt(0) == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     public String getSalt(User user) {
         try {
