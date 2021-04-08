@@ -45,14 +45,27 @@ public class Connection {
         @Override
         public void run() {
             try {
+
+                Object userLogin = inputStream.readObject();
+                if (userLogin instanceof User){
+                    System.out.println("received user obj from server");
+                } else {
+                    System.out.println("Invalid login or other error");
+                }
+
                 while (!Thread.interrupted()) {
 
-                        inputStream.readObject();
+                        Object object = inputStream.readObject();
                         System.out.println("loop check receive");
 
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    disconnect();
+                } catch (IOException ex){
+                    System.out.println("Disconnected ");
+                }
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -76,11 +89,15 @@ public class Connection {
                         outputStream.flush();
                         System.out.println("loop check send");
                 }
-            } catch (IOException | InterruptedException e) {
+
+            } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (IOException e){
+
             }
         }
     }
+
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
@@ -100,13 +117,11 @@ public class Connection {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
 
-    public void disconnect() {
-        try {
-            socket.close();
-//            guideManager.loadGuides();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    public void disconnect() throws IOException{
+        send.interrupt();
+        receive.interrupt();
+        socket.close();
     }
 
     public void setGuideManager(GuideManager manager) {

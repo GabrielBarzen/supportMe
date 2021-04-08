@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.supportmeinc.model.JfxUtils;
 import org.supportmeinc.view.*;
+import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
 import shared.User;
@@ -34,9 +35,11 @@ public class Main extends Application {
 
     public void startBackend() {
         System.out.println("running init");
-        connection = new Connection(ip, port, new User("gmb@bmg.com","nice","nicerdicerdeluxeprofusion"));
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
+        replaceWithUserFromLoginScreen.setNewUser(true);
+        connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
-//        testCard();
+//      testCard();
     }
 
     public void testCard() { //TODO Stubbe, eliminera
@@ -87,7 +90,7 @@ public class Main extends Application {
     private CardEditor cardEditorController;
     private CardViewer cardViewerController;
     private GuideBrowser guideBrowserController;
-    private GuideEditor guideEditorController;
+    private GuideEditorUi guideEditorUiController;
     private Login loginController;
     private Toolbar toolbarController;
 
@@ -118,7 +121,8 @@ public class Main extends Application {
     public void registerController(JFXcontroller viewController) { //TODO Möjligtvis refactor --> Toolbar
         if (viewController instanceof Login) {loginController = (Login) viewController;}
         if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
-        if (viewController instanceof GuideEditor) {guideEditorController = (GuideEditor) viewController;}
+        if (viewController instanceof GuideEditorUi) {
+            guideEditorUiController = (GuideEditorUi) viewController;}
         if (viewController instanceof CardViewer) {cardViewerController = (CardViewer) viewController;}
         if (viewController instanceof CardEditor) {cardEditorController = (CardEditor) viewController;}
         if (viewController instanceof Toolbar) {toolbarController = (Toolbar) viewController;}

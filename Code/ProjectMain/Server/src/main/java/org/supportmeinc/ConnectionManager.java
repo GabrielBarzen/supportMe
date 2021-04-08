@@ -23,6 +23,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         this.serverSocket = serverSocket;
         this.guideManager = guideManager;
         databaseConnection = new UserDatabaseConnection();
+        userConnection = new HashMap<>();
         start();
     }
     public ConnectionManager(ServerSocket serverSocket, GuideManager guideManager, boolean test){
@@ -71,16 +72,20 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     public void objectReceived(Object object, User user) {
         ServerLog.log("Object received from client " + object.getClass());
         if (object instanceof Connection){
+
+            Connection connection = (Connection) object;
             ServerLog.log("ConnectionManager attempting auth");
             Authenticator auth = new Authenticator(user, databaseConnection);
             User loggedInUser = auth.authenticate();
             if(loggedInUser != null){
-                ServerLog.log("Auth status : " + loggedInUser.getEmail() + "logged in" );
+                ServerLog.log("Auth status : " + loggedInUser.getEmail() + " logged in" );
                 ServerLog.log("Adding user to connections map");
-                userConnection.put(user,(Connection) object);
-                userConnection.get(user).sendObject(loggedInUser);
+                connection.setUser(loggedInUser);
+                userConnection.put(loggedInUser,connection);
+                connection.sendObject(loggedInUser);
             } else {
                 ServerLog.log("Auth status : could not log in" );
+                connection.sendObject(null);
             }
         }
 

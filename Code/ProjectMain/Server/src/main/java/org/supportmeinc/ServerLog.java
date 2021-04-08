@@ -6,7 +6,8 @@ public class ServerLog implements Runnable{
 
     public static Buffer<String> logBuffer = new Buffer<>();
 
-    ServerLog(){
+
+    public ServerLog(){
         Thread thread = new Thread(this);
         thread.start();
     }
@@ -25,4 +26,5 @@ public class ServerLog implements Runnable{
             }
         }
     }
+
 }

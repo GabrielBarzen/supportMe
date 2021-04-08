@@ -35,6 +35,12 @@ public class Connection {
         receive.start();
     }
 
+    public void disconnect() throws IOException{
+        send.interrupt();
+        receive.interrupt();
+        socket.close();
+    }
+
     public void setObjectReceivedListener(ObjectReceivedListener listener){
         this.objectReceivedListener = listener;
     }
@@ -64,11 +70,11 @@ public class Connection {
                         ServerLog.log("Send waiting for object to send");
                         outputStream.writeObject(objectBuffer.get());
                     } catch (IOException e) {
-                        e.printStackTrace();
+
                     }
                 }
             }catch (InterruptedException e) {
-                e.printStackTrace();
+
             }
         }
 
@@ -97,7 +103,13 @@ public class Connection {
                     objectReceivedListener.objectReceived(object,getUser());
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+
+                try {
+                    disconnect();
+                } catch (IOException ex){
+                    System.out.println(ex.getMessage());
+                }
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
