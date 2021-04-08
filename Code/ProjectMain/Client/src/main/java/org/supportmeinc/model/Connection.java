@@ -112,4 +112,7 @@ public class Connection {
         guideManager = manager;
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
 }
