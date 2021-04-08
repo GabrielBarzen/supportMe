@@ -13,6 +13,7 @@ public class Server {
 
     public static void main(String[] args) {
         port = 1030;
+        ServerLog logger = new ServerLog();
         Server server = new Server(port);
     }
 
@@ -20,7 +21,7 @@ public class Server {
         try {
             ServerLog.log("Starting cm");
             ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port), new GuideManager());
-            ServerLog logger = new ServerLog();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

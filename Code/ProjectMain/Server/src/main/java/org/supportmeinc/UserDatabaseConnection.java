@@ -41,9 +41,8 @@ public class UserDatabaseConnection {
             connectionProps.put("password", userDbPassword);
             dbConnection = DriverManager.getConnection(url, connectionProps);
             ServerLog.log("Connected to database");
-        } catch (SQLException throwables) {
+        } catch (Exception e) {
             ServerLog.log("Unable to connect to database");
-            throwables.printStackTrace();
         }
     }
 
