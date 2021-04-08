@@ -59,7 +59,10 @@ public class Authenticator {
             }
         }
 
-        return databaseConnection.login(user,passwordHash);
+
+        User loggedInUser = databaseConnection.authenticate(user,passwordHash);
+        return loggedInUser;
+
     }
 
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {
