@@ -14,13 +14,14 @@ public class UserDatabaseConnection {
     java.sql.Connection dbConnection;
     private String userDbName;
     private String userDbPassword;
+    private String dbIp;
 
     public UserDatabaseConnection(){
         URL pwdUrl = getClass().getClassLoader().getResource(String.format(".%spwd.txt", File.separatorChar));;
         readConfig(pwdUrl);
 
         try {
-            String url = "jdbc:postgresql://84.55.115.173/support_me_user";
+            String url = "jdbc:postgresql://"+dbIp+"/support_me_user";
             java.sql.Connection conn = null;
             Properties connectionProps = new Properties();
             connectionProps.put("user", userDbName);
@@ -44,6 +45,9 @@ public class UserDatabaseConnection {
                         break;
                     case "user_password":
                         userDbPassword = entry[1];
+                        break;
+                    case "db_ip":
+                        dbIp = entry[1];
                         break;
                 }
             }
