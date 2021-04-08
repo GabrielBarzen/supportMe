@@ -1,9 +1,7 @@
 package org.supportmeinc.model;
 
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 import shared.*;
@@ -12,28 +10,33 @@ public class Connection {
 
     private Socket socket;
     private GuideManager guideManager;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
     private User user;
     private Receive receive;
     private Send send;
 
-
-    public Connection(String ip, int port) {
+    public Connection(String ip, int port, User user) {
+        this.user = user;
         try {
+            System.out.println("starting connection");
             socket = new Socket(ip, port);
+            System.out.println("starting connected");
+            System.out.println("opening streams");
+            outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+            inputStream = new ObjectInputStream(this.socket.getInputStream());
+            System.out.println("Starting threads");
 
-            receive = new Receive();
             send = new Send();
+            receive = new Receive();
+            System.out.println("threads created");
 
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
+            send.start();
+            receive.start();
+            System.out.println("threads started");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        send.start();
-        receive.start();
 
     }
 
@@ -41,41 +44,56 @@ public class Connection {
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    ois.readObject();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+            try {
+                Object userLogin = inputStream.readObject();
+                if (userLogin instanceof User){
+                    System.out.println("received user obj from server");
+                } else {
+                    System.out.println("Invalid login or other error");
                 }
+
+                while (!Thread.interrupted()) {
+
+                        Object object = inputStream.readObject();
+                        System.out.println("loop check receive");
+
+                }
+            } catch (IOException e) {
+                try {
+                    disconnect();
+                } catch (IOException ex){
+                    System.out.println("Disconnected ");
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    Buffer<Object> objectBuffer = new Buffer<>();
+
+    public void send(Object object){
+        objectBuffer.put(object);
     }
 
     private class Send extends Thread {
 
         @Override
         public void run() {
-            while (true) {
-                try {
-                    oos.writeObject();
-                    oos.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            send(user);
+            try {
+                while (!Thread.interrupted()) {
+                        outputStream.writeObject(objectBuffer.get());
+                        outputStream.flush();
+                        System.out.println("loop check send");
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e){
+
             }
         }
     }
-
-    public void send(Guide guide) {
-        try {
-            oos.writeObject(guide);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public Guide getGuide(UUID guideUUID) {
         return goodLordTheCardGiver();
@@ -95,14 +113,10 @@ public class Connection {
         return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
     }
 
-
-    public void disconnect() {
-        try {
-            socket.close();
-            guideManager.loadGuides();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void disconnect() throws IOException{
+        send.interrupt();
+        receive.interrupt();
+        socket.close();
     }
 
     public void setGuideManager(GuideManager manager) {
