@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -15,7 +16,10 @@
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="81.0" fitWidth="96.0" layoutX="204.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="81.0" fitWidth="96.0" layoutX="204.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../profile.png" />
+         </image></ImageView>
       <TextField fx:id="firstname" layoutX="204.0" layoutY="162.0" promptText="Enter first name" />
       <TextField fx:id="lastname" layoutX="204.0" layoutY="213.0" promptText="Enter last name" />
       <TextField fx:id="email" layoutX="204.0" layoutY="264.0" promptText="Enter Email" />

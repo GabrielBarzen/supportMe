@@ -24,4 +24,9 @@ public class Register implements JFXcontroller {
         controller.registerController(this);
     }
 
+    public void displayImage(){
+
+    }
+
+
 }
