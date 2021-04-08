@@ -2,26 +2,56 @@ package org.supportmeinc;
 
 import shared.User;
 
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.*;
-import java.util.Arrays;
 import java.util.Properties;
 
 public class UserDatabaseConnection {
 
     java.sql.Connection dbConnection;
+    private String userDbName;
+    private String userDbPassword;
 
     public UserDatabaseConnection(){
+        URL pwdUrl = getClass().getClassLoader().getResource(String.format(".%spwd.txt", File.separatorChar));;
+        readConfig(pwdUrl);
+
         try {
-            String url = "jdbc:postgresql://84.55.115.173/supportMeUser";
+            String url = "jdbc:postgresql://84.55.115.173/support_me_user";
             java.sql.Connection conn = null;
             Properties connectionProps = new Properties();
-            connectionProps.put("user", "postgres");
-            connectionProps.put("password", "supportMe");
+            connectionProps.put("user", userDbName);
+            connectionProps.put("password", userDbPassword);
             dbConnection = DriverManager.getConnection(url, connectionProps);
             ServerLog.log("Connected to database");
         } catch (SQLException throwables) {
             ServerLog.log("Unable to connect to database");
             throwables.printStackTrace();
+        }
+    }
+    private void readConfig(URL url) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
+            String configEntry;
+
+            while ((configEntry = bufferedReader.readLine()) != null){
+                String[] entry = configEntry.split("=");
+                switch (entry[0]){
+                    case "user":
+                        userDbName = entry[1];
+                        break;
+                    case "user_password":
+                        userDbPassword = entry[1];
+                        break;
+                }
+            }
+
+        } catch (FileNotFoundException e){
+            System.out.println("Config file not found");
+        } catch (IOException | URISyntaxException e){
+            System.out.println("Read exception in config");
         }
     }
 

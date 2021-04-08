@@ -11,9 +11,9 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="database">
-            <name qname="supportMeModel" />
-            <name qname="supportMeUser" />
-            <node kind="schema" qname="@" />
+            <name qname="support_me_model" />
+            <name qname="support_me_user" />
+            <node kind="schema" qname="public" />
           </node>
         </introspection-scope>
       </schema-mapping>
