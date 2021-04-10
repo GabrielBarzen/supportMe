@@ -47,4 +47,5 @@ java --version ger version java 15 elle högre
 ![image](https://user-images.githubusercontent.com/71310727/114266249-945b9800-99f5-11eb-9189-2843876e4389.png)
 
 9. Denna fil laddas upp via canvas i samband med retrospekt 2
+Filen innehåller information servern behöver för att koppla upp sig till vår databas för användare samt guider.
 
