@@ -2,6 +2,7 @@ package org.supportmeinc.model;
 
 import shared.Card;
 import shared.Guide;
+import shared.Thumbnail;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class GuideCreator {
     private Guide currentEditedGuide;
     private Card currentEditedCard;
+    private Card descriptionCard;
     ArrayList<Guide> guideArrayList;
     Connection connection;
     ObjectOutputStream oos;
@@ -32,6 +34,8 @@ public class GuideCreator {
         if (currentEditedGuide == null) {
             currentEditedGuide = new Guide();
         }
+        ArrayList<Card> cards = currentEditedGuide.getCards();
+        createDescriptionCard();
     }
 
     public void finishGuide() {
@@ -82,6 +86,20 @@ public class GuideCreator {
         currentEditedGuide = guides[index];
         cards = currentEditedGuide.getCards();
         editCard();
+    }
+
+    public void createDescriptionCard() {
+        if (descriptionCard == null) {
+            descriptionCard = new Card();
+        }
+        Thumbnail thumbnail = getThumbnail();
+        String title = thumbnail.getTitle();
+        String description = thumbnail.getDescription();
+        byte[] image = thumbnail.getImage();
+        descriptionCard.setTitle(title);
+        descriptionCard.setText(description);
+        descriptionCard.setImage(image);
+        currentEditedGuide.addCard(descriptionCard);
     }
 
     public void createCard() {
@@ -137,5 +155,9 @@ public class GuideCreator {
 
     public void discardThisGuide() {
         currentEditedGuide = null;
+    }
+
+    public Thumbnail getThumbnail() {
+        return currentEditedGuide.getThumbnail();
     }
 }
