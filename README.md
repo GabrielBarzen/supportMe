@@ -41,3 +41,10 @@ java --version ger version java 15 elle högre
 7. Njut
 
 ![image](https://user-images.githubusercontent.com/71310727/112955188-75305100-913f-11eb-9ed2-540294fc1a13.png)
+
+8. För test av serversida behöver filen pwd.txt finnas under Server/src/main/resources
+
+![image](https://user-images.githubusercontent.com/71310727/114266249-945b9800-99f5-11eb-9189-2843876e4389.png)
+
+9. Denna fil laddas upp via canvas i samband med retrospekt 2
+
