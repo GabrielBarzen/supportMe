@@ -1,8 +1,6 @@
 package org.supportmeinc;
 
-import shared.Guide;
-import shared.Thumbnail;
-import shared.User;
+import shared.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;

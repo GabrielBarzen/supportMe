@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class ServerLog implements Runnable{
 
-    public static Buffer<String> logBuffer = new Buffer<>();
-
+    public static Buffer<String> logBuffer = new Buffer<String>();
 
     public ServerLog(){
         Thread thread = new Thread(this);

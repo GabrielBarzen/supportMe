@@ -8,10 +8,7 @@ import java.net.ServerSocket;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.Properties;
+
 
 public class Server {
 
