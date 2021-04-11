@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.UUID;
 
 
 /**
@@ -44,7 +45,7 @@ public class Main extends Application {
     }
 
     public void testCard() { //TODO Stubbe, eliminera
-        Card testCard = initGuide(0);
+        Card testCard = initGuide(0, new Thumbnail(UUID.randomUUID()));
         cardViewerController.setCard(testCard.getTitle(), testCard.getImage(), testCard.getText());
     }
 
@@ -75,8 +76,8 @@ public class Main extends Application {
     }
     //Model methods//
 
-    public Card initGuide(int index) {
-        return guideManager.initGuide(index);
+    public Card initGuide(int index, Thumbnail thumbnail) {
+        return guideManager.initGuide(index, thumbnail);
     }
 
     public Card getCard(boolean choice) {

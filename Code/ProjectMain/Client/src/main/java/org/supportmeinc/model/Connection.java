@@ -40,6 +40,10 @@ public class Connection {
 
     }
 
+    public Socket getSocket() {
+        return socket;
+    }
+
     private class Receive extends Thread {
 
         @Override
