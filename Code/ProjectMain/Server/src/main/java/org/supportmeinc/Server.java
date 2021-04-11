@@ -1,7 +1,13 @@
 package org.supportmeinc;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Date;
@@ -12,12 +18,37 @@ public class Server {
     private static int port;
 
     public static void main(String[] args) {
-        port = 1030;
         ServerLog logger = new ServerLog();
-        Server server = new Server(port);
+        Server server = new Server();
     }
 
-    public Server(int port){
+    //Configuration methods//
+    private void readConfig(URL url) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
+            String configEntry;
+
+            while ((configEntry = bufferedReader.readLine()) != null){
+                String[] entry = configEntry.split("=");
+                switch (entry[0]){
+                    case "port":
+                        port = Integer.parseInt(entry[1]);
+                        break;
+                    default:
+                        System.out.println("Config entry : " + entry[0] + " is not a valid config entry");
+                }
+            }
+
+        } catch (FileNotFoundException e){
+            System.out.println("Config file not found");
+        } catch (IOException e){
+            System.out.println("Read exception in config");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Server(){
+        readConfig(getClass().getResource("config.conf"));
         try {
             ServerLog.log("Starting cm");
             ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port), new GuideManager());
@@ -26,7 +57,6 @@ public class Server {
             e.printStackTrace();
         }
     }
-
-
 }
+
 

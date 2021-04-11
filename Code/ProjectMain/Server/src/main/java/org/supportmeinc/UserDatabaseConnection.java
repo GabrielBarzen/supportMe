@@ -25,7 +25,8 @@ public class UserDatabaseConnection {
     private String dbIp;
 
     public UserDatabaseConnection(){
-        URL pwdUrl = getClass().getClassLoader().getResource(String.format(".%spwd.txt", File.separatorChar));;
+        URL pwdUrl = getClass().getResource("pwd.txt");;
+        System.out.println(pwdUrl);
 
         if (pwdUrl != null){
             readConfig(pwdUrl);

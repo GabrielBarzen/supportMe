@@ -16,6 +16,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 
 /**
@@ -24,8 +27,8 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static Scene scene;
-    private int port = 1029;
-    private String ip = "::1";
+    private int port;
+    private String ip;
     private Connection connection;
     private GuideManager guideManager;
 
@@ -34,8 +37,9 @@ public class Main extends Application {
     }
 
     public void startBackend() {
+        readConfig(getClass().getResource("config.conf"));
         System.out.println("running init");
-        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(getClass().getResource("FinalLogotyp.png")));
         replaceWithUserFromLoginScreen.setNewUser(true);
         connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
@@ -48,8 +52,8 @@ public class Main extends Application {
     }
 
     //Configuration methods//
-    private void readConfig() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("config.conf"))){
+    private void readConfig(URL url) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
             String configEntry;
 
             while ((configEntry = bufferedReader.readLine()) != null){
@@ -70,6 +74,8 @@ public class Main extends Application {
             System.out.println("Config file not found");
         } catch (IOException e){
             System.out.println("Read exception in config");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
     //Model methods//
