@@ -30,10 +30,13 @@ public class GuideManager {
     }
 
     public Card getCard(boolean choice) {
-        return null;
+        Card card;
+        card = currentGuide.getCard(choice);
+        return card;
     }
 
     public Thumbnail[] getThumbnails() {
+        thumbnails = connection.getThumbnails();
         return thumbnails;
     }
 
@@ -42,7 +45,12 @@ public class GuideManager {
         UUID id = thumbnail.getGuideUUID();
         Guide guide = connection.getGuide(id);
         return guide;
+    }
 
+    public Card getDescriptionCard() {
+        Card card;
+        card = currentGuide.getDescriptionCard();
+        return card;
     }
 
 }

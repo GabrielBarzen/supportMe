@@ -99,7 +99,23 @@ public class Connection {
     }
 
 
-    public Guide getGuide(UUID guideUUID) {
+    public Guide getGuide(UUID guideUUID)  {
+        try {
+            Object object = inputStream.readObject();
+            while (object != null) {
+                if (object instanceof Guide) {
+                    Guide guide = (Guide) object;
+                    UUID id = guide.getGuideUUID();
+                    if (id.equals(guideUUID)) {
+                        return guide;
+                    }
+                }
+
+                object = inputStream.readObject();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return goodLordTheCardGiver();
     }
 

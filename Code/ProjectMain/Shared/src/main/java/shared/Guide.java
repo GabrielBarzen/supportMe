@@ -56,4 +56,17 @@ public class Guide implements Serializable {
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
     }
+
+    public Card getCard(boolean choice) {
+        UUID id;
+        Card card;
+        if (choice) {
+            id = currentCard.getAffirmUUID();
+        }
+        else {
+            id = currentCard.getNegUUID();
+        }
+        card = getCard(id);
+        return card;
+    }
 }

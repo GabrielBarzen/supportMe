@@ -10,6 +10,7 @@ import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
+import shared.Thumbnail;
 import shared.User;
 
 import java.io.BufferedReader;
@@ -79,11 +80,14 @@ public class Main extends Application {
     }
 
     public Card getCard(boolean choice) {
-        return null;
+       Card card;
+       card = guideManager.getCard(choice);
+       return card;
     }
 
     public void exitCardView() {
-
+        Thumbnail[] thumbnails;
+        thumbnails = guideManager.getThumbnails();
     }
 
     //UI methods// //TODO Möjligtvis refactor --> Toolbar
