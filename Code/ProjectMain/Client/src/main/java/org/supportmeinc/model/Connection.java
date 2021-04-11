@@ -45,7 +45,6 @@ public class Connection {
         @Override
         public void run() {
             try {
-
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
                     System.out.println("received user obj from server");
@@ -65,7 +64,6 @@ public class Connection {
                 } catch (IOException ex){
                     System.out.println("Disconnected ");
                 }
-
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -89,7 +87,6 @@ public class Connection {
                         outputStream.flush();
                         System.out.println("loop check send");
                 }
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e){

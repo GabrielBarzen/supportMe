@@ -1,6 +1,7 @@
 package org.supportmeinc;
 
 
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -10,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import shared.*;
 
 import java.util.Properties;
@@ -80,6 +80,7 @@ public class UserDatabaseConnection {
             statement.setString(1,user.getEmail());
             ResultSet rs = statement.executeQuery();
 
+
             if (rs.next()) {
                 String retvalue = rs.getString(1);
                 return retvalue;
@@ -101,6 +102,7 @@ public class UserDatabaseConnection {
             if (rs.next()) {
                 user.setUserName(rs.getString(1));
                 user.setImage(rs.getBytes(2));
+
                 return user;
             }
         } catch (SQLException e) {
@@ -111,8 +113,6 @@ public class UserDatabaseConnection {
 
     public boolean registerUser(User user, String passwordHash, String salt) {
         try {
-
-
             String query = "select register_user(?, ?, ?, ?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setString(1, user.getEmail());
@@ -121,12 +121,9 @@ public class UserDatabaseConnection {
             statement.setString(4, salt);
             statement.setBytes(5, user.getImage());
             ResultSet rs = statement.executeQuery();
-
-
             if(rs.next()){
                 return rs.getInt(1) == 1;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -39,8 +39,9 @@ public class Main extends Application {
     public void startBackend() {
         readConfig(getClass().getResource("config.conf"));
         System.out.println("running init");
-        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(getClass().getResource("FinalLogotyp.png")));
-        replaceWithUserFromLoginScreen.setNewUser(true);
+
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
+        replaceWithUserFromLoginScreen.setNewUser(false);
         connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
 //      testCard();
