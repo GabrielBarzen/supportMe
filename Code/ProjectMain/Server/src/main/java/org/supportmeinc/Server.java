@@ -48,7 +48,7 @@ public class Server {
         readConfig(getClass().getResource("config.conf"));
         try {
             ServerLog.log("Starting cm");
-            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port), new GuideManager());
+            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port));
 
         } catch (IOException e) {
             e.printStackTrace();

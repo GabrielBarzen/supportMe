@@ -73,7 +73,7 @@ public class Connection {
                     }
                 }
             } catch (InterruptedException e){
-                e.printStackTrace();
+                ServerLog.log("Connection with client lost");
             }
         }
 

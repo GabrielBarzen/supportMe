@@ -25,7 +25,6 @@ public class UserDatabaseConnection {
 
     public UserDatabaseConnection(){
         URL pwdUrl = getClass().getResource("pwd.txt");;
-        System.out.println(pwdUrl);
 
         if (pwdUrl != null){
             readConfig(pwdUrl);
@@ -40,9 +39,9 @@ public class UserDatabaseConnection {
             connectionProps.put("user", userDbName);
             connectionProps.put("password", userDbPassword);
             dbConnection = DriverManager.getConnection(url, connectionProps);
-            ServerLog.log("Connected to database");
+            ServerLog.log("Connected to user-database");
         } catch (Exception e) {
-            ServerLog.log("Unable to connect to database");
+            ServerLog.log("Unable to connect to user-database");
         }
     }
 

@@ -4,7 +4,6 @@ import shared.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
@@ -14,13 +13,15 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     private HashMap<User,Connection> userConnection;
     private GuideManager guideManager;
 
-    private UserDatabaseConnection databaseConnection;
+    private UserDatabaseConnection userDatabaseConnection;
+    private ModelDatabaseConnection modelDatabaseConnection;
 
 
-    public ConnectionManager(ServerSocket serverSocket, GuideManager guideManager) {
+    public ConnectionManager(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
-        this.guideManager = guideManager;
-        databaseConnection = new UserDatabaseConnection();
+        userDatabaseConnection = new UserDatabaseConnection();
+        modelDatabaseConnection = new ModelDatabaseConnection();
+        guideManager = new GuideManager(modelDatabaseConnection);
         userConnection = new HashMap<>();
         start();
     }
@@ -55,7 +56,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof Connection){
             Connection connection = (Connection) object;
             ServerLog.log("ConnectionManager attempting auth");
-            Authenticator auth = new Authenticator(user, databaseConnection);
+            Authenticator auth = new Authenticator(user, userDatabaseConnection);
             User loggedInUser = auth.authenticate();
             if(loggedInUser != null){
                 ServerLog.log("Auth status : " + loggedInUser.getEmail() + " logged in" );
@@ -77,7 +78,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
         if (object instanceof Thumbnail[]){
             Thumbnail[] oldThumbnails = (Thumbnail[]) object;
-            Thumbnail[] newThumbnails = guideManager.getThumbNails(oldThumbnails);
+            Thumbnail[] newThumbnails = guideManager.getThumbNails(oldThumbnails, user);
             userConnection.get(user).sendObject(newThumbnails);
         }
     }
