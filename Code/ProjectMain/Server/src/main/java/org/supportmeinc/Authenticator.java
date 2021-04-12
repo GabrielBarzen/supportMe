@@ -12,21 +12,16 @@ public class Authenticator {
 
     private final User user;
     private final UserDatabaseConnection databaseConnection;
-    private boolean loginSuccess = false;
+
 
     Authenticator(User user, UserDatabaseConnection databaseConnection) {
         this.user = user;
         this.databaseConnection = databaseConnection;
     }
 
-    private boolean newUser(){
-       // return databaseConnection.registerUser(user);
-        return false;
-    }
-
     public User authenticate()  {
-        String salt = null;
-        String password = null;
+        String salt;
+        String password;
         String passwordHash = null;
 
         if(user.isNewUser()){
@@ -51,15 +46,15 @@ public class Authenticator {
             ServerLog.log("ERROR : Authenticator.authenticate() no such algorithm");
         }
 
-        if(user.isNewUser() && user != null && passwordHash != null && salt != null ){
+        if(user.isNewUser() && passwordHash != null && salt != null){
             boolean success = databaseConnection.registerUser(user,passwordHash,salt);
             if(!success){
                 ServerLog.log("Could not register user");
                 return null;
             }
         }
-        User loggedInUser = databaseConnection.authenticate(user,passwordHash);
-        return loggedInUser;
+
+        return databaseConnection.authenticate(user,passwordHash);
     }
 
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {
@@ -68,9 +63,9 @@ public class Authenticator {
         final byte[] hashbytes = digest.digest(password.getBytes(StandardCharsets.UTF_8 ));
 
         StringBuilder hexString = new StringBuilder(2 * hashbytes.length);
-        for (int i = 0; i < hashbytes.length; i++) {
-            String hex = Integer.toHexString(0xff & hashbytes[i]);
-            if(hex.length() == 1) {
+        for (byte hashbyte : hashbytes) {
+            String hex = Integer.toHexString(0xff & hashbyte);
+            if (hex.length() == 1) {
                 hexString.append('0');
             }
             hexString.append(hex);
