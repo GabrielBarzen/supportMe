@@ -3,7 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,maven,java,macos,linux,windows
 
 ### vpp bak ###
-*.vpp_bak*
+*vpp.bak*
 
 ### Password file ###
 **/pwd.txt
