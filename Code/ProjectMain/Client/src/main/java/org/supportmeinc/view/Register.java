@@ -16,6 +16,7 @@ public class Register implements JFXcontroller {
     @FXML private TextField lastname;
     @FXML private TextField email;
     @FXML private TextField password;
+    @FXML private TextField password1;
     @FXML private ImageView picture;
 
     @Override
