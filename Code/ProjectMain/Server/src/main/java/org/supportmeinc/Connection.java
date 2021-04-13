@@ -65,16 +65,15 @@ public class Connection {
         @Override
         public void run() {
             try {
-                while (!Thread.interrupted()){
-                    try{
+                while (!Thread.interrupted()) {
+                    try {
                         ServerLog.log("Send waiting for object to send");
                         outputStream.writeObject(objectBuffer.get());
                     } catch (IOException e) {
-
                     }
                 }
-            }catch (InterruptedException e) {
-
+            } catch (InterruptedException e){
+                ServerLog.log("Connection with client lost");
             }
         }
 
@@ -103,13 +102,11 @@ public class Connection {
                     objectReceivedListener.objectReceived(object,getUser());
                 }
             } catch (IOException e) {
-
                 try {
                     disconnect();
                 } catch (IOException ex){
                     System.out.println(ex.getMessage());
                 }
-
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

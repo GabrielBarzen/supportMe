@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/intellij,maven,java,macos,linux,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,maven,java,macos,linux,windows
 
+### vpp bak ###
+*vpp.bak*
+
 ### Password file ###
 **/pwd.txt
 

@@ -16,6 +16,9 @@ public class Connection {
     private Receive receive;
     private Send send;
 
+    Buffer<Object> sendBuffer = new Buffer<>();
+    Buffer<Object> receiveBuffer = new Buffer<>();
+
     public Connection(String ip, int port, User user) {
         this.user = user;
         try {
@@ -40,12 +43,35 @@ public class Connection {
 
     }
 
+    public void send(Object object){
+        sendBuffer.put(object);
+    }
+
+    public Guide getGuide(Thumbnail thumbnail) throws InterruptedException{
+        Guide retGuide = null;
+        send(thumbnail);
+        Object guide = receiveBuffer.get();
+        if (guide instanceof Guide){
+            retGuide = (Guide) guide;
+        }
+        return retGuide;
+    }
+
+    public Thumbnail[] getThumbnails(Thumbnail[] thumbnails) throws InterruptedException{
+        Thumbnail[] retGuide = null;
+        send(thumbnails);
+        Object guide = receiveBuffer.get();
+        if (guide instanceof Thumbnail[]){
+            retGuide = (Thumbnail[]) guide;
+        }
+        return retGuide;
+    }
+
     private class Receive extends Thread {
 
         @Override
         public void run() {
             try {
-
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
                     System.out.println("received user obj from server");
@@ -65,17 +91,10 @@ public class Connection {
                 } catch (IOException ex){
                     System.out.println("Disconnected ");
                 }
-
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    Buffer<Object> objectBuffer = new Buffer<>();
-
-    public void send(Object object){
-        objectBuffer.put(object);
     }
 
     private class Send extends Thread {
@@ -85,11 +104,10 @@ public class Connection {
             send(user);
             try {
                 while (!Thread.interrupted()) {
-                        outputStream.writeObject(objectBuffer.get());
+                        outputStream.writeObject(sendBuffer.get());
                         outputStream.flush();
                         System.out.println("loop check send");
                 }
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e){

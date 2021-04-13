@@ -1,6 +1,5 @@
 package org.supportmeinc;
 
-import shared.User;
 
 
 import java.io.*;
@@ -11,8 +10,8 @@ import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
+
+import shared.*;
 
 import java.util.Properties;
 
@@ -25,7 +24,7 @@ public class UserDatabaseConnection {
     private String dbIp;
 
     public UserDatabaseConnection(){
-        URL pwdUrl = getClass().getClassLoader().getResource(String.format(".%spwd.txt", File.separatorChar));;
+        URL pwdUrl = getClass().getResource("pwd.txt");;
 
         if (pwdUrl != null){
             readConfig(pwdUrl);
@@ -40,9 +39,9 @@ public class UserDatabaseConnection {
             connectionProps.put("user", userDbName);
             connectionProps.put("password", userDbPassword);
             dbConnection = DriverManager.getConnection(url, connectionProps);
-            ServerLog.log("Connected to database");
+            ServerLog.log("Connected to user-database");
         } catch (Exception e) {
-            ServerLog.log("Unable to connect to database");
+            ServerLog.log("Unable to connect to user-database");
         }
     }
 
@@ -80,6 +79,7 @@ public class UserDatabaseConnection {
             statement.setString(1,user.getEmail());
             ResultSet rs = statement.executeQuery();
 
+
             if (rs.next()) {
                 String retvalue = rs.getString(1);
                 return retvalue;
@@ -101,6 +101,7 @@ public class UserDatabaseConnection {
             if (rs.next()) {
                 user.setUserName(rs.getString(1));
                 user.setImage(rs.getBytes(2));
+
                 return user;
             }
         } catch (SQLException e) {
@@ -111,8 +112,6 @@ public class UserDatabaseConnection {
 
     public boolean registerUser(User user, String passwordHash, String salt) {
         try {
-
-
             String query = "select register_user(?, ?, ?, ?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setString(1, user.getEmail());
@@ -121,12 +120,9 @@ public class UserDatabaseConnection {
             statement.setString(4, salt);
             statement.setBytes(5, user.getImage());
             ResultSet rs = statement.executeQuery();
-
-
             if(rs.next()){
                 return rs.getInt(1) == 1;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
