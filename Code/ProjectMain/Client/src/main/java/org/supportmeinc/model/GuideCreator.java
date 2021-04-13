@@ -58,32 +58,9 @@ public class GuideCreator {
         }
     }
 
-    public Guide[] getGuides() {
-        guideArrayList = new ArrayList<>();
-        String author = "Namn på author";
-        //Method to get guides that the author has created from database
-        try {
-            oos.writeObject(author);
-            Object object = ois.readObject();
-            while (object != null) {
-                if (object instanceof Guide) {
-                    Guide guide = (Guide) object;
-                    guideArrayList.add(guide);
-                }
-                object = ois.readObject();
-            }
-            Guide[] guides = guideArrayList.toArray(Guide[]::new);
-            return guides;
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public void editGuide(int index) {
         ArrayList<Card> cards;
-        Guide[] guides = getGuides();
-        currentEditedGuide = guides[index];
+        Guide currentEditedGuide = connection.getGuide(UUID.randomUUID());
         cards = currentEditedGuide.getCards();
         editCard();
     }
