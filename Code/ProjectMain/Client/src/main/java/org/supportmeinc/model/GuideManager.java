@@ -5,6 +5,9 @@ import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -35,6 +38,16 @@ public class GuideManager {
     public Thumbnail[] getThumbnails() {
         return thumbnails;
     }
+
+
+  
+    public Guide getGuide(Thumbnail thumbnail) {
+        UUID id = thumbnail.getGuideUUID();
+        Guide guide = connection.getGuide(id);
+        return guide;
+
+    }
+
 
 }
 

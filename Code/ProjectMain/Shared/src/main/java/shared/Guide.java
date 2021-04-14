@@ -10,6 +10,7 @@ public class Guide implements Serializable {
     private Card descriptionCard;
     private ArrayList<Card> cards;
     private Card currentCard;
+    private String author;
 
     public void setThumbnail(Thumbnail thumbnail) {
         this.thumbnail = thumbnail;
@@ -55,5 +56,17 @@ public class Guide implements Serializable {
 
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
