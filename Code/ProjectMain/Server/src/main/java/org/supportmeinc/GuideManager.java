@@ -11,29 +11,20 @@ import java.util.UUID;
 public class GuideManager {
 
     private HashMap<UUID, Guide> guides;
+    private ModelDatabaseConnection databaseConnection;
 
-    public GuideManager(){
-        readGuidesFromFile();
-    }
-
-    public void readGuidesFromFile(){
-        guides = new HashMap<>();
-        Guide guide = new Guide();
-        guides.put(guide.getGuideUUID(), guide);
-    }
-
-    public void writeGuidesToFile(){
-
+    public GuideManager(ModelDatabaseConnection modelDatabaseConnection){
+        databaseConnection = modelDatabaseConnection;
     }
 
     public Guide getGuide(UUID guideUUID) {
         return guides.getOrDefault(guideUUID, null);
     }
 
-    public Thumbnail[] getThumbNails(Thumbnail[] oldArray) {
+    public Thumbnail[] getThumbNails(Thumbnail[] oldArray, User user) {
 
         ArrayList<Thumbnail> oldThumbnails = new ArrayList<>(Arrays.asList(oldArray));
-        ArrayList<Thumbnail> currentThumbnails = new ArrayList<>();
+        ArrayList<Thumbnail> currentThumbnails = databaseConnection.getCurrentThumbnails(user);
 
         for (Guide guide: guides.values()) {
             currentThumbnails.add(guide.getThumbnail());

@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/intellij,maven,java,macos,linux,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij,maven,java,macos,linux,windows
 
+### vpp bak ###
+*vpp.bak*
+
 ### Password file ###
 **/pwd.txt
 
@@ -27,6 +30,8 @@
 **/.idea/**/dynamic.xml
 **/.idea/**/uiDesigner.xml
 **/.idea/**/dbnavigator.xml
+**/.idea/**/vcs.xml
+/.idea/**
 
 # Gradle
 **/.idea/**/gradle.xml
@@ -42,7 +47,7 @@
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
-# *.iml
+*.iml
 # *.ipr
 
 # CMake
