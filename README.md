@@ -13,7 +13,7 @@ Projektet är baserat runt en idé om teknisk support för dina nära och kära.
 0. Förutsättningar:
 java --version ger version java 15 elle högre
 
-1. Kör kommandot "git clone https://github.com/GabrielModin/supportMe/" där du vill lägga projektet
+1. Kör kommandot "git clone https://github.com/GabrielModin/supportMe" där du vill lägga projektet
 
 ![image](https://user-images.githubusercontent.com/71310727/114859549-3232d680-9deb-11eb-8cae-f4b58ead3204.png)
 
