@@ -26,15 +26,18 @@ public class GuideManager {
         ArrayList<Thumbnail> oldThumbnails = new ArrayList<>(Arrays.asList(oldArray));
         ArrayList<Thumbnail> currentThumbnails = databaseConnection.getCurrentThumbnails(user);
 
+        Thumbnail[] returnArray;
+
         for (Guide guide: guides.values()) {
             currentThumbnails.add(guide.getThumbnail());
         }
 
         if (oldThumbnails.equals(currentThumbnails)) {
-            return null;
+            returnArray = null;
         } else {
-            return currentThumbnails.toArray(new Thumbnail[0]);
+            returnArray = currentThumbnails.toArray(new Thumbnail[0]);
         }
+        return returnArray;
     }
 
     public void addGuide(Guide guide){

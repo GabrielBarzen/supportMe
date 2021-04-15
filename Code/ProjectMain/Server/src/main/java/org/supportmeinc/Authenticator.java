@@ -20,15 +20,16 @@ public class Authenticator {
     }
 
     public User authenticate()  {
-        String salt;
-        String password;
+        String salt = null;
+        String password = null;
         String passwordHash = null;
+        User returnUser = null;
 
         if(user.isNewUser()){
             StringBuilder saltBuilder = new StringBuilder(20);
 
             Random random = new Random();
-            char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXYZ1234567890".toCharArray();
+            char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvXxYyZz0123456789".toCharArray();
 
             for (int i = 0; i < 20; i++) {
                 char c = chars[random.nextInt(chars.length)];
@@ -50,11 +51,14 @@ public class Authenticator {
             boolean success = databaseConnection.registerUser(user,passwordHash,salt);
             if(!success){
                 ServerLog.log("Could not register user");
-                return null;
+            } else {
+                returnUser = databaseConnection.authenticate(user,passwordHash);
             }
+        } else {
+            returnUser = databaseConnection.authenticate(user,passwordHash);
         }
 
-        return databaseConnection.authenticate(user,passwordHash);
+        return returnUser;
     }
 
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {
