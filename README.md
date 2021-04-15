@@ -11,7 +11,7 @@ Projektet är baserat runt en idé om teknisk support för dina nära och kära.
 
 # Hämta projekt Till intellij
 0. Förutsättningar:
-java --version ger version java 15 elle högre
+java --version ger version java 15 eller högre
 
 1. Kör kommandot "git clone https://github.com/GabrielModin/supportMe" där du vill lägga projektet
 
