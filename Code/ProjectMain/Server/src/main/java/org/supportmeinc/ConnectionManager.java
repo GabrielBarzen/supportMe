@@ -29,10 +29,8 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     private void start(){
         if (acceptConnectionThread == null) {
             acceptConnectionThread = new Thread(this);
-        } else {
-            return;
+            acceptConnectionThread.start();
         }
-        acceptConnectionThread.start();
     }
 
     @Override
