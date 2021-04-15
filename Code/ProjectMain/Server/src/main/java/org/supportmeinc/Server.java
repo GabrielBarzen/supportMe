@@ -5,29 +5,28 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Date;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+
 
 public class Server {
 
-    private static String ip;
     private static int port;
 
     public static void main(String[] args) {
-        //readConfig();
-
-        Server server = new Server(port);
+        ServerLog logger = new ServerLog();
+        Server server = new Server();
     }
 
-    private static void readConfig() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("config.conf"))){
+    //Configuration methods//
+    private void readConfig(URL url) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
             String configEntry;
 
             while ((configEntry = bufferedReader.readLine()) != null){
                 String[] entry = configEntry.split("=");
                 switch (entry[0]){
-                    case "ip":
-                        ip = entry[1];
-                        break;
                     case "port":
                         port = Integer.parseInt(entry[1]);
                         break;
@@ -40,18 +39,21 @@ public class Server {
             System.out.println("Config file not found");
         } catch (IOException e){
             System.out.println("Read exception in config");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 
-    Server(int port){
+    public Server(){
+        readConfig(getClass().getResource("config.conf"));
         try {
-            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(1028), new GuideManager());
-        } catch (IOException e) {
-            log(e.getMessage());
-        }
-    }
+            ServerLog.log("Starting cm");
+            ConnectionManager connectionManager = new ConnectionManager(new ServerSocket(port));
 
-    public static void log(String loggedMessage){
-        System.out.println(new Date() + " : " + loggedMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
+
+

@@ -7,13 +7,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.supportmeinc.model.JfxUtils;
 import org.supportmeinc.view.*;
+import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
+import shared.User;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 
 /**
@@ -32,20 +37,25 @@ public class Main extends Application {
     }
 
     public void startBackend() {
+        readConfig(getClass().getResource("config.conf"));
         System.out.println("running init");
-        connection = new Connection(ip, port);
+
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
+        replaceWithUserFromLoginScreen.setNewUser(false);
+        connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
-        testCard();
+//      testCard();
     }
 
-    public void testCard() {
+    public void testCard() { //TODO Stubbe, eliminera
+
         Card testCard = initGuide(0);
-        cardViewerController.setCard(testCard.getTitle(), JfxUtils.fromBytes(testCard.getImage()), testCard.getText());
+        cardViewerController.setCard(testCard.getTitle(), testCard.getImage(), testCard.getText());
     }
 
     //Configuration methods//
-    private void readConfig() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("config.conf"))){
+    private void readConfig(URL url) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
             String configEntry;
 
             while ((configEntry = bufferedReader.readLine()) != null){
@@ -66,6 +76,8 @@ public class Main extends Application {
             System.out.println("Config file not found");
         } catch (IOException e){
             System.out.println("Read exception in config");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
     //Model methods//
@@ -82,43 +94,49 @@ public class Main extends Application {
 
     }
 
-    //UI methods//
+    //UI methods// //TODO Möjligtvis refactor --> Toolbar
     private CardEditor cardEditorController;
     private CardViewer cardViewerController;
     private GuideBrowser guideBrowserController;
-    private GuideEditor guideEditorController;
+    private GuideEditorUi guideEditorUiController;
     private Login loginController;
     private Register registerController;
+    private Toolbar toolbarController;
+
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("cardViewer"));
+        scene = new Scene(loadFXML("toolbar"));
+        stage.setTitle("supportMe");
         stage.setScene(scene);
         stage.show();
+        System.out.println("nice");
         startBackend();
     }
 
-    public void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
+        scene.setRoot(loadFXML(resourceName));
     }
 
-    public Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
-        Parent returnParent = fxmlLoader.load();
-        System.out.println("fxml item : " + returnParent.getClass());
+    public Parent loadFXML(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(resourceName + ".fxml"));
+        Parent root = fxmlLoader.load();
+        System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
         jfXcontroller.initData(this);
         System.out.println("new controller of type : " + jfXcontroller.getClass());
-        return returnParent;
+        return root;
     }
 
-    public void registerController(JFXcontroller viewController) {
+    public void registerController(JFXcontroller viewController) { //TODO Möjligtvis refactor --> Toolbar
         if (viewController instanceof Login) {loginController = (Login) viewController;}
         if (viewController instanceof Register) {registerController = (Register) viewController;}
         if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
-        if (viewController instanceof GuideEditor) {guideEditorController = (GuideEditor) viewController;}
-        if (viewController instanceof CardViewer) { cardViewerController = (CardViewer) viewController;}
+        if (viewController instanceof GuideEditorUi) {
+            guideEditorUiController = (GuideEditorUi) viewController;}
+        if (viewController instanceof CardViewer) {cardViewerController = (CardViewer) viewController;}
         if (viewController instanceof CardEditor) {cardEditorController = (CardEditor) viewController;}
+        if (viewController instanceof Toolbar) {toolbarController = (Toolbar) viewController;}
     }
 
 }

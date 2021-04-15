@@ -12,6 +12,7 @@ public class Connection {
     private Send send;
     private Receive receive;
     private User user;
+    private Connection connection = this;
 
 
     private ObjectReceivedListener objectReceivedListener;
@@ -20,15 +21,24 @@ public class Connection {
     ObjectOutputStream outputStream;
 
     public Connection(Socket socket) throws IOException {
+        ServerLog.log("Establishing connection");
+
         this.socket = socket;
         this.send = new Send();
         this.receive = new Receive();
 
-        inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-        outputStream = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+        outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+        inputStream = new ObjectInputStream(this.socket.getInputStream());
 
+        ServerLog.log("Starting send & receive threads");
         send.start();
         receive.start();
+    }
+
+    public void disconnect() throws IOException{
+        send.interrupt();
+        receive.interrupt();
+        socket.close();
     }
 
     public void setObjectReceivedListener(ObjectReceivedListener listener){
@@ -50,19 +60,20 @@ public class Connection {
 
     private class Send extends Thread{
 
-
         Buffer<Object> objectBuffer = new Buffer<>();
 
         @Override
         public void run() {
-            while (!Thread.interrupted()){
-                try {
-                    outputStream.writeObject(objectBuffer.get());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            try {
+                while (!Thread.interrupted()) {
+                    try {
+                        ServerLog.log("Send waiting for object to send");
+                        outputStream.writeObject(objectBuffer.get());
+                    } catch (IOException e) {
+                    }
                 }
+            } catch (InterruptedException e){
+                ServerLog.log("Connection with client lost");
             }
         }
 
@@ -75,21 +86,31 @@ public class Connection {
 
         @Override
         public void run() {
-            while (!Thread.interrupted()){
-                try {
-                    Object object = inputStream.readObject();
-                    if (object instanceof User){
-                        setUser((User) object);
-                    }
-                    objectReceivedListener.objectReceived(object,getUser());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+            try {
+                ServerLog.log("Waiting for user-Object from user");
+                Object userObj = inputStream.readObject();
+                if (userObj instanceof User && user == null){
+                    setUser((User) userObj);
+                    objectReceivedListener.objectReceived(connection,user);
+                } else {
+                    ServerLog.log("First object received not of class : User");
+                    send.interrupt();
                 }
-
+                while (!Thread.interrupted()){
+                    ServerLog.log("Waiting for object from user");
+                    Object object = inputStream.readObject();
+                    objectReceivedListener.objectReceived(object,getUser());
+                }
+            } catch (IOException e) {
+                try {
+                    disconnect();
+                } catch (IOException ex){
+                    System.out.println(ex.getMessage());
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }
 }
+

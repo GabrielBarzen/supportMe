@@ -1,7 +1,9 @@
 package org.supportmeinc.model;
 import javafx.scene.image.Image;
-
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class JfxUtils {
     public static byte[] toBytes(String url) {
@@ -22,5 +24,15 @@ public class JfxUtils {
         Image image;
         image = new Image(new BufferedInputStream(new ByteArrayInputStream(img)));
         return image;
+    }
+
+    public static byte[] toBytes(URL url) {
+        try {
+            File file = Paths.get(url.toURI()).toFile();
+            return toBytes(file.getAbsolutePath());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

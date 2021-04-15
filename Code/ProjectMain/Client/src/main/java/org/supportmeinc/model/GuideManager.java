@@ -3,6 +3,14 @@ package org.supportmeinc.model;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
+import shared.User;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
+import java.util.UUID;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class GuideManager {
 
@@ -10,10 +18,12 @@ public class GuideManager {
     private Guide[] guides;
     private Thumbnail[] thumbnails; // fixa plz
     private Connection connection;
+    private ArrayList<Card> cardArrayList;
 
     public GuideManager(Connection connection) {
         this.connection = connection;
         thumbnails = connection.getThumbnails();
+        connection.setGuideManager(this);
     }
 
     public Card initGuide(int index) {
@@ -30,4 +40,14 @@ public class GuideManager {
     }
 
 
+  
+    public Guide getGuide(Thumbnail thumbnail) {
+        UUID id = thumbnail.getGuideUUID();
+        Guide guide = connection.getGuide(id);
+        return guide;
+
+    }
+
+
 }
+

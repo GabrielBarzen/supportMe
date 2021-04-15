@@ -1,10 +1,13 @@
 package shared;
+
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Thumbnail {
+public class Thumbnail implements Serializable {
 
     private String title;
     private String description;
+
     private byte[] image;
     private UUID guideUUID;
 

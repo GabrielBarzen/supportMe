@@ -10,11 +10,17 @@ public class Guide implements Serializable {
     private Card descriptionCard;
     private ArrayList<Card> cards;
     private Card currentCard;
+    private String author;
+
+    public void setThumbnail(Thumbnail thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     private Thumbnail thumbnail;
 
     public Guide(){
         guideUUID = UUID.randomUUID();
-        cards = new ArrayList<>();
+        cards = new ArrayList<Card>();
         thumbnail = new Thumbnail(guideUUID);
     }
 
@@ -38,7 +44,7 @@ public class Guide implements Serializable {
         this.descriptionCard = descriptionCard;
     }
 
-    public Card getCard(String cardUUID){
+    public Card getCard(UUID cardUUID){
         for (Card card : cards) {
             if(card.getCardUUID().equals(cardUUID)) {
                 currentCard = card;
@@ -46,5 +52,21 @@ public class Guide implements Serializable {
             }
         }
         return null;
+    }
+
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
