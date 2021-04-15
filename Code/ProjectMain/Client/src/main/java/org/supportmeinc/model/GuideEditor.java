@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 
-public class GuideCreator {
+public class GuideEditor {
     private Guide currentEditedGuide;
     private Card currentEditedCard;
     private Card descriptionCard;
@@ -20,7 +20,7 @@ public class GuideCreator {
     ObjectOutputStream oos;
     ObjectInputStream ois;
 
-    public GuideCreator(Connection connection) {
+    public GuideEditor(Connection connection) {
         this.connection = connection;
         try {
             oos = new ObjectOutputStream(connection.getSocket().getOutputStream());

@@ -38,7 +38,7 @@ public class Main extends Application {
 
     public void startBackend() {
         readConfig(getClass().getResource("config.conf"));
-        System.out.println("running init");
+        System.out.println("running init");q
 
         User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
         replaceWithUserFromLoginScreen.setNewUser(false);
