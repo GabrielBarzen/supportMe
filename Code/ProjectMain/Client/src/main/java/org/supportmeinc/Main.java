@@ -48,6 +48,7 @@ public class Main extends Application {
     }
 
     public void testCard() { //TODO Stubbe, eliminera
+
         Card testCard = initGuide(0);
         cardViewerController.setCard(testCard.getTitle(), testCard.getImage(), testCard.getText());
     }
@@ -99,7 +100,9 @@ public class Main extends Application {
     private GuideBrowser guideBrowserController;
     private GuideEditorUi guideEditorUiController;
     private Login loginController;
+    private Register registerController;
     private Toolbar toolbarController;
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -127,6 +130,7 @@ public class Main extends Application {
 
     public void registerController(JFXcontroller viewController) { //TODO Möjligtvis refactor --> Toolbar
         if (viewController instanceof Login) {loginController = (Login) viewController;}
+        if (viewController instanceof Register) {registerController = (Register) viewController;}
         if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
         if (viewController instanceof GuideEditorUi) {
             guideEditorUiController = (GuideEditorUi) viewController;}
