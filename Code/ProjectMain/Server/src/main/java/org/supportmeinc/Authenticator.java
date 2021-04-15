@@ -14,7 +14,7 @@ public class Authenticator {
     private final UserDatabaseConnection databaseConnection;
 
 
-    Authenticator(User user, UserDatabaseConnection databaseConnection) {
+    public Authenticator(User user, UserDatabaseConnection databaseConnection) {
         this.user = user;
         this.databaseConnection = databaseConnection;
     }
