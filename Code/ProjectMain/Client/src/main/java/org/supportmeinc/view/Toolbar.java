@@ -20,7 +20,7 @@ public class Toolbar implements JFXcontroller {
 
     public void homeButton() throws IOException {
 //        anchorPane.getChildren().setAll(controller.loadFXML("guideBrowser"));
-        borderPane.setCenter(controller.loadFXML("newCardViewer"));
+        borderPane.setCenter(controller.loadFXML("updatedCardViewer"));
         controller.testCard();
 //        anchorPane.getChildren().add(controller.loadFXML("guideBrowser"));
     }

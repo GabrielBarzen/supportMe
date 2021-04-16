@@ -40,7 +40,7 @@ public class CardViewer implements JFXcontroller, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cardImage.fitHeightProperty().bind(box.heightProperty());
-        cardImage.fitWidthProperty().bind(box.widthProperty());
+//        cardImage.fitHeightProperty().bind(box.heightProperty());
+//        cardImage.fitWidthProperty().bind(box.widthProperty());
     }
 }
