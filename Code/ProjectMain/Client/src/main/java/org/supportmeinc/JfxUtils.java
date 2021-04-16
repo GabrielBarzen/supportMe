@@ -18,7 +18,6 @@ public class JfxUtils {
 
     public static byte[] toBytes(String filename) {
         URL url = JfxUtils.class.getResource("images/" + filename);
-        System.out.println("img = " + url);
         return toBytes(url);
 
     }
@@ -32,4 +31,5 @@ public class JfxUtils {
         }
         return bytes;
     }
+
 }
