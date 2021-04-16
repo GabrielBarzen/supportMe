@@ -12,12 +12,12 @@
    <children>
       <BorderPane fx:id="borderPane" layoutX="200.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #188f8b;" BorderPane.alignment="CENTER">
+            <HBox fx:id="tb" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" >
                <children>
                   <VBox prefHeight="125.0" prefWidth="100.0">
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button mnemonicParsing="false" onAction="#homeButton" prefHeight="25.0" prefWidth="100.0" text="Button" />
+                        <Button fx:id="example" mnemonicParsing="false" onAction="#homeButton" prefHeight="25.0" prefWidth="100.0" text="Button" />
                      </children>
                   </VBox>
                </children>

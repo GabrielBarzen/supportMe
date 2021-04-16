@@ -1,0 +1,7 @@
+@import "global.css";
+#example {
+    -fx-color: aqua;
+}
+#tb {
+    -fx-background-color: green;
+}

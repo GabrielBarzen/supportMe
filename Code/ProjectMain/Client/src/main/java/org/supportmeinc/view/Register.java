@@ -28,6 +28,4 @@ public class Register implements JFXcontroller {
     public void displayImage(){
 
     }
-
-
 }

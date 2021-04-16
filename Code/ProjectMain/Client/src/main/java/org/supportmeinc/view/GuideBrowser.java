@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
-import org.supportmeinc.model.JfxUtils;
+import org.supportmeinc.JfxUtils;
 import shared.Thumbnail;
 
 import java.io.IOException;
@@ -43,10 +43,11 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     //TODO STUBBE, VÄNLIGEN ELIMINERA EFTER TEST
     public void fakeThumbnails() {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 1; i++) {
             Thumbnail nail = new Thumbnail(UUID.randomUUID());
             nail.setTitle("Title #" + i);
-            byte[] testImage = JfxUtils.toBytes("src/main/resources/org/supportmeinc/FinalLogotyp.png");
+
+            byte[] testImage = JfxUtils.toBytes("FinalLogotyp.png");
             nail.setImage(testImage);
             nail.setDescription("This is a short but detailed and descriptive description for guide #" + i + " some extra text bla bla bla bla ayyyyyyyylmao wassup yoyo heyeyeyeaaa");
             thumbnails.add(nail);
@@ -63,13 +64,13 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         try {
             for (int i = 0; i < thumbnails.size(); i++) {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("thumbnail.fxml"));
+                loader.setLocation(Main.class.getResource("view/thumbnail.fxml"));
                 AnchorPane anchorPane = loader.load();
 
-                ThumbnailController thumbnailController = loader.getController();
+                ThumbnailItem thumbnailItem = loader.getController();
                 Thumbnail thumbnail = thumbnails.get(i);
 //                thumbnailController.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
-                thumbnailController.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), i);
+                thumbnailItem.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), i);
 
                 /**
                  * flowPane.getChildren() can use several methods to add elements depending on model structure;
