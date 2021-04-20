@@ -3,10 +3,9 @@ package org.supportmeinc.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import org.supportmeinc.model.JfxUtils;
-import org.w3c.dom.ls.LSOutput;
+import org.supportmeinc.JfxUtils;
 
-public class ThumbnailController {
+public class ThumbnailItem {
 
     @FXML
     private Label lblTitle;

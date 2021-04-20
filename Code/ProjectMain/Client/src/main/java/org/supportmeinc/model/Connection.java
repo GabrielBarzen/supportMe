@@ -4,6 +4,8 @@ package org.supportmeinc.model;
 import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
+
+import org.supportmeinc.JfxUtils;
 import shared.*;
 
 public class Connection {
@@ -126,7 +128,7 @@ public class Connection {
         Card card = new Card();
         card.setTitle("The last guide you will ever need");
         card.setText("Step 1 get rich, step 2 ???, setp 3 profit");
-        card.setImage(JfxUtils.toBytes("src/main/resources/org/supportmeinc/FinalLogotyp.png"));
+        card.setImage(JfxUtils.toBytes("FinalLogotyp.png"));
         guide.setDescriptionCard(card);
         return guide;
     }

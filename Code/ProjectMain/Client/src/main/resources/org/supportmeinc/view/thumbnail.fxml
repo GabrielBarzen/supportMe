@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.ThumbnailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.ThumbnailItem">
     <children>
       <VBox fx:id="vBox" onMouseClicked="#returnIndex" prefHeight="360.0" prefWidth="262.0">
          <children>
@@ -25,9 +25,6 @@
                           <viewport>
                               <Rectangle2D />
                           </viewport>
-                     <image>
-                        <Image url="@../../../../../../../../../../../Desktop/Desktop/asd/3333.png" />
-                     </image>
                       </ImageView>
                       <Label fx:id="lblText" prefHeight="133.0" prefWidth="233.0" text="This is a thumbnail text with information about thumbnails yo thumbnails heard you like thumbnails so we put some thumbnails in your thumbnails that cool dog?" wrapText="true">
                           <font>

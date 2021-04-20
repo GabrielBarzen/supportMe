@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.supportmeinc.Main;
-import org.supportmeinc.model.JfxUtils;
+import org.supportmeinc.JfxUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
