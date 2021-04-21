@@ -75,8 +75,37 @@ public class ModelDatabaseConnection {
     }
 
     public Thumbnail[] getCurrentThumbnails(UUID[] guideAccessUUID) {
-        return null; //TODO: query to get current users allowed thumbnails
+        Thumbnail[] returnValues = null;
+        for (UUID uuid: guideAccessUUID) {
+            try {
+                String query = "select get_thumbnail(?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, uuid);
+
+                ResultSet rs = statement.executeQuery();
+                ArrayList<Thumbnail> thumbnails = new ArrayList<>();
+                while (rs.next()){
+                    UUID guideUUID = (UUID) rs.getObject(1);
+                    Thumbnail thumbnail = new Thumbnail(guideUUID);
+                    String thumbnailTitle = rs.getString(4);
+                    thumbnail.setTitle(thumbnailTitle);
+                    String thumbnailText = rs.getString(5);
+                    thumbnail.setDescription(thumbnailText);
+                    byte[] thumbnailImage = rs.getBytes(6);
+                    thumbnail.setImage(thumbnailImage);
+
+                    thumbnails.add(thumbnail);
+                }
+                returnValues = thumbnails.toArray(new Thumbnail[0]);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return returnValues;
     }
+
     public Card[] getCards(UUID guideUUID){
         Card[] cards = null;
 
@@ -111,7 +140,7 @@ public class ModelDatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return cards; //TODO: query to get cards from guide vida UUID
+        return cards; 
     }
 
     public Thumbnail getThumbnail(UUID guideUUID){
@@ -136,7 +165,7 @@ public class ModelDatabaseConnection {
             e.printStackTrace();
         }
 
-        return returnThumbnail; //TODO: get thumbnail from database based on guideUUID
+        return returnThumbnail;
     }
 
     public Card getCard(UUID cardUUID){
@@ -199,7 +228,6 @@ public class ModelDatabaseConnection {
             }
         }
 
-        return guide;//TODO: query to get cards from UUID with help from getCards
-
+        return guide;
     }
 }
