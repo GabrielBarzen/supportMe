@@ -11,18 +11,15 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     private Thread acceptConnectionThread;
 
     private HashMap<User,Connection> userConnection;
-    private GuideManager guideManager;
-
-    private UserDatabaseConnection userDatabaseConnection;
-    private ModelDatabaseConnection modelDatabaseConnection;
+    private DatabaseManager databaseManager;
 
 
     public ConnectionManager(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
-        userDatabaseConnection = new UserDatabaseConnection();
-        modelDatabaseConnection = new ModelDatabaseConnection();
-        guideManager = new GuideManager(modelDatabaseConnection);
+
+        databaseManager = new DatabaseManager();
         userConnection = new HashMap<>();
+
         start();
     }
 
@@ -54,7 +51,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof Connection){
             Connection connection = (Connection) object;
             ServerLog.log("ConnectionManager attempting auth");
-            Authenticator auth = new Authenticator(user, userDatabaseConnection);
+            Authenticator auth = new Authenticator(user, databaseManager);
             User loggedInUser = auth.authenticate();
             if(loggedInUser != null){
                 ServerLog.log("Auth status : " + loggedInUser.getEmail() + " logged in" );
@@ -70,14 +67,10 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
         if (object instanceof Thumbnail){
             Thumbnail thumbnail = (Thumbnail) object;
-            Guide guide = guideManager.getGuide(thumbnail.getGuideUUID());
-            userConnection.get(user).sendObject(guide);
         }
 
         if (object instanceof Thumbnail[]){
             Thumbnail[] oldThumbnails = (Thumbnail[]) object;
-            Thumbnail[] newThumbnails = guideManager.getThumbNails(oldThumbnails, userDatabaseConnection.getGuideUUIDaccess(user));
-            userConnection.get(user).sendObject(newThumbnails);
         }
     }
 }

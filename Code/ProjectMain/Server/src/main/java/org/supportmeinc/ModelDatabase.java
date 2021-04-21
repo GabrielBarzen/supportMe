@@ -19,14 +19,16 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 
-public class ModelDatabaseConnection {
+public class ModelDatabase {
     java.sql.Connection dbConnection;
 
     private String modelDbName;
     private String modelDbPassword;
     private String dbIp;
+    private DatabaseManager databaseManager;
 
-    public ModelDatabaseConnection(){
+
+    public ModelDatabase(){
         URL pwdUrl = getClass().getResource("pwd.txt");;
 
         if (pwdUrl != null){
@@ -46,6 +48,11 @@ public class ModelDatabaseConnection {
         } catch (Exception e) {
             ServerLog.log("Unable to connect to model-database");
         }
+    }
+
+    public ModelDatabase(DatabaseManager databaseManager){
+        this();
+        this.databaseManager = databaseManager;
     }
 
     private void readConfig(URL url) {
@@ -233,16 +240,21 @@ public class ModelDatabaseConnection {
 
     public void addGuide(Guide guide){
         boolean addedThumb = addThumbnail(guide.getThumbnail());
-        boolean addedCards = addCards(guide.getCards());
-        if (addedThumb && addedCards) {
-            try {
-                String query = "select add_guide(?,?)";
-                PreparedStatement statement = dbConnection.prepareStatement(query);
-                statement.setObject(1, guide.getGuideUUID());
-                statement.setObject(2, guide.getDescriptionCard().getCardUUID());
-                statement.execute();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        if (addedThumb) {
+            boolean addedCards = addCards(guide.getCards());
+            if (addedCards){
+                try {
+                    String query = "select add_guide(?,?)";
+                    PreparedStatement statement = dbConnection.prepareStatement(query);
+                    statement.setObject(1, guide.getGuideUUID());
+                    statement.setObject(2, guide.getDescriptionCard().getCardUUID());
+                    statement.execute();
+
+                    databaseManager.userDatabaseAddGuide(guide.getAuthorEmail(), guide);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
