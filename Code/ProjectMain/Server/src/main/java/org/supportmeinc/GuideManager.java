@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public class GuideManager {
 
-    private HashMap<UUID, Guide> guides;
     private ModelDatabaseConnection databaseConnection;
 
     public GuideManager(ModelDatabaseConnection modelDatabaseConnection){
@@ -18,19 +17,15 @@ public class GuideManager {
     }
 
     public Guide getGuide(UUID guideUUID) {
-        return guides.getOrDefault(guideUUID, null);
+        return databaseConnection.getGuide(guideUUID);
     }
 
     public Thumbnail[] getThumbNails(Thumbnail[] oldArray, UUID[] userGuideAccess) {
 
         ArrayList<Thumbnail> oldThumbnails = new ArrayList<>(Arrays.asList(oldArray));
-        ArrayList<Thumbnail> currentThumbnails = databaseConnection.getCurrentThumbnails();
+        ArrayList<Thumbnail> currentThumbnails = new ArrayList<>(Arrays.asList(databaseConnection.getCurrentThumbnails(userGuideAccess)));
 
         Thumbnail[] returnArray;
-
-        for (Guide guide: guides.values()) {
-            currentThumbnails.add(guide.getThumbnail());
-        }
 
         if (oldThumbnails.equals(currentThumbnails)) {
             returnArray = null;
