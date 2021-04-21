@@ -140,7 +140,7 @@ public class ModelDatabaseConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return cards; 
+        return cards;
     }
 
     public Thumbnail getThumbnail(UUID guideUUID){
@@ -229,5 +229,64 @@ public class ModelDatabaseConnection {
         }
 
         return guide;
+    }
+
+    public void addGuide(Guide guide){
+        boolean addedThumb = addThumbnail(guide.getThumbnail());
+        boolean addedCards = addCards(guide.getCards());
+        if (addedThumb && addedCards) {
+            try {
+                String query = "select add_guide(?,?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, guide.getGuideUUID());
+                statement.setObject(2, guide.getDescriptionCard().getCardUUID());
+                statement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean addCards(Card[] cards) {
+        boolean success = false;
+        try {
+            for (Card card: cards) {
+                String query = "select add_card(?,?,?,?,?,?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, card.getCardUUID());
+                statement.setObject(2, card.getAffirmUUID());
+                statement.setObject(3, card.getNegUUID());
+                statement.setString(4, card.getTitle());
+                statement.setString(5, card.getText());
+                statement.setBytes(6, card.getImage());
+                success = statement.execute();
+                if(!success){
+                    ServerLog.log("failed adding card");
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
+    private boolean addThumbnail(Thumbnail thumbnail) {
+        boolean success = false;
+        try {
+            String query = "select add_thumbnail(?,?,?,?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, thumbnail.getGuideUUID());
+            statement.setString(2, thumbnail.getTitle());
+            statement.setString(3, thumbnail.getDescription());
+            statement.setBytes(4, thumbnail.getImage());
+            success = statement.execute();
+            if(!success){
+                ServerLog.log("failed adding thumbnail");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
     }
 }
