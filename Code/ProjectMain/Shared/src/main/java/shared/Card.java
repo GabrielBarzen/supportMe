@@ -5,12 +5,20 @@ import java.util.UUID;
 
 public class Card implements Serializable {
 
-    private final UUID cardUUID = UUID.randomUUID();
+    private final UUID cardUUID;
     private UUID affirmUUID;
     private UUID negUUID;
     private String title;
     private String text;
     private byte[] image;
+
+    public Card(UUID cardUUID){
+        this.cardUUID = cardUUID;
+    }
+
+    public Card(){
+        this.cardUUID = UUID.randomUUID();
+    }
 
     public void setAffirmUUID(UUID affirmUUID) {
         this.affirmUUID = affirmUUID;
@@ -55,4 +63,6 @@ public class Card implements Serializable {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+
 }

@@ -1,7 +1,7 @@
 package org.supportmeinc;
 
-import shared.Thumbnail;
-import shared.User;
+
+import shared.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -11,8 +11,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.UUID;
 
 public class ModelDatabaseConnection {
     java.sql.Connection dbConnection;
@@ -69,7 +74,219 @@ public class ModelDatabaseConnection {
         }
     }
 
-    public ArrayList<Thumbnail> getCurrentThumbnails() {
-        return null; //TODO: query to get current users allowed thumbnails
+    public Thumbnail[] getCurrentThumbnails(UUID[] guideAccessUUID) {
+        Thumbnail[] returnValues = null;
+        for (UUID uuid: guideAccessUUID) {
+            try {
+                String query = "select get_thumbnail(?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, uuid);
+
+                ResultSet rs = statement.executeQuery();
+                ArrayList<Thumbnail> thumbnails = new ArrayList<>();
+                while (rs.next()){
+                    UUID guideUUID = (UUID) rs.getObject(1);
+                    Thumbnail thumbnail = new Thumbnail(guideUUID);
+                    String thumbnailTitle = rs.getString(4);
+                    thumbnail.setTitle(thumbnailTitle);
+                    String thumbnailText = rs.getString(5);
+                    thumbnail.setDescription(thumbnailText);
+                    byte[] thumbnailImage = rs.getBytes(6);
+                    thumbnail.setImage(thumbnailImage);
+
+                    thumbnails.add(thumbnail);
+                }
+                returnValues = thumbnails.toArray(new Thumbnail[0]);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return returnValues;
+    }
+
+    public Card[] getCards(UUID guideUUID){
+        Card[] cards = null;
+
+        try {
+            String query = "select get_cards(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guideUUID);
+
+            ArrayList<Card> returnCardsList = new ArrayList<>();
+
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Card newCard = new Card();
+                UUID cardUUIDFromDatabase = (UUID) rs.getObject(1);
+                newCard = new Card(cardUUIDFromDatabase);
+                UUID affirmativeUUID = (UUID) rs.getObject(2);
+                newCard.setAffirmUUID(affirmativeUUID);
+                UUID negativeUUID = (UUID) rs.getObject(3);
+                newCard.setNegUUID(negativeUUID);
+                String cardTitle = rs.getString(4);
+                newCard.setTitle(cardTitle);
+                String cardText = rs.getString(5);
+                newCard.setText(cardText);
+                byte[] cardImage = rs.getBytes(6);
+                newCard.setImage(cardImage);
+                returnCardsList.add(newCard);
+            }
+
+            cards = returnCardsList.toArray(new Card[0]);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cards;
+    }
+
+    public Thumbnail getThumbnail(UUID guideUUID){
+        Thumbnail returnThumbnail = null;
+        try {
+            String query = "select get_thumbnail(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guideUUID);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                UUID guideUUIDFromDatabase = (UUID) rs.getObject(1);
+                returnThumbnail = new Thumbnail(guideUUIDFromDatabase);
+                String title = rs.getString(2);
+                returnThumbnail.setTitle(title);
+                String text= rs.getString(3);;
+                returnThumbnail.setDescription(text);
+                byte[] image = rs.getBytes(4);
+                returnThumbnail.setImage(image);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return returnThumbnail;
+    }
+
+    public Card getCard(UUID cardUUID){
+        Card returnCard = null;
+        try {
+            String query = "select get_card(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, cardUUID);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                UUID cardUUIDFromDatabase = (UUID) rs.getObject(1);
+                returnCard = new Card(cardUUIDFromDatabase);
+                UUID affirmativeUUID = (UUID) rs.getObject(2);
+                returnCard.setAffirmUUID(affirmativeUUID);
+                UUID negativeUUID = (UUID) rs.getObject(3);
+                returnCard.setNegUUID(negativeUUID);
+                String cardTitle = rs.getString(4);
+                returnCard.setTitle(cardTitle);
+                String cardText = rs.getString(5);
+                returnCard.setText(cardText);
+                byte[] cardImage = rs.getBytes(6);
+                returnCard.setImage(cardImage);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returnCard; //TODO: get card from database based on cardUUID
+    }
+
+    public Guide getGuide(UUID guideUUID){
+        Guide guide = null;
+        Card[] cards = getCards(guideUUID);
+        Thumbnail thumbnail = getThumbnail(guideUUID);
+
+        UUID descriptionCardUUID = null;
+        UUID guideUUIDFromDatabase = null;
+
+        if(!(cards == null || thumbnail == null)){
+            try {
+                String query = "select get_guide(?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, guideUUID);
+
+                ResultSet rs = statement.executeQuery();
+                if(rs.next()){
+                    guideUUIDFromDatabase = (UUID) rs.getObject(1);
+                    descriptionCardUUID = (UUID) rs.getObject(2);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (descriptionCardUUID != null) {
+                guide = new Guide(guideUUIDFromDatabase);
+                Card descriptionCard = getCard(descriptionCardUUID);
+                guide.setCards(cards);
+                guide.setAuthor("n/a"); //TODO: add author to modelDB guide table
+                guide.setDescriptionCard(descriptionCard);
+                guide.setThumbnail(thumbnail);
+            }
+        }
+
+        return guide;
+    }
+
+    public void addGuide(Guide guide){
+        boolean addedThumb = addThumbnail(guide.getThumbnail());
+        boolean addedCards = addCards(guide.getCards());
+        if (addedThumb && addedCards) {
+            try {
+                String query = "select add_guide(?,?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, guide.getGuideUUID());
+                statement.setObject(2, guide.getDescriptionCard().getCardUUID());
+                statement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean addCards(Card[] cards) {
+        boolean success = false;
+        try {
+            for (Card card: cards) {
+                String query = "select add_card(?,?,?,?,?,?)";
+                PreparedStatement statement = dbConnection.prepareStatement(query);
+                statement.setObject(1, card.getCardUUID());
+                statement.setObject(2, card.getAffirmUUID());
+                statement.setObject(3, card.getNegUUID());
+                statement.setString(4, card.getTitle());
+                statement.setString(5, card.getText());
+                statement.setBytes(6, card.getImage());
+                success = statement.execute();
+                if(!success){
+                    ServerLog.log("failed adding card");
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
+    private boolean addThumbnail(Thumbnail thumbnail) {
+        boolean success = false;
+        try {
+            String query = "select add_thumbnail(?,?,?,?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, thumbnail.getGuideUUID());
+            statement.setString(2, thumbnail.getTitle());
+            statement.setString(3, thumbnail.getDescription());
+            statement.setBytes(4, thumbnail.getImage());
+            success = statement.execute();
+            if(!success){
+                ServerLog.log("failed adding thumbnail");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
     }
 }

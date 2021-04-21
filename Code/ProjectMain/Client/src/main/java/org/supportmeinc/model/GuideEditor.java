@@ -34,12 +34,12 @@ public class GuideEditor {
         if (currentEditedGuide == null) {
             currentEditedGuide = new Guide();
         }
-        ArrayList<Card> cards = currentEditedGuide.getCards();
+        Card[] cards = currentEditedGuide.getCards();
         createDescriptionCard();
     }
 
     public void finishGuide() {
-        ArrayList<Card> cards = currentEditedGuide.getCards();
+        Card[] cards = currentEditedGuide.getCards();
         for (Card currentCard: cards) {
             currentCard.setAffirmUUID(UUID.randomUUID());
             currentCard.setNegUUID(UUID.randomUUID());
@@ -59,7 +59,7 @@ public class GuideEditor {
     }
 
     public void editGuide(int index) {
-        ArrayList<Card> cards;
+        Card[] cards;
         Guide currentEditedGuide = connection.getGuide(UUID.randomUUID());
         cards = currentEditedGuide.getCards();
         editCard();
@@ -123,7 +123,7 @@ public class GuideEditor {
     }
 
     public void discardCard(Card card) {
-        currentEditedGuide.getCards().remove(card);
+        currentEditedGuide.removeCard(card);
     }
 
     public void discardThisCard() {

@@ -2,13 +2,14 @@ package shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Guide implements Serializable {
 
     private UUID guideUUID;
     private Card descriptionCard;
-    private ArrayList<Card> cards;
+    private HashMap<UUID,Card> cards;
     private Card currentCard;
     private String author;
 
@@ -20,7 +21,12 @@ public class Guide implements Serializable {
 
     public Guide(){
         guideUUID = UUID.randomUUID();
-        cards = new ArrayList<Card>();
+        cards = new HashMap<>();
+        thumbnail = new Thumbnail(guideUUID);
+    }
+    public Guide(UUID guideUUID){
+        this.guideUUID = guideUUID;
+        cards = new HashMap<>();
         thumbnail = new Thumbnail(guideUUID);
     }
 
@@ -45,28 +51,31 @@ public class Guide implements Serializable {
     }
 
     public Card getCard(UUID cardUUID){
-        for (Card card : cards) {
-            if(card.getCardUUID().equals(cardUUID)) {
-                currentCard = card;
-                return card;
-            }
+
+        return cards.get(cardUUID);
+    }
+
+    public void setCards(Card[] cards) {
+        HashMap<UUID, Card> cardMap = new HashMap<>();
+        for (Card card: cards) {
+            cardMap.put(card.getCardUUID(),card);
         }
-        return null;
+        this.cards = cardMap;
     }
 
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
-    }
-
-    public ArrayList<Card> getCards() {
-        return cards;
+    public Card[] getCards() {
+        return cards.values().toArray(new Card[0]);
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        cards.put(card.getCardUUID(), card);
     }
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void removeCard(Card card) {
+        cards.remove(card.getCardUUID());
     }
 }
