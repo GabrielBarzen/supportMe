@@ -69,7 +69,7 @@ public class ModelDatabaseConnection {
         }
     }
 
-    public ArrayList<Thumbnail> getCurrentThumbnails(User user) {
+    public ArrayList<Thumbnail> getCurrentThumbnails() {
         return null; //TODO: query to get current users allowed thumbnails
     }
 }

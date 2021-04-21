@@ -1,5 +1,6 @@
 package org.supportmeinc.model;
 
+import org.supportmeinc.JfxUtils;
 import shared.User;
 
 public class LoginManager {

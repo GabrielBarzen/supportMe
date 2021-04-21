@@ -29,7 +29,7 @@ public class Authenticator {
             StringBuilder saltBuilder = new StringBuilder(20);
 
             Random random = new Random();
-            char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvXxYyZz0123456789".toCharArray();
+            char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789".toCharArray();
 
             for (int i = 0; i < 20; i++) {
                 char c = chars[random.nextInt(chars.length)];

@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.supportmeinc.Main;
-import org.supportmeinc.model.JfxUtils;
+import org.supportmeinc.JfxUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,7 +40,7 @@ public class CardViewer implements JFXcontroller, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        cardImage.fitHeightProperty().bind(box.heightProperty());
-//        cardImage.fitWidthProperty().bind(box.widthProperty());
+//        cardImage.fitHeightProperty().bind(box.heightProperty()); TODO previously used for binding imageView size with other component, might be used later
+//        cardImage.fitWidthProperty().bind(box.widthProperty()); TODO previously used for binding imageView size with other component, might be used later
     }
 }

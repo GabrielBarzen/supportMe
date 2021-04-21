@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.supportmeinc.model.JfxUtils;
 import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
@@ -40,7 +39,7 @@ public class Main extends Application {
         readConfig(getClass().getResource("config.conf"));
         System.out.println("running init");
 
-        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes(Main.class.getResource("FinalLogotyp.png")));
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes("FinalLogotyp.png"));
         replaceWithUserFromLoginScreen.setNewUser(false);
         connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
@@ -115,16 +114,30 @@ public class Main extends Application {
     }
 
     public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
-        scene.setRoot(loadFXML(resourceName));
+
+
+
     }
 
     public Parent loadFXML(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(resourceName + ".fxml"));
+
+        System.out.println();
+        System.out.println(getClass().getResource("view/" + resourceName + ".fxml"));
+        System.out.println(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
+        System.out.println();
+
+        String fxml = String.valueOf(getClass().getResource("view/" + resourceName + ".fxml"));
+        String styleSheet = String.valueOf(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(new URL(fxml));
+
         Parent root = fxmlLoader.load();
         System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
         jfXcontroller.initData(this);
-        System.out.println("new controller of type : " + jfXcontroller.getClass());
+
+        root.getStylesheets().add(styleSheet);
+
         return root;
     }
 

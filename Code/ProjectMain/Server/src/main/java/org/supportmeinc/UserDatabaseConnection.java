@@ -13,7 +13,9 @@ import java.sql.SQLException;
 
 import shared.*;
 
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.UUID;
 
 public class UserDatabaseConnection {
 
@@ -73,25 +75,26 @@ public class UserDatabaseConnection {
 
 
     public String getSalt(User user) {
+        String returnValue = null;
         try {
             String query = "SELECT get_salt(?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setString(1,user.getEmail());
             ResultSet rs = statement.executeQuery();
 
-
             if (rs.next()) {
-                String retvalue = rs.getString(1);
-                return retvalue;
+                returnValue = rs.getString(1);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return returnValue;
     }
 
     public User authenticate(User user, String passwordHash) {
+
+        User returnValue = null;
         try {
             String query = "SELECT * FROM login(?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -99,18 +102,16 @@ public class UserDatabaseConnection {
             statement.setString(2, passwordHash);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                user.setUserName(rs.getString(1));
-                user.setImage(rs.getBytes(2));
-
-                return user;
+                returnValue = new User(user.getEmail(),rs.getString(1),null,rs.getBytes(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return returnValue;
     }
 
     public boolean registerUser(User user, String passwordHash, String salt) {
+        boolean returnValue = false;
         try {
             String query = "select register_user(?, ?, ?, ?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -121,11 +122,41 @@ public class UserDatabaseConnection {
             statement.setBytes(5, user.getImage());
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
-                return rs.getInt(1) == 1;
+                returnValue = rs.getInt(1) == 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return returnValue;
+    }
+
+    public UUID[] getGuideUUIDaccess(User user) {
+        UUID[] returnValues = null;
+        try {
+            String query = "select get_all_access(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+
+            ResultSet rs = statement.executeQuery();
+            ArrayList<UUID> UUIDList = new ArrayList<>();
+            while (rs.next()){
+                UUIDList.add((UUID) rs.getObject(1));
+            }
+            returnValues = new UUID[0];
+            UUIDList.toArray(returnValues);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return returnValues;
+    }
+
+    public boolean giveAccess(String authorEmail, String userEmail, UUID guideUUID){
+        boolean success = false;
+        return success; //TODO : write queries and code for assigning access to guide
+    }
+
+    public boolean revokeAccess(String authorEmail, String userEmail, UUID guideUUID){
+        boolean success = false;
+        return success; //TODO : write queries and code for revoking access to guide
     }
 }

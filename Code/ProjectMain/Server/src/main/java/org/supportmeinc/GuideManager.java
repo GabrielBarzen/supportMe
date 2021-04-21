@@ -21,10 +21,10 @@ public class GuideManager {
         return guides.getOrDefault(guideUUID, null);
     }
 
-    public Thumbnail[] getThumbNails(Thumbnail[] oldArray, User user) {
+    public Thumbnail[] getThumbNails(Thumbnail[] oldArray, UUID[] userGuideAccess) {
 
         ArrayList<Thumbnail> oldThumbnails = new ArrayList<>(Arrays.asList(oldArray));
-        ArrayList<Thumbnail> currentThumbnails = databaseConnection.getCurrentThumbnails(user);
+        ArrayList<Thumbnail> currentThumbnails = databaseConnection.getCurrentThumbnails();
 
         Thumbnail[] returnArray;
 
@@ -40,8 +40,5 @@ public class GuideManager {
         return returnArray;
     }
 
-    public void addGuide(Guide guide){
-        guides.put(guide.getGuideUUID(), guide);
-    }
 
 }
