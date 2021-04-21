@@ -74,4 +74,8 @@ public class Guide implements Serializable {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    public void removeCard(Card card) {
+        cards.remove(card.getCardUUID());
+    }
 }
