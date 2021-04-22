@@ -55,6 +55,7 @@ public class Connection {
 
 
     public void sendObject(Object object) {
+        System.out.println("sending object : " + object.getClass());
         send.sendObject(object);
     }
 

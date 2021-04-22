@@ -67,6 +67,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
         if (object instanceof Thumbnail){
             Thumbnail thumbnail = (Thumbnail) object;
+            userConnection.get(user).sendObject(databaseManager.getGuide(thumbnail.getGuideUUID()));
         }
 
         if (object instanceof Thumbnail[]){

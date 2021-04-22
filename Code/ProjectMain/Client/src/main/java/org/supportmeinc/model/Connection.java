@@ -69,6 +69,22 @@ public class Connection {
         return retGuide;
     }
 
+
+    public Thumbnail[] getThumbnails() {
+        return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
+    }
+
+
+    public void disconnect() throws IOException{
+        send.interrupt();
+        receive.interrupt();
+        socket.close();
+    }
+
+    public void setGuideManager(GuideManager manager) {
+        guideManager = manager;
+    }
+
     private class Receive extends Thread {
 
         @Override
@@ -83,8 +99,9 @@ public class Connection {
 
                 while (!Thread.interrupted()) {
 
-                        Object object = inputStream.readObject();
-                        System.out.println("loop check receive");
+                    Object object = inputStream.readObject();
+                    receiveBuffer.put(object);
+                    System.out.println("loop check receive");
 
                 }
             } catch (IOException e) {
@@ -119,36 +136,4 @@ public class Connection {
     }
 
 
-    public Guide getGuide(UUID guideUUID) {
-        return goodLordTheCardGiver();
-    }
-
-    public Guide goodLordTheCardGiver() {
-        Guide guide = new Guide();
-        Card card = new Card();
-        card.setTitle("The last guide you will ever need");
-        card.setText("Step 1 get rich, step 2 ???, setp 3 profit");
-        card.setImage(JfxUtils.toBytes("FinalLogotyp.png"));
-        guide.setDescriptionCard(card);
-        return guide;
-    }
-
-    public Thumbnail[] getThumbnails() {
-        return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
-    }
-
-
-    public void disconnect() throws IOException{
-        send.interrupt();
-        receive.interrupt();
-        socket.close();
-    }
-
-    public void setGuideManager(GuideManager manager) {
-        guideManager = manager;
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
 }
