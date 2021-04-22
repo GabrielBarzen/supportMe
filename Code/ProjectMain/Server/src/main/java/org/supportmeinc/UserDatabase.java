@@ -142,6 +142,7 @@ public class UserDatabase {
 
     public UUID[] getGuideUUIDaccess(User user) {
         UUID[] returnValues = null;
+        System.out.println(user.getEmail());
         try {
             String query = "select get_all_access(?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -150,10 +151,12 @@ public class UserDatabase {
             ResultSet rs = statement.executeQuery();
             ArrayList<UUID> UUIDList = new ArrayList<>();
             while (rs.next()){
+                UUID uuid = (UUID) rs.getObject(1);
+                System.out.println(uuid.toString());
                 UUIDList.add((UUID) rs.getObject(1));
             }
-            returnValues = new UUID[0];
-            UUIDList.toArray(returnValues);
+            returnValues = UUIDList.toArray(new UUID[0]);
+            System.out.println("retval uuid : " + returnValues[0]);
         } catch (SQLException e) {
             e.printStackTrace();
         }

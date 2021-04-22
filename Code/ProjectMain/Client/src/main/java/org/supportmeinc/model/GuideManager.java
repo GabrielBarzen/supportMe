@@ -22,10 +22,23 @@ public class GuideManager {
 
     public GuideManager(Connection connection) {
         this.connection = connection;
-        thumbnails = connection.getThumbnails();
+        thumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
         UUID guideUUID = UUID.fromString("a860a789-fea8-42e3-8a40-43ffa3e4f3bf");
-        thumbnails[0] = new Thumbnail(guideUUID);
+        try {
+            thumbnails = connection.getThumbnails(thumbnails);
+            System.out.println("got thumbnails from server");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println(thumbnails.length);
+            Guide guide = connection.getGuide(thumbnails[0]);
+            System.out.println(guide.getDescriptionCard().getTitle());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -36,7 +49,6 @@ public class GuideManager {
     public Thumbnail[] getThumbnails() {
         return thumbnails;
     }
-
 
     public Guide getGuide(int i) {
         Guide returnGuide = null;

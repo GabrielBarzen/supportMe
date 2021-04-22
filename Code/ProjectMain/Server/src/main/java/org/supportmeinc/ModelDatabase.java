@@ -88,20 +88,29 @@ public class ModelDatabase {
         Thumbnail[] returnValues = null;
         for (UUID uuid: guideAccessUUID) {
             try {
+                System.out.println("getting thumbnails");
+
                 String query = "select * from get_thumbnail(?)";
                 PreparedStatement statement = dbConnection.prepareStatement(query);
                 statement.setObject(1, uuid);
 
                 ResultSet rs = statement.executeQuery();
                 ArrayList<Thumbnail> thumbnails = new ArrayList<>();
+
+                System.out.println("executed query thumbnails");
+
                 while (rs.next()){
+                    System.out.println("opening rs");
+
                     UUID guideUUID = (UUID) rs.getObject(1);
+
+                    System.out.println("new uuid fr thumbnails : " + guideUUID.toString());
                     Thumbnail thumbnail = new Thumbnail(guideUUID);
-                    String thumbnailTitle = rs.getString(4);
+                    String thumbnailTitle = rs.getString(2);
                     thumbnail.setTitle(thumbnailTitle);
-                    String thumbnailText = rs.getString(5);
+                    String thumbnailText = rs.getString(3);
                     thumbnail.setDescription(thumbnailText);
-                    byte[] thumbnailImage = rs.getBytes(6);
+                    byte[] thumbnailImage = rs.getBytes(4);
                     thumbnail.setImage(thumbnailImage);
 
                     thumbnails.add(thumbnail);

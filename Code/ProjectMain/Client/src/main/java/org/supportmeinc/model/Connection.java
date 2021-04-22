@@ -60,13 +60,17 @@ public class Connection {
     }
 
     public Thumbnail[] getThumbnails(Thumbnail[] thumbnails) throws InterruptedException{
-        Thumbnail[] retGuide = null;
+        Thumbnail[] returnThumbnails = null;
         send(thumbnails);
-        Object guide = receiveBuffer.get();
-        if (guide instanceof Thumbnail[]){
-            retGuide = (Thumbnail[]) guide;
+        Object newThumbnails = receiveBuffer.get();
+        if (newThumbnails != null) {
+            if (newThumbnails instanceof Thumbnail[]) {
+                returnThumbnails = (Thumbnail[]) newThumbnails;
+            }
+        } else {
+            returnThumbnails = thumbnails;
         }
-        return retGuide;
+        return returnThumbnails;
     }
 
 

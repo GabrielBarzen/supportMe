@@ -3,7 +3,9 @@ package org.supportmeinc;
 import shared.*;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
@@ -72,6 +74,18 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
         if (object instanceof Thumbnail[]){
             Thumbnail[] oldThumbnails = (Thumbnail[]) object;
+            UUID[] guideUUIDacess = databaseManager.getGuideUUIDaccess(user);
+
+            Thumbnail[] newThumbnails = databaseManager.getCurrentThumbnails(guideUUIDacess);
+
+            if (!(Arrays.equals((oldThumbnails), newThumbnails))) {
+                System.out.println("Sending new");
+                System.out.println("len : " + newThumbnails.length);
+                userConnection.get(user).sendObject(newThumbnails);
+            } else {
+                System.out.println("Sending old");
+                userConnection.get(user).sendObject(null);
+            }
         }
     }
 }
