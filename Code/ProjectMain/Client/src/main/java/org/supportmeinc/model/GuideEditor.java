@@ -1,7 +1,9 @@
 package org.supportmeinc.model;
 
+import org.supportmeinc.JfxUtils;
 import shared.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 
@@ -15,7 +17,7 @@ public class GuideEditor {
         cardsList = new ArrayList<>();
     }
 
-    public void addNewCard(String title, String description, Image img, String affirmUUID, String negativeUUID) {
+    public void addNewCard(String title, String description, File img, String affirmUUID, String negativeUUID) {
         Card card = new Card();
         card.setTitle(title);
         card.setText(description);
@@ -34,5 +36,12 @@ public class GuideEditor {
             card.setTitle(i + " Wow it works");
             cardsList.add(card);
         }
+    }
+
+    public void updateCard(String title, String description, File img, int index) {
+        Card card = cardsList.get(index);
+        card.setTitle(title);
+        card.setText(description);
+        card.setImage(JfxUtils.toBytes(img));
     }
 }

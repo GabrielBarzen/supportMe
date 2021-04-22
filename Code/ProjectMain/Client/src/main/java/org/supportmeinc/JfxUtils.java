@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class JfxUtils {
 
-    public static Image fromBytes(byte[] img){
+    public static Image toImage(byte[] img){
         Image image;
         image = new Image(new BufferedInputStream(new ByteArrayInputStream(img)));
         return image;

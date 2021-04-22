@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -64,7 +64,7 @@
          <left>
             <AnchorPane prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="650.0" prefWidth="218.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <VBox fx:id="cardList" prefHeight="645.0" prefWidth="300.0" scaleShape="false" />
                      </content></ScrollPane>
@@ -80,7 +80,7 @@
                         <AnchorPane prefHeight="53.0" prefWidth="290.0">
                            <children>
                               <TextField fx:id="txtFilePath" disable="true" editable="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                              <Button alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="27.0" mnemonicParsing="false" onAction="#openFileChooser" text="Select File" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Button alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="27.0" mnemonicParsing="false" onAction="#selectImage" text="Select File" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <TextArea fx:id="txtCardText" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." />
@@ -97,9 +97,6 @@
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="26.0" prefWidth="290.0">
-                           <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#save" text="Save" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
-                           </children>
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -115,6 +112,39 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
+         <top>
+            <HBox alignment="CENTER" minHeight="50.0" minWidth="1180.0" prefHeight="50.0" prefWidth="200.0" spacing="360.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Cardlist" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Current card" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Properties" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <AnchorPane prefHeight="30.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
+                  <Button layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Create new Card" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Save" />
+               </children>
+            </AnchorPane>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

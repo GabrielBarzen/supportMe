@@ -179,7 +179,7 @@ public class Main extends Application {
         return guideEditor.getCardsList();
     }
 
-    public void addCardToList(String title, String description, Image img, String affirmUUID, String negativeUUID) {
+    public void addCardToList(String title, String description, File img, String affirmUUID, String negativeUUID) {
         guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
     }
 
@@ -189,4 +189,7 @@ public class Main extends Application {
         return selectedFile;
     }
 
+    public void updateCard(String title, String description, File img, int index) {
+        guideEditor.updateCard(title, description, img, index);
+    }
 }
