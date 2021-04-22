@@ -9,50 +9,75 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="picture" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.Main">
+<AnchorPane fx:id="picture" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Login">
    <children>
-      <Button fx:id="registerButton" layoutX="175.0" layoutY="411.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="96.0" text="Register">
+      <Button fx:id="registerButton" layoutX="60.0" layoutY="416.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="158.0" style="-fx-background-color: #F6BE00;" text="Register" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="81.0" fitWidth="96.0" layoutX="204.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="81.0" fitWidth="96.0" layoutX="197.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/FinalLogotyp.png" />
          </image></ImageView>
-      <TextField fx:id="firstname" layoutX="204.0" layoutY="162.0" promptText="Enter first name" />
-      <TextField fx:id="lastname" layoutX="204.0" layoutY="213.0" promptText="Enter last name" />
-      <TextField fx:id="email" layoutX="204.0" layoutY="264.0" promptText="Enter Email" />
-      <Label layoutX="60.0" layoutY="165.0" prefHeight="18.0" prefWidth="88.0" text="First name">
+      <TextField fx:id="firstname" layoutX="204.0" layoutY="162.0" promptText="Enter first name">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font></TextField>
+      <TextField fx:id="lastname" layoutX="204.0" layoutY="213.0" promptText="Enter last name">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font></TextField>
+      <TextField fx:id="email" layoutX="204.0" layoutY="264.0" promptText="Enter Email">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font></TextField>
+      <Label layoutX="60.0" layoutY="165.0" prefHeight="18.0" prefWidth="88.0" text="First name" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="60.0" layoutY="216.0" prefHeight="18.0" prefWidth="88.0" text="Last name">
+      <Label layoutX="60.0" layoutY="216.0" prefHeight="18.0" prefWidth="88.0" text="Last name" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="60.0" layoutY="266.0" prefHeight="18.0" prefWidth="88.0" text="Email">
+      <Label layoutX="60.0" layoutY="266.0" prefHeight="18.0" prefWidth="88.0" text="E-mail" textFill="#9e0909">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <PasswordField fx:id="password" layoutX="204.0" layoutY="312.0" promptText="Enter password" />
-      <Label layoutX="60.0" layoutY="315.0" text="Password">
+      <PasswordField fx:id="password" layoutX="204.0" layoutY="312.0" promptText="Enter password">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font></PasswordField>
+      <Label layoutX="60.0" layoutY="315.0" text="Password" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="pictureButton" layoutX="46.0" layoutY="74.0" mnemonicParsing="false" text="Add profile picture">
+      <Button fx:id="pictureButton" layoutX="41.0" layoutY="74.0" mnemonicParsing="false" onAction="#chooseImage" style="-fx-background-color: #F6BE00;" text="Add profile picture" textFill="#9e0909">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <PasswordField fx:id="password1" layoutX="204.0" layoutY="363.0" promptText="Re-enter password" />
-      <Label layoutX="60.0" layoutY="366.0" text="Re-enter password">
+      <PasswordField fx:id="password1" layoutX="204.0" layoutY="363.0" promptText="Re-enter password">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
+         </font></PasswordField>
+      <Label layoutX="60.0" layoutY="366.0" text="Re-enter password" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="cancelButton" layoutX="245.0" layoutY="416.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="42.0" prefWidth="158.0" style="-fx-background-color: #F6BE00;" text="Cancel" textFill="#9e0909">
+         <font>
+            <Font name="Book Antiqua" size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="rMessage" layoutX="148.0" layoutY="127.0" prefHeight="26.0" prefWidth="214.0" textFill="#9e0909">
+         <font>
+            <Font name="Book Antiqua" size="12.0" />
          </font>
       </Label>
    </children>

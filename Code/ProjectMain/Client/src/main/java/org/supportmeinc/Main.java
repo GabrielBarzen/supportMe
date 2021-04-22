@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 public class Main extends Application {
 
     private static Scene scene;
+    private static Stage stage;
     private int port;
     private String ip;
     private Connection connection;
@@ -105,12 +106,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("toolbar"));
+      //  scene = new Scene(loadFXML("toolbar"));
+        scene = new Scene(loadFXML("login"));
         stage.setTitle("supportMe");
         stage.setScene(scene);
         stage.show();
         System.out.println("nice");
         startBackend();
+    }
+
+    public void changeScene(String fxml) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
+        stage.getScene().setRoot(root);
+    }
+
+    public void checkUser(String email, String password){
+
     }
 
     public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar

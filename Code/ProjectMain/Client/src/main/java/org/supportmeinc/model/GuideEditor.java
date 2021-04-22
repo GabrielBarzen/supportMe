@@ -19,7 +19,7 @@ public class GuideEditor {
     Connection connection;
     ObjectOutputStream oos;
     ObjectInputStream ois;
-
+/*
     public GuideEditor(Connection connection) {
         this.connection = connection;
         try {
@@ -137,4 +137,6 @@ public class GuideEditor {
     public Thumbnail getThumbnail() {
         return currentEditedGuide.getThumbnail();
     }
+
+ */
 }
