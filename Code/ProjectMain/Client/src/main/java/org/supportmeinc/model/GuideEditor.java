@@ -4,44 +4,37 @@ import org.supportmeinc.JfxUtils;
 import shared.*;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.scene.image.Image;
+import java.util.UUID;
 
 public class GuideEditor {
 
-    private ArrayList<Card> cardsList;
+    private HashMap<UUID,Card> cardsList;
     private Card currentCard;
     private Guide outputGuide;
 
     public GuideEditor() {
-        cardsList = new ArrayList<>();
+        cardsList = new HashMap<>();
     }
 
     public void addNewCard(String title, String description, File img, String affirmUUID, String negativeUUID) {
         Card card = new Card();
         card.setTitle(title);
         card.setText(description);
-        cardsList.add(card);
+        cardsList.put(card.getCardUUID(),card);
     }
 
-    public ArrayList<Card> getCardsList() {
+    public HashMap<UUID, Card> getCardsList() {
+
         return cardsList;
     }
 
-    public void populateCardList() {
-        Card card;
-
-        for (int i = 0; i < 9; i++) {
-            card = new Card();
-            card.setTitle(i + " Wow it works");
-            cardsList.add(card);
-        }
-    }
-
-    public void updateCard(String title, String description, File img, int index) {
-        Card card = cardsList.get(index);
+    public void updateCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
+        Card card = cardsList.get(cardUUID);
         card.setTitle(title);
         card.setText(description);
-        card.setImage(JfxUtils.toBytes(img));
+        cardsList.put(cardUUID, card);
+
     }
 }

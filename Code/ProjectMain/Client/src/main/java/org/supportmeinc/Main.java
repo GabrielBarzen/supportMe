@@ -16,8 +16,8 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import javafx.scene.image.Image;
+import java.util.UUID;
+import java.util.HashMap;
 
 
 /**
@@ -175,21 +175,17 @@ public class Main extends Application {
         }
     }
 
-    public ArrayList<Card> getCardsList() {
+    public HashMap<UUID, Card> getCardsList() {
         return guideEditor.getCardsList();
     }
 
-    public void addCardToList(String title, String description, File img, String affirmUUID, String negativeUUID) {
-        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
+    public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
+//        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
     }
 
     public File jfxFileChooser() {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(mainStage);
         return selectedFile;
-    }
-
-    public void updateCard(String title, String description, File img, int index) {
-        guideEditor.updateCard(title, description, img, index);
     }
 }
