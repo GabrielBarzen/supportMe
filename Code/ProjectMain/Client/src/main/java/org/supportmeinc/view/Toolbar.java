@@ -1,13 +1,9 @@
 package org.supportmeinc.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.supportmeinc.Main;
-
-import java.awt.*;
 import java.io.IOException;
 
 public class Toolbar implements JFXcontroller {

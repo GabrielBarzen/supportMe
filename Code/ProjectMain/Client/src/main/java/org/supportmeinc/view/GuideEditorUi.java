@@ -1,8 +1,6 @@
 package org.supportmeinc.view;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,12 +9,9 @@ import javafx.scene.image.ImageView;
 import org.supportmeinc.JfxUtils;
 import org.supportmeinc.Main;
 import shared.Card;
-
 import java.io.File;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import org.supportmeinc.model.*;
 
 public class GuideEditorUi implements JFXcontroller, Initializable {
 
