@@ -31,9 +31,11 @@ public class GuideEditor {
 
     public void updateCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
         Card card = cardsList.get(cardUUID);
+        System.out.println(card);
         card.setTitle(title);
         card.setText(description);
-        cardsList.put(cardUUID, card);
+        cardsList.replace(cardUUID, card);
+        System.out.println(cardsList.get(cardUUID) + "sista i GuideEditor");
 
     }
 }

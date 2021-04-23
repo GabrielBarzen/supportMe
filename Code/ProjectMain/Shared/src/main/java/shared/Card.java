@@ -64,5 +64,7 @@ public class Card implements Serializable {
         this.image = image;
     }
 
-
+    public String toString() {
+        return String.format("%s",title);
+    }
 }

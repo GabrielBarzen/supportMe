@@ -1,17 +1,21 @@
 package org.supportmeinc.view;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import org.supportmeinc.JfxUtils;
 import org.supportmeinc.Main;
 import shared.Card;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class GuideEditorUi implements JFXcontroller, Initializable {
 
@@ -23,7 +27,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     @FXML private TextArea txtCardText;
     @FXML private ComboBox<Card> cmbYes, cmbNo;
     @FXML private ListView<Card> listView;
-    private ObservableList<String> listViewContent;
+
 
 
 
@@ -31,14 +35,21 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         this.controller = controller;
         controller.registerController(this);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        populateListView();
+
     }
 
     public GuideEditorUi() {
+        this.listView = new ListView<>();
 
     }
 
     public void populateListView() {
+        listView.getItems().clear();
+        for (Card card : controller.getCardsList().values()) {
+            listView.getItems().add(card);
+            System.out.println(card.getCardUUID());
+        }
+
 
     }
 
@@ -67,20 +78,21 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         String title = txtCardTitle.getText();
         String text = txtCardText.getText();
 
- //       if(!listView.isPressed()) {
-        controller.addCardToList(title, text, null, null, null);
- //       } else {
- //           UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
-  //          controller.updateCard(title, text, null, null, null, cardUUID);
-   //     }
-
         lblTitlePreview.setText(title);
         lblCardTextPreview.setText(text);
+
+        if(!listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
+            controller.addCardToList(title, text, null, null, null);
+        } else {
+            System.out.println("Update card ifen");
+            UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
+            controller.updateCard(title, text, null, null, null, cardUUID);
+        }
 
         txtCardText.setText("Fill in text");
         txtCardTitle.setText("Fill in title");
 
-        listView.refresh();
+        populateListView();
 
     }
 
@@ -88,6 +100,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        updateCardsList();
+//        populateListView();
     }
 }
