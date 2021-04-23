@@ -11,12 +11,12 @@ import java.util.Random;
 public class Authenticator {
 
     private final User user;
-    private final UserDatabaseConnection databaseConnection;
+    private final DatabaseManager databaseManager;
 
 
-    public Authenticator(User user, UserDatabaseConnection databaseConnection) {
+    public Authenticator(User user, DatabaseManager databaseManager) {
         this.user = user;
-        this.databaseConnection = databaseConnection;
+        this.databaseManager = databaseManager;
     }
 
     public User authenticate()  {
@@ -38,7 +38,7 @@ public class Authenticator {
 
             salt = saltBuilder.toString();
         } else {
-            salt = databaseConnection.getSalt(user);
+            salt = databaseManager.getSalt(user);
         }
         try {
             password = String.format("%s%s", salt, user.getPassword());
@@ -48,14 +48,14 @@ public class Authenticator {
         }
 
         if(user.isNewUser() && passwordHash != null && salt != null){
-            boolean success = databaseConnection.registerUser(user,passwordHash,salt);
+            boolean success = databaseManager.registerUser(user,passwordHash,salt);
             if(!success){
                 ServerLog.log("Could not register user");
             } else {
-                returnUser = databaseConnection.authenticate(user,passwordHash);
+                returnUser = databaseManager.authenticate(user,passwordHash);
             }
         } else {
-            returnUser = databaseConnection.authenticate(user,passwordHash);
+            returnUser = databaseManager.authenticate(user,passwordHash);
         }
 
         return returnUser;

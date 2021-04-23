@@ -22,12 +22,8 @@ public class GuideEditor {
 
     public GuideEditor(Connection connection) {
         this.connection = connection;
-        try {
-            oos = new ObjectOutputStream(connection.getSocket().getOutputStream());
-            ois = new ObjectInputStream(connection.getSocket().getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
     }
 
     public void createGuide() {
@@ -60,7 +56,6 @@ public class GuideEditor {
 
     public void editGuide(int index) {
         Card[] cards;
-        Guide currentEditedGuide = connection.getGuide(UUID.randomUUID());
         cards = currentEditedGuide.getCards();
         editCard();
     }

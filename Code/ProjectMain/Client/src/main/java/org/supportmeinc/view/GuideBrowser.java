@@ -33,10 +33,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     }
 
-    public void getGuide(int index) {
-        controller.initGuide(index);
-    }
-
     public void setThumbnails(ArrayList<Thumbnail> thumbnails) {
         this.thumbnails = thumbnails;
     }

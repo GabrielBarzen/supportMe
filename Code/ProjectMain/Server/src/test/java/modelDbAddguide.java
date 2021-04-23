@@ -1,4 +1,4 @@
-import org.supportmeinc.ModelDatabaseConnection;
+import org.supportmeinc.ModelDatabase;
 import org.supportmeinc.ServerLog;
 import shared.Card;
 import shared.Guide;
@@ -10,7 +10,7 @@ public class modelDbAddguide {
         new modelDbAddguide();
     }
 
-    ModelDatabaseConnection dbcon = new ModelDatabaseConnection();
+    ModelDatabase dbcon = new ModelDatabase();
 
     modelDbAddguide(){
         Guide guide = new Guide();

@@ -7,11 +7,11 @@ import java.util.UUID;
 
 public class Guide implements Serializable {
 
-    private UUID guideUUID;
+    private final UUID guideUUID;
     private Card descriptionCard;
     private HashMap<UUID,Card> cards;
-    private Card currentCard;
-    private String author;
+    private UUID currentCard;
+    private String authorEmail;
 
     public void setThumbnail(Thumbnail thumbnail) {
         this.thumbnail = thumbnail;
@@ -39,7 +39,7 @@ public class Guide implements Serializable {
     }
 
     public Card getCurrentCard() {
-        return currentCard;
+        return cards.get(currentCard);
     }
 
     public Card getDescriptionCard() {
@@ -71,11 +71,15 @@ public class Guide implements Serializable {
         cards.put(card.getCardUUID(), card);
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(String authorEmail) {
+        this.authorEmail = authorEmail;
     }
 
     public void removeCard(Card card) {
         cards.remove(card.getCardUUID());
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
     }
 }
