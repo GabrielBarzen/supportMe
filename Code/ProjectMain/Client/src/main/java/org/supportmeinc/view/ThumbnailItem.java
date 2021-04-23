@@ -7,26 +7,23 @@ import org.supportmeinc.JfxUtils;
 
 public class ThumbnailItem {
 
-    @FXML
-    private Label lblTitle;
+    @FXML private Label lblTitle;
 
-    @FXML
-    private ImageView imgThumb;
+    @FXML private ImageView imgThumb;
 
-    @FXML
-    private Label lblText;
+    @FXML private Label lblText;
 
     private int listIndex; //represents index in list of thumbnails in GuideBrowser
 
-    public void setData(String title, byte[] image, String text) {
+    public void setData(String title, byte[] image, String text) { //TODO remove? might not be used
         lblTitle.setText(title);
-        imgThumb.setImage(JfxUtils.fromBytes(image));
+        imgThumb.setImage(JfxUtils.toImage(image));
         lblText.setText(text);
     }
 
     public void setData(String title, byte[] image, String text, int listIndex) {
         lblTitle.setText(title);
-        imgThumb.setImage(JfxUtils.fromBytes(image));
+        imgThumb.setImage(JfxUtils.toImage(image));
         lblText.setText(text);
         this.listIndex = listIndex;
     }

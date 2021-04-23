@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
@@ -13,14 +14,13 @@ import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.UUID;
+import java.util.HashMap;
+
 
 
 /**
@@ -29,10 +29,12 @@ import java.util.UUID;
 public class Main extends Application {
 
     private static Scene scene;
+    private static Stage mainStage;
     private int port;
     private String ip;
     private Connection connection;
     private GuideManager guideManager;
+    private GuideEditor guideEditor;
 
     public static void main(String[] args) {
         launch();
@@ -109,6 +111,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        mainStage = stage;
         scene = new Scene(loadFXML("toolbar"));
         stage.setTitle("supportMe");
         stage.setScene(scene);
@@ -146,14 +149,47 @@ public class Main extends Application {
     }
 
     public void registerController(JFXcontroller viewController) { //TODO Möjligtvis refactor --> Toolbar
-        if (viewController instanceof Login) {loginController = (Login) viewController;}
-        if (viewController instanceof Register) {registerController = (Register) viewController;}
-        if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
+        if (viewController instanceof Login) {
+            loginController = (Login) viewController;
+        }
+
+        if (viewController instanceof Register) {
+            registerController = (Register) viewController;
+        }
+
+        if (viewController instanceof GuideBrowser) {
+            guideBrowserController = (GuideBrowser) viewController;
+        }
+
         if (viewController instanceof GuideEditorUi) {
-            guideEditorUiController = (GuideEditorUi) viewController;}
-        if (viewController instanceof CardViewer) {cardViewerController = (CardViewer) viewController;}
-        if (viewController instanceof CardEditor) {cardEditorController = (CardEditor) viewController;}
-        if (viewController instanceof Toolbar) {toolbarController = (Toolbar) viewController;}
+            guideEditorUiController = (GuideEditorUi) viewController;
+            guideEditor = new GuideEditor();
+        }
+
+        if (viewController instanceof CardViewer) {
+            cardViewerController = (CardViewer) viewController;
+        }
+
+        if (viewController instanceof CardEditor) {
+            cardEditorController = (CardEditor) viewController;
+        }
+
+        if (viewController instanceof Toolbar) {
+            toolbarController = (Toolbar) viewController;
+        }
     }
 
+    public HashMap<UUID, Card> getCardsList() {
+        return guideEditor.getCardsList();
+    }
+
+    public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
+//        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
+    }
+
+    public File jfxFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(mainStage);
+        return selectedFile;
+    }
 }
