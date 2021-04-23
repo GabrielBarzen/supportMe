@@ -71,7 +71,7 @@
                <children>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="listView" fixedCellSize="30.0" onMouseClicked="#populateComboBoxes" prefHeight="567.0" prefWidth="297.0" />
+                        <ListView fx:id="listView" fixedCellSize="30.0" onMouseClicked="#onClick" onMouseExited="#populateComboBoxes" prefHeight="567.0" prefWidth="297.0" />
                      </content></ScrollPane>
                </children>
             </AnchorPane>
@@ -89,16 +89,18 @@
                            </children>
                         </AnchorPane>
                         <TextArea fx:id="txtCardText" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." />
-                        <AnchorPane prefHeight="37.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="80.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="YES CARD" />
                               <ComboBox fx:id="cmbYes" layoutX="140.0" layoutY="5.0" prefWidth="150.0" />
+                              <Label fx:id="yesCardSelected" layoutX="182.0" layoutY="44.0" prefHeight="17.0" prefWidth="67.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="37.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="80.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="NO CARD" />
                               <ComboBox fx:id="cmbNo" layoutX="140.0" layoutY="5.0" prefWidth="150.0" />
+                              <Label fx:id="noCardSelected" layoutX="182.0" layoutY="39.0" prefHeight="17.0" prefWidth="67.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="26.0" prefWidth="290.0">

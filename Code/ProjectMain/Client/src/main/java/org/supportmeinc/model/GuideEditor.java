@@ -1,5 +1,6 @@
 package org.supportmeinc.model;
 
+import org.supportmeinc.JfxUtils;
 import shared.Card;
 import shared.Guide;
 
@@ -21,25 +22,39 @@ public class GuideEditor {
         Card card = new Card();
         card.setTitle(title);
         card.setText(description);
+        card.setAffirmUUID(affirmUUID);
+        card.setNegUUID(negativeUUID);
+
+        if(img == null) {
+            card.setImage(null);
+        } else {
+            card.setImage(JfxUtils.toBytes(img));
+        }
+
         cardsList.put(card.getCardUUID(),card);
     }
 
-    public HashMap<UUID, Card> getCardsList() {
-        return cardsList;
-    }
-
-
     public void updateCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
         Card card = cardsList.get(cardUUID);
-        System.out.println(card);
         card.setTitle(title);
         card.setText(description);
-        cardsList.replace(cardUUID, card);
-        System.out.println(cardsList.get(cardUUID) + "sista i GuideEditor");
+        card.setAffirmUUID(affirmUUID);
+        card.setNegUUID(negativeUUID);
 
+        if(img == null) {
+            card.setImage(null);
+        } else {
+            card.setImage(JfxUtils.toBytes(img));
+        }
+
+        cardsList.replace(cardUUID, card);
     }
 
     public void removeCard(UUID cardUUID) {
         cardsList.remove(cardUUID);
+    }
+
+    public HashMap<UUID, Card> getCardsList() {
+        return cardsList;
     }
 }
