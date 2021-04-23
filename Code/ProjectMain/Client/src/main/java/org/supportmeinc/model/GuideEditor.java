@@ -5,7 +5,6 @@ import shared.*;
 
 import java.io.File;
 import java.util.HashMap;
-import javafx.scene.image.Image;
 import java.util.UUID;
 
 public class GuideEditor {
@@ -26,9 +25,9 @@ public class GuideEditor {
     }
 
     public HashMap<UUID, Card> getCardsList() {
-
         return cardsList;
     }
+
 
     public void updateCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
         Card card = cardsList.get(cardUUID);

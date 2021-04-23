@@ -14,14 +14,15 @@ public class JfxUtils {
         return image;
     }
 
-    public static byte[] toBytes(File file) {
-        byte[] bytes = new byte[0];
+    public static byte[] toBytes(File file){
+        byte[] returnBytes = null;
         try {
-            bytes = Files.readAllBytes(file.toPath());
-        } catch (IOException e) {
+            returnBytes = toBytes(new URL(file.getAbsolutePath()));
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return bytes;
+        return returnBytes;
+
     }
 
     public static byte[] toBytes(String filename) {

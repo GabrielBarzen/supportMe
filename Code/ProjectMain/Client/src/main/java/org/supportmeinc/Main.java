@@ -10,6 +10,8 @@ import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
+import shared.Guide;
+import shared.Thumbnail;
 import shared.User;
 
 import java.io.*;
@@ -18,6 +20,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.HashMap;
+
 
 
 /**
@@ -45,12 +48,13 @@ public class Main extends Application {
         replaceWithUserFromLoginScreen.setNewUser(false);
         connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
+
+        System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
 //      testCard();
     }
 
     public void testCard() { //TODO Stubbe, eliminera
-
-        Card testCard = initGuide(0);
+        Card testCard = guideManager.getGuide(0).getDescriptionCard();
         cardViewerController.setCard(testCard.getTitle(), testCard.getImage(), testCard.getText());
     }
 
@@ -83,8 +87,8 @@ public class Main extends Application {
     }
     //Model methods//
 
-    public Card initGuide(int index) {
-        return guideManager.initGuide(index);
+    public Card getGuide(int index) {
+        return guideManager.getGuide(index).getDescriptionCard();
     }
 
     public Card getCard(boolean choice) {
@@ -133,8 +137,8 @@ public class Main extends Application {
         String styleSheet = String.valueOf(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
 
         FXMLLoader fxmlLoader = new FXMLLoader(new URL(fxml));
-
         Parent root = fxmlLoader.load();
+
         System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
         jfXcontroller.initData(this);

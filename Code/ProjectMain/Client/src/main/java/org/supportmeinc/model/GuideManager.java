@@ -16,20 +16,31 @@ public class GuideManager {
 
     private Guide currentGuide;
     private Guide[] guides;
-    private Thumbnail[] thumbnails; // fixa plz
+    private Thumbnail[] thumbnails;
     private Connection connection;
     private ArrayList<Card> cardArrayList;
 
     public GuideManager(Connection connection) {
         this.connection = connection;
-        thumbnails = connection.getThumbnails();
+        thumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
+        UUID guideUUID = UUID.fromString("a860a789-fea8-42e3-8a40-43ffa3e4f3bf");
+        try {
+            thumbnails = connection.getThumbnails(thumbnails);
+            System.out.println("got thumbnails from server");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println(thumbnails.length);
+            Guide guide = connection.getGuide(thumbnails[0]);
+            System.out.println(guide.getDescriptionCard().getTitle());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public Card initGuide(int index) {
-        currentGuide = connection.getGuide(thumbnails[index].getGuideUUID());
-        return currentGuide.getDescriptionCard();
-    }
 
     public Card getCard(boolean choice) {
         return null;
@@ -39,15 +50,14 @@ public class GuideManager {
         return thumbnails;
     }
 
-
-  
-    public Guide getGuide(Thumbnail thumbnail) {
-        UUID id = thumbnail.getGuideUUID();
-        Guide guide = connection.getGuide(id);
-        return guide;
-
+    public Guide getGuide(int i) {
+        Guide returnGuide = null;
+        try {
+            returnGuide = connection.getGuide(thumbnails[i]);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return returnGuide;
     }
-
-
 }
 

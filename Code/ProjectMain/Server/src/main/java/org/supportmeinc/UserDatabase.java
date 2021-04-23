@@ -13,19 +13,21 @@ import java.sql.SQLException;
 
 import shared.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 
-public class UserDatabaseConnection {
+public class UserDatabase {
 
     java.sql.Connection dbConnection;
 
     private String userDbName;
     private String userDbPassword;
     private String dbIp;
+    private DatabaseManager databaseManager;
 
-    public UserDatabaseConnection(){
+    public UserDatabase(){
         URL pwdUrl = getClass().getResource("pwd.txt");;
 
         if (pwdUrl != null){
@@ -73,6 +75,9 @@ public class UserDatabaseConnection {
         }
     }
 
+    public boolean getAuthor(UUID guideUUID){
+        return false;//TODO get author from guide
+    }
 
     public String getSalt(User user) {
         String returnValue = null;
@@ -130,8 +135,14 @@ public class UserDatabaseConnection {
         return returnValue;
     }
 
+    public UserDatabase(DatabaseManager databaseManager){
+        this();
+        this.databaseManager = databaseManager;
+    }
+
     public UUID[] getGuideUUIDaccess(User user) {
         UUID[] returnValues = null;
+        System.out.println(user.getEmail());
         try {
             String query = "select get_all_access(?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -140,10 +151,12 @@ public class UserDatabaseConnection {
             ResultSet rs = statement.executeQuery();
             ArrayList<UUID> UUIDList = new ArrayList<>();
             while (rs.next()){
+                UUID uuid = (UUID) rs.getObject(1);
+                System.out.println(uuid.toString());
                 UUIDList.add((UUID) rs.getObject(1));
             }
-            returnValues = new UUID[0];
-            UUIDList.toArray(returnValues);
+            returnValues = UUIDList.toArray(new UUID[0]);
+            System.out.println("retval uuid : " + returnValues[0]);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -158,5 +171,9 @@ public class UserDatabaseConnection {
     public boolean revokeAccess(String authorEmail, String userEmail, UUID guideUUID){
         boolean success = false;
         return success; //TODO : write queries and code for revoking access to guide
+    }
+
+    public boolean addGuide(String authorEmail, Guide guide) {
+        return false;//TODO add author with guide to database
     }
 }
