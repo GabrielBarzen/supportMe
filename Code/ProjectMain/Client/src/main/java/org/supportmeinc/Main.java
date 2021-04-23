@@ -165,6 +165,7 @@ public class Main extends Application {
             guideEditor = new GuideEditor();
             guideEditorUiController = (GuideEditorUi) viewController;
             guideEditorUiController.populateListView();
+            guideEditorUiController.populateComboBoxes();
 
         }
 
@@ -203,5 +204,9 @@ public class Main extends Application {
 
     public void updateCard(String title, String text, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
         guideEditor.updateCard(title, text, img, affirmUUID, negativeUUID, cardUUID);
+    }
+
+    public void removeCard(UUID cardUUID) {
+        guideEditor.removeCard(cardUUID);
     }
 }

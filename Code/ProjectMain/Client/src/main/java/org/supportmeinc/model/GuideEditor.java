@@ -38,4 +38,8 @@ public class GuideEditor {
         System.out.println(cardsList.get(cardUUID) + "sista i GuideEditor");
 
     }
+
+    public void removeCard(UUID cardUUID) {
+        cardsList.remove(cardUUID);
+    }
 }

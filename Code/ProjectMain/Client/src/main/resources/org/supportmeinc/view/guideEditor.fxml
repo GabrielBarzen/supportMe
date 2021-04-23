@@ -71,7 +71,7 @@
                <children>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="listView" fixedCellSize="30.0" prefHeight="567.0" prefWidth="297.0" />
+                        <ListView fx:id="listView" fixedCellSize="30.0" onMouseClicked="#populateComboBoxes" prefHeight="567.0" prefWidth="297.0" />
                      </content></ScrollPane>
                </children>
             </AnchorPane>
@@ -144,7 +144,7 @@
          <bottom>
             <AnchorPane prefHeight="30.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
+                  <Button layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
                   <Button layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Create new Card" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Save" />
                </children>
