@@ -1,12 +1,15 @@
 package org.supportmeinc.model;
 
 
-import java.io.*;
+import shared.Guide;
+import shared.Thumbnail;
+import shared.User;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.UUID;
-
-import org.supportmeinc.JfxUtils;
-import shared.*;
 
 public class Connection {
 

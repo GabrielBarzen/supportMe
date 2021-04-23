@@ -1,7 +1,7 @@
 package org.supportmeinc.model;
 
-import org.supportmeinc.JfxUtils;
-import shared.*;
+import shared.Card;
+import shared.Guide;
 
 import java.io.File;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class GuideEditor {
         cardsList = new HashMap<>();
     }
 
-    public void addNewCard(String title, String description, File img, String affirmUUID, String negativeUUID) {
+    public void addNewCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
         Card card = new Card();
         card.setTitle(title);
         card.setText(description);
