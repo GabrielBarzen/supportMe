@@ -73,11 +73,13 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         String text = txtCardText.getText();
 
  //       if(!listView.isPressed()) {
-        controller.addCardToList(title, text, null, null, null);
- //       } else {
- //           UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
-  //          controller.updateCard(title, text, null, null, null, cardUUID);
-   //     }
+        if (text.length() < 281) {
+            controller.addCardToList(title, text, null, null, null);
+            //       } else {
+            //           UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
+            //          controller.updateCard(title, text, null, null, null, cardUUID);
+            //     }
+        }
 
         lblTitlePreview.setText(title);
         lblCardTextPreview.setText(text);
