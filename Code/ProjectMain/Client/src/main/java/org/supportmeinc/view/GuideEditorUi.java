@@ -1,6 +1,5 @@
 package org.supportmeinc.view;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,37 +8,55 @@ import javafx.scene.image.ImageView;
 import org.supportmeinc.JfxUtils;
 import org.supportmeinc.Main;
 import shared.Card;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class GuideEditorUi implements JFXcontroller, Initializable {
 
     private Main controller;
 
-    @FXML private Label lblTitlePreview, lblCardTextPreview;
+    @FXML private Label lblTitlePreview, lblCardTextPreview, yesCardSelected, noCardSelected;
     @FXML private ImageView imgPreview;
     @FXML private TextField txtCardTitle, txtFilePath;
     @FXML private TextArea txtCardText;
     @FXML private ComboBox<Card> cmbYes, cmbNo;
     @FXML private ListView<Card> listView;
-    private ObservableList<String> listViewContent;
+    private Alert alert = new Alert(Alert.AlertType.WARNING);
 
-
+    public GuideEditorUi() {
+        this.listView = new ListView<>();
+    }
 
     public void initData(Main controller){
         this.controller = controller;
         controller.registerController(this);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        populateListView();
-    }
-
-    public GuideEditorUi() {
-
     }
 
     public void populateListView() {
+        listView.getItems().clear();
+        for (Card card : controller.getCardsList().values()) {
+            listView.getItems().add(card);
+        }
+    }
 
+    public void populateComboBoxes() {
+        cmbYes.getItems().clear();
+        cmbNo.getItems().clear();
+        for (Card card : controller.getCardsList().values()) {
+            if(card != listView.getSelectionModel().getSelectedItem()) {
+                if(card.getAffirmUUID() == null) {
+                    cmbYes.getItems().add(card);
+                }
+
+                if(card.getNegUUID() == null) {
+                    cmbNo.getItems().add(card);
+                }
+            }
+        }
     }
 
     public void selectImage() {
@@ -54,7 +71,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             Image img = JfxUtils.toImage(byteFile);
             imgPreview.setImage(img);
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("File type warning");
             alert.setHeaderText("Could not add selected image to Card");
             alert.setContentText("Selected file must be of type .png or .jpg, please try again");
@@ -64,30 +81,74 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void save() {
-        String title = txtCardTitle.getText();
+        String title;
         String text = txtCardText.getText();
+        UUID yesUUID = null;
+        UUID noUUID = null;
+        File img = null;
 
- //       if(!listView.isPressed()) {
-        controller.addCardToList(title, text, null, null, null);
- //       } else {
- //           UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
-  //          controller.updateCard(title, text, null, null, null, cardUUID);
-   //     }
+        if(!txtCardTitle.getText().equals("")) {
+            title = txtCardTitle.getText();
+        } else {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No title added");
+            alert.setHeaderText("Can't create card without title");
+            alert.setContentText("Please fill in title");
+            alert.show();
+            return;
+        }
+
+        if(cmbYes.getSelectionModel().getSelectedItem() != null) {
+            yesUUID = cmbYes.getSelectionModel().getSelectedItem().getCardUUID();
+        }
+
+        if(cmbNo.getSelectionModel().getSelectedItem() != null) {
+            noUUID = cmbNo.getSelectionModel().getSelectedItem().getCardUUID();
+        }
+
+        //TODO: Add image, type File, might need new method in JfxUtils.
+
+        if(!listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
+            controller.addCardToList(title, text, img, yesUUID, noUUID);
+        } else {
+            UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
+            controller.updateCard(title, text, img, yesUUID, noUUID, cardUUID);
+        }
 
         lblTitlePreview.setText(title);
         lblCardTextPreview.setText(text);
 
-        txtCardText.setText("Fill in text");
-        txtCardTitle.setText("Fill in title");
-
-        listView.refresh();
-
+        populateListView();
+        populateComboBoxes();
     }
 
+    /*public void onClick() {
+        if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
+            if(listView.getSelectionModel().getSelectedItem() != null) {
+                Card affirmCard = controller.getCardsList().get(listView.getSelectionModel().getSelectedItem().getAffirmUUID());
+                if(affirmCard != null) {
+                    yesCardSelected.setText(affirmCard.toString());
+                }
+            }
+        }
+    }*/
 
+    public void removeCard() {
+        if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
+            controller.removeCard(listView.getSelectionModel().getSelectedItem().getCardUUID());
+            populateListView();
+            populateComboBoxes();
+        } else {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No card selected");
+            alert.setHeaderText("Couldn't remove card");
+            alert.setContentText("Please select a card to be deleted");
+            alert.show();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        updateCardsList();
+//        populateListView();
     }
 }

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -71,7 +71,7 @@
                <children>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="listView" prefHeight="570.0" prefWidth="300.0" />
+                        <ListView fx:id="listView" fixedCellSize="30.0" onMouseClicked="#onClick" onMouseExited="#populateComboBoxes" prefHeight="567.0" prefWidth="297.0" />
                      </content></ScrollPane>
                </children>
             </AnchorPane>
@@ -89,16 +89,18 @@
                            </children>
                         </AnchorPane>
                         <TextArea fx:id="txtCardText" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." />
-                        <AnchorPane prefHeight="37.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="80.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="YES CARD" />
                               <ComboBox fx:id="cmbYes" layoutX="140.0" layoutY="5.0" prefWidth="150.0" />
+                              <Label fx:id="yesCardSelected" layoutX="182.0" layoutY="44.0" prefHeight="17.0" prefWidth="67.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="37.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="80.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="NO CARD" />
                               <ComboBox fx:id="cmbNo" layoutX="140.0" layoutY="5.0" prefWidth="150.0" />
+                              <Label fx:id="noCardSelected" layoutX="182.0" layoutY="39.0" prefHeight="17.0" prefWidth="67.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="26.0" prefWidth="290.0">
@@ -144,7 +146,7 @@
          <bottom>
             <AnchorPane prefHeight="30.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
+                  <Button layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
                   <Button layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Create new Card" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Save" />
                </children>
