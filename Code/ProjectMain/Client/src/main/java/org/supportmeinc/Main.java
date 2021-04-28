@@ -50,7 +50,6 @@ public class Main extends Application {
         guideManager = new GuideManager(connection);
 
         System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
-//      testCard();
     }
 
     public void testCard() { //TODO Stubbe, eliminera
@@ -63,9 +62,9 @@ public class Main extends Application {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
             String configEntry;
 
-            while ((configEntry = bufferedReader.readLine()) != null){
+            while ((configEntry = bufferedReader.readLine()) != null) {
                 String[] entry = configEntry.split("=");
-                switch (entry[0]){
+                switch (entry[0]) {
                     case "ip":
                         ip = entry[1];
                         break;
@@ -77,9 +76,9 @@ public class Main extends Application {
                 }
             }
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Config file not found");
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Read exception in config");
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -116,14 +115,10 @@ public class Main extends Application {
         stage.setTitle("supportMe");
         stage.setScene(scene);
         stage.show();
-        System.out.println("nice");
         startBackend();
     }
 
     public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
-
-
-
     }
 
     public Parent loadFXML(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
