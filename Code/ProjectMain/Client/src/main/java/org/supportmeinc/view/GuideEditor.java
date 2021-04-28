@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.supportmeinc.JfxUtils;
-import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
 import shared.Card;
 
@@ -15,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class GuideEditorUi implements JFXcontroller, Initializable {
+public class GuideEditor implements JFXcontroller, Initializable {
 
     private MainController controller;
 
@@ -27,13 +26,15 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     @FXML private ListView<Card> listView;
     private Alert alert = new Alert(Alert.AlertType.WARNING);
 
-    public GuideEditorUi() {
+    public GuideEditor() {
         this.listView = new ListView<>();
+        System.out.println("kjahskjhiuyewiwurywiewuyiuywiew");
     }
 
     public void initData(MainController controller){
         this.controller = controller;
-        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        System.out.println("kjasdhdkjhasskjdhakjshkjahsdkjhaskdhakjsdhjkashdjkahsd");
+//        listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
 //    public void populateListView() {
@@ -121,7 +122,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 //        populateListView();
 //        populateComboBoxes();
 //    }
-
+//
 //    public void onClick() {
 //        if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
 //            if(listView.getSelectionModel().getSelectedItem() != null) {
@@ -132,7 +133,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 //            }
 //        }
 //    }
-
+//
 //    public void removeCard() {
 //        if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
 //            controller.removeCard(listView.getSelectionModel().getSelectedItem().getCardUUID());

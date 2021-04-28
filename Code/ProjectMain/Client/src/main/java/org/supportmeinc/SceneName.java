@@ -4,7 +4,7 @@ public enum SceneName {
     cardEditor,
     cardViewer,
     guideBrowser,
-    guideEditorUI,
+    guideEditor,
     login,
     register,
     toolbar

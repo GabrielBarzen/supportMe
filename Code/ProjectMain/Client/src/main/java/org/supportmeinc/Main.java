@@ -4,16 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.supportmeinc.view.*;
-import org.supportmeinc.view.GuideEditorUi;
+import org.supportmeinc.view.GuideEditor;
 import shared.Card;
 import org.supportmeinc.model.*;
-import shared.Guide;
-import shared.Thumbnail;
-import shared.User;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -35,7 +30,7 @@ public class Main extends Application {
     private String ip;
     private Connection connection;
     private GuideManager guideManager;
-    private GuideEditor guideEditor;
+    private org.supportmeinc.model.GuideEditor guideEditor;
 
     public static void main(String[] args) {
         launch();
@@ -96,20 +91,16 @@ public class Main extends Application {
     private CardEditor cardEditorController;
     private CardViewer cardViewerController;
     private GuideBrowser guideBrowserController;
-    private GuideEditorUi guideEditorUiController;
+    private GuideEditor guideEditorUiController;
     private Login loginController;
     private Register registerController;
     private Toolbar toolbarController;
+    private MainController mainController;
 
 
     @Override
     public void start(Stage stage) throws IOException {
-        mainStage = stage;
-        scene = new Scene(loadFXML("login"));
-        stage.setTitle("supportMe");
-        stage.setScene(scene);
-        stage.show();
-        System.out.println("nice");
+        this.mainController = new MainController(stage, this);
         startBackend();
     }
 
@@ -152,9 +143,9 @@ public class Main extends Application {
             guideBrowserController = (GuideBrowser) viewController;
         }
 
-        if (viewController instanceof GuideEditorUi) {
-            guideEditor = new GuideEditor();
-            guideEditorUiController = (GuideEditorUi) viewController;
+        if (viewController instanceof GuideEditor) {
+//            guideEditor = new GuideEditor();
+            guideEditorUiController = (GuideEditor) viewController;
 //            guideEditorUiController.populateListView();
 //            guideEditorUiController.populateComboBoxes();
 

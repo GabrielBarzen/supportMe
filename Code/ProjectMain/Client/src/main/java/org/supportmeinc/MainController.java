@@ -1,9 +1,12 @@
 package org.supportmeinc;
 
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
+import org.supportmeinc.model.GuideEditor;
+import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
 
@@ -19,32 +22,41 @@ public class MainController {
     private Stage stage;
     private Scene toolbar;
     private Toolbar toolbarController;
+    private GuideManager guideManager;
+    private GuideEditor guideEditor;
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
         this.stage = stage;
 
+
         try {
-            toolbar = new Scene(loadFXML(SceneName.toolbar));
-            stage.setScene(toolbar);
+            stage.setScene(new Scene(loadFXML(SceneName.login)));
         } catch (IOException e) {
 
         }
 
         scenes = new HashMap<>();
+        stage.setTitle("supportMe");
+        stage.show();
         populateScenes();
     }
 
     public void populateScenes() {
         for (SceneName sceneName : SceneName.values()) {
-            try {
-                 AnchorPane scene = new AnchorPane(loadFXML(sceneName));
-                 scenes.put(sceneName, scene);
-            }
-            catch (IOException e) {
+            if(!(sceneName.equals(SceneName.login) || sceneName.equals(SceneName.register) || sceneName.equals(SceneName.toolbar))) {
+                try {
+                    AnchorPane scene = new AnchorPane(loadFXML(sceneName));
+                    scenes.put(sceneName, scene);
+                } catch (IOException e) {
 
+                }
             }
         }
+    }
+
+    public HashMap<SceneName, AnchorPane> getScenes() {
+        return scenes;
     }
 
     public void registerToolbar(Toolbar toolbar) {
@@ -55,6 +67,7 @@ public class MainController {
 
         String resourceName = sceneName.name();
         System.out.println(getClass().getResource("view/" + resourceName + ".fxml"));
+        System.out.println("asdlkasldjhaskdjhasdkjh");
         System.out.println(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
         System.out.println();
 
@@ -75,6 +88,13 @@ public class MainController {
 
     public void switchScene(SceneName sceneName) {
         toolbarController.swapScene(scenes.get(sceneName));
+    }
+
+    public void sceneSwitch(SceneName sceneName, Event event) throws IOException {
+        Scene scene = new Scene(loadFXML(sceneName));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public File jfxFileChooser() {

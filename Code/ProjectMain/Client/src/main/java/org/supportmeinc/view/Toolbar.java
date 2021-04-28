@@ -20,13 +20,13 @@ public class Toolbar implements JFXcontroller {
         //controller.registerController(this);
     }
 
-    public void homeButton() throws IOException {
-      //  borderPane.setCenter(controller.loadFXML("guideBrowser"));
+    public void homeButton() {
+       borderPane.setCenter(controller.getScenes().get(SceneName.guideBrowser));
 //        controller.testCard();
     }
 
-    public void createNewGuide() throws IOException {
-     //   borderPane.setCenter(controller.loadFXML("guideEditor"));
+    public void createNewGuide() {
+        borderPane.setCenter(controller.getScenes().get(SceneName.guideEditor));
     }
 
     public void swapScene(AnchorPane pane) {

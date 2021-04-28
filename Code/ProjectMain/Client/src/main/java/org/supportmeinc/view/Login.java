@@ -53,7 +53,8 @@ public class Login implements JFXcontroller {
             message.setText("Please enter your email and password!");
 
         } else if (email.equals("a") && pass.equals("a")) {
-            sceneSwitch(SceneName.toolbar, event);
+//            sceneSwitch(SceneName.toolbar, event);
+            controller.sceneSwitch(SceneName.toolbar, event);
         }
         else {
             message.setText("Wrong username or password!");
@@ -61,11 +62,13 @@ public class Login implements JFXcontroller {
     }
 
     public void switchToRegister(javafx.event.ActionEvent event) throws IOException {
-        sceneSwitch(SceneName.register, event);
+//        sceneSwitch(SceneName.register, event);
+        controller.sceneSwitch(SceneName.register, event);
     }
 
     public void switchToLogin(javafx.event.ActionEvent event) throws IOException {
-        sceneSwitch(SceneName.login, event);
+//        sceneSwitch(SceneName.login, event);
+        controller.sceneSwitch(SceneName.login, event);
     }
 
     public void chooseImage(ActionEvent event) {
@@ -80,13 +83,6 @@ public class Login implements JFXcontroller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void sceneSwitch(SceneName sceneName, Event event) throws IOException {
-        scene = new Scene(controller.loadFXML(sceneName));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
     }
 
 }

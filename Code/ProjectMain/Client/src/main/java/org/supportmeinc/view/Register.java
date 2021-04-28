@@ -43,7 +43,7 @@ public class Register implements JFXcontroller {
         this.controller = controller;
     }
 
-    public void displayImage(){
+    public void displayImage() {
 
     }
 

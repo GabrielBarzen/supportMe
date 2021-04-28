@@ -16,14 +16,10 @@ public class CardViewer implements JFXcontroller, Initializable {
 
     MainController controller;
 
-    @FXML
-    private Label cardTitle;
-    @FXML
-    private ImageView cardImage;
-    @FXML
-    private Label cardText;
-    @FXML
-    private VBox box;
+    @FXML private Label cardTitle;
+    @FXML private ImageView cardImage;
+    @FXML private Label cardText;
+    @FXML private VBox box;
 
     public void initData(MainController controller){
         this.controller = controller;

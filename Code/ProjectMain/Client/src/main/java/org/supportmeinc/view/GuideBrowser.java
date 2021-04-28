@@ -30,7 +30,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public GuideBrowser(){
-
+        System.out.println("GUIDEBROWSER");
     }
 
     public void setThumbnails(ArrayList<Thumbnail> thumbnails) {
