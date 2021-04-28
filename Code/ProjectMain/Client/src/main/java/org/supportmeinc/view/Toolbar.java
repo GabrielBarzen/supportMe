@@ -3,33 +3,34 @@ package org.supportmeinc.view;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import org.supportmeinc.Main;
+import org.supportmeinc.MainController;
+import org.supportmeinc.SceneName;
+
 import java.io.IOException;
 
 public class Toolbar implements JFXcontroller {
 
-    public AnchorPane toolbar;
-    private Main controller;
+    private MainController controller;
 
-    @FXML
-    private BorderPane borderPane; //Swap FXML in CENTER of borderpane to switch scenes, use ANCHORPANE as parent
+    @FXML private BorderPane borderPane;
 
-    public void initData(Main controller){
+    public void initData(MainController controller){
         this.controller = controller;
-        controller.registerController(this);
+        controller.registerToolbar(this);
+        //controller.registerController(this);
     }
 
     public void homeButton() throws IOException {
-//        anchorPane.getChildren().setAll(controller.loadFXML("guideBrowser"));
-        borderPane.setCenter(controller.loadFXML("guideBrowser"));
+      //  borderPane.setCenter(controller.loadFXML("guideBrowser"));
 //        controller.testCard();
-//        borderPane.setCenter(controller.loadFXML("guideBrowser"));
-//        controller.testCard();
-//        anchorPane.getChildren().add(controller.loadFXML("guideBrowser"));
     }
 
     public void createNewGuide() throws IOException {
-        borderPane.setCenter(controller.loadFXML("guideEditor"));
+     //   borderPane.setCenter(controller.loadFXML("guideEditor"));
+    }
+
+    public void swapScene(AnchorPane pane) {
+        borderPane.setCenter(pane);
     }
 
 } //class end

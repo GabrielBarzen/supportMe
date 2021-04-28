@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
 import org.supportmeinc.JfxUtils;
+import org.supportmeinc.MainController;
 import shared.Thumbnail;
 
 import java.io.IOException;
@@ -18,15 +19,14 @@ import java.util.UUID;
 
 public class GuideBrowser implements JFXcontroller, Initializable {
 
-    private Main controller;
+    private MainController controller;
     private List<Thumbnail> thumbnails = new ArrayList<>();
 
     @FXML
     private FlowPane flowPane;
 
-    public void initData(Main controller){
+    public void initData(MainController controller){
         this.controller = controller;
-        controller.registerController(this);
     }
 
     public GuideBrowser(){
