@@ -4,20 +4,23 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
+import shared.Guide;
+import shared.Thumbnail;
 import shared.User;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.UUID;
+import java.util.HashMap;
+
 
 
 /**
@@ -26,11 +29,12 @@ import java.nio.file.Paths;
 public class Main extends Application {
 
     private static Scene scene;
-    private static Stage stage;
+    private static Stage mainStage;
     private int port;
     private String ip;
     private Connection connection;
     private GuideManager guideManager;
+    private GuideEditor guideEditor;
 
     public static void main(String[] args) {
         launch();
@@ -44,12 +48,13 @@ public class Main extends Application {
         replaceWithUserFromLoginScreen.setNewUser(false);
         connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
+
+        System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
 //      testCard();
     }
 
     public void testCard() { //TODO Stubbe, eliminera
-
-        Card testCard = initGuide(0);
+        Card testCard = guideManager.getGuide(0).getDescriptionCard();
         cardViewerController.setCard(testCard.getTitle(), testCard.getImage(), testCard.getText());
     }
 
@@ -82,8 +87,8 @@ public class Main extends Application {
     }
     //Model methods//
 
-    public Card initGuide(int index) {
-        return guideManager.initGuide(index);
+    public Card getGuide(int index) {
+        return guideManager.getGuide(index).getDescriptionCard();
     }
 
     public Card getCard(boolean choice) {
@@ -106,22 +111,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-      //  scene = new Scene(loadFXML("toolbar"));
-        scene = new Scene(loadFXML("login"));
+        mainStage = stage;
+        scene = new Scene(loadFXML("toolbar"));
         stage.setTitle("supportMe");
         stage.setScene(scene);
         stage.show();
         System.out.println("nice");
         startBackend();
-    }
-
-    public void changeScene(String fxml) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fxml));
-        stage.getScene().setRoot(root);
-    }
-
-    public void checkUser(String email, String password){
-
     }
 
     public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
@@ -141,8 +137,8 @@ public class Main extends Application {
         String styleSheet = String.valueOf(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
 
         FXMLLoader fxmlLoader = new FXMLLoader(new URL(fxml));
-
         Parent root = fxmlLoader.load();
+
         System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
         jfXcontroller.initData(this);
@@ -153,14 +149,47 @@ public class Main extends Application {
     }
 
     public void registerController(JFXcontroller viewController) { //TODO Möjligtvis refactor --> Toolbar
-        if (viewController instanceof Login) {loginController = (Login) viewController;}
-        if (viewController instanceof Register) {registerController = (Register) viewController;}
-        if (viewController instanceof GuideBrowser) {guideBrowserController = (GuideBrowser) viewController;}
+        if (viewController instanceof Login) {
+            loginController = (Login) viewController;
+        }
+
+        if (viewController instanceof Register) {
+            registerController = (Register) viewController;
+        }
+
+        if (viewController instanceof GuideBrowser) {
+            guideBrowserController = (GuideBrowser) viewController;
+        }
+
         if (viewController instanceof GuideEditorUi) {
-            guideEditorUiController = (GuideEditorUi) viewController;}
-        if (viewController instanceof CardViewer) {cardViewerController = (CardViewer) viewController;}
-        if (viewController instanceof CardEditor) {cardEditorController = (CardEditor) viewController;}
-        if (viewController instanceof Toolbar) {toolbarController = (Toolbar) viewController;}
+            guideEditorUiController = (GuideEditorUi) viewController;
+            guideEditor = new GuideEditor();
+        }
+
+        if (viewController instanceof CardViewer) {
+            cardViewerController = (CardViewer) viewController;
+        }
+
+        if (viewController instanceof CardEditor) {
+            cardEditorController = (CardEditor) viewController;
+        }
+
+        if (viewController instanceof Toolbar) {
+            toolbarController = (Toolbar) viewController;
+        }
     }
 
+    public HashMap<UUID, Card> getCardsList() {
+        return guideEditor.getCardsList();
+    }
+
+    public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
+//        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
+    }
+
+    public File jfxFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(mainStage);
+        return selectedFile;
+    }
 }

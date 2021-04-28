@@ -1,11 +1,11 @@
 import org.supportmeinc.Authenticator;
-import org.supportmeinc.ServerLog;
-import org.supportmeinc.UserDatabaseConnection;
+import org.supportmeinc.DatabaseManager;
+import org.supportmeinc.UserDatabase;
 import shared.User;
 
 public class databaseConnectionTest {
 
-    private UserDatabaseConnection db;
+    private DatabaseManager db;
     private Authenticator auth;
     private User testUser1;
     private User testUser2;
@@ -17,7 +17,7 @@ public class databaseConnectionTest {
     }
 
     private databaseConnectionTest(){
-        db =  new UserDatabaseConnection();
+        db =  new DatabaseManager();
         populateTestUsers();
         testLogin();
     }

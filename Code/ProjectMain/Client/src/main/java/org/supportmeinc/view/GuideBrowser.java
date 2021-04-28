@@ -33,17 +33,13 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     }
 
-    public void getGuide(int index) {
-        controller.initGuide(index);
-    }
-
     public void setThumbnails(ArrayList<Thumbnail> thumbnails) {
         this.thumbnails = thumbnails;
     }
 
     //TODO STUBBE, VÄNLIGEN ELIMINERA EFTER TEST
     public void fakeThumbnails() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 25; i++) {
             Thumbnail nail = new Thumbnail(UUID.randomUUID());
             nail.setTitle("Title #" + i);
 
