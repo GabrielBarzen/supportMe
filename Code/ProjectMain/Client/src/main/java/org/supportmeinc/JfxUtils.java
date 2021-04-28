@@ -4,10 +4,11 @@ import javafx.scene.image.Image;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 
 public class JfxUtils {
 
-    public static Image fromBytes(byte[] img){
+    public static Image toImage(byte[] img){
         Image image;
         image = new Image(new BufferedInputStream(new ByteArrayInputStream(img)));
         return image;
@@ -21,6 +22,7 @@ public class JfxUtils {
             e.printStackTrace();
         }
         return returnBytes;
+
     }
 
     public static byte[] toBytes(String filename) {

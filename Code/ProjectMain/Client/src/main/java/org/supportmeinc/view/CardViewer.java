@@ -34,7 +34,7 @@ public class CardViewer implements JFXcontroller, Initializable {
 
     public void setCard(String title, byte[] image, String text) {
         cardTitle.setText(title);
-        cardImage.setImage(JfxUtils.fromBytes(image));
+        cardImage.setImage(JfxUtils.toImage(image));
         cardText.setText(text);
     }
 

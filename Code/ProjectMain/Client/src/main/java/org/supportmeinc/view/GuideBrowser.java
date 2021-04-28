@@ -39,7 +39,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     //TODO STUBBE, VÄNLIGEN ELIMINERA EFTER TEST
     public void fakeThumbnails() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 25; i++) {
             Thumbnail nail = new Thumbnail(UUID.randomUUID());
             nail.setTitle("Title #" + i);
 
