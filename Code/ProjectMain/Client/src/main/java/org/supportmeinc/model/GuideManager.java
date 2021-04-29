@@ -48,10 +48,11 @@ public class GuideManager {
         }*/
     }
 
-    public Thumbnail[] getDownloadedThumbnails()  {
-	    String username = "user";
+    public ArrayList<Thumbnail> getDownloadedThumbnails()  {
+	    String username = "user"; //TODO byt mot framtida lösning
+        ArrayList<Thumbnail> thumbnails = new ArrayList<>();
 	    try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username + "textfile.txt"));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username + ".dat"));
             Object obj = ois.readObject();
             ArrayList<Guide> guides = new ArrayList<>();
             while (obj != null) {
@@ -62,15 +63,14 @@ public class GuideManager {
                 }
             }
             if (guides.size() > 0) {
-                Thumbnail[] thumbnails = new Thumbnail[guides.size()];
-                for (int i = 0; i < guides.size(); i++) {
-                    thumbnails[i] = guides.get(i).getThumbnail();
+                for (Guide guide : guides) {
+                    thumbnails.add(guide.getThumbnail());
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new Thumbnail[0];
+        return thumbnails;
     }
 
     public Card getCard(boolean choice) {
@@ -84,7 +84,7 @@ public class GuideManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (!(newThumbs == null)){
+        if (!(newThumbs == null)) {
             thumbnails = newThumbs;
         }
         return thumbnails;

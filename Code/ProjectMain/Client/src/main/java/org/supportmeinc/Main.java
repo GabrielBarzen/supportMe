@@ -48,9 +48,10 @@ public class Main extends Application {
         try {
             connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
-        } catch (ConnectException e) {
+        } catch (IOException e) {
             guideManager = new GuideManager();
-            e.printStackTrace();
+			System.out.println("Cannot create a connection, starting in offline mode");
+            //e.printStackTrace();
         }
 
         System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());

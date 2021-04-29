@@ -52,7 +52,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fakeThumbnails();
+        //fakeThumbnails();
         updateThumbnailView();
     }
 
