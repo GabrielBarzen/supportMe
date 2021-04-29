@@ -1,3 +1,26 @@
 .root {
-    -fx-background-color: aqua;
+    -fx-background-color: #d7cec7;
+}
+.button{
+    -fx-border: none;
+    -fx-background-color: #f3f3f3;
+    -fx-padding: 4px 4px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+}
+
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-background-color: #dedede;
+}
+.scroll-bar {
+    -fx-background-color: #f3f3f3;
+    -fx-border-color: #f3f3f3;
+    -fx-progress-color: #f3f3f3;
+    -fx-border: none;
+    -fx-display: inline-block;
 }

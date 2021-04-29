@@ -43,6 +43,7 @@ public class Connection {
             receive.start();
             System.out.println("threads started");
         } catch (IOException e) {
+            System.out.println("caught");
             e.printStackTrace();
         }
 
