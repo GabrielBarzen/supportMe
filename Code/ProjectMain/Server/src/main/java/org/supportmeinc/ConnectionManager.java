@@ -34,7 +34,6 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
     @Override
     public void run() {
-
         while (!Thread.interrupted()){
             ServerLog.log("awaiting connection");
             try {
@@ -65,6 +64,12 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
                 ServerLog.log("Auth status : could not log in" );
                 connection.sendObject(null);
             }
+        }
+
+        if (object instanceof Guide){
+            Guide guide = (Guide) object;
+            boolean success = databaseManager.saveGuide(guide, user);
+            userConnection.get(user).sendObject(success);
         }
 
         if (object instanceof Thumbnail){

@@ -45,7 +45,7 @@ public class Connection {
 
     }
 
-    public void send(Object object){
+    private void send(Object object){
         sendBuffer.put(object);
     }
 
@@ -73,11 +73,22 @@ public class Connection {
         return returnThumbnails;
     }
 
+    public boolean saveGuide(Guide guide) {
+        boolean success = false;
+        send(guide);
+        Object obj = null;
 
-    public Thumbnail[] getThumbnails() {
-        return new Thumbnail[]{new Thumbnail(UUID.randomUUID())};
+        try {
+            obj = receiveBuffer.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(obj instanceof Boolean){
+            success = (Boolean) obj;
+        }
+        return success;
     }
-
 
     public void disconnect() throws IOException{
         send.interrupt();

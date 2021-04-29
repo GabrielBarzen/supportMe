@@ -252,14 +252,15 @@ public class ModelDatabase {
         return guide;
     }
 
-    public void addGuide(Guide guide){
+    public boolean addGuide(Guide guide){
+        boolean success = false;
         try {
             String query = "select (?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setObject(1, guide.getGuideUUID());
             statement.setObject(2, guide.getDescriptionCard().getCardUUID());
             statement.execute();
-            databaseManager.userDatabaseAddGuide(guide.getAuthorEmail(), guide);
+            success = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -271,6 +272,7 @@ public class ModelDatabase {
                 ServerLog.log("added guide" + guide.getGuideUUID());
             }
         }
+        return success;
     }
 
     private boolean addCards(Card[] cards, UUID guideUUID) {
@@ -310,6 +312,55 @@ public class ModelDatabase {
             success = statement.execute();
             if(!success){
                 ServerLog.log("failed adding thumbnail");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
+    public boolean saveGuide(Guide guide, User user) {
+        boolean success = false;
+        boolean guideExist = false;
+        try {
+            String query = "select exist_guide(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guide.getGuideUUID());
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                guideExist = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (guideExist){
+            success = updateGuide(guide);
+        } else {
+            success = addGuide(guide);
+        }
+        return success;
+
+    }
+
+    private boolean updateGuide(Guide guide) {
+        boolean success = false;
+        success = removeGuide(guide);
+        if (success) {
+            success = addGuide(guide);
+        }
+        return success;
+    }
+
+    private boolean removeGuide(Guide guide) {
+        boolean success = false;
+        try {
+            String query = "select remove_guide(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guide.getGuideUUID());
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                success = rs.getBoolean(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
