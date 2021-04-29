@@ -1,5 +1,4 @@
 package org.supportmeinc.view;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,7 +8,6 @@ import org.supportmeinc.Main;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import shared.Thumbnail;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,8 +20,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     private MainController controller;
     private List<Thumbnail> thumbnails = new ArrayList<>();
 
-    @FXML
-    private FlowPane flowPane;
+    @FXML private FlowPane flowPane;
 
     public void initData(MainController controller){
         this.controller = controller;

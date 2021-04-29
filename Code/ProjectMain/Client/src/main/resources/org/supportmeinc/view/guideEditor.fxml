@@ -36,7 +36,7 @@
                      <bottom>
                         <VBox alignment="CENTER" prefHeight="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label fx:id="lblCardTextPreview" alignment="CENTER" contentDisplay="CENTER" text="cardText">
+                              <Label fx:id="lblCardTextPreview" alignment="CENTER" contentDisplay="CENTER" text="cardText" wrapText="true">
                                  <font>
                                     <Font size="18.0" />
                                  </font></Label>
@@ -77,14 +77,14 @@
                <children>
                   <VBox prefHeight="650.0" prefWidth="300.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TextField fx:id="txtCardTitle" prefWidth="290.0" promptText="Add card title..." />
+                        <TextField fx:id="txtCardTitle" onKeyTyped="#updateTitlePreview" prefWidth="290.0" promptText="Add card title..." />
                         <AnchorPane prefHeight="53.0" prefWidth="290.0">
                            <children>
                               <TextField fx:id="txtFilePath" disable="true" editable="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="27.0" mnemonicParsing="false" onAction="#selectImage" text="Select File" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                        <TextArea fx:id="txtCardText" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." wrapText="true" />
+                        <TextArea fx:id="txtCardText" onKeyTyped="#updateTextPreview" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." wrapText="true" />
                         <AnchorPane prefHeight="80.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="YES CARD" />
@@ -142,7 +142,8 @@
          <bottom>
             <AnchorPane prefHeight="30.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" mnemonicParsing="false" onAction="#openSelectedCard" prefHeight="25.0" prefWidth="150.0" text="Edit Card" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="150.0" text="Remove Card" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Create new Card" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Save" />
                </children>

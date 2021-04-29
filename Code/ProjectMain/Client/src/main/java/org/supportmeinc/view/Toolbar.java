@@ -1,12 +1,9 @@
 package org.supportmeinc.view;
-
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
-
-import java.io.IOException;
 
 public class Toolbar implements JFXcontroller {
 

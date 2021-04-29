@@ -41,6 +41,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             listView.getItems().add(card);
         }
     }
+
     public void populateComboBoxes() {
         cmbYes.getItems().clear();
         cmbNo.getItems().clear();
@@ -56,6 +57,35 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
     }
 
+    public void updateTitlePreview() { //TODO add alert
+        String cardTitle = txtCardTitle.getText();
+
+        if (cardTitle.length() > 20) {
+            cardTitle = cardTitle.substring(0, 20);
+            txtCardTitle.setText(cardTitle);
+        }
+        lblTitlePreview.setText(cardTitle);
+    }
+
+    public void updateTextPreview() { //TODO add alert
+        String cardText = txtCardText.getText();
+
+        if (cardText.length() > 280) {
+            cardText = cardText.substring(0, 280);
+            txtCardText.setText(cardText);
+        }
+        lblCardTextPreview.setText(cardText);
+    }
+
+    public void openSelectedCard() { //TODO early version, not tested with actual card
+        Card selectedCard = listView.getSelectionModel().getSelectedItem();
+        if (selectedCard != null) {
+            lblTitlePreview.setText(selectedCard.getTitle());
+            imgPreview.setImage(ImageUtils.toImage(selectedCard.getImage()));
+            lblCardTextPreview.setText(selectedCard.getText());
+        }
+    }
+
     public void selectImage() {
         File file = controller.jfxFileChooser();
         String fileName = file.toString();
@@ -67,6 +97,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             byte[] byteFile = ImageUtils.toBytes(file);
             Image img = ImageUtils.toImage(byteFile);
             imgPreview.setImage(img);
+            txtFilePath.setText(fileName);
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("File type warning");
@@ -110,8 +141,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         if(cmbNo.getSelectionModel().getSelectedItem() != null) {
             noUUID = cmbNo.getSelectionModel().getSelectedItem().getCardUUID();
         }
-
-        //TODO: Add image, type File, might need new method in JfxUtils.
 
         if(!listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
             controller.addCardToList(title, text, img, yesUUID, noUUID);
