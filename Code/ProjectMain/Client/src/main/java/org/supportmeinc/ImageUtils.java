@@ -7,7 +7,7 @@ import java.nio.file.Files;
 
 public class ImageUtils {
 
-    public static Image toImage(byte[] img){
+    public static Image toImage(byte[] img) {
         Image image;
         image = new Image(new BufferedInputStream(new ByteArrayInputStream(img)));
         return image;
@@ -26,14 +26,13 @@ public class ImageUtils {
     public static byte[] toBytes(String filename) {
         URL url = ImageUtils.class.getResource("images/" + filename);
         return toBytes(url);
-
     }
 
     private static byte[] toBytes(URL url) {
         byte[] bytes = new byte[0];
         try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream(url.getFile()))){
             bytes = bis.readAllBytes();
-        }catch (IOException e){
+        }catch (IOException e) {
             e.printStackTrace();
         }
         return bytes;

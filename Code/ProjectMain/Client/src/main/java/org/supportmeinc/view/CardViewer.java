@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 

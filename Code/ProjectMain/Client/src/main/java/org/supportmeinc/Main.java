@@ -50,9 +50,9 @@ public class Main extends Application {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(Paths.get(url.toURI()).toFile()))){
             String configEntry;
 
-            while ((configEntry = bufferedReader.readLine()) != null){
+            while ((configEntry = bufferedReader.readLine()) != null) {
                 String[] entry = configEntry.split("=");
-                switch (entry[0]){
+                switch (entry[0]) {
                     case "ip":
                         ip = entry[1];
                         break;
@@ -64,9 +64,9 @@ public class Main extends Application {
                 }
             }
 
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Config file not found");
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Read exception in config");
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -101,11 +101,15 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         this.mainController = new MainController(stage, this);
+        mainStage = stage;
+        scene = new Scene(loadFXML("toolbar"));
+        stage.setTitle("supportMe");
+        stage.setScene(scene);
+        stage.show();
         startBackend();
     }
 
     public void setRoot(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
-
     }
 
     public Parent loadFXML(String resourceName) throws IOException { //TODO Möjligtvis refactor --> Toolbar

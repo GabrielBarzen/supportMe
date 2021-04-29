@@ -140,7 +140,7 @@ public class UserDatabase {
         this.databaseManager = databaseManager;
     }
 
-    public UUID[] getGuideUUIDaccess(User user) {
+    public UUID[] getGuideUUIAccess(User user) {
         UUID[] returnValues = null;
         System.out.println(user.getEmail());
         try {
@@ -173,7 +173,21 @@ public class UserDatabase {
         return success; //TODO : write queries and code for revoking access to guide
     }
 
-    public boolean addGuide(String authorEmail, Guide guide) {
-        return false;//TODO add author with guide to database
+    public boolean saveGuide(Guide guide, User user) {
+        boolean success = false;
+        try {
+            String query = "select add_guide(?, ?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+            statement.setObject(2, guide.getGuideUUID());
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                success = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
     }
 }
