@@ -43,7 +43,6 @@ public class GuideManager {
 
     }
 
-
     public Card getCard(boolean choice) {
         return null;
     }
