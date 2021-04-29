@@ -21,7 +21,7 @@ public class GuideManager {
         getDownloadedThumbnails();
     }
 
-    public GuideManager(Connection connection) throws ConnectException {
+    public GuideManager(Connection connection) {
         this.connection = connection;
         thumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
@@ -48,7 +48,7 @@ public class GuideManager {
         }*/
     }
 
-    public ArrayList<Thumbnail> getDownloadedThumbnails()  {
+    public ArrayList<Thumbnail> getDownloadedThumbnails() {
 	    String username = "user"; //TODO byt mot framtida lösning
         ArrayList<Thumbnail> thumbnails = new ArrayList<>();
 	    try {
