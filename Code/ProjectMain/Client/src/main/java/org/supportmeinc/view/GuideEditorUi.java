@@ -98,6 +98,15 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             return;
         }
 
+        if (text.length() > 280) {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Card text cannot be more than 280 characters");
+			alert.setHeaderText("Can't create card with text more than 280 characters");
+			alert.setContentText("If your card is two steps, please divide them");
+			alert.show();
+			return;
+        }
+
         if(cmbYes.getSelectionModel().getSelectedItem() != null) {
             yesUUID = cmbYes.getSelectionModel().getSelectedItem().getCardUUID();
         }
