@@ -7,25 +7,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-
 public class Authenticator {
 
     private final User user;
     private final DatabaseManager databaseManager;
-
 
     public Authenticator(User user, DatabaseManager databaseManager) {
         this.user = user;
         this.databaseManager = databaseManager;
     }
 
-    public User authenticate()  {
+    public User authenticate() {
         String salt = null;
         String password = null;
         String passwordHash = null;
         User returnUser = null;
 
-        if(user.isNewUser()){
+        if (user.isNewUser()) {
             StringBuilder saltBuilder = new StringBuilder(20);
 
             Random random = new Random();
@@ -43,13 +41,13 @@ public class Authenticator {
         try {
             password = String.format("%s%s", salt, user.getPassword());
             passwordHash = hashSHA256(password);
-        } catch (NoSuchAlgorithmException e){
+        } catch (NoSuchAlgorithmException e) {
             ServerLog.log("ERROR : Authenticator.authenticate() no such algorithm");
         }
 
-        if(user.isNewUser() && passwordHash != null && salt != null){
+        if (user.isNewUser() && passwordHash != null && salt != null) {
             boolean success = databaseManager.registerUser(user,passwordHash,salt);
-            if(!success){
+            if (!success) {
                 ServerLog.log("Could not register user");
             } else {
                 returnUser = databaseManager.authenticate(user,passwordHash);
