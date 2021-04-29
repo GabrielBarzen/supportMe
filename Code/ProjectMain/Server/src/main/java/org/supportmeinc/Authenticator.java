@@ -72,7 +72,6 @@ public class Authenticator {
             }
             hexString.append(hex);
         }
-
         return hexString.toString();
     }
 
