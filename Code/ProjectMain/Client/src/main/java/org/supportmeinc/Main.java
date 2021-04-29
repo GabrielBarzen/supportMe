@@ -13,6 +13,7 @@ import org.supportmeinc.model.*;
 import shared.User;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -44,8 +45,13 @@ public class Main extends Application {
 
         User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
         replaceWithUserFromLoginScreen.setNewUser(false);
-        connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
-        guideManager = new GuideManager(connection);
+        try {
+            connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
+            guideManager = new GuideManager(connection);
+        } catch (ConnectException e) {
+            guideManager = new GuideManager();
+            e.printStackTrace();
+        }
 
         System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
     }

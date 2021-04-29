@@ -4,6 +4,8 @@ import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
+import java.io.*;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -15,7 +17,11 @@ public class GuideManager {
     private Connection connection;
     private ArrayList<Card> cardArrayList;
 
-    public GuideManager(Connection connection) {
+	public GuideManager() {
+        getDownloadedThumbnails();
+    }
+
+    public GuideManager(Connection connection) throws ConnectException {
         this.connection = connection;
         thumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
@@ -40,7 +46,31 @@ public class GuideManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
+    }
 
+    public Thumbnail[] getDownloadedThumbnails()  {
+	    String username = "user";
+	    try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username + "textfile.txt"));
+            Object obj = ois.readObject();
+            ArrayList<Guide> guides = new ArrayList<>();
+            while (obj != null) {
+                if (obj instanceof Guide) {
+                    Guide guide = (Guide) obj;
+                    guides.add(guide);
+                    obj = ois.readObject();
+                }
+            }
+            if (guides.size() > 0) {
+                Thumbnail[] thumbnails = new Thumbnail[guides.size()];
+                for (int i = 0; i < guides.size(); i++) {
+                    thumbnails[i] = guides.get(i).getThumbnail();
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new Thumbnail[0];
     }
 
     public Card getCard(boolean choice) {

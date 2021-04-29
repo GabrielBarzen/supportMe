@@ -8,6 +8,7 @@ import shared.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class Connection {
     Buffer<Object> sendBuffer = new Buffer<>();
     Buffer<Object> receiveBuffer = new Buffer<>();
 
-    public Connection(String ip, int port, User user) {
+    public Connection(String ip, int port, User user) throws ConnectException {
         this.user = user;
         try {
             System.out.println("starting connection");
