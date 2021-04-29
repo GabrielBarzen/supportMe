@@ -3,7 +3,7 @@ package org.supportmeinc.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 
 public class ThumbnailItem {
 
@@ -17,13 +17,13 @@ public class ThumbnailItem {
 
     public void setData(String title, byte[] image, String text) { //TODO remove? might not be used
         lblTitle.setText(title);
-        imgThumb.setImage(JfxUtils.toImage(image));
+        imgThumb.setImage(ImageUtils.toImage(image));
         lblText.setText(text);
     }
 
     public void setData(String title, byte[] image, String text, int listIndex) {
         lblTitle.setText(title);
-        imgThumb.setImage(JfxUtils.toImage(image));
+        imgThumb.setImage(ImageUtils.toImage(image));
         lblText.setText(text);
         this.listIndex = listIndex;
     }

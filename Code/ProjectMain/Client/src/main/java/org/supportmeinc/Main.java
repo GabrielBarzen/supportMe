@@ -10,8 +10,6 @@ import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
-import shared.Guide;
-import shared.Thumbnail;
 import shared.User;
 
 import java.io.*;
@@ -44,7 +42,7 @@ public class Main extends Application {
         readConfig(getClass().getResource("config.conf"));
         System.out.println("running init");
 
-        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS",JfxUtils.toBytes("FinalLogotyp.png"));
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
         replaceWithUserFromLoginScreen.setNewUser(false);
         connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
         guideManager = new GuideManager(connection);
