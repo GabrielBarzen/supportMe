@@ -1,6 +1,6 @@
 package org.supportmeinc.model;
 
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 import shared.Card;
 import shared.Guide;
 
@@ -28,7 +28,7 @@ public class GuideEditor {
         if(img == null) {
             card.setImage(null);
         } else {
-            card.setImage(JfxUtils.toBytes(img));
+            card.setImage(ImageUtils.toBytes(img));
         }
 
         cardsList.put(card.getCardUUID(),card);
@@ -44,7 +44,7 @@ public class GuideEditor {
         if(img == null) {
             card.setImage(null);
         } else {
-            card.setImage(JfxUtils.toBytes(img));
+            card.setImage(ImageUtils.toBytes(img));
         }
 
         cardsList.replace(cardUUID, card);

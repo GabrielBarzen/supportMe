@@ -2,11 +2,10 @@ package org.supportmeinc;
 import javafx.scene.image.Image;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 
-public class JfxUtils {
+public class ImageUtils {
 
     public static Image toImage(byte[] img){
         Image image;
@@ -25,7 +24,7 @@ public class JfxUtils {
     }
 
     public static byte[] toBytes(String filename) {
-        URL url = JfxUtils.class.getResource("images/" + filename);
+        URL url = ImageUtils.class.getResource("images/" + filename);
         return toBytes(url);
 
     }

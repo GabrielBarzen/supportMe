@@ -5,8 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import org.supportmeinc.Main;
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 
 import java.net.URL;
@@ -31,7 +30,7 @@ public class CardViewer implements JFXcontroller, Initializable {
 
     public void setCard(String title, byte[] image, String text) {
         cardTitle.setText(title);
-        cardImage.setImage(JfxUtils.toImage(image));
+        cardImage.setImage(ImageUtils.toImage(image));
         cardText.setText(text);
     }
 

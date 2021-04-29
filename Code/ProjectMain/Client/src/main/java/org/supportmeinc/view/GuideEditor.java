@@ -5,14 +5,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import shared.Card;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 public class GuideEditor implements JFXcontroller, Initializable {
 
@@ -68,8 +67,8 @@ public class GuideEditor implements JFXcontroller, Initializable {
         System.out.println(extension);
 
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
-            byte[] byteFile = JfxUtils.toBytes(file);
-            Image img = JfxUtils.toImage(byteFile);
+            byte[] byteFile = ImageUtils.toBytes(file);
+            Image img = ImageUtils.toImage(byteFile);
             imgPreview.setImage(img);
         } else {
             alert = new Alert(Alert.AlertType.WARNING);

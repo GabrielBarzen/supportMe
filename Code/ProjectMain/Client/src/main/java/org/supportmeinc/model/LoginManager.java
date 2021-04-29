@@ -1,6 +1,6 @@
 package org.supportmeinc.model;
 
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 import shared.User;
 
 public class LoginManager {
@@ -25,7 +25,7 @@ public class LoginManager {
         currentUser.setUserName("Will we let them change this?");
         currentUser.setPassword("is this encrypted?");
         currentUser.setEmail("youDontwantGoogleToFollowYou@now.com");
-        currentUser.setImage(JfxUtils.toBytes("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2Fl3q2zVr6cu95nF6O4%2Fgiphy.gif&f=1&nofb=1"));
+        currentUser.setImage(ImageUtils.toBytes("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2Fl3q2zVr6cu95nF6O4%2Fgiphy.gif&f=1&nofb=1"));
 
     }
 }
