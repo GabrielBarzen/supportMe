@@ -1,5 +1,4 @@
 package org.supportmeinc.view;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
 import org.supportmeinc.ImageUtils;
+import org.supportmeinc.MainController;
 import shared.Thumbnail;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,17 +22,15 @@ import java.util.UUID;
 
 public class GuideBrowser implements JFXcontroller, Initializable {
 
-    private Main controller;
+    private MainController controller;
     private List<Thumbnail> thumbnails = new ArrayList<>();
 
-    @FXML
-    private FlowPane flowPane;
-    @FXML
-    private ScrollPane scrollPane;
+    @FXML private FlowPane flowPane;
+    @FXML private ScrollPane scrollPane;
 
-    public void initData(Main controller){
+
+    public void initData(MainController controller){
         this.controller = controller;
-        controller.registerController(this);
 
         scrollPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -45,7 +42,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public GuideBrowser(){
-
+        System.out.println("GUIDEBROWSER");
     }
 
     public void setThumbnails(ArrayList<Thumbnail> thumbnails) {

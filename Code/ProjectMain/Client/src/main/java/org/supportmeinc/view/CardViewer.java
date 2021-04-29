@@ -5,27 +5,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import org.supportmeinc.Main;
 import org.supportmeinc.ImageUtils;
+import org.supportmeinc.MainController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CardViewer implements JFXcontroller, Initializable {
 
-    Main controller;
+    MainController controller;
 
-    @FXML
-    private Label cardTitle;
-    @FXML
-    private ImageView cardImage;
-    @FXML
-    private Label cardText;
-    @FXML
-    private VBox box;
+    @FXML private Label cardTitle;
+    @FXML private ImageView cardImage;
+    @FXML private Label cardText;
+    @FXML private VBox box;
 
-    public void initData(Main controller){
+    public void initData(MainController controller){
         this.controller = controller;
-        controller.registerController(this);
     }
 
     public CardViewer(){
