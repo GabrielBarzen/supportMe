@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 import shared.Thumbnail;
 
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
             Thumbnail nail = new Thumbnail(UUID.randomUUID());
             nail.setTitle("Title #" + i);
 
-            byte[] testImage = JfxUtils.toBytes("FinalLogotyp.png");
+            byte[] testImage = ImageUtils.toBytes("FinalLogotyp.png");
             nail.setImage(testImage);
             nail.setDescription("This is a short but detailed and descriptive description for guide #" + i + " some extra text bla bla bla bla ayyyyyyyylmao wassup yoyo heyeyeyeaaa");
             thumbnails.add(nail);

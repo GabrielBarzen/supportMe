@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.supportmeinc.JfxUtils;
+import org.supportmeinc.ImageUtils;
 import org.supportmeinc.Main;
 import shared.Card;
 
@@ -67,8 +67,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         System.out.println(extension);
 
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
-            byte[] byteFile = JfxUtils.toBytes(file);
-            Image img = JfxUtils.toImage(byteFile);
+            byte[] byteFile = ImageUtils.toBytes(file);
+            Image img = ImageUtils.toImage(byteFile);
             imgPreview.setImage(img);
         } else {
             alert = new Alert(Alert.AlertType.WARNING);

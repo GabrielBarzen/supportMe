@@ -62,11 +62,11 @@ public class Authenticator {
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {
         final MessageDigest digest;
         digest = MessageDigest.getInstance("SHA3-256");
-        final byte[] hashbytes = digest.digest(password.getBytes(StandardCharsets.UTF_8 ));
+        final byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8 ));
 
-        StringBuilder hexString = new StringBuilder(2 * hashbytes.length);
-        for (byte hashbyte : hashbytes) {
-            String hex = Integer.toHexString(0xff & hashbyte);
+        StringBuilder hexString = new StringBuilder(2 * hashBytes.length);
+        for (byte hashByte : hashBytes) {
+            String hex = Integer.toHexString(0xff & hashByte);
             if (hex.length() == 1) {
                 hexString.append('0');
             }
