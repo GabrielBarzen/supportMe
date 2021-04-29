@@ -25,7 +25,6 @@ public class GuideManager {
         this.connection = connection;
         thumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
-
         //getThumbnails();
 
         UUID guideUUID = UUID.fromString("a860a789-fea8-42e3-8a40-43ffa3e4f3bf");
