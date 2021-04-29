@@ -1,14 +1,14 @@
 package org.supportmeinc.view;
 
 import org.supportmeinc.Main;
+import org.supportmeinc.MainController;
 
 public class CardEditor implements JFXcontroller {
 
-    Main controller;
+    MainController controller;
 
-    public void initData(Main controller){
+    public void initData(MainController controller){
         this.controller = controller;
-        controller.registerController(this);
     }
 
     public CardEditor(){

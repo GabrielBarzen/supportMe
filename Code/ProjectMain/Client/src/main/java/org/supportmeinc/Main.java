@@ -4,13 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.supportmeinc.view.*;
 import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
-import shared.User;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -32,7 +30,7 @@ public class Main extends Application {
     private String ip;
     private Connection connection;
     private GuideManager guideManager;
-    private GuideEditor guideEditor;
+    private org.supportmeinc.model.GuideEditor guideEditor;
 
     public static void main(String[] args) {
         launch();
@@ -40,14 +38,6 @@ public class Main extends Application {
 
     public void startBackend() {
         readConfig(getClass().getResource("config.conf"));
-        System.out.println("running init");
-
-        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
-        replaceWithUserFromLoginScreen.setNewUser(false);
-        connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
-        guideManager = new GuideManager(connection);
-
-        System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
     }
 
     public void testCard() { //TODO Stubbe, eliminera
@@ -82,6 +72,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
     //Model methods//
 
     public Card getGuide(int index) {
@@ -104,15 +95,12 @@ public class Main extends Application {
     private Login loginController;
     private Register registerController;
     private Toolbar toolbarController;
+    private MainController mainController;
 
 
     @Override
     public void start(Stage stage) throws IOException {
-        mainStage = stage;
-        scene = new Scene(loadFXML("toolbar"));
-        stage.setTitle("supportMe");
-        stage.setScene(scene);
-        stage.show();
+        this.mainController = new MainController(stage, this);
         startBackend();
     }
 
@@ -134,7 +122,7 @@ public class Main extends Application {
 
         System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
-        jfXcontroller.initData(this);
+        //jfXcontroller.initData(this);
 
         root.getStylesheets().add(styleSheet);
 
@@ -155,10 +143,10 @@ public class Main extends Application {
         }
 
         if (viewController instanceof GuideEditorUi) {
-            guideEditor = new GuideEditor();
+//            guideEditor = new GuideEditor();
             guideEditorUiController = (GuideEditorUi) viewController;
-            guideEditorUiController.populateListView();
-            guideEditorUiController.populateComboBoxes();
+//            guideEditorUiController.populateListView();
+//            guideEditorUiController.populateComboBoxes();
 
         }
 
@@ -187,12 +175,6 @@ public class Main extends Application {
 
     public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
         guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
-    }
-
-    public File jfxFileChooser() {
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(mainStage);
-        return selectedFile;
     }
 
     public void updateCard(String title, String text, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {

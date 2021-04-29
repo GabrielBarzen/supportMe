@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.supportmeinc.Main;
+import org.supportmeinc.MainController;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.html.ImageView;
@@ -19,7 +20,7 @@ import java.io.IOException;
 
 public class Register implements JFXcontroller {
 
-    Main controller;
+    private MainController controller;
 
     @FXML private Button registerButton;
     @FXML private Button pictureButton;
@@ -38,12 +39,11 @@ public class Register implements JFXcontroller {
     private File filePath;
 
     @Override
-    public void initData(Main controller) {
+    public void initData(MainController controller) {
         this.controller = controller;
-        controller.registerController(this);
     }
 
-    public void displayImage(){
+    public void displayImage() {
 
     }
 
