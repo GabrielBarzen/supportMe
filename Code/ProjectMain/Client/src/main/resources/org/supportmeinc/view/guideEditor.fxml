@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditor">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -33,13 +33,6 @@
                            </children>
                         </AnchorPane>
                      </top>
-                     <center>
-                        <AnchorPane maxHeight="317.0" maxWidth="580.0" prefHeight="317.0" prefWidth="580.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <ImageView fx:id="imgPreview" fitHeight="317.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </AnchorPane>
-                     </center>
                      <bottom>
                         <VBox alignment="CENTER" prefHeight="200.0" BorderPane.alignment="CENTER">
                            <children>
@@ -49,11 +42,11 @@
                                  </font></Label>
                               <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Yes">
+                                    <Button disable="true" mnemonicParsing="false" text="Yes">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font></Button>
-                                    <Button mnemonicParsing="false" text="No">
+                                    <Button disable="true" mnemonicParsing="false" text="No">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font></Button>
@@ -62,6 +55,9 @@
                            </children>
                         </VBox>
                      </bottom>
+                     <center>
+                        <ImageView fx:id="imgPreview" fitHeight="317.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
                   </BorderPane>
                </children>
             </AnchorPane>
@@ -88,7 +84,7 @@
                               <Button alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="27.0" mnemonicParsing="false" onAction="#selectImage" text="Select File" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                        <TextArea fx:id="txtCardText" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." />
+                        <TextArea fx:id="txtCardText" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." wrapText="true" />
                         <AnchorPane prefHeight="80.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="14.0" layoutY="9.0" text="YES CARD" />
@@ -146,8 +142,8 @@
          <bottom>
             <AnchorPane prefHeight="30.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
-                  <Button layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Create new Card" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="300.0" text="Remove Card" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Create new Card" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="881.0" layoutY="2.0" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Save" />
                </children>
             </AnchorPane>

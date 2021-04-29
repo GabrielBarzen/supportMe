@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.supportmeinc.view.*;
-import org.supportmeinc.view.GuideEditor;
+import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import org.supportmeinc.model.*;
 
@@ -91,7 +91,7 @@ public class Main extends Application {
     private CardEditor cardEditorController;
     private CardViewer cardViewerController;
     private GuideBrowser guideBrowserController;
-    private GuideEditor guideEditorUiController;
+    private GuideEditorUi guideEditorUiController;
     private Login loginController;
     private Register registerController;
     private Toolbar toolbarController;
@@ -101,11 +101,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         this.mainController = new MainController(stage, this);
-        mainStage = stage;
-        scene = new Scene(loadFXML("toolbar"));
-        stage.setTitle("supportMe");
-        stage.setScene(scene);
-        stage.show();
         startBackend();
     }
 
@@ -147,9 +142,9 @@ public class Main extends Application {
             guideBrowserController = (GuideBrowser) viewController;
         }
 
-        if (viewController instanceof GuideEditor) {
+        if (viewController instanceof GuideEditorUi) {
 //            guideEditor = new GuideEditor();
-            guideEditorUiController = (GuideEditor) viewController;
+            guideEditorUiController = (GuideEditorUi) viewController;
 //            guideEditorUiController.populateListView();
 //            guideEditorUiController.populateComboBoxes();
 

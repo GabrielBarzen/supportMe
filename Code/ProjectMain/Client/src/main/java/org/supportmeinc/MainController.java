@@ -9,11 +9,13 @@ import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
+import shared.Card;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class MainController {
 
@@ -40,6 +42,8 @@ public class MainController {
         stage.setTitle("supportMe");
         stage.show();
         populateScenes();
+        guideEditor = new GuideEditor();
+       // guideManager = new GuideManager();
     }
 
     public void populateScenes() {
@@ -55,8 +59,8 @@ public class MainController {
         }
     }
 
-    public HashMap<SceneName, AnchorPane> getScenes() {
-        return scenes;
+    public AnchorPane getScenes(SceneName scene) {
+        return scenes.get(scene);
     }
 
     public void registerToolbar(Toolbar toolbar) {
@@ -67,7 +71,6 @@ public class MainController {
 
         String resourceName = sceneName.name();
         System.out.println(getClass().getResource("view/" + resourceName + ".fxml"));
-        System.out.println("asdlkasldjhaskdjhasdkjh");
         System.out.println(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
         System.out.println();
 
@@ -101,5 +104,21 @@ public class MainController {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
         return selectedFile;
+    }
+
+    public HashMap<UUID, Card> getCardsList() {
+        return guideEditor.getCardsList();
+    }
+
+    public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
+        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
+    }
+
+    public void updateCard(String title, String text, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
+        guideEditor.updateCard(title, text, img, affirmUUID, negativeUUID, cardUUID);
+    }
+
+    public void removeCard(UUID cardUUID) {
+        guideEditor.removeCard(cardUUID);
     }
 }

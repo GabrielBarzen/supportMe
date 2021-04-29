@@ -21,12 +21,12 @@ public class Toolbar implements JFXcontroller {
     }
 
     public void homeButton() {
-       borderPane.setCenter(controller.getScenes().get(SceneName.guideBrowser));
+       borderPane.setCenter(controller.getScenes(SceneName.guideBrowser));
 //        controller.testCard();
     }
 
     public void createNewGuide() {
-        borderPane.setCenter(controller.getScenes().get(SceneName.guideEditor));
+        borderPane.setCenter(controller.getScenes(SceneName.guideEditor));
     }
 
     public void swapScene(AnchorPane pane) {

@@ -41,7 +41,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             listView.getItems().add(card);
         }
     }
-
     public void populateComboBoxes() {
         cmbYes.getItems().clear();
         cmbNo.getItems().clear();
@@ -50,7 +49,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 if(card.getAffirmUUID() == null) {
                     cmbYes.getItems().add(card);
                 }
-
                 if(card.getNegUUID() == null) {
                     cmbNo.getItems().add(card);
                 }
@@ -76,7 +74,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             alert.setContentText("Selected file must be of type .png or .jpg, please try again");
             alert.show();
         }
-
     }
 
     public void save() {
@@ -86,7 +83,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         UUID noUUID = null;
         File img = null;
 
-        if(!txtCardTitle.getText().equals("")) {
+        if(!txtCardTitle.getText().isBlank()) {
             title = txtCardTitle.getText();
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
@@ -100,10 +97,10 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         if (text.length() > 280) {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Card text cannot be more than 280 characters");
-			alert.setHeaderText("Can't create card with text more than 280 characters");
-			alert.setContentText("If your card is two steps, please divide them");
-			alert.show();
-			return;
+            alert.setHeaderText("Can't create card with text more than 280 characters");
+            alert.setContentText("If your card is two steps, please divide them");
+            alert.show();
+            return;
         }
 
         if(cmbYes.getSelectionModel().getSelectedItem() != null) {
@@ -130,7 +127,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         populateComboBoxes();
     }
 
-    /*public void onClick() {
+    public void onClick() {
         if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
             if(listView.getSelectionModel().getSelectedItem() != null) {
                 Card affirmCard = controller.getCardsList().get(listView.getSelectionModel().getSelectedItem().getAffirmUUID());
@@ -139,7 +136,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 }
             }
         }
-    }*/
+    }
 
     public void removeCard() {
         if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
