@@ -18,7 +18,10 @@
 **/.idea/**/usage.statistics.xml
 **/.idea/**/dictionaries
 **/.idea/**/shelf
-
+**/Client/.idea/*
+**/Server/.idea/*
+**/Shared/.idea/*
+**/.idea/**
 # Generated files
 **/.idea/**/contentModel.xml
 
@@ -31,7 +34,7 @@
 **/.idea/**/uiDesigner.xml
 **/.idea/**/dbnavigator.xml
 **/.idea/**/vcs.xml
-/.idea/**
+/.idea/*
 
 # Gradle
 **/.idea/**/gradle.xml
