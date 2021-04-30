@@ -38,9 +38,8 @@ public class GuideBrowser implements JFXcontroller, Initializable {// class Begi
             }
         });
 
-        fakeThumbnails();
         controller.setGuideBrowser(this);
-        System.out.println("najjeBajje");
+
     }
 
     public void addThumbnail(String title, byte[] image, String description) {
@@ -65,24 +64,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {// class Begi
 
     public GuideBrowser(){
 
-        System.out.println("GUIDEBROWSER");
     }
-
-
-
-    //TODO STUBBE, VÄNLIGEN ELIMINERA EFTER TEST
-    public void fakeThumbnails() {
-        for (int i = 0; i < 25; i++) {
-            Thumbnail nail = new Thumbnail(UUID.randomUUID());
-            nail.setTitle("Title #" + i);
-
-            byte[] testImage = ImageUtils.toBytes("FinalLogotyp.png");
-            nail.setImage(testImage);
-            nail.setDescription("This is a short but detailed and descriptive description for guide #" + i + " some extra text bla bla bla bla ayyyyyyyylmao wassup yoyo heyeyeyeaaa");
-            addThumbnail(nail.getTitle(), nail.getImage(), nail.getDescription());
-        }
-    }
-
 
 
     @Override
