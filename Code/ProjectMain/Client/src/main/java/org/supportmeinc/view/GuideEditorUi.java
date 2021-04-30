@@ -65,39 +65,40 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
     }
 
-    public void updateTitlePreview() { //TODO add alert
+    public void updateTitlePreview() {
         String cardTitle = txtCardTitle.getText();
 
         if (cardTitle.length() > 20) {
             cardTitle = cardTitle.substring(0, 20);
             txtCardTitle.setText(cardTitle);
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Card title cannot be longer than 20 characters");
+            alert.setHeaderText("Can't create card with title longer than 280 characters");
+            alert.setContentText("If your card is two steps, please divide them");
+            alert.show();
         }
 
         title = cardTitle;
         lblTitlePreview.setText(cardTitle);
     }
 
-    public void updateTextPreview() { //TODO add alert
+    public void updateTextPreview() {
         String cardText = txtCardText.getText();
 
-        if (cardText.length() > 280) {
-            cardText = cardText.substring(0, 280);
+        if (cardText.length() > 160) {
+            cardText = cardText.substring(0, 160);
             txtCardText.setText(cardText);
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Card text cannot be more than 160 characters");
+            alert.setHeaderText("Can't create card with text more than 160 characters");
+            alert.setContentText("If your card is two steps, please divide them");
+            alert.show();
         }
 
         text = cardText;
         lblCardTextPreview.setText(cardText);
-    }
-
-    public void openSelectedCard() { //TODO early version, not tested with actual card
-        //Vad gör denna????
-//        UUID selectedCard = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
-//        System.out.println("opening : " + selectedCard);
-//        if (selectedCard != null) {
-//            lblTitlePreview.setText(controller.getCardTitle(selectedCard));
-//            imgPreview.setImage(ImageUtils.toImage(controller.getCardImage(selectedCard)));
-//            lblCardTextPreview.setText(controller.getCardText(selectedCard));
-//        }
     }
 
     public void selectImage() {
@@ -136,15 +137,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             return;
         }
 
-        if (text.length() > 280) {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Card text cannot be more than 280 characters");
-            alert.setHeaderText("Can't create card with text more than 280 characters");
-            alert.setContentText("If your card is two steps, please divide them");
-            alert.show();
-            return;
-        }
-
         controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
         System.out.println("saving : " + cardUUID);
 
@@ -172,6 +164,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 txtCardText.setText(text);
                 txtCardTitle.setText(title);
                 imgPreview.setImage(ImageUtils.toImage(img));
+                txtFilePath.clear();
 
                 updateTextPreview();
                 updateTitlePreview();
@@ -219,6 +212,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
         updateTitlePreview();
         updateTextPreview();
+        txtFilePath.clear();
 
         cardUUID = controller.createNewCard();
         repopulateLists();
