@@ -55,8 +55,6 @@ public class GuideEditor {
         currentCard = new Card();
     }
 
-
-
     public void setDescription(String title, String description, byte[] img, UUID affirmUUID, Guide guide) {
         Card card = new Card();
         card.setText(description);
@@ -106,11 +104,11 @@ public class GuideEditor {
             returnGuide = null;
         } else {
             returnGuide = new Guide();
+            setDescription(title, description, img, affirmUUID, returnGuide);
             returnGuide.setCards(cardsList.values().toArray(new Card[0]));
             returnGuide.setDescriptionCard(descriptionCard);
-            returnGuide.setThumbnail(null);
+            returnGuide.setThumbnail(thumbnail);
             returnGuide.setAuthor(controller.getAuthor());
-            setDescription(title, description, img, affirmUUID, returnGuide);
         }
 
         return returnGuide;

@@ -7,5 +7,6 @@ public enum SceneName {
     guideEditor,
     login,
     register,
-    toolbar
+    toolbar,
+    guideEditorSave
 }
