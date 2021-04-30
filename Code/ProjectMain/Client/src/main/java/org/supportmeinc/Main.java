@@ -11,6 +11,7 @@ import shared.Card;
 import org.supportmeinc.model.*;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -38,6 +39,22 @@ public class Main extends Application {
 
     public void startBackend() {
         readConfig(getClass().getResource("config.conf"));
+
+        System.out.println("running init");
+
+        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
+        replaceWithUserFromLoginScreen.setNewUser(false);
+        try {
+            connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
+            guideManager = new GuideManager(connection);
+        } catch (IOException e) {
+            guideManager = new GuideManager();
+			System.out.println("Cannot create a connection, starting in offline mode");
+            e.printStackTrace();
+        }
+
+        System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
+
     }
 
     public void testCard() { //TODO Stubbe, eliminera
@@ -163,6 +180,5 @@ public class Main extends Application {
         }
     }
 
-
-
 }
+
