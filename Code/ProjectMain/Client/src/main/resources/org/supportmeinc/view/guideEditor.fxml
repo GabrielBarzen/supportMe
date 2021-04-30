@@ -144,19 +144,31 @@
             </HBox>
          </top>
          <bottom>
-            <AnchorPane prefHeight="30.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
+<<<<<<< Updated upstream
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" mnemonicParsing="false" onAction="#loadCardOnListSelection" prefHeight="25.0" prefWidth="150.0" text="Edit Card" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="150.0" text="Remove Card" />
 
                   <Button fx:id="createCardButton" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefWidth="300.0" text="Save Guide" />
+=======
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" mnemonicParsing="false" onAction="#loadCardOnListSelection" prefHeight="24.0" prefWidth="150.0" text="Edit Card" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="24.0" prefWidth="150.0" text="Remove Card" />
+                  <Button fx:id="createCardButton" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="300.0" text="Save Guide" />
+>>>>>>> Stashed changes
                   <AnchorPane layoutX="881.0" layoutY="2.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#save" prefWidth="300.0" text="Save Card" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#save" prefHeight="24.0" prefWidth="300.0" text="Save Card" />
                      </children>
                   </AnchorPane>
 
                </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </AnchorPane>
          </bottom>
       </BorderPane>
