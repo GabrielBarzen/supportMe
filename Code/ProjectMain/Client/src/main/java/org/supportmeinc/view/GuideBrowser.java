@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class GuideBrowser implements JFXcontroller, Initializable {
+public class GuideBrowser implements JFXcontroller, Initializable {// class Begin
 
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
