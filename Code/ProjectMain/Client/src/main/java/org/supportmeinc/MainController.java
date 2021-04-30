@@ -9,6 +9,7 @@ import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.*;
 import shared.Card;
+import shared.Guide;
 import shared.Thumbnail;
 
 import java.io.File;
@@ -35,6 +36,12 @@ public class MainController {
         this.controller = controller;
         this.stage = stage;
 
+//        try {
+//            toolbar = new Scene(loadFXML(SceneName.toolbar));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         try {
             stage.setScene(new Scene(loadFXML(SceneName.login)));
         } catch (IOException e) {
@@ -45,7 +52,7 @@ public class MainController {
         stage.setTitle("supportMe");
         stage.show();
         populateScenes();
-        guideEditor = new GuideEditor();
+        guideEditor = new GuideEditor(this);
         this.guideManager = guideManager;
     }
 
@@ -160,7 +167,36 @@ public class MainController {
         }
     }
 
+
     public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
         this.setGuideEditorSave = guideEditorSave;
+    }
+
+    public void saveGuide(String title, String description, byte[] img, UUID affirmUUID) {
+        Guide guide = guideEditor.packGuide(title, description, img, affirmUUID);
+        if (guide != null) {
+            guideManager.saveGuide(guide);
+        } else {
+            System.out.println("något annat "); //TODO alert user if guide error
+        }
+    }
+
+    public String getAuthor() {
+        return guideManager.getCurrentUser().getEmail();
+    }
+
+    public void login(String email, String pass) {
+        guideManager = controller.Login(email, pass);
+        if (guideManager != null) {
+            System.out.println("Logged in successfully");
+            try {
+                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.exit(0);
+        }
+
     }
 }

@@ -32,6 +32,14 @@ public class GuideEditorSave {
         controller.setGuideEditorSave(this);
     }
 
+    public void saveGuide() {
+        if(!(txtTitle.getText().isBlank() || txtDescription.getText().isBlank())) {
+            String title = txtTitle.getText();
+            String description = txtDescription.getText();
+            controller.saveGuide(title, description, img);
+        }
+    }
+
     public void selectImage() {
         File file = controller.jfxFileChooser();
         String fileName = file.toString();

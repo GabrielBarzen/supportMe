@@ -69,8 +69,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 cmbYes.getItems().add(controller.getCardTitle(uuid));
                 cmbNo.getItems().add(controller.getCardTitle(uuid));
                 listView.getItems().add(controller.getCardTitle(uuid));
-            } else {
-                System.out.println("Bitch det blev null, vad håller du på med? (GuideEditorUI om du undrar var det blev fel)");
             }
         }
     }
@@ -83,9 +81,9 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             txtCardTitle.setText(cardTitle);
 
             alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Card title cannot be longer than 20 characters");
-            alert.setHeaderText("Can't create card with title longer than 280 characters");
-            alert.setContentText("If your card is two steps, please divide them");
+            alert.setTitle("Card title warning");
+            alert.setHeaderText("Can't create card with title longer than 20 characters");
+            alert.setContentText("Please select a shorter title");
             alert.show();
         }
 
@@ -101,8 +99,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             txtCardText.setText(cardText);
 
             alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Card text cannot be more than 160 characters");
-            alert.setHeaderText("Can't create card with text more than 160 characters");
+            alert.setTitle("Card text limit warning");
+            alert.setHeaderText("Can't create card with text longer than 160 characters");
             alert.setContentText("If your card is two steps, please divide them");
             alert.show();
         }
@@ -156,15 +154,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             return;
         }
 
-        if (text.length() > 280) {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Card text cannot be more than 280 characters");
-            alert.setHeaderText("Can't create card with text more than 280 characters");
-            alert.setContentText("If your card is two steps, please divide them");
-            alert.show();
-            return;
-        }
-
         if(cmbYes.getSelectionModel().getSelectedIndex() != -1) {
             if (guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex()) != null) {
                 yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
@@ -206,7 +195,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 txtCardTitle.setText(title);
                 imgPreview.setImage(ImageUtils.toImage(img));
                 txtFilePath.clear();
-
 
                 updateComboboxPreview();
                 updateTextPreview();
