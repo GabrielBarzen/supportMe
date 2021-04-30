@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
+import org.supportmeinc.SceneName;
 
 import java.io.File;
 import java.net.URL;
@@ -239,5 +240,10 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         txtFilePath.clear();
 
         cardUUID = controller.createNewCard();
+    }
+
+    public void saveGuide() {
+        controller.switchScene(SceneName.guideEditorSave);
+        controller.onLoadGuideEditorSave();
     }
 }
