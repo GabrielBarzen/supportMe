@@ -70,7 +70,8 @@ public class GuideEditor {
         thumbnail.setTitle(card.getTitle());
         thumbnail.setImage(card.getImage());
 
-        this.descriptionCard = descriptionCard;
+        this.descriptionCard = card;
+        this.thumbnail = thumbnail;
     }
 
     public String getCardTitle(UUID uuid) {

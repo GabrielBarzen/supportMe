@@ -255,10 +255,9 @@ public class ModelDatabase {
     public boolean addGuide(Guide guide){
         boolean success = false;
         try {
-            String query = "select (?, ?)";
+            String query = "select add_guide(?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setObject(1, guide.getGuideUUID());
-            statement.setObject(2, guide.getDescriptionCard().getCardUUID());
             statement.execute();
             success = true;
         } catch (SQLException e) {
@@ -267,7 +266,7 @@ public class ModelDatabase {
 
         boolean addedThumb = addThumbnail(guide.getThumbnail());
         if (addedThumb) {
-            boolean addedCards = addCards(guide.getCards(), guide.getGuideUUID());
+            boolean addedCards = addCards(guide.getCards(), guide.getGuideUUID(), guide.getDescriptionCard().getCardUUID());
             if (addedCards){
                 ServerLog.log("added guide" + guide.getGuideUUID());
             }
@@ -275,7 +274,7 @@ public class ModelDatabase {
         return success;
     }
 
-    private boolean addCards(Card[] cards, UUID guideUUID) {
+    private boolean addCards(Card[] cards, UUID guideUUID, UUID descriptionCardUUID) {
         boolean success = false;
         try {
             for (Card card: cards) {
@@ -296,6 +295,17 @@ public class ModelDatabase {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        try {
+            String query = "select add_description_card_guide(?, ?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guideUUID);
+            statement.setObject(2, descriptionCardUUID);
+            statement.execute();
+            success = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            success = false;
         }
         return success;
     }
