@@ -112,15 +112,9 @@ public class MainController {
         return selectedFile;
     }
 
-    public HashMap<UUID, Card> getCardsList() {
-        return guideEditor.getCardsList();
-    }
-
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
         guideEditor.saveCard(title, description, img, affirmUUID, negativeUUID, cardUUID);
     }
-
-
 
     public void removeCard(UUID cardUUID) {
         guideEditor.removeCard(cardUUID);
