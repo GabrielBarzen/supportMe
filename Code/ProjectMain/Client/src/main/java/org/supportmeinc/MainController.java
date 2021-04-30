@@ -8,7 +8,6 @@ import javafx.stage.*;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.*;
-import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
@@ -29,7 +28,7 @@ public class MainController {
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
-    private GuideEditorSave setGuideEditorSave;
+    private GuideEditorSave guideEditorSave;
 
 
     public MainController(Stage stage, Main controller, GuideManager guideManager) {
@@ -169,7 +168,7 @@ public class MainController {
 
 
     public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
-        this.setGuideEditorSave = guideEditorSave;
+        this.guideEditorSave = guideEditorSave;
     }
 
     public void saveGuide(String title, String description, byte[] img, UUID affirmUUID) {
@@ -198,5 +197,9 @@ public class MainController {
             System.exit(0);
         }
 
+    }
+
+    public void onLoadGuideEditorSave() {
+        guideEditorSave.onLoad();
     }
 }
