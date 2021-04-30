@@ -99,6 +99,10 @@ public class Connection {
         guideManager = manager;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     private class Receive extends Thread {
 
         @Override

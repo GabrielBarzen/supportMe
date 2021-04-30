@@ -3,6 +3,7 @@ package org.supportmeinc.model;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
+import shared.User;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -98,6 +99,15 @@ public class GuideManager {
             e.printStackTrace();
         }*/
         return new Guide();
+    }
+
+    public void saveGuide(Guide guide) {
+	    boolean success = connection.saveGuide(guide);
+        System.out.println(success);
+    }
+
+    public User getCurrentUser() {
+	    return connection.getUser();
     }
 }
 

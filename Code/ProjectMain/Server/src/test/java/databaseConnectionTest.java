@@ -23,16 +23,16 @@ public class databaseConnectionTest {
     }
 
     private void populateTestUsers(){
-        testUser1 = new User("existinguser@testuser.1", "test1", "test1");
+        testUser1 = new User("existinguser@testuser.1",  "test1");
         testUser1.setNewUser(true);
 
-        testUser2 = new User("existinguser@testuser.1", "test1", "test1");
+        testUser2 = new User("existinguser@testuser.1",  "test1");
         testUser2.setNewUser(false);
 
-        testUser3 = new User("existinguser@testuser.1", "test1", "test1");
+        testUser3 = new User("existinguser@testuser.1",  "test1");
         testUser3.setNewUser(true);
 
-        testUser4 = new User("existinguser@testuser.2", "test2", "test2");
+        testUser4 = new User("existinguser@testuser.2",  "test2");
         testUser4.setNewUser(false);
     }
 

@@ -48,16 +48,11 @@ public class Login implements JFXcontroller {
         String email = userName.getText();
         String pass = password.getText();
 
-
         if (email.isEmpty() && pass.isEmpty()) {
             message.setText("Please enter your email and password!");
 
-        } else if (email.equals("a") && pass.equals("a")) {
-//            sceneSwitch(SceneName.toolbar, event);
-            controller.sceneSwitch(SceneName.toolbar, event);
-        }
-        else {
-            message.setText("Wrong username or password!");
+        } else {
+             controller.login(email, pass);
         }
     }
 
