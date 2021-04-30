@@ -11,11 +11,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Login">
    <children>
-      <Button fx:id="loginButton" layoutX="304.0" layoutY="361.0" mnemonicParsing="false" onAction="#userLogin" prefHeight="42.0" prefWidth="118.0" style="-fx-background-color: #F6BE00;" text="Login" textFill="#9e0909">
+      <Button fx:id="loginButton" layoutX="304.0" layoutY="361.0" mnemonicParsing="false" onAction="#userLogin" prefHeight="42.0" prefWidth="118.0"  text="Login" >
          <font>
             <Font name="Book Antiqua Bold" size="14.0" />
          </font></Button>
-      <Button fx:id="registerButton" layoutX="304.0" layoutY="420.0" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="42.0" prefWidth="118.0" style="-fx-background-color: #F6BE00;" text="Register" textFill="#9e0909">
+      <Button fx:id="registerButton" layoutX="304.0" layoutY="420.0" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="42.0" prefWidth="118.0"  text="Register" >
          <font>
             <Font name="Book Antiqua Bold" size="14.0" />
          </font></Button>
@@ -27,12 +27,12 @@
          <font>
             <Font name="Book Antiqua Bold Italic" size="12.0" />
          </font></PasswordField>
-      <Label layoutX="24.0" layoutY="372.0" text="Username" textFill="#9e0909">
+      <Label layoutX="24.0" layoutY="372.0" text="Username" >
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="24.0" layoutY="419.0" prefHeight="19.0" prefWidth="78.0" text="Password" textFill="#9e0909">
+      <Label layoutX="24.0" layoutY="419.0" prefHeight="19.0" prefWidth="78.0" text="Password" >
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>

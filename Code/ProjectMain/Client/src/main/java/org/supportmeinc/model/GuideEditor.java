@@ -18,36 +18,19 @@ public class GuideEditor {
         cardsList = new HashMap<>();
     }
 
-    public void addNewCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
-        Card card = new Card();
-        card.setTitle(title);
-        card.setText(description);
-        card.setAffirmUUID(affirmUUID);
-        card.setNegUUID(negativeUUID);
+    public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
+        currentCard = new Card();
+        currentCard.setTitle(title);
+        currentCard.setText(description);
+        currentCard.setAffirmUUID(affirmUUID);
+        currentCard.setNegUUID(negativeUUID);
+        currentCard.setImage(img);
 
-        if(img == null) {
-            card.setImage(null);
+        if (cardsList.containsKey(cardUUID)){
+            cardsList.replace(cardUUID, currentCard);
         } else {
-            card.setImage(ImageUtils.toBytes(img));
+            cardsList.put(cardUUID, currentCard);
         }
-
-        cardsList.put(card.getCardUUID(),card);
-    }
-
-    public void updateCard(String title, String description, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
-        Card card = cardsList.get(cardUUID);
-        card.setTitle(title);
-        card.setText(description);
-        card.setAffirmUUID(affirmUUID);
-        card.setNegUUID(negativeUUID);
-
-        if(img == null) {
-            card.setImage(null);
-        } else {
-            card.setImage(ImageUtils.toBytes(img));
-        }
-
-        cardsList.replace(cardUUID, card);
     }
 
     public void removeCard(UUID cardUUID) {
@@ -56,5 +39,29 @@ public class GuideEditor {
 
     public HashMap<UUID, Card> getCardsList() {
         return cardsList;
+    }
+
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public void createNewCard() {
+        currentCard = new Card();
+    }
+
+    public String getCardTitle(UUID uuid) {
+        return cardsList.get(uuid).getTitle();
+    }
+    public String getCardText(UUID uuid){
+        return cardsList.get(uuid).getText();
+    }
+    public UUID getCardAffirmUUID(UUID uuid){
+        return cardsList.get(uuid).getAffirmUUID();
+    }
+    public UUID getCardNegUUID(UUID uuid){
+        return cardsList.get(uuid).getNegUUID();
+    }
+    public byte[] getCardImage(UUID uuid){
+        return cardsList.get(uuid).getImage();
     }
 }

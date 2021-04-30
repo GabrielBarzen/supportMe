@@ -25,6 +25,7 @@ public class Connection {
 
     public Connection(String ip, int port, User user) throws IOException {
         this.user = user;
+
         System.out.println("starting connection");
         socket = new Socket(ip, port);
         System.out.println("starting connected");
