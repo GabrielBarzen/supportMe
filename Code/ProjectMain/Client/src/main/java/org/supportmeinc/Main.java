@@ -17,6 +17,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.HashMap;
+import shared.User;
 
 
 
@@ -50,7 +51,6 @@ public class Main extends Application {
         } catch (IOException e) {
             guideManager = new GuideManager();
 			System.out.println("Cannot create a connection, starting in offline mode");
-            e.printStackTrace();
         }
 
         System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
