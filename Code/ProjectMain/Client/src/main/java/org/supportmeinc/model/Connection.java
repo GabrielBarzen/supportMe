@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.UUID;
 
 public class Connection {
 
@@ -24,28 +23,24 @@ public class Connection {
     Buffer<Object> sendBuffer = new Buffer<>();
     Buffer<Object> receiveBuffer = new Buffer<>();
 
-    public Connection(String ip, int port, User user) {
+    public Connection(String ip, int port, User user) throws IOException {
         this.user = user;
-        try {
-            System.out.println("starting connection");
-            socket = new Socket(ip, port);
-            System.out.println("starting connected");
-            System.out.println("opening streams");
-            outputStream = new ObjectOutputStream(this.socket.getOutputStream());
-            inputStream = new ObjectInputStream(this.socket.getInputStream());
-            System.out.println("Starting threads");
 
-            send = new Send();
-            receive = new Receive();
-            System.out.println("threads created");
+        System.out.println("starting connection");
+        socket = new Socket(ip, port);
+        System.out.println("starting connected");
+        System.out.println("opening streams");
+        outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+        inputStream = new ObjectInputStream(this.socket.getInputStream());
+        System.out.println("Starting threads");
 
-            send.start();
-            receive.start();
-            System.out.println("threads started");
-        } catch (IOException e) {
-            System.out.println("caught");
-            e.printStackTrace();
-        }
+        send = new Send();
+        receive = new Receive();
+        System.out.println("threads created");
+
+        send.start();
+        receive.start();
+        System.out.println("threads started");
 
     }
 

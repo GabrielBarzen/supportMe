@@ -48,8 +48,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
-
-
     public void repopulateLists() {
         guideCardUUID = null;
         guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
@@ -126,12 +124,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void save() {
-        if (cmbYes.getSelectionModel().getSelectedItem() != null) {
-            yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
-        }
-        if (cmbNo.getSelectionModel().getSelectedItem() != null) {
-            noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
-        }
+
         if(!txtCardTitle.getText().isBlank()) {
             title = txtCardTitle.getText();
         } else {
@@ -172,7 +165,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 System.out.println("yes : " + yesUUID);
                 System.out.println("no : " + noUUID);
 
-
                 System.out.println("opening : " + cardUUID);
                 System.out.println(text);
                 System.out.println(title);
@@ -183,6 +175,14 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
                 updateTextPreview();
                 updateTitlePreview();
+                repopulateLists();
+                
+                if (controller.getCardTitle(yesUUID) != null) {
+                    cmbYes.getSelectionModel().select(controller.getCardTitle(yesUUID));
+                }
+                if (controller.getCardTitle(noUUID) != null) {
+                    cmbNo.getSelectionModel().select(controller.getCardTitle(noUUID));
+                }
             }
         }
     }
@@ -225,12 +225,16 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void cmbYesSelect(ActionEvent actionEvent) {
-        System.out.println(yesUUID);
-        System.out.println(controller.getCardTitle(yesUUID));
+        if (cmbYes.getSelectionModel().getSelectedItem() != null) {
+            yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
+        }
+
     }
 
     public void cmbNoSelect(ActionEvent actionEvent) {
-        System.out.println(noUUID);
-        System.out.println(controller.getCardTitle(noUUID));
+        if (cmbNo.getSelectionModel().getSelectedItem() != null) {
+            noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
+        }
     }
+
 }
