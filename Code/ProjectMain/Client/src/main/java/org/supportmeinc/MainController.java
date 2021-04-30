@@ -7,10 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
-import org.supportmeinc.view.GuideEditorUi;
-import org.supportmeinc.view.GuideBrowser;
-import org.supportmeinc.view.JFXcontroller;
-import org.supportmeinc.view.Toolbar;
+import org.supportmeinc.view.*;
 import shared.Card;
 import shared.Thumbnail;
 
@@ -31,6 +28,7 @@ public class MainController {
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
+    private GuideEditorSave setGuideEditorSave;
 
 
     public MainController(Stage stage, Main controller, GuideManager guideManager) {
@@ -160,5 +158,9 @@ public class MainController {
         for (Thumbnail thumbnail: thumbnails) {
             guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
         }
+    }
+
+    public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
+        this.setGuideEditorSave = guideEditorSave;
     }
 }
