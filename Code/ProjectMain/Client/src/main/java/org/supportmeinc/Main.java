@@ -163,25 +163,6 @@ public class Main extends Application {
         }
     }
 
-    public HashMap<UUID, Card> getCardsList() {
-        return guideEditor.getCardsList();
-       /* HashMap<UUID,Card> temp = new HashMap<>();
-        UUID uuid;
-        Card card = new Card();
-        card.setTitle("1 Test");
-        temp.put(UUID.randomUUID(), card);
-        return temp;*/
-    }
 
-    public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
-        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
-    }
 
-    public void updateCard(String title, String text, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
-        guideEditor.updateCard(title, text, img, affirmUUID, negativeUUID, cardUUID);
-    }
-
-    public void removeCard(UUID cardUUID) {
-        guideEditor.removeCard(cardUUID);
-    }
 }

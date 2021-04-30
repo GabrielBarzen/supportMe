@@ -1,8 +1,13 @@
 package org.supportmeinc.view;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
 import org.supportmeinc.ImageUtils;
@@ -21,9 +26,19 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     private List<Thumbnail> thumbnails = new ArrayList<>();
 
     @FXML private FlowPane flowPane;
+    @FXML private ScrollPane scrollPane;
+
 
     public void initData(MainController controller){
         this.controller = controller;
+
+        scrollPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                scrollPane.getParent().requestFocus();
+            }
+        });
+
     }
 
     public GuideBrowser(){

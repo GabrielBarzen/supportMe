@@ -1,5 +1,6 @@
 package org.supportmeinc.view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -7,10 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
-import shared.Card;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -22,9 +24,20 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     @FXML private ImageView imgPreview;
     @FXML private TextField txtCardTitle, txtFilePath;
     @FXML private TextArea txtCardText;
-    @FXML private ComboBox<Card> cmbYes, cmbNo;
-    @FXML private ListView<Card> listView;
+    @FXML private ComboBox<String> cmbYes, cmbNo;
+    @FXML private ListView<String> listView;
+
+    private ArrayList<UUID> guideCardUUID;
+
     private Alert alert = new Alert(Alert.AlertType.WARNING);
+
+    private String title = null;
+    private String text = null;
+    private UUID yesUUID = null;
+    private UUID noUUID = null;
+    private UUID cardUUID;
+    private byte[] img = null;
+
 
     public GuideEditorUi() {
         this.listView = new ListView<>();
@@ -35,25 +48,22 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
-    public void populateListView() {
-        listView.getItems().clear();
-        for (Card card : controller.getCardsList().values()) {
-            listView.getItems().add(card);
-        }
-    }
 
-    public void populateComboBoxes() {
+
+    public void repopulateLists() {
+        guideCardUUID = null;
+        guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
+
         cmbYes.getItems().clear();
         cmbNo.getItems().clear();
-        for (Card card : controller.getCardsList().values()) {
-            if(card != listView.getSelectionModel().getSelectedItem()) {
-                if(card.getAffirmUUID() == null) {
-                    cmbYes.getItems().add(card);
-                }
-                if(card.getNegUUID() == null) {
-                    cmbNo.getItems().add(card);
-                }
-            }
+        listView.getItems().clear();
+
+        for (UUID uuid : guideCardUUID) {
+
+            cmbYes.getItems().add(controller.getCardTitle(uuid));
+            cmbNo.getItems().add(controller.getCardTitle(uuid));
+            listView.getItems().add(controller.getCardTitle(uuid));
+
         }
     }
 
@@ -64,6 +74,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             cardTitle = cardTitle.substring(0, 20);
             txtCardTitle.setText(cardTitle);
         }
+
+        title = cardTitle;
         lblTitlePreview.setText(cardTitle);
     }
 
@@ -74,16 +86,20 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             cardText = cardText.substring(0, 280);
             txtCardText.setText(cardText);
         }
+
+        text = cardText;
         lblCardTextPreview.setText(cardText);
     }
 
     public void openSelectedCard() { //TODO early version, not tested with actual card
-        Card selectedCard = listView.getSelectionModel().getSelectedItem();
-        if (selectedCard != null) {
-            lblTitlePreview.setText(selectedCard.getTitle());
-            imgPreview.setImage(ImageUtils.toImage(selectedCard.getImage()));
-            lblCardTextPreview.setText(selectedCard.getText());
-        }
+        //Vad gör denna????
+//        UUID selectedCard = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
+//        System.out.println("opening : " + selectedCard);
+//        if (selectedCard != null) {
+//            lblTitlePreview.setText(controller.getCardTitle(selectedCard));
+//            imgPreview.setImage(ImageUtils.toImage(controller.getCardImage(selectedCard)));
+//            lblCardTextPreview.setText(controller.getCardText(selectedCard));
+//        }
     }
 
     public void selectImage() {
@@ -95,9 +111,11 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
             byte[] byteFile = ImageUtils.toBytes(file);
-            Image img = ImageUtils.toImage(byteFile);
-            imgPreview.setImage(img);
+            Image image = ImageUtils.toImage(byteFile);
+            imgPreview.setImage(image);
             txtFilePath.setText(fileName);
+            img = ImageUtils.toBytes(file);
+
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("File type warning");
@@ -108,12 +126,12 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void save() {
-        String title;
-        String text = txtCardText.getText();
-        UUID yesUUID = null;
-        UUID noUUID = null;
-        File img = null;
-
+        if (cmbYes.getSelectionModel().getSelectedItem() != null) {
+            yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
+        }
+        if (cmbNo.getSelectionModel().getSelectedItem() != null) {
+            noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
+        }
         if(!txtCardTitle.getText().isBlank()) {
             title = txtCardTitle.getText();
         } else {
@@ -134,44 +152,44 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             return;
         }
 
-        if(cmbYes.getSelectionModel().getSelectedItem() != null) {
-            yesUUID = cmbYes.getSelectionModel().getSelectedItem().getCardUUID();
-        }
+        controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
+        System.out.println("saving : " + cardUUID);
 
-        if(cmbNo.getSelectionModel().getSelectedItem() != null) {
-            noUUID = cmbNo.getSelectionModel().getSelectedItem().getCardUUID();
-        }
-
-        if(!listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
-            controller.addCardToList(title, text, img, yesUUID, noUUID);
-        } else {
-            UUID cardUUID = listView.getSelectionModel().getSelectedItem().getCardUUID();
-            controller.updateCard(title, text, img, yesUUID, noUUID, cardUUID);
-        }
-
-        lblTitlePreview.setText(title);
-        lblCardTextPreview.setText(text);
-
-        populateListView();
-        populateComboBoxes();
+        repopulateLists();
     }
 
-    public void onClick() {
+    public void loadCardOnListSelection() {
         if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
             if(listView.getSelectionModel().getSelectedItem() != null) {
-                Card affirmCard = controller.getCardsList().get(listView.getSelectionModel().getSelectedItem().getAffirmUUID());
-                if(affirmCard != null) {
-                    yesCardSelected.setText(affirmCard.toString());
-                }
+                cardUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
+
+                title = controller.getCardTitle(cardUUID);
+                text = controller.getCardText(cardUUID);
+                img = controller.getCardImage(cardUUID);
+                yesUUID = controller.getCardAffirmUUID(cardUUID);
+                noUUID = controller.getCardNegUUID(cardUUID);
+
+                System.out.println("yes : " + yesUUID);
+                System.out.println("no : " + noUUID);
+
+
+                System.out.println("opening : " + cardUUID);
+                System.out.println(text);
+                System.out.println(title);
+
+                txtCardText.setText(text);
+                txtCardTitle.setText(title);
+                imgPreview.setImage(ImageUtils.toImage(img));
+
+                updateTextPreview();
+                updateTitlePreview();
             }
         }
     }
 
     public void removeCard() {
         if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
-            controller.removeCard(listView.getSelectionModel().getSelectedItem().getCardUUID());
-            populateListView();
-            populateComboBoxes();
+            controller.removeCard(guideCardUUID.get(listView.getSelectionModel().getSelectedIndex()));
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No card selected");
@@ -179,10 +197,40 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             alert.setContentText("Please select a card to be deleted");
             alert.show();
         }
+        repopulateLists();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        populateListView();
+
+    }
+
+    public void createNewCard(ActionEvent actionEvent) {
+        title = null;
+        text = null;
+        yesUUID = null;
+        noUUID = null;
+        cardUUID = null;
+        img = null;
+
+        txtCardText.setText("");
+        txtCardTitle.setText("");
+        imgPreview.setImage(null);
+
+        updateTitlePreview();
+        updateTextPreview();
+
+        cardUUID = controller.createNewCard();
+        repopulateLists();
+    }
+
+    public void cmbYesSelect(ActionEvent actionEvent) {
+        System.out.println(yesUUID);
+        System.out.println(controller.getCardTitle(yesUUID));
+    }
+
+    public void cmbNoSelect(ActionEvent actionEvent) {
+        System.out.println(noUUID);
+        System.out.println(controller.getCardTitle(noUUID));
     }
 }

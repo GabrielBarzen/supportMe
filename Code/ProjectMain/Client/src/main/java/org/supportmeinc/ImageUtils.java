@@ -8,8 +8,10 @@ import java.nio.file.Files;
 public class ImageUtils {
 
     public static Image toImage(byte[] img) {
-        Image image;
-        image = new Image(new BufferedInputStream(new ByteArrayInputStream(img)));
+        Image image = null;
+        if (img != null) {
+            image = new Image(new BufferedInputStream(new ByteArrayInputStream(img)));
+        }
         return image;
     }
 

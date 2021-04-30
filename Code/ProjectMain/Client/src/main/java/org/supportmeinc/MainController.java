@@ -58,6 +58,12 @@ public class MainController {
             }
         }
     }
+    public UUID createNewCard(){
+        guideEditor.createNewCard();
+        return guideEditor.getCurrentCard().getCardUUID();
+    }
+
+
 
     public AnchorPane getScenes(SceneName scene) {
         return scenes.get(scene);
@@ -110,15 +116,33 @@ public class MainController {
         return guideEditor.getCardsList();
     }
 
-    public void addCardToList(String title, String description, File img, UUID affirmUUID, UUID negativeUUID) {
-        guideEditor.addNewCard(title, description, img, affirmUUID, negativeUUID);
+    public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
+        guideEditor.saveCard(title, description, img, affirmUUID, negativeUUID, cardUUID);
     }
 
-    public void updateCard(String title, String text, File img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
-        guideEditor.updateCard(title, text, img, affirmUUID, negativeUUID, cardUUID);
-    }
+
 
     public void removeCard(UUID cardUUID) {
         guideEditor.removeCard(cardUUID);
+    }
+
+    public UUID[] getGuideEditorCardUUIDs() {
+        return guideEditor.getCardsList().keySet().toArray(new UUID[0]);
+    }
+
+    public String getCardTitle(UUID uuid) {
+        return guideEditor.getCardTitle(uuid);
+    }
+    public String getCardText(UUID uuid){
+        return guideEditor.getCardText(uuid);
+    }
+    public UUID getCardAffirmUUID(UUID uuid){
+        return guideEditor.getCardAffirmUUID(uuid);
+    }
+    public UUID getCardNegUUID(UUID uuid){
+        return guideEditor.getCardNegUUID(uuid);
+    }
+    public byte[] getCardImage(UUID uuid){
+        return guideEditor.getCardImage(uuid);
     }
 }
