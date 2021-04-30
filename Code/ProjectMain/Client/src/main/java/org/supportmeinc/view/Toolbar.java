@@ -19,6 +19,7 @@ public class Toolbar implements JFXcontroller {
 
     public void homeButton() {
        borderPane.setCenter(controller.getScenes(SceneName.guideBrowser));
+       controller.refreshThumbnails();
 //        controller.testCard();
     }
 
