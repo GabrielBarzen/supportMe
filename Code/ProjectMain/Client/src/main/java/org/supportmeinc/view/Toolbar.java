@@ -24,6 +24,7 @@ public class Toolbar implements JFXcontroller {
     }
 
     public void createNewGuide() {
+        controller.initGuideEditor();
         borderPane.setCenter(controller.getScenes(SceneName.guideEditor));
     }
 

@@ -1,6 +1,5 @@
 package org.supportmeinc.view;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -41,11 +40,13 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     public GuideEditorUi() {
         this.listView = new ListView<>();
+        guideCardUUID = new ArrayList<>();
     }
 
     public void initData(MainController controller){
         this.controller = controller;
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        controller.setGuideEditorUi(this);
     }
 
     public void repopulateLists() {
@@ -57,11 +58,20 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         listView.getItems().clear();
 
         for (UUID uuid : guideCardUUID) {
+            System.out.println(uuid);
+        }
 
-            cmbYes.getItems().add(controller.getCardTitle(uuid));
-            cmbNo.getItems().add(controller.getCardTitle(uuid));
-            listView.getItems().add(controller.getCardTitle(uuid));
+        guideCardUUID.removeIf(uuid -> uuid == cardUUID);
 
+        for (UUID uuid : guideCardUUID) {
+            System.out.println(uuid);
+            if(uuid != null) {
+                cmbYes.getItems().add(controller.getCardTitle(uuid));
+                cmbNo.getItems().add(controller.getCardTitle(uuid));
+                listView.getItems().add(controller.getCardTitle(uuid));
+            } else {
+                System.out.println("Bitch det blev null, vad håller du på med? (GuideEditorUI om du undrar var det blev fel)");
+            }
         }
     }
 
@@ -101,6 +111,16 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         lblCardTextPreview.setText(cardText);
     }
 
+    public void updateComboboxPreview() {
+        if(yesUUID != null) {
+            yesCardSelected.setText("Selected: " + controller.getCardTitle(yesUUID));
+        }
+
+        if(noUUID != null) {
+            noCardSelected.setText("Selected: " + controller.getCardTitle(noUUID));
+        }
+    }
+
     public void selectImage() {
         File file = controller.jfxFileChooser();
         String fileName = file.toString();
@@ -125,7 +145,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void save() {
-
         if(!txtCardTitle.getText().isBlank()) {
             title = txtCardTitle.getText();
         } else {
@@ -137,8 +156,30 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             return;
         }
 
+        if (text.length() > 280) {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Card text cannot be more than 280 characters");
+            alert.setHeaderText("Can't create card with text more than 280 characters");
+            alert.setContentText("If your card is two steps, please divide them");
+            alert.show();
+            return;
+        }
+
+        if(cmbYes.getSelectionModel().getSelectedIndex() != -1) {
+            if (guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex()) != null) {
+                yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
+            }
+        }
+        if(cmbNo.getSelectionModel().getSelectedIndex() != -1) {
+            if (guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex()) != null) {
+                noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
+            }
+        }
+      
         controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
         System.out.println("saving : " + cardUUID);
+
+        createNewCard();
 
         repopulateLists();
     }
@@ -166,16 +207,11 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 imgPreview.setImage(ImageUtils.toImage(img));
                 txtFilePath.clear();
 
+
+                updateComboboxPreview();
                 updateTextPreview();
                 updateTitlePreview();
                 repopulateLists();
-                
-                if (controller.getCardTitle(yesUUID) != null) {
-                    cmbYes.getSelectionModel().select(controller.getCardTitle(yesUUID));
-                }
-                if (controller.getCardTitle(noUUID) != null) {
-                    cmbNo.getSelectionModel().select(controller.getCardTitle(noUUID));
-                }
             }
         }
     }
@@ -198,7 +234,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     }
 
-    public void createNewCard(ActionEvent actionEvent) {
+    public void createNewCard() {
         title = null;
         text = null;
         yesUUID = null;
@@ -215,20 +251,5 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         txtFilePath.clear();
 
         cardUUID = controller.createNewCard();
-        repopulateLists();
     }
-
-    public void cmbYesSelect(ActionEvent actionEvent) {
-        if (cmbYes.getSelectionModel().getSelectedItem() != null) {
-            yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
-        }
-
-    }
-
-    public void cmbNoSelect(ActionEvent actionEvent) {
-        if (cmbNo.getSelectionModel().getSelectedItem() != null) {
-            noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
-        }
-    }
-
 }

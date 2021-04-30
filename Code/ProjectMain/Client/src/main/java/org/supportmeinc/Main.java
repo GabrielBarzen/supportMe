@@ -19,6 +19,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.HashMap;
+import shared.User;
 
 
 

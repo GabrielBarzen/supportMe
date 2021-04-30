@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
+import org.supportmeinc.view.GuideEditorUi;
 import org.supportmeinc.view.GuideBrowser;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
@@ -28,7 +29,9 @@ public class MainController {
     private Toolbar toolbarController;
     private GuideManager guideManager;
     private GuideEditor guideEditor;
+    private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
+
 
     public MainController(Stage stage, Main controller, GuideManager guideManager) {
         this.controller = controller;
@@ -143,6 +146,12 @@ public class MainController {
     }
     public byte[] getCardImage(UUID uuid){
         return guideEditor.getCardImage(uuid);
+    }
+
+    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {this.guideEditorUi = guideEditorUi; }
+
+    public void initGuideEditor() {
+        guideEditorUi.createNewCard();
     }
 
     public void refreshThumbnails() {
