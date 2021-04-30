@@ -8,9 +8,11 @@ import javafx.stage.*;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.GuideEditorUi;
+import org.supportmeinc.view.GuideBrowser;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
 import shared.Card;
+import shared.Thumbnail;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +30,12 @@ public class MainController {
     private GuideManager guideManager;
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
+    private GuideBrowser guideBrowser;
 
-    public MainController(Stage stage, Main controller) {
+
+    public MainController(Stage stage, Main controller, GuideManager guideManager) {
         this.controller = controller;
         this.stage = stage;
-
 
         try {
             stage.setScene(new Scene(loadFXML(SceneName.login)));
@@ -45,7 +48,11 @@ public class MainController {
         stage.show();
         populateScenes();
         guideEditor = new GuideEditor();
-       // guideManager = new GuideManager();
+        this.guideManager = guideManager;
+    }
+
+    public void setGuideBrowser(GuideBrowser guideBrowser) {
+        this.guideBrowser = guideBrowser;
     }
 
     public void populateScenes() {
@@ -60,12 +67,11 @@ public class MainController {
             }
         }
     }
+
     public UUID createNewCard(){
         guideEditor.createNewCard();
         return guideEditor.getCurrentCard().getCardUUID();
     }
-
-
 
     public AnchorPane getScenes(SceneName scene) {
         return scenes.get(scene);
@@ -141,9 +147,18 @@ public class MainController {
     public byte[] getCardImage(UUID uuid){
         return guideEditor.getCardImage(uuid);
     }
+
     public void setGuideEditorUi(GuideEditorUi guideEditorUi) {this.guideEditorUi = guideEditorUi; }
 
     public void initGuideEditor() {
         guideEditorUi.createNewCard();
+    }
+
+    public void refreshThumbnails() {
+        Thumbnail[] thumbnails = guideManager.getThumbnails();
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: thumbnails) {
+            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
+        }
     }
 }

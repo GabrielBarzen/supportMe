@@ -23,11 +23,10 @@ import java.util.UUID;
 public class GuideBrowser implements JFXcontroller, Initializable {
 
     private MainController controller;
-    private List<Thumbnail> thumbnails = new ArrayList<>();
+    private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
 
     @FXML private FlowPane flowPane;
     @FXML private ScrollPane scrollPane;
-
 
     public void initData(MainController controller){
         this.controller = controller;
@@ -39,15 +38,37 @@ public class GuideBrowser implements JFXcontroller, Initializable {
             }
         });
 
+        fakeThumbnails();
+        controller.setGuideBrowser(this);
+        System.out.println("najjeBajje");
+    }
+
+    public void addThumbnail(String title, byte[] image, String description) {
+        ThumbnailItem item = null;
+        AnchorPane anchorPane = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/thumbnail.fxml"));
+
+            anchorPane = loader.load();
+            item = loader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (item != null && anchorPane != null) {
+            item.setData(title, image, description, thumbnailItems.size());
+            thumbnailItems.add(item);
+            updateThumbnailView(anchorPane);
+        }
     }
 
     public GuideBrowser(){
+
         System.out.println("GUIDEBROWSER");
     }
 
-    public void setThumbnails(ArrayList<Thumbnail> thumbnails) {
-        this.thumbnails = thumbnails;
-    }
+
 
     //TODO STUBBE, VÄNLIGEN ELIMINERA EFTER TEST
     public void fakeThumbnails() {
@@ -58,40 +79,23 @@ public class GuideBrowser implements JFXcontroller, Initializable {
             byte[] testImage = ImageUtils.toBytes("FinalLogotyp.png");
             nail.setImage(testImage);
             nail.setDescription("This is a short but detailed and descriptive description for guide #" + i + " some extra text bla bla bla bla ayyyyyyyylmao wassup yoyo heyeyeyeaaa");
-            thumbnails.add(nail);
+            addThumbnail(nail.getTitle(), nail.getImage(), nail.getDescription());
         }
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fakeThumbnails();
-        updateThumbnailView();
+
     }
 
-    public void updateThumbnailView() {
-        try {
-            for (int i = 0; i < thumbnails.size(); i++) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(Main.class.getResource("view/thumbnail.fxml"));
-                AnchorPane anchorPane = loader.load();
+    public void updateThumbnailView(AnchorPane anchorPane) {
+        flowPane.getChildren().add(anchorPane);
+    }
 
-                ThumbnailItem thumbnailItem = loader.getController();
-                Thumbnail thumbnail = thumbnails.get(i);
-//                thumbnailController.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
-                thumbnailItem.setData(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), i);
-
-                /**
-                 * flowPane.getChildren() can use several methods to add elements depending on model structure;
-                 * add() - adds one element to end of existing pane
-                 *      add(int index)
-                 * addAll() - adds list of elements to end of existing pane
-                 * set() - removes all current elements and adds a single element to the pane
-                 * setAll() - removes all current elements and adds a list of elements to pane
-                 */
-                flowPane.getChildren().add(anchorPane);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void resetView() {
+        thumbnailItems = new ArrayList<>();
+        flowPane.getChildren().clear();
     }
 } //class end
