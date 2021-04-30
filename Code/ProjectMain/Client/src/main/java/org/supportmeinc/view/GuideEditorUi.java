@@ -75,24 +75,36 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
     }
 
-    public void updateTitlePreview() { //TODO add alert
+    public void updateTitlePreview() {
         String cardTitle = txtCardTitle.getText();
 
         if (cardTitle.length() > 20) {
             cardTitle = cardTitle.substring(0, 20);
             txtCardTitle.setText(cardTitle);
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Card title cannot be longer than 20 characters");
+            alert.setHeaderText("Can't create card with title longer than 280 characters");
+            alert.setContentText("If your card is two steps, please divide them");
+            alert.show();
         }
 
         title = cardTitle;
         lblTitlePreview.setText(cardTitle);
     }
 
-    public void updateTextPreview() { //TODO add alert
+    public void updateTextPreview() {
         String cardText = txtCardText.getText();
 
-        if (cardText.length() > 280) {
-            cardText = cardText.substring(0, 280);
+        if (cardText.length() > 160) {
+            cardText = cardText.substring(0, 160);
             txtCardText.setText(cardText);
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Card text cannot be more than 160 characters");
+            alert.setHeaderText("Can't create card with text more than 160 characters");
+            alert.setContentText("If your card is two steps, please divide them");
+            alert.show();
         }
 
         text = cardText;
@@ -163,7 +175,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
             }
         }
-
+      
         controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
         System.out.println("saving : " + cardUUID);
 
@@ -193,6 +205,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 txtCardText.setText(text);
                 txtCardTitle.setText(title);
                 imgPreview.setImage(ImageUtils.toImage(img));
+                txtFilePath.clear();
 
 
                 updateComboboxPreview();
@@ -235,6 +248,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
         updateTitlePreview();
         updateTextPreview();
+        txtFilePath.clear();
 
         cardUUID = controller.createNewCard();
     }
