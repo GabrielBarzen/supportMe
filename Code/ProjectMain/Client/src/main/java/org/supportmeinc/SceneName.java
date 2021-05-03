@@ -1,8 +1,7 @@
 package org.supportmeinc;
 
 public enum SceneName {
-    cardEditor,
-    cardViewer,
+    guideViewer,
     guideBrowser,
     guideEditor,
     login,
