@@ -84,16 +84,7 @@ public class Main extends Application {
 
     }
 
-    //UI methods// //TODO Möjligtvis refactor --> Toolbar
-    private CardEditor cardEditorController;
-    private CardViewer cardViewerController;
-    private GuideBrowser guideBrowserController;
-    private GuideEditorUi guideEditorUiController;
-    private Login loginController;
-    private Register registerController;
-    private Toolbar toolbarController;
     private MainController mainController;
-
 
     @Override
     public void start(Stage stage) throws IOException {
