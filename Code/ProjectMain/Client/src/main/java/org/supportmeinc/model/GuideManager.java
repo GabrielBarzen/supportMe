@@ -28,9 +28,6 @@ public class GuideManager {
         connection.setGuideManager(this);
         //getThumbnails();
 
-        UUID guideUUID = UUID.fromString("a860a789-fea8-42e3-8a40-43ffa3e4f3bf");
-        System.out.println("GuideManager running");
-
         //TODO: Obs måste köra server om dessa block är avkommenterade
         /*        try {
             thumbnails = connection.getThumbnails(thumbnails);

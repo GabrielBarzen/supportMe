@@ -56,7 +56,7 @@ public class DatabaseManager {
     }
 
     public UUID[] getGuideUUIDaccess(User user) {
-        return userDatabase.getGuideUUIAccess(user);
+        return userDatabase.getGuideUUIDAccess(user);
     }
 
     public boolean giveAccess(String authorEmail, String userEmail, UUID guideUUID) {
@@ -69,9 +69,11 @@ public class DatabaseManager {
 
     public boolean saveGuide(Guide guide, User user) {
         boolean success = false;
-        success = modelDatabase.saveGuide(guide, user);
+        System.out.println("Saving gude");
+        success = modelDatabase.saveGuide(guide);
         if (success) {
-            success = userDatabase.saveGuide(guide, user);
+            System.out.println("saved guide");
+            success = userDatabase.saveGuide(guide);
         }
         return success;
     }

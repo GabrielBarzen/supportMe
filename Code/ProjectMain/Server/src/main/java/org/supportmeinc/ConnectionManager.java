@@ -80,15 +80,27 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof Thumbnail[]){
             Thumbnail[] oldThumbnails = (Thumbnail[]) object;
 
-            UUID[] guideUUIDacess = databaseManager.getGuideUUIDaccess(user);
-            Thumbnail[] newThumbnails = databaseManager.getCurrentThumbnails(guideUUIDacess);
+            for (Thumbnail nail: oldThumbnails) {
+                System.out.println("old Thumbs : " + nail.getGuideUUID());
+            }
 
-            if (!(Arrays.equals((oldThumbnails), newThumbnails))) {
+            UUID[] guideUUIDacess = databaseManager.getGuideUUIDaccess(user);
+
+            for (UUID uuid: guideUUIDacess) {
+                System.out.println("Guide uuid access : " + uuid);
+            }
+
+            Thumbnail[] newThumbnails = databaseManager.getCurrentThumbnails(guideUUIDacess);
+            for (Thumbnail nail: newThumbnails) {
+                System.out.println("new Thumbs : " + nail.getGuideUUID());
+            }
+
+            if (!(Arrays.equals(oldThumbnails, newThumbnails))) {
                 System.out.println("Sending new");
                 System.out.println("len : " + newThumbnails.length);
                 userConnection.get(user).sendObject(newThumbnails);
             } else {
-                System.out.println("Sending old");
+                System.out.println("Sending null");
                 userConnection.get(user).sendObject(null);
             }
         }

@@ -86,42 +86,12 @@ public class ModelDatabase {
 
     public Thumbnail[] getCurrentThumbnails(UUID[] guideAccessUUID) {
         Thumbnail[] returnValues = null;
+        ArrayList<Thumbnail> temp = new ArrayList<>();
         for (UUID uuid: guideAccessUUID) {
-            try {
-                System.out.println("getting thumbnails");
-
-                String query = "select * from get_thumbnail(?)";
-                PreparedStatement statement = dbConnection.prepareStatement(query);
-                statement.setObject(1, uuid);
-
-                ResultSet rs = statement.executeQuery();
-                ArrayList<Thumbnail> thumbnails = new ArrayList<>();
-
-                System.out.println("executed query thumbnails");
-
-                while (rs.next()){
-                    System.out.println("opening rs");
-
-                    UUID guideUUID = (UUID) rs.getObject(1);
-
-                    System.out.println("new uuid fr thumbnails : " + guideUUID.toString());
-                    Thumbnail thumbnail = new Thumbnail(guideUUID);
-                    String thumbnailTitle = rs.getString(2);
-                    thumbnail.setTitle(thumbnailTitle);
-                    String thumbnailText = rs.getString(3);
-                    thumbnail.setDescription(thumbnailText);
-                    byte[] thumbnailImage = rs.getBytes(4);
-                    thumbnail.setImage(thumbnailImage);
-
-                    thumbnails.add(thumbnail);
-                }
-                returnValues = thumbnails.toArray(new Thumbnail[0]);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            temp.add(getThumbnail(uuid));
         }
-
+        returnValues = temp.toArray(new Thumbnail[0]);
+        System.out.println(Arrays.toString(returnValues));
         return returnValues;
     }
 
@@ -172,6 +142,7 @@ public class ModelDatabase {
             ResultSet rs = statement.executeQuery();
         if(rs.next()){
             UUID guideUUIDFromDatabase = (UUID) rs.getObject("guide_uuid");
+            System.out.println("thumbnail with uuid : " + guideUUIDFromDatabase);
             returnThumbnail = new Thumbnail(guideUUIDFromDatabase);
             String title = rs.getString(2);
             returnThumbnail.setTitle(title);
@@ -255,20 +226,21 @@ public class ModelDatabase {
     public boolean addGuide(Guide guide){
         boolean success = false;
         try {
-            String query = "select add_guide(?)";
+            String query = "select add_guide(?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
             statement.setObject(1, guide.getGuideUUID());
+            statement.setString(2, guide.getAuthorEmail());
             statement.execute();
             success = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        boolean addedThumb = addThumbnail(guide.getThumbnail());
-        if (addedThumb) {
-            boolean addedCards = addCards(guide.getCards(), guide.getGuideUUID(), guide.getDescriptionCard().getCardUUID());
-            if (addedCards){
+        boolean addedCards = addCards(guide.getCards(), guide.getGuideUUID(), guide.getDescriptionCard().getCardUUID());
+        if (addedCards) {
+            boolean addedThumb = addThumbnail(guide.getThumbnail());
+            if (addedThumb){
                 ServerLog.log("added guide" + guide.getGuideUUID());
+                success = true;
             }
         }
         return success;
@@ -329,7 +301,7 @@ public class ModelDatabase {
         return success;
     }
 
-    public boolean saveGuide(Guide guide, User user) {
+    public boolean saveGuide(Guide guide) {
         boolean success = false;
         boolean guideExist = false;
         try {
@@ -340,26 +312,21 @@ public class ModelDatabase {
             if(rs.next()){
                 guideExist = rs.getBoolean(1);
             }
+            success = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         if (guideExist){
-            success = updateGuide(guide);
-        } else {
+            success = removeGuide(guide);
+        }
+        if (success){
             success = addGuide(guide);
         }
         return success;
 
     }
 
-    private boolean updateGuide(Guide guide) {
-        boolean success = false;
-        success = removeGuide(guide);
-        if (success) {
-            success = addGuide(guide);
-        }
-        return success;
-    }
 
     private boolean removeGuide(Guide guide) {
         boolean success = false;

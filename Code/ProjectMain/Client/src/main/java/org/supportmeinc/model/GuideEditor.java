@@ -62,6 +62,7 @@ public class GuideEditor {
         card.setImage(img);
         card.setNegUUID(null);
         card.setAffirmUUID(affirmUUID);
+        cardsList.put(card.getCardUUID(), card);
 
         Thumbnail thumbnail = new Thumbnail(guide.getGuideUUID());
         thumbnail.setDescription(card.getText());
