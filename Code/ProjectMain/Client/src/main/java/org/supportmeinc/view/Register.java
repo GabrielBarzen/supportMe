@@ -24,23 +24,14 @@ public class Register implements JFXcontroller {
 
     private MainController controller;
 
-
-    @FXML private Button btnRegister;
-    @FXML private Button btnPicture;
     @FXML private TextField userName;
-    @FXML private TextField lastName;
     @FXML private TextField email;
     @FXML private PasswordField password;
     @FXML private PasswordField rePassword;
-    @FXML private ImageView picture;
+    @FXML private ImageView picturePreview;
     @FXML private Label rMessage;
 
     private byte[] image;
-
-    private Stage stage;
-    private Scene scene;
-
-    private FileChooser fileChooser;
     private File imageFile;
 
     @Override
@@ -48,20 +39,13 @@ public class Register implements JFXcontroller {
         this.controller = controller;
     }
 
-    public void displayImage() {
-
-    }
-
-    public void chooseImage(ActionEvent event) {
-        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Image");
-        this.imageFile = fileChooser.showOpenDialog(stage);
+    public void chooseImage() {
+        this.imageFile = controller.jfxFileChooser();
         image = ImageUtils.toBytes(imageFile);
-        picture.setImage(ImageUtils.toImage(image));
+        picturePreview.setImage(ImageUtils.toImage(image));
     }
 
-    public void userRegister(ActionEvent event) throws IOException {
+    public void userRegister() {
         String userNameString = userName.getText();
         String mail = email.getText();
         String pass = password.getText();
