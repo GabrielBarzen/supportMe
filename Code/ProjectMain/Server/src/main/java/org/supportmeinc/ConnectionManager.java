@@ -49,12 +49,12 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
     @Override
     public void objectReceived(Object object, User user) {
         ServerLog.log("Object received from client " + object.getClass());
-        if (object instanceof Connection){
+        if (object instanceof Connection) {
             Connection connection = (Connection) object;
             ServerLog.log("ConnectionManager attempting auth");
             Authenticator auth = new Authenticator(user, databaseManager);
             User loggedInUser = auth.authenticate();
-            if(loggedInUser != null){
+            if(loggedInUser != null) {
                 ServerLog.log("Auth status : " + loggedInUser.getEmail() + " logged in" );
                 ServerLog.log("Adding user to connections map");
                 connection.setUser(loggedInUser);
@@ -63,21 +63,26 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
             } else {
                 ServerLog.log("Auth status : could not log in" );
                 connection.sendObject(null);
+                try {
+                    connection.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        if (object instanceof Guide){
+        if (object instanceof Guide) {
             Guide guide = (Guide) object;
             boolean success = databaseManager.saveGuide(guide, user);
             userConnection.get(user).sendObject(success);
         }
 
-        if (object instanceof Thumbnail){
+        if (object instanceof Thumbnail) {
             Thumbnail thumbnail = (Thumbnail) object;
             userConnection.get(user).sendObject(databaseManager.getGuide(thumbnail.getGuideUUID()));
         }
 
-        if (object instanceof Thumbnail[]){
+        if (object instanceof Thumbnail[]) {
             Thumbnail[] guideAccessThumbnails;
             Thumbnail[] guideAuthorThumbnails;
 

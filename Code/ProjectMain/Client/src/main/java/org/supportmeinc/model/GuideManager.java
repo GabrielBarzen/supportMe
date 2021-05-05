@@ -120,5 +120,13 @@ public class GuideManager implements ThumbnailListener{
         }
         return thumbnails;
     }
+
+    public void disconnect() {
+        try {
+            connection.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

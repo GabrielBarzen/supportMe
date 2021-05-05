@@ -56,19 +56,5 @@ public class Login implements JFXcontroller {
         controller.sceneSwitch(SceneName.register, event);
     }
 
-    public void chooseImage(ActionEvent event) {
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Image");
-        this.filePath = fileChooser.showOpenDialog(stage);
-
-        try {
-            BufferedImage bufferedImage = ImageIO.read(filePath);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
 

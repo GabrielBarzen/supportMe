@@ -1,7 +1,9 @@
 package org.supportmeinc;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import shared.Card;
 import shared.User;
 import org.supportmeinc.model.*;
@@ -22,7 +24,6 @@ public class Main extends Application {
     private int port;
     private String ip;
     private Connection connection;
-    private GuideManager guideManager;
     private org.supportmeinc.model.GuideEditor guideEditor;
 
     public static void main(String[] args) {
@@ -63,18 +64,18 @@ public class Main extends Application {
     private MainController mainController;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         readConfig(getClass().getResource("config.conf"));
 
 //        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
 //        replaceWithUserFromLoginScreen.setNewUser(false);
 
-        this.mainController = new MainController(stage, this, guideManager);
+        this.mainController = new MainController(stage, this);
     }
 
     public GuideManager Login (String email, String userPassword){
         User user = new User(email, userPassword);
-
+        GuideManager guideManager;
         try {
             connection = new Connection(ip, port, user); //Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
@@ -87,6 +88,7 @@ public class Main extends Application {
 
 
     public GuideManager register(User user) {
+        GuideManager guideManager = null;
         try {
             connection = new Connection(ip, port, user); //Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
