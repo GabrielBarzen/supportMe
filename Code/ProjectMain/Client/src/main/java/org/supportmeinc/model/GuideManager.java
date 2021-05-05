@@ -122,10 +122,12 @@ public class GuideManager implements ThumbnailListener{
     }
 
     public void disconnect() {
-        try {
-            connection.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
+	    if (connection != null) {
+            try {
+                connection.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
