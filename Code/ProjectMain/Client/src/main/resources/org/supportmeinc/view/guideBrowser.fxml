@@ -16,13 +16,6 @@
          <content>
             <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
          </content>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem fx:id="contextMenu" mnemonicParsing="false" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-              </items>
-            </ContextMenu>
-         </contextMenu></ScrollPane>
+         </ScrollPane>
    </children>
 </AnchorPane>

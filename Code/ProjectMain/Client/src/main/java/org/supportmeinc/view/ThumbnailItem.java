@@ -1,11 +1,10 @@
 package org.supportmeinc.view;
 
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +12,7 @@ import org.supportmeinc.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 public class ThumbnailItem {
 
@@ -21,11 +21,11 @@ public class ThumbnailItem {
     @FXML private ImageView imgThumb;
     @FXML private Label lblText;
 
-    private ContextMenu contextMenu = new ContextMenu();
-    private MenuItem openItem = new MenuItem();
-    private MenuItem editItem = new MenuItem();
-    private MenuItem deleteItem = new MenuItem();
-    private MenuItem cancelItem = new MenuItem();
+    @FXML private ContextMenu contextMenu = new ContextMenu();
+    @FXML private MenuItem openItem = new MenuItem();
+    @FXML private MenuItem editItem = new MenuItem();
+    @FXML private MenuItem deleteItem = new MenuItem();
+    @FXML private MenuItem cancelItem = new MenuItem();
 
 
     private int listIndex; //represents index in list of thumbnails in GuideBrowser
@@ -42,6 +42,31 @@ public class ThumbnailItem {
         deleteItem.setText("Delete");
         cancelItem.setText("Cancel");
 
+        openItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                open();
+            }
+        });
+        editItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                edit();
+            }
+        });
+        deleteItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                delete();
+            }
+        });
+        cancelItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                cancel();
+            }
+        });
+
         contextMenu.getItems().add(openItem);
         contextMenu.getItems().add(editItem);
         contextMenu.getItems().add(deleteItem);
@@ -56,6 +81,33 @@ public class ThumbnailItem {
         });
     }
 
+    private void open() {
+        System.out.println("open " + lblTitle.getText());
+    }
+
+    private void edit() {
+        System.out.println("edit " + lblTitle.getText());
+    }
+
+    private void delete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete");
+        alert.setHeaderText("Are you sure you wish to delete this guide?");
+        alert.setContentText("You have chosen to delete the guide" + lblTitle.getText() + "are you sure you wish to delete it?");
+        alert.setX(anchPane.getLayoutX());
+        alert.setY(anchPane.getLayoutY());
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isEmpty() || result.get() != ButtonType.OK) {
+            System.out.println("dont delete");
+        } else {
+            System.out.println("do delete");
+        }
+
+    }
+
+    private void cancel() {
+        System.out.println("cancel");
+    }
 
 
     public int returnIndex() { //TODO connect class with GuideBrowser to return listIndex when clicking a thumbnail
