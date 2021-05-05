@@ -7,11 +7,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
-import org.supportmeinc.model.ThumbnailListener;
+import org.supportmeinc.view.GuideEditorUi;
+import org.supportmeinc.view.GuideBrowser;
+import org.supportmeinc.view.JFXcontroller;
+import org.supportmeinc.view.Toolbar;
 import org.supportmeinc.view.*;
 import shared.Guide;
 import shared.Thumbnail;
-
+import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +32,11 @@ public class MainController {
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
+
+    private User user;
+
     private GuideEditorSave guideEditorSave;
+
 
 
     public MainController(Stage stage, Main controller, GuideManager guideManager) {
@@ -73,7 +80,7 @@ public class MainController {
         }
     }
 
-    public UUID createNewCard(){
+    public UUID createNewCard() {
         guideEditor.createNewCard();
         return guideEditor.getCurrentCard().getCardUUID();
     }
@@ -140,16 +147,16 @@ public class MainController {
     public String getCardTitle(UUID uuid) {
         return guideEditor.getCardTitle(uuid);
     }
-    public String getCardText(UUID uuid){
+    public String getCardText(UUID uuid) {
         return guideEditor.getCardText(uuid);
     }
-    public UUID getCardAffirmUUID(UUID uuid){
+    public UUID getCardAffirmUUID(UUID uuid) {
         return guideEditor.getCardAffirmUUID(uuid);
     }
-    public UUID getCardNegUUID(UUID uuid){
+    public UUID getCardNegUUID(UUID uuid) {
         return guideEditor.getCardNegUUID(uuid);
     }
-    public byte[] getCardImage(UUID uuid){
+    public byte[] getCardImage(UUID uuid) {
         return guideEditor.getCardImage(uuid);
     }
 
@@ -198,6 +205,20 @@ public class MainController {
         }
     }
 
+    public void registerUser(User user) {
+        guideManager = controller.register(user);
+        if (guideManager != null) {
+            System.out.println("Logged in successfully");
+            try {
+                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.exit(0);
+        }
+    }
+
     public void onLoadGuideEditorSave() {
         guideEditorSave.onLoad();
     }
@@ -213,7 +234,21 @@ public class MainController {
         }
     }
 
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        User removeUser = user;
+        user = null;
+        return removeUser;
+    }
+
     public void openGuide(UUID uuid) {
         guideManager.getGuide(uuid);
     }
+
+
+
 }
