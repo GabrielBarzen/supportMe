@@ -245,8 +245,15 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void saveGuide() {
-        controller.switchScene(SceneName.guideEditorSave);
-        controller.onLoadGuideEditorSave();
+        if(!listView.getItems().isEmpty() && controller.checkCardLinksValid()) {
+            controller.switchScene(SceneName.guideEditorSave);
+            controller.onLoadGuideEditorSave();
+        } else {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Couldn't save cardlist");
+            alert.setContentText("Couldn't save cardlist due to no cards or missing links between cards");
+            alert.show();
+        }
     }
 
 
