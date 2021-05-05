@@ -92,14 +92,29 @@ public class Connection {
         }
     }
 
-    public void grantAccess(UUID uuid, String email) {
+    public void grantAccess(UUID uuid, String email) { // grant access to email on guide from uuid
         String request = requestBuilder(requestType.grant, uuid.toString() + ":" + email);
         send(request);
     }
 
-    public void revokeAccess(UUID uuid, String email) {
+    public void revokeAccess(UUID uuid, String email) { // revoke access to email on guide from uuid
         String request = requestBuilder(requestType.revoke, uuid.toString() + ":" + email);
         send(request);
+    }
+
+    public String[] getAccessList(UUID uuid) { // get access list from guide uuid, null if no access on guide is granted
+        String[] returnArray = null;
+        String request = requestBuilder(requestType.getAccessList, uuid.toString());
+        send(request);
+        try {
+            Object arrayObject = receiveBuffer.get();
+            if (arrayObject instanceof String[]) {
+                returnArray = (String[]) arrayObject;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return returnArray;
     }
 
     private String requestBuilder(requestType type, String data){

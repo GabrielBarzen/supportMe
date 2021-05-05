@@ -243,4 +243,8 @@ public class UserDatabase {
         }
         return success;
     }
+
+    public String[] getAccessList() {
+        return null; //TODO query for getting access list
+    }
 }

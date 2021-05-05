@@ -115,10 +115,14 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         noCardSelected.setText("");
         if(yesUUID != null) {
             yesCardSelected.setText("Selected: " + controller.getCardTitle(yesUUID));
+        } else {
+            yesCardSelected.setText("Selected: ");
         }
 
         if(noUUID != null) {
             noCardSelected.setText("Selected: " + controller.getCardTitle(noUUID));
+        } else {
+            noCardSelected.setText("Selected: ");
         }
     }
 
