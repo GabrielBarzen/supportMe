@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorSave">
    <padding>
@@ -43,7 +44,7 @@
                               </ImageView>
                               <HBox prefHeight="34.0" prefWidth="555.0" spacing="10.0">
                                  <children>
-                                    <Button onAction="#selectImage" fx:id="btnChooseFile" mnemonicParsing="false" prefWidth="120.0" text="Choose File" />
+                                    <Button fx:id="btnChooseFile" mnemonicParsing="false" onAction="#selectImage" prefWidth="120.0" text="Choose File" />
                                     <TextField fx:id="txtFilePath" editable="false" prefHeight="25.0" prefWidth="449.0" promptText="Choose file...." />
                                  </children>
                                  <opaqueInsets>
@@ -70,6 +71,8 @@
                                     </AnchorPane>
                                 </content>
                               </ScrollPane>
+                              <Label text="User access" />
+                              <TextField fx:id="txtAccess" promptText="Please add users you'd like to have access to your guide, separate emails with &quot;,&quot;..." />
                            </children>
                         </VBox>
                      </children>
@@ -82,8 +85,8 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="btnExit" mnemonicParsing="false" text="Exit" />
-                        <Button onAction="#saveGuide" fx:id="btnSaveGuide" mnemonicParsing="false" text="Save Guide" />
+                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#back" text="Back" />
+                        <Button fx:id="btnSaveGuide" mnemonicParsing="false" onAction="#saveGuide" text="Save Guide" />
                      </children>
                   </HBox>
                </children>
@@ -94,8 +97,10 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label text="Guide Info" />
-                        <Label text="Image" />
+                        <Label text="Guide Info">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
                      </children>
                   </HBox>
                </children>
