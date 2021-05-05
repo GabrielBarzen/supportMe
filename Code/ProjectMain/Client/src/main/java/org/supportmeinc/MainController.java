@@ -11,8 +11,8 @@ import org.supportmeinc.view.GuideEditorUi;
 import org.supportmeinc.view.GuideBrowser;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
-import shared.Card;
 import shared.Thumbnail;
+import shared.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +31,8 @@ public class MainController {
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
+    private User user;
+    private boolean bool;
 
 
     public MainController(Stage stage, Main controller, GuideManager guideManager) {
@@ -68,7 +70,7 @@ public class MainController {
         }
     }
 
-    public UUID createNewCard(){
+    public UUID createNewCard() {
         guideEditor.createNewCard();
         return guideEditor.getCurrentCard().getCardUUID();
     }
@@ -135,16 +137,16 @@ public class MainController {
     public String getCardTitle(UUID uuid) {
         return guideEditor.getCardTitle(uuid);
     }
-    public String getCardText(UUID uuid){
+    public String getCardText(UUID uuid) {
         return guideEditor.getCardText(uuid);
     }
-    public UUID getCardAffirmUUID(UUID uuid){
+    public UUID getCardAffirmUUID(UUID uuid) {
         return guideEditor.getCardAffirmUUID(uuid);
     }
-    public UUID getCardNegUUID(UUID uuid){
+    public UUID getCardNegUUID(UUID uuid) {
         return guideEditor.getCardNegUUID(uuid);
     }
-    public byte[] getCardImage(UUID uuid){
+    public byte[] getCardImage(UUID uuid) {
         return guideEditor.getCardImage(uuid);
     }
 
@@ -161,4 +163,17 @@ public class MainController {
             guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
         }
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        User removeUser = user;
+        user = null;
+        return removeUser;
+    }
+
+
+
 }

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
+import shared.User;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -49,26 +50,20 @@ public class Login implements JFXcontroller {
         String pass = password.getText();
 
 
-        if (email.isEmpty() && pass.isEmpty()) {
+        if (email.isEmpty() || pass.isEmpty()) {
             message.setText("Please enter your email and password!");
-
-        } else if (email.equals("a") && pass.equals("a")) {
-//            sceneSwitch(SceneName.toolbar, event);
-            controller.sceneSwitch(SceneName.toolbar, event);
+        } else if (true) {
+            controller.setUser(new User(email, null, pass));
         }
         else {
             message.setText("Wrong username or password!");
         }
+
+        controller.sceneSwitch(SceneName.toolbar, event);
     }
 
     public void switchToRegister(javafx.event.ActionEvent event) throws IOException {
-//        sceneSwitch(SceneName.register, event);
         controller.sceneSwitch(SceneName.register, event);
-    }
-
-    public void switchToLogin(javafx.event.ActionEvent event) throws IOException {
-//        sceneSwitch(SceneName.login, event);
-        controller.sceneSwitch(SceneName.login, event);
     }
 
     public void chooseImage(ActionEvent event) {

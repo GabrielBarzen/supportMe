@@ -110,7 +110,7 @@ public class Main extends Application {
         User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
         replaceWithUserFromLoginScreen.setNewUser(false);
         try {
-            connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //Todo : replace with user from login screen
+            connection = new Connection(ip, port, replaceWithUserFromLoginScreen); //SOLVED? Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
             System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
         } catch (IOException e) {
