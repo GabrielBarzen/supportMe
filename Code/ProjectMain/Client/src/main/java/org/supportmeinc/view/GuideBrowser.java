@@ -26,7 +26,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {// class Begi
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
 
-    @FXML private FlowPane flowPane;
+    @FXML private FlowPane flowPane, flowPaneSaved;
     @FXML private ScrollPane scrollPane;
 
     public void initData(MainController controller){

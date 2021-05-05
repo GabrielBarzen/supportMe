@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideBrowser">
    <padding>
@@ -14,7 +14,14 @@
    <children>
       <ScrollPane fx:id="scrollPane" fitToWidth="true" focusTraversable="false" layoutX="200.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="400.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Your guides" />
+                  <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
+                  <Label text="Saved guides" />
+                  <FlowPane fx:id="flowPaneSaved" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
+               </children>
+            </VBox>
          </content>
          </ScrollPane>
    </children>
