@@ -46,6 +46,7 @@ public class MainController {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
+                stage.close();
                 guideManager.disconnect();
             }
         });
