@@ -60,29 +60,14 @@ public class Main extends Application {
     }
 
     //Model methods//
-
-    public Card getGuide(int index) {
-        return guideManager.getGuide(index).getDescriptionCard();
-    }
-
-    public Card getCard(boolean choice) {
-        return null;
-    }
-
-    public void exitCardView() {
-
-    }
-
     private MainController mainController;
 
     @Override
     public void start(Stage stage) throws IOException {
         readConfig(getClass().getResource("config.conf"));
 
-        System.out.println("running init");
-
-        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
-        replaceWithUserFromLoginScreen.setNewUser(false);
+//        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
+//        replaceWithUserFromLoginScreen.setNewUser(false);
 
         this.mainController = new MainController(stage, this, guideManager);
     }
@@ -93,7 +78,6 @@ public class Main extends Application {
         try {
             connection = new Connection(ip, port, user); //Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
-            System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
         } catch (IOException e) {
             guideManager = new GuideManager();
             System.out.println("Cannot create a connection, starting in offline mode");
@@ -102,5 +86,15 @@ public class Main extends Application {
     }
 
 
+    public GuideManager register(User user) {
+        try {
+            connection = new Connection(ip, port, user); //Todo : replace with user from login screen
+            guideManager = new GuideManager(connection);
+        } catch (IOException e) {
+            System.exit(1);
+            e.printStackTrace();
+        }
+        return guideManager;
+    }
 }
 

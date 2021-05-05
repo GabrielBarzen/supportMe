@@ -19,7 +19,7 @@
          <font>
             <Font name="Book Antiqua Bold" size="14.0" />
          </font></Button>
-      <TextField fx:id="userName" layoutX="109.0" layoutY="370.0" promptText="Enter username">
+      <TextField fx:id="userEmail" layoutX="109.0" layoutY="370.0" promptText="Enter email">
          <font>
             <Font name="Book Antiqua Bold Italic" size="12.0" />
          </font></TextField>
@@ -27,7 +27,7 @@
          <font>
             <Font name="Book Antiqua Bold Italic" size="12.0" />
          </font></PasswordField>
-      <Label layoutX="24.0" layoutY="372.0" text="Username" >
+      <Label layoutX="24.0" layoutY="372.0" text="Email" >
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>

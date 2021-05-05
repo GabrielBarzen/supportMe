@@ -25,7 +25,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         controller.setGuideBrowser(this);
     }
 
-    public void addThumbnail(String title, byte[] image, String description) {
+    public void addThumbnail(String title, byte[] image, String description,UUID guideUUID) {
         ThumbnailItem item = null;
         AnchorPane anchorPane = null;
         try {
@@ -39,7 +39,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         }
 
         if (item != null && anchorPane != null) {
-            item.setData(title, image, description, thumbnailItems.size());
+            item.setData(title, image, description, thumbnailItems.size(), guideUUID, this);
             thumbnailItems.add(item);
             updateThumbnailView(anchorPane);
         }
@@ -49,6 +49,10 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     }
 
+
+    public void openGuide(UUID uuid){
+        controller.openGuide(uuid);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

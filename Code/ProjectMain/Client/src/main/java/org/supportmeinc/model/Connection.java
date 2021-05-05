@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.UUID;
 
 public class Connection {
 
@@ -19,6 +20,7 @@ public class Connection {
     private User user;
     private Receive receive;
     private Send send;
+    private ThumbnailListener listener;
 
     Buffer<Object> sendBuffer = new Buffer<>();
     Buffer<Object> receiveBuffer = new Buffer<>();
@@ -44,6 +46,10 @@ public class Connection {
 
     }
 
+    public void registerListener(ThumbnailListener listener){
+        this.listener = listener;
+    }
+
     private void send(Object object){
         sendBuffer.put(object);
     }
@@ -58,18 +64,48 @@ public class Connection {
         return retGuide;
     }
 
-    public Thumbnail[] getThumbnails(Thumbnail[] thumbnails) throws InterruptedException{
-        Thumbnail[] returnThumbnails = null;
+    public void getThumbnails(Thumbnail[] thumbnails) throws InterruptedException{
         send(thumbnails);
-        Object newThumbnails = receiveBuffer.get();
-        if (newThumbnails != null) {
-            if (newThumbnails instanceof Thumbnail[]) {
-                returnThumbnails = (Thumbnail[]) newThumbnails;
-            }
+        Object returnAccessObject = receiveBuffer.get();
+        Thumbnail[] returnAccess = null;
+        boolean success;
+        if (returnAccessObject instanceof Thumbnail[]) {
+            returnAccess = (Thumbnail[]) returnAccessObject;
+            success = true;
         } else {
-            returnThumbnails = thumbnails;
+            System.out.println("error in Connection.getThumbnails accessThumbnails");
+            success = false;
         }
-        return returnThumbnails;
+
+        Object returnAuthorObject = receiveBuffer.get();
+        Thumbnail[] returnAuthor = null;
+        if (returnAuthorObject instanceof Thumbnail[] && success) {
+            returnAuthor = (Thumbnail[]) returnAuthorObject;
+            success = true;
+        } else {
+            System.out.println("error in Connection.getThumbnails authorThumbnails");
+            success = false;
+        }
+
+        if (success ) {
+            listener.thumbnailsReceived(returnAccess, returnAuthor);
+        }
+    }
+
+    public void grantAccess(UUID uuid, String email) {
+        String request = requestBuilder(requestType.grant, uuid.toString() + ":" + email);
+        send(request);
+    }
+
+    public void revokeAccess(UUID uuid, String email) {
+        String request = requestBuilder(requestType.revoke, uuid.toString() + ":" + email);
+        send(request);
+    }
+
+    private String requestBuilder(requestType type, String data){
+        String request = null;
+        request = String.format("%s:%s",type.name(), data);
+        return request;
     }
 
     public boolean saveGuide(Guide guide) {
