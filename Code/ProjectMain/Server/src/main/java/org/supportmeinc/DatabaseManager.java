@@ -90,4 +90,8 @@ public class DatabaseManager {
     public boolean revokeAccess(String userEmail, UUID guideUUID) {
         return userDatabase.revokeAccess(userEmail, guideUUID);
     }
+
+    public String[] getAccessList(String requestPart) {
+        return userDatabase.getAccessList();
+    }
 }
