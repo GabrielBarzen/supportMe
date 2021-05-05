@@ -187,15 +187,8 @@ public class UserDatabase {
         return returnValues;
     }
 
-    public boolean giveAccess(String authorEmail, String userEmail, UUID guideUUID){
-        boolean success = false;
-        return success; //TODO : write queries and code for assigning access to guide
-    }
 
-    public boolean revokeAccess(String authorEmail, String userEmail, UUID guideUUID){
-        boolean success = false;
-        return success; //TODO : write queries and code for revoking access to guide
-    }
+
 
     public boolean saveGuide(Guide guide) {
         boolean success = false;
@@ -215,5 +208,39 @@ public class UserDatabase {
         return success;
     }
 
+    public boolean grantAccess(String userEmail, UUID guideUUID) {
+        boolean success = false;
+        try {
+            String query = "select grant_access(?, ?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, userEmail);
+            statement.setObject(2, guideUUID);
+            ResultSet rs = statement.executeQuery();
 
+            if(rs.next()){
+                success = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
+    public boolean revokeAccess(String userEmail, UUID guideUUID){
+        boolean success = false;
+        try {
+            String query = "select revoke_access(?, ?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, userEmail);
+            statement.setObject(2, guideUUID);
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                success = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
 }

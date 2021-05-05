@@ -59,14 +59,6 @@ public class DatabaseManager {
         return userDatabase.getGuideUUIDAccess(user);
     }
 
-    public boolean giveAccess(String authorEmail, String userEmail, UUID guideUUID) {
-        return userDatabase.giveAccess(authorEmail, userEmail, guideUUID);
-    }
-
-    public boolean revokeAccess(String authorEmail, String userEmail, UUID guideUUID) {
-        return userDatabase.giveAccess(authorEmail, userEmail, guideUUID);
-    }
-
     public boolean saveGuide(Guide guide, User user) {
         boolean success = false;
         System.out.println("Saving gude");
@@ -88,5 +80,14 @@ public class DatabaseManager {
         UUID[] authorUUID = userDatabase.getGuideUUIDAuthor(user);
         Thumbnail[] authorThumbnails = modelDatabase.getThumbnailsFromUUID(authorUUID);
         return authorThumbnails;
+    }
+
+
+    public boolean grantAccess(String userEmail, UUID guideUUID) {
+        return userDatabase.grantAccess(userEmail, guideUUID);
+    }
+
+    public boolean revokeAccess(String userEmail, UUID guideUUID) {
+        return userDatabase.revokeAccess(userEmail, guideUUID);
     }
 }

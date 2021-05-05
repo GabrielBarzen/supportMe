@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.UUID;
 
 public class Connection {
 
@@ -89,6 +90,22 @@ public class Connection {
         if (success ) {
             listener.thumbnailsReceived(returnAccess, returnAuthor);
         }
+    }
+
+    public void grantAccess(UUID uuid, String email) {
+        String request = requestBuilder(requestType.grant, uuid.toString() + ":" + email);
+        send(request);
+    }
+
+    public void revokeAccess(UUID uuid, String email) {
+        String request = requestBuilder(requestType.revoke, uuid.toString() + ":" + email);
+        send(request);
+    }
+
+    private String requestBuilder(requestType type, String data){
+        String request = null;
+        request = String.format("%s:%s",type.name(), data);
+        return request;
     }
 
     public boolean saveGuide(Guide guide) {
