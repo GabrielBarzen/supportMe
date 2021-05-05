@@ -1,25 +1,14 @@
 package org.supportmeinc;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.supportmeinc.view.*;
-import org.supportmeinc.view.GuideEditorUi;
 import shared.Card;
 import shared.User;
-
 import org.supportmeinc.model.*;
-
 import java.io.*;
-import java.net.ConnectException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.UUID;
-import java.util.HashMap;
-import shared.User;
 
 
 

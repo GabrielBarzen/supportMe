@@ -1,5 +1,4 @@
 package org.supportmeinc;
-
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -10,7 +9,6 @@ import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.*;
 import shared.Guide;
 import shared.Thumbnail;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -201,5 +199,9 @@ public class MainController {
 
     public void onLoadGuideEditorSave() {
         guideEditorSave.onLoad();
+    }
+
+    public void createNewGuide() {
+        toolbarController.createNewGuide();
     }
 }
