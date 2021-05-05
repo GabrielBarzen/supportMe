@@ -10,7 +10,7 @@ import org.supportmeinc.MainController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CardViewer implements JFXcontroller, Initializable {
+public class GuideViewer implements JFXcontroller, Initializable {
 
     MainController controller;
 
@@ -23,7 +23,7 @@ public class CardViewer implements JFXcontroller, Initializable {
         this.controller = controller;
     }
 
-    public CardViewer(){
+    public GuideViewer(){
         System.out.println("created cardViewer");
     }
 

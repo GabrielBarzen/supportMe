@@ -11,20 +11,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Register">
    <children>
-      <Button fx:id="registerButton" layoutX="60.0" layoutY="416.0" mnemonicParsing="false" onAction="#userRegister" prefHeight="42.0" prefWidth="158.0" style="-fx-background-color: #F6BE00;" text="Register" textFill="#9e0909">
+      <Button fx:id="btnRegister" onAction="#userRegister" layoutX="60.0" layoutY="416.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="158.0" style="-fx-background-color: #F6BE00;" text="Register" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="81.0" fitWidth="96.0" layoutX="197.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="picturePreview" fitHeight="81.0" fitWidth="96.0" layoutX="197.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/FinalLogotyp.png" />
          </image></ImageView>
-      <TextField fx:id="firstName" layoutX="204.0" layoutY="162.0" promptText="Enter first name">
-         <font>
-            <Font name="Book Antiqua" size="12.0" />
-         </font></TextField>
-      <TextField fx:id="lastName" layoutX="204.0" layoutY="213.0" promptText="Enter last name">
+      <TextField fx:id="userName" layoutX="204.0" layoutY="162.0" promptText="Enter first name">
          <font>
             <Font name="Book Antiqua" size="12.0" />
          </font></TextField>
@@ -32,12 +28,7 @@
          <font>
             <Font name="Book Antiqua" size="12.0" />
          </font></TextField>
-      <Label layoutX="60.0" layoutY="165.0" prefHeight="18.0" prefWidth="88.0" text="First name" textFill="#9e0909">
-         <font>
-            <Font name="Book Antiqua" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="60.0" layoutY="216.0" prefHeight="18.0" prefWidth="88.0" text="Last name" textFill="#9e0909">
+      <Label layoutX="60.0" layoutY="165.0" prefHeight="18.0" prefWidth="88.0" text="Username" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
@@ -56,7 +47,7 @@
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="pictureButton" layoutX="41.0" layoutY="74.0" mnemonicParsing="false" onAction="#chooseImage" style="-fx-background-color: #F6BE00;" text="Add profile picture" textFill="#9e0909">
+      <Button fx:id="btnPicture" layoutX="41.0" layoutY="74.0" mnemonicParsing="false" onAction="#chooseImage" style="-fx-background-color: #F6BE00;" text="Add profile picture" textFill="#9e0909">
          <font>
             <Font size="13.0" />
          </font>

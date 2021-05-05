@@ -1,25 +1,17 @@
 package org.supportmeinc.view;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
-import shared.User;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +24,7 @@ public class Login implements JFXcontroller {
     private Stage stage;
     private Scene scene;
 
-    @FXML private TextField userName;
+    @FXML private TextField userEmail;
     @FXML private TextField password;
     @FXML private Label message;
 
@@ -46,17 +38,15 @@ public class Login implements JFXcontroller {
     }
 
     public void userLogin(ActionEvent event) throws IOException {
-        String email = userName.getText();
+        String email = userEmail.getText();
         String pass = password.getText();
 
-
-        if (email.isEmpty() || pass.isEmpty()) {
+        if (email.isEmpty() && pass.isEmpty()) {
             message.setText("Please enter your email and password!");
-        } else if (true) {
-            controller.setUser(new User(email, null, pass));
-        }
-        else {
-            message.setText("Wrong username or password!");
+
+        } else {
+             controller.login(email, pass);
+
         }
 
         controller.sceneSwitch(SceneName.toolbar, event);

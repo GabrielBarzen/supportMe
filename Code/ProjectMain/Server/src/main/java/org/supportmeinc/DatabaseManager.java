@@ -20,7 +20,7 @@ public class DatabaseManager {
 
     //ModelDatabase methods//
     public Thumbnail[] getCurrentThumbnails(UUID[] guideAccessUUID) {
-        return modelDatabase.getCurrentThumbnails(guideAccessUUID);}
+        return modelDatabase.getThumbnailsFromUUID(guideAccessUUID);}
 
     public Card[] getCards(UUID guideUUID) {
         return modelDatabase.getCards(guideUUID);}
@@ -56,7 +56,7 @@ public class DatabaseManager {
     }
 
     public UUID[] getGuideUUIDaccess(User user) {
-        return userDatabase.getGuideUUIAccess(user);
+        return userDatabase.getGuideUUIDAccess(user);
     }
 
     public boolean giveAccess(String authorEmail, String userEmail, UUID guideUUID) {
@@ -69,10 +69,24 @@ public class DatabaseManager {
 
     public boolean saveGuide(Guide guide, User user) {
         boolean success = false;
-        success = modelDatabase.saveGuide(guide, user);
+        System.out.println("Saving gude");
+        success = modelDatabase.saveGuide(guide);
         if (success) {
-            success = userDatabase.saveGuide(guide, user);
+            System.out.println("saved guide");
+            success = userDatabase.saveGuide(guide);
         }
         return success;
+    }
+
+    public Thumbnail[] getAccessThumbnails(User user) {
+        UUID[] accessUUID = userDatabase.getGuideUUIDAccess(user);
+        Thumbnail[] accessThumbnails = modelDatabase.getThumbnailsFromUUID(accessUUID);
+        return accessThumbnails;
+    }
+
+    public Thumbnail[] getAuthorThumbnails(User user) {
+        UUID[] authorUUID = userDatabase.getGuideUUIDAuthor(user);
+        Thumbnail[] authorThumbnails = modelDatabase.getThumbnailsFromUUID(authorUUID);
+        return authorThumbnails;
     }
 }

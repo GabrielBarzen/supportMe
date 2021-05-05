@@ -28,6 +28,10 @@ public class Toolbar implements JFXcontroller {
         borderPane.setCenter(controller.getScenes(SceneName.guideEditor));
     }
 
+    public void guideViewer() {
+        borderPane.setCenter(controller.getScenes(SceneName.guideViewer));
+    }
+
     public void swapScene(AnchorPane pane) {
         borderPane.setCenter(pane);
     }

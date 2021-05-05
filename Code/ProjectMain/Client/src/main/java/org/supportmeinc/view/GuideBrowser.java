@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class GuideBrowser implements JFXcontroller, Initializable {
+public class GuideBrowser implements JFXcontroller, Initializable {// class Begin
 
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
@@ -30,20 +31,12 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     public void initData(MainController controller){
         this.controller = controller;
-
-        scrollPane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                scrollPane.getParent().requestFocus();
-            }
-        });
-
-        fakeThumbnails();
         controller.setGuideBrowser(this);
-        System.out.println("najjeBajje");
+
+        
     }
 
-    public void addThumbnail(String title, byte[] image, String description) {
+    public void addThumbnail(String title, byte[] image, String description,UUID guideUUID) {
         ThumbnailItem item = null;
         AnchorPane anchorPane = null;
         try {
@@ -57,7 +50,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         }
 
         if (item != null && anchorPane != null) {
-            item.setData(title, image, description, thumbnailItems.size());
+            item.setData(title, image, description, thumbnailItems.size(), guideUUID, this);
             thumbnailItems.add(item);
             updateThumbnailView(anchorPane);
         }
@@ -65,25 +58,12 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     public GuideBrowser(){
 
-        System.out.println("GUIDEBROWSER");
     }
 
 
-
-    //TODO STUBBE, VÄNLIGEN ELIMINERA EFTER TEST
-    public void fakeThumbnails() {
-        for (int i = 0; i < 25; i++) {
-            Thumbnail nail = new Thumbnail(UUID.randomUUID());
-            nail.setTitle("Title #" + i);
-
-            byte[] testImage = ImageUtils.toBytes("FinalLogotyp.png");
-            nail.setImage(testImage);
-            nail.setDescription("This is a short but detailed and descriptive description for guide #" + i + " some extra text bla bla bla bla ayyyyyyyylmao wassup yoyo heyeyeyeaaa");
-            addThumbnail(nail.getTitle(), nail.getImage(), nail.getDescription());
-        }
+    public void openGuide(UUID uuid){
+        controller.openGuide(uuid);
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

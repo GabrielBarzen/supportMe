@@ -11,9 +11,10 @@ import org.supportmeinc.view.GuideEditorUi;
 import org.supportmeinc.view.GuideBrowser;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
+import org.supportmeinc.view.*;
+import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -31,13 +32,22 @@ public class MainController {
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
+
     private User user;
-    private boolean bool;
+
+    private GuideEditorSave guideEditorSave;
+
 
 
     public MainController(Stage stage, Main controller, GuideManager guideManager) {
         this.controller = controller;
         this.stage = stage;
+
+//        try {
+//            toolbar = new Scene(loadFXML(SceneName.toolbar));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         try {
             stage.setScene(new Scene(loadFXML(SceneName.login)));
@@ -49,7 +59,7 @@ public class MainController {
         stage.setTitle("supportMe");
         stage.show();
         populateScenes();
-        guideEditor = new GuideEditor();
+        guideEditor = new GuideEditor(this);
         this.guideManager = guideManager;
     }
 
@@ -157,12 +167,73 @@ public class MainController {
     }
 
     public void refreshThumbnails() {
-        Thumbnail[] thumbnails = guideManager.getThumbnails();
-        guideBrowser.resetView();
-        for (Thumbnail thumbnail: thumbnails) {
-            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
+        guideManager.getThumbnails();
+        Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
+        Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
+        setThumbnailInView(accessThumbnails, authorThumbnails);
+    }
+
+
+    public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
+        this.guideEditorSave = guideEditorSave;
+    }
+
+    public void saveGuide(String title, String description, byte[] img, UUID affirmUUID) {
+        Guide guide = guideEditor.packGuide(title, description, img, affirmUUID);
+        if (guide != null) {
+            guideManager.saveGuide(guide);
+        } else {
+            System.out.println("något annat "); //TODO alert user if guide error
         }
     }
+
+    public String getAuthor() {
+        return guideManager.getCurrentUser().getEmail();
+    }
+
+    public void login(String email, String pass) {
+        guideManager = controller.Login(email, pass);
+        if (guideManager != null) {
+            System.out.println("Logged in successfully");
+            try {
+                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.exit(0);
+        }
+    }
+
+    public void registerUser(User user) {
+        guideManager = controller.register(user);
+        if (guideManager != null) {
+            System.out.println("Logged in successfully");
+            try {
+                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.exit(0);
+        }
+    }
+
+    public void onLoadGuideEditorSave() {
+        guideEditorSave.onLoad();
+    }
+
+
+    public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: access) {
+            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+        for (Thumbnail thumbnail: author) {
+            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+    }
+
 
     public void setUser(User user) {
         this.user = user;
@@ -172,6 +243,10 @@ public class MainController {
         User removeUser = user;
         user = null;
         return removeUser;
+    }
+
+    public void openGuide(UUID uuid) {
+        guideManager.getGuide(uuid);
     }
 
 

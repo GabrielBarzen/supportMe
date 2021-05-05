@@ -14,9 +14,7 @@ import java.sql.SQLException;
 import shared.*;
 
 import javax.xml.crypto.Data;
-import java.util.ArrayList;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 
 public class UserDatabase {
 
@@ -140,9 +138,9 @@ public class UserDatabase {
         this.databaseManager = databaseManager;
     }
 
-    public UUID[] getGuideUUIAccess(User user) {
-        UUID[] returnValues = null;
-        System.out.println(user.getEmail());
+    public UUID[] getGuideUUIDAccess(User user) {
+        UUID[] returnValues;
+
         try {
             String query = "select get_all_access(?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -152,11 +150,37 @@ public class UserDatabase {
             ArrayList<UUID> UUIDList = new ArrayList<>();
             while (rs.next()){
                 UUID uuid = (UUID) rs.getObject(1);
-                System.out.println(uuid.toString());
-                UUIDList.add((UUID) rs.getObject(1));
+                UUIDList.add(uuid);
+                System.out.println("Access of : " + uuid);
+
             }
             returnValues = UUIDList.toArray(new UUID[0]);
-            System.out.println("retval uuid : " + returnValues[0]);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            returnValues = null;
+        }
+        return returnValues;
+    }
+
+
+    public UUID[] getGuideUUIDAuthor(User user) {
+        UUID[] returnValues = null;
+        System.out.println(user.getEmail());
+        try {
+            String query = "select get_all_author(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setString(1, user.getEmail());
+
+            ResultSet rs = statement.executeQuery();
+            ArrayList<UUID> UUIDList = new ArrayList<>();
+            while (rs.next()){
+                UUID uuid = (UUID) rs.getObject(1);
+                UUIDList.add(uuid);
+                System.out.println("Author of : " + uuid);
+            }
+            returnValues = UUIDList.toArray(new UUID[0]);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,12 +197,12 @@ public class UserDatabase {
         return success; //TODO : write queries and code for revoking access to guide
     }
 
-    public boolean saveGuide(Guide guide, User user) {
+    public boolean saveGuide(Guide guide) {
         boolean success = false;
         try {
             String query = "select add_guide(?, ?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
-            statement.setString(1, user.getEmail());
+            statement.setString(1, guide.getAuthorEmail());
             statement.setObject(2, guide.getGuideUUID());
             ResultSet rs = statement.executeQuery();
 
@@ -190,4 +214,6 @@ public class UserDatabase {
         }
         return success;
     }
+
+
 }
