@@ -50,31 +50,24 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             }
 
             if(affirmUUID != null) {
-                if(controller.packGuide(title, description, img, affirmUUID)) {
-                    System.out.println("Kommer du innanför packGuide?");
-                    if(controller.saveGuide()) {
-                        System.out.println("Kommer du innanför saveGuide?");
-                        alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Guide saved!");
-                        alert.setHeaderText("Successful!");
-                        alert.setContentText("Guide is saved");
-                        alert.show();
-                        controller.switchScene(SceneName.guideBrowser);
-                        controller.setNewGuideEditorModel();
+                controller.packGuide(title, description, img, affirmUUID);
 
-                    } else {
-                        alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Guide couldn't be saved");
-                        alert.setHeaderText("Warning!");
-                        alert.setContentText("Guide couldn't be saved to server, please check connection");
-                        alert.show();
-                    }
+                if(controller.saveGuide()) {
+
+                    alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Guide saved!");
+                    alert.setHeaderText("Successful!");
+                    alert.setContentText("Guide is saved");
+                    alert.show();
+
+                    controller.switchScene(SceneName.guideBrowser);
+                    controller.setNewGuideEditorModel();
 
                 } else {
                     alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Guide couldn't be saved");
-                    alert.setHeaderText("Card links missing");
-                    alert.setContentText("More than one card is missing links to next card in guide!");
+                    alert.setHeaderText("Warning!");
+                    alert.setContentText("Guide couldn't be saved to server, please check connection");
                     alert.show();
                 }
             } else {
@@ -84,6 +77,12 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                 alert.setContentText("Please select a starting card");
                 alert.show();
             }
+        } else {
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Could not save guide");
+            alert.setHeaderText("No title or description");
+            alert.setContentText("Please fill in a title and a description!");
+            alert.show();
         }
     }
 

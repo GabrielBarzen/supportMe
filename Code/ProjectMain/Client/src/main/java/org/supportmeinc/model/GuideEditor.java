@@ -92,11 +92,23 @@ public class GuideEditor {
         return outputGuide;
     }
 
-    public boolean packGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        Guide returnGuide;
+    public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
+        Guide returnGuide = new Guide();
+        setDescription(title, description, img, affirmUUID, returnGuide);
+        returnGuide.setCards(cardsList.values().toArray(new Card[0]));
+        returnGuide.setDescriptionCard(descriptionCard);
+        returnGuide.setThumbnail(thumbnail);
+        returnGuide.setAuthor(controller.getAuthor());
+        this.outputGuide = returnGuide;
+    }
+
+    public boolean checkCardLinksValid() {
+        boolean boolReturn;
+
         int ok = 0;
 
         for (Card card : cardsList.values()) {
+            System.out.println(cardsList.values());
             if (card.getNegUUID() == null && card.getAffirmUUID() == null){
                 ok++;
             } else if (card.getNegUUID() == null || card.getAffirmUUID() == null) {
@@ -104,17 +116,12 @@ public class GuideEditor {
             }
         }
 
-        if(ok != 1){
-            return false;
+        if(ok != 1) {
+            boolReturn = false;
         } else {
-            returnGuide = new Guide();
-            setDescription(title, description, img, affirmUUID, returnGuide);
-            returnGuide.setCards(cardsList.values().toArray(new Card[0]));
-            returnGuide.setDescriptionCard(descriptionCard);
-            returnGuide.setThumbnail(thumbnail);
-            returnGuide.setAuthor(controller.getAuthor());
-            this.outputGuide = returnGuide;
-            return true;
+            boolReturn = true;
         }
+
+        return boolReturn;
     }
 }

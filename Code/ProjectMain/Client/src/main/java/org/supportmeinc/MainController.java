@@ -194,8 +194,12 @@ public class MainController {
         }
     }
 
-    public boolean packGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        return guideEditor.packGuide(title, description, img, affirmUUID);
+    public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
+        guideEditor.packGuide(title, description, img, affirmUUID);
+    }
+
+    public boolean checkCardLinksValid() {
+        return guideEditor.checkCardLinksValid();
     }
 
     public String getAuthor() {
