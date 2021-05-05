@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Toolbar">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Toolbar">
    <children>
       <BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -21,12 +21,6 @@
                      <children>
                         <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                         <Button fx:id="homeButton" mnemonicParsing="false" onAction="#homeButton" prefHeight="25.0" prefWidth="100.0" text="My Guides" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="createGuide" mnemonicParsing="false" onAction="#createNewGuide" prefHeight="25.0" prefWidth="100.0" text="Create Guide" />
                      </children>
                   </VBox>
                   <VBox layoutX="20.0" layoutY="10.0" prefHeight="100.0" prefWidth="100.0">

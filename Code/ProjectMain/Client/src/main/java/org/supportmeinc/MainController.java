@@ -1,6 +1,6 @@
 package org.supportmeinc;
-
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.layout.AnchorPane;
@@ -39,20 +39,21 @@ public class MainController {
 
 
 
-    public MainController(Stage stage, Main controller, GuideManager guideManager) {
+    public MainController(Stage stage, Main controller) {
         this.controller = controller;
         this.stage = stage;
-
-//        try {
-//            toolbar = new Scene(loadFXML(SceneName.toolbar));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("gabbe = " + stage);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                guideManager.disconnect();
+            }
+        });
 
         try {
             stage.setScene(new Scene(loadFXML(SceneName.login)));
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
 
         scenes = new HashMap<>();
@@ -60,7 +61,6 @@ public class MainController {
         stage.show();
         populateScenes();
         guideEditor = new GuideEditor(this);
-        this.guideManager = guideManager;
     }
 
     public void setGuideBrowser(GuideBrowser guideBrowser) {
@@ -121,7 +121,6 @@ public class MainController {
 
     public void sceneSwitch(SceneName sceneName, Event event) throws IOException {
         Scene scene = new Scene(loadFXML(sceneName));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
     }
@@ -234,14 +233,20 @@ public class MainController {
         guideEditorSave.onLoad();
     }
 
+    public void createNewGuide() {
+        initGuideEditor();
+        switchScene(SceneName.guideEditor);
+        System.out.println("ät mer bajs");
+    }
+
 
     public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
         guideBrowser.resetView();
         for (Thumbnail thumbnail: access) {
-            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+            guideBrowser.addThumbnailAccess(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
         }
         for (Thumbnail thumbnail: author) {
-            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+            guideBrowser.addThumbnailAuthor(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
         }
     }
 

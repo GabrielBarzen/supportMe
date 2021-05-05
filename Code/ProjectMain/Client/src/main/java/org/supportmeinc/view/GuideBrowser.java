@@ -1,42 +1,32 @@
 package org.supportmeinc.view;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
-import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
-import shared.Thumbnail;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class GuideBrowser implements JFXcontroller, Initializable {// class Begin
+public class GuideBrowser implements JFXcontroller, Initializable {
 
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
 
-    @FXML private FlowPane flowPane;
+    @FXML private FlowPane flowPane, flowPaneSaved;
     @FXML private ScrollPane scrollPane;
 
     public void initData(MainController controller){
         this.controller = controller;
         controller.setGuideBrowser(this);
-
-        
     }
 
-    public void addThumbnail(String title, byte[] image, String description,UUID guideUUID) {
+    public void addThumbnailAuthor(String title, byte[] image, String description, UUID guideUUID) {
         ThumbnailItem item = null;
         AnchorPane anchorPane = null;
         try {
@@ -52,7 +42,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {// class Begi
         if (item != null && anchorPane != null) {
             item.setData(title, image, description, thumbnailItems.size(), guideUUID, this);
             thumbnailItems.add(item);
-            updateThumbnailView(anchorPane);
+            flowPane.getChildren().add(anchorPane);
         }
     }
 
@@ -70,12 +60,34 @@ public class GuideBrowser implements JFXcontroller, Initializable {// class Begi
 
     }
 
-    public void updateThumbnailView(AnchorPane anchorPane) {
-        flowPane.getChildren().add(anchorPane);
-    }
-
     public void resetView() {
         thumbnailItems = new ArrayList<>();
         flowPane.getChildren().clear();
+        flowPaneSaved.getChildren().clear();
+    }
+
+    public void createNewGuide() {
+        System.out.println("ÄT BAJS");
+        controller.createNewGuide();
+    }
+
+    public void addThumbnailAccess(String title, byte[] image, String description, UUID guideUUID) {
+        ThumbnailItem item = null;
+        AnchorPane anchorPane = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/thumbnail.fxml"));
+
+            anchorPane = loader.load();
+            item = loader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (item != null && anchorPane != null) {
+            item.setData(title, image, description, thumbnailItems.size(), guideUUID, this);
+            thumbnailItems.add(item);
+            flowPaneSaved.getChildren().add(anchorPane);
+        }
     }
 } //class end
