@@ -13,6 +13,7 @@ import org.supportmeinc.ImageUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 public class ThumbnailItem {
 
@@ -27,11 +28,12 @@ public class ThumbnailItem {
     @FXML private MenuItem deleteItem = new MenuItem();
     @FXML private MenuItem cancelItem = new MenuItem();
 
-
+    private UUID guideUUID;
     private int listIndex; //represents index in list of thumbnails in GuideBrowser
 
-    public void setData(String title, byte[] image, String text, int listIndex) {
+    public void setData(String title, byte[] image, String text, int listIndex, UUID guideUUID, GuideBrowser guideBrowser) {
         this.listIndex = listIndex;
+        this.guideUUID = guideUUID;
 
         lblTitle.setText(title);
         imgThumb.setImage(ImageUtils.toImage(image));
@@ -82,7 +84,7 @@ public class ThumbnailItem {
     }
 
     private void open() {
-        System.out.println("open " + lblTitle.getText());
+
     }
 
     private void edit() {

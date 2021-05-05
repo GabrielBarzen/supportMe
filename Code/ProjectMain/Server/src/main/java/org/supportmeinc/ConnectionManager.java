@@ -78,30 +78,31 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         }
 
         if (object instanceof Thumbnail[]){
-            Thumbnail[] oldThumbnails = (Thumbnail[]) object;
+            Thumbnail[] guideAccessThumbnails;
+            Thumbnail[] guideAuthorThumbnails;
 
-            for (Thumbnail nail: oldThumbnails) {
-                System.out.println("old Thumbs : " + nail.getGuideUUID());
-            }
+            guideAccessThumbnails = databaseManager.getAccessThumbnails(user);
+            guideAuthorThumbnails = databaseManager.getAuthorThumbnails(user);
 
-            UUID[] guideUUIDacess = databaseManager.getGuideUUIDaccess(user);
+            userConnection.get(user).sendObject(guideAccessThumbnails);
+            userConnection.get(user).sendObject(guideAuthorThumbnails);
+        }
 
-            for (UUID uuid: guideUUIDacess) {
-                System.out.println("Guide uuid access : " + uuid);
-            }
+        if (object instanceof String) {
+            String request = (String) object;
+            String[] requestParts = request.split(":");
 
-            Thumbnail[] newThumbnails = databaseManager.getCurrentThumbnails(guideUUIDacess);
-            for (Thumbnail nail: newThumbnails) {
-                System.out.println("new Thumbs : " + nail.getGuideUUID());
-            }
+            switch (requestParts[0]) {
+                case "grant":
+                    databaseManager.grantAccess(requestParts[2], UUID.fromString(requestParts[1]));
+                    break;
+                case "revoke":
+                    databaseManager.revokeAccess(requestParts[2], UUID.fromString(requestParts[1]));
+                    break;
 
-            if (!(Arrays.equals(oldThumbnails, newThumbnails))) {
-                System.out.println("Sending new");
-                System.out.println("len : " + newThumbnails.length);
-                userConnection.get(user).sendObject(newThumbnails);
-            } else {
-                System.out.println("Sending null");
-                userConnection.get(user).sendObject(null);
+                default:
+                    ServerLog.log("could not grant/revoke acces to guide");
+                    break;
             }
         }
     }

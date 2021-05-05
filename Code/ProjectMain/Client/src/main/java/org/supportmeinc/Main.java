@@ -71,19 +71,6 @@ public class Main extends Application {
     }
 
     //Model methods//
-
-    public Card getGuide(int index) {
-        return guideManager.getGuide(index).getDescriptionCard();
-    }
-
-    public Card getCard(boolean choice) {
-        return null;
-    }
-
-    public void exitCardView() {
-
-    }
-
     private MainController mainController;
 
     @Override
@@ -104,7 +91,6 @@ public class Main extends Application {
         try {
             connection = new Connection(ip, port, user); //Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
-            System.out.println(guideManager.getGuide(0).getThumbnail().getTitle());
         } catch (IOException e) {
             guideManager = new GuideManager();
             System.out.println("Cannot create a connection, starting in offline mode");
