@@ -88,8 +88,11 @@ public class GuideEditor {
     public byte[] getCardImage(UUID uuid){
         return cardsList.get(uuid).getImage();
     }
+    public Guide getOutputGuide() {
+        return outputGuide;
+    }
 
-    public Guide packGuide(String title, String description, byte[] img, UUID affirmUUID) {
+    public boolean packGuide(String title, String description, byte[] img, UUID affirmUUID) {
         Guide returnGuide;
         int ok = 0;
 
@@ -102,7 +105,7 @@ public class GuideEditor {
         }
 
         if(ok != 1){
-            returnGuide = null;
+            return false;
         } else {
             returnGuide = new Guide();
             setDescription(title, description, img, affirmUUID, returnGuide);
@@ -110,8 +113,8 @@ public class GuideEditor {
             returnGuide.setDescriptionCard(descriptionCard);
             returnGuide.setThumbnail(thumbnail);
             returnGuide.setAuthor(controller.getAuthor());
+            this.outputGuide = returnGuide;
+            return true;
         }
-
-        return returnGuide;
     }
 }

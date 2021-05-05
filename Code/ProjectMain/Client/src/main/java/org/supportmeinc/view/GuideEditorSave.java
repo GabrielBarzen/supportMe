@@ -18,8 +18,8 @@ import java.util.UUID;
 
 public class GuideEditorSave implements JFXcontroller, Initializable {
 
-    @FXML Button btnExit, btnSaveGuide, btnChooseFile;
-    @FXML TextField txtTitle, txtFilePath;
+    @FXML Button btnBack, btnSaveGuide, btnChooseFile;
+    @FXML TextField txtTitle, txtFilePath, txtAccess;
     @FXML TextArea txtDescription;
     @FXML ImageView imgPreview;
     @FXML ListView<String> listView;
@@ -49,8 +49,34 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                 }
             }
 
-            if(!(affirmUUID == null)) {
-                controller.saveGuide(title, description, img, affirmUUID);
+            if(affirmUUID != null) {
+                if(controller.packGuide(title, description, img, affirmUUID)) {
+                    System.out.println("Kommer du innanför packGuide?");
+                    if(controller.saveGuide()) {
+                        System.out.println("Kommer du innanför saveGuide?");
+                        alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Guide saved!");
+                        alert.setHeaderText("Successful!");
+                        alert.setContentText("Guide is saved");
+                        alert.show();
+                        controller.switchScene(SceneName.guideBrowser);
+                        controller.setNewGuideEditorModel();
+
+                    } else {
+                        alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Guide couldn't be saved");
+                        alert.setHeaderText("Warning!");
+                        alert.setContentText("Guide couldn't be saved to server, please check connection");
+                        alert.show();
+                    }
+
+                } else {
+                    alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Guide couldn't be saved");
+                    alert.setHeaderText("Card links missing");
+                    alert.setContentText("More than one card is missing links to next card in guide!");
+                    alert.show();
+                }
             } else {
                 alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Could not save guide");
@@ -70,6 +96,10 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
 
         listView.getItems().clear();
+        txtTitle.clear();
+        txtDescription.clear();
+        txtFilePath.clear();
+        txtAccess.clear();
 
         for (UUID uuid : guideCardUUID) {
             System.out.println(uuid);
@@ -100,6 +130,10 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             alert.setContentText("Selected file must be of type .png or .jpg, please try again");
             alert.show();
         }
+    }
+
+    public void back() {
+        controller.switchScene(SceneName.guideEditor);
     }
 
     @Override

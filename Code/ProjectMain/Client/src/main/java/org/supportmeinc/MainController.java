@@ -153,6 +153,11 @@ public class MainController {
     }
 
     public void setGuideEditorUi(GuideEditorUi guideEditorUi) {this.guideEditorUi = guideEditorUi; }
+    public void setNewGuideEditorModel() {
+        this.guideEditor = new GuideEditor(this);
+        guideEditorUi.repopulateLists();
+        guideEditorSave.repopulateLists();
+    }
 
     public void initGuideEditor() {
         guideEditorUi.createNewCard();
@@ -171,13 +176,19 @@ public class MainController {
         this.guideEditorSave = guideEditorSave;
     }
 
-    public void saveGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        Guide guide = guideEditor.packGuide(title, description, img, affirmUUID);
+    public boolean saveGuide() {
+        Guide guide = guideEditor.getOutputGuide();
         if (guide != null) {
             guideManager.saveGuide(guide);
+            return true;
         } else {
             System.out.println("något annat "); //TODO alert user if guide error
+            return false;
         }
+    }
+
+    public boolean packGuide(String title, String description, byte[] img, UUID affirmUUID) {
+        return guideEditor.packGuide(title, description, img, affirmUUID);
     }
 
     public String getAuthor() {

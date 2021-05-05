@@ -111,6 +111,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void updateComboboxPreview() {
+        yesCardSelected.setText("");
+        noCardSelected.setText("");
         if(yesUUID != null) {
             yesCardSelected.setText("Selected: " + controller.getCardTitle(yesUUID));
         }
@@ -246,4 +248,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         controller.switchScene(SceneName.guideEditorSave);
         controller.onLoadGuideEditorSave();
     }
+
+
 }
