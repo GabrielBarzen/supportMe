@@ -2,19 +2,16 @@ package org.supportmeinc.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
-
-import javax.imageio.ImageIO;
-import javax.swing.text.html.ImageView;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,15 +19,17 @@ public class Register implements JFXcontroller {
 
     private MainController controller;
 
-    @FXML private Button registerButton;
-    @FXML private Button pictureButton;
+    @FXML private Button btnRegister;
+    @FXML private Button btnPicture;
     @FXML private TextField firstname;
     @FXML private TextField lastname;
     @FXML private TextField email;
-    @FXML private TextField password;
-    @FXML private TextField password1;
-    @FXML private ImageView picture;
+    @FXML private PasswordField password;
+    @FXML private PasswordField password1;
+    @FXML private ImageView picturePreview;
     @FXML private Label rMessage;
+
+    private byte[] image;
 
     private Stage stage;
     private Scene scene;
@@ -53,7 +52,7 @@ public class Register implements JFXcontroller {
         String mail = email.getText();
         String pass = password.getText();
         String pass1 = password1.getText();
-        Image pic = picture.getImage();
+        Image pic = picturePreview.getImage();
 
         if(fName.isEmpty()|| lName.isEmpty()|| mail.isEmpty()|| pass.isEmpty()||pass1.isEmpty()){
             rMessage.setText("please fill up all fields!");
@@ -61,6 +60,6 @@ public class Register implements JFXcontroller {
 
     }
 
-
-
+    public void switchToLogin(ActionEvent actionEvent) {
+    }
 }

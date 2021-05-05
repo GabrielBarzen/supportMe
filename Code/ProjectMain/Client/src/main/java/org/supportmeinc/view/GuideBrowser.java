@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -30,16 +31,9 @@ public class GuideBrowser implements JFXcontroller, Initializable {// class Begi
 
     public void initData(MainController controller){
         this.controller = controller;
-
-        scrollPane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                scrollPane.getParent().requestFocus();
-            }
-        });
-
         controller.setGuideBrowser(this);
 
+        
     }
 
     public void addThumbnail(String title, byte[] image, String description) {

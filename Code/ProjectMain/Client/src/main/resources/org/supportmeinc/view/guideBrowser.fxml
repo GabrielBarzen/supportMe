@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -13,6 +15,7 @@
       <ScrollPane fx:id="scrollPane" fitToWidth="true" focusTraversable="false" layoutX="200.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="400.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
-         </content></ScrollPane>
+         </content>
+         </ScrollPane>
    </children>
 </AnchorPane>

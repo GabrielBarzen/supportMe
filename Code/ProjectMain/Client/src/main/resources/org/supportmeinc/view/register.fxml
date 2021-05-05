@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="picture" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Register">
    <children>
-      <Button fx:id="registerButton" layoutX="60.0" layoutY="416.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="158.0" style="-fx-background-color: #F6BE00;" text="Register" textFill="#9e0909">
+      <Button fx:id="btnRegister" layoutX="60.0" layoutY="416.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="158.0" style="-fx-background-color: #F6BE00;" text="Register" textFill="#9e0909">
          <font>
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="81.0" fitWidth="96.0" layoutX="197.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="picturePreview" fitHeight="81.0" fitWidth="96.0" layoutX="197.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/FinalLogotyp.png" />
          </image></ImageView>
@@ -56,7 +56,7 @@
             <Font name="Book Antiqua" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="pictureButton" layoutX="41.0" layoutY="74.0" mnemonicParsing="false" onAction="#chooseImage" style="-fx-background-color: #F6BE00;" text="Add profile picture" textFill="#9e0909">
+      <Button fx:id="btnPicture" layoutX="41.0" layoutY="74.0" mnemonicParsing="false" onAction="#chooseImage" style="-fx-background-color: #F6BE00;" text="Add profile picture" textFill="#9e0909">
          <font>
             <Font size="13.0" />
          </font>
