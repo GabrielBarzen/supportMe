@@ -237,7 +237,6 @@ public class MainController {
     public void createNewGuide() {
         initGuideEditor();
         switchScene(SceneName.guideEditor);
-        System.out.println("ät mer bajs");
     }
 
 

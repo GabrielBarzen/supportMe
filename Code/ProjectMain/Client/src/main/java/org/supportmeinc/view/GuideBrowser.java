@@ -67,7 +67,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void createNewGuide() {
-        System.out.println("ÄT BAJS");
         controller.createNewGuide();
     }
 
