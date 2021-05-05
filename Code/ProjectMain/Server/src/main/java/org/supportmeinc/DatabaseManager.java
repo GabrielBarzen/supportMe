@@ -20,7 +20,7 @@ public class DatabaseManager {
 
     //ModelDatabase methods//
     public Thumbnail[] getCurrentThumbnails(UUID[] guideAccessUUID) {
-        return modelDatabase.getCurrentThumbnails(guideAccessUUID);}
+        return modelDatabase.getThumbnailsFromUUID(guideAccessUUID);}
 
     public Card[] getCards(UUID guideUUID) {
         return modelDatabase.getCards(guideUUID);}
@@ -76,5 +76,17 @@ public class DatabaseManager {
             success = userDatabase.saveGuide(guide);
         }
         return success;
+    }
+
+    public Thumbnail[] getAccessThumbnails(User user) {
+        UUID[] accessUUID = userDatabase.getGuideUUIDAccess(user);
+        Thumbnail[] accessThumbnails = modelDatabase.getThumbnailsFromUUID(accessUUID);
+        return accessThumbnails;
+    }
+
+    public Thumbnail[] getAuthorThumbnails(User user) {
+        UUID[] authorUUID = userDatabase.getGuideUUIDAuthor(user);
+        Thumbnail[] authorThumbnails = modelDatabase.getThumbnailsFromUUID(authorUUID);
+        return authorThumbnails;
     }
 }

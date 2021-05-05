@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
+import org.supportmeinc.model.ThumbnailListener;
 import org.supportmeinc.view.*;
 import shared.Guide;
 import shared.Thumbnail;
@@ -159,11 +160,10 @@ public class MainController {
     }
 
     public void refreshThumbnails() {
-        Thumbnail[] thumbnails = guideManager.getThumbnails();
-        guideBrowser.resetView();
-        for (Thumbnail thumbnail: thumbnails) {
-            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription());
-        }
+        guideManager.getThumbnails();
+        Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
+        Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
+        setThumbnailInView(accessThumbnails, authorThumbnails);
     }
 
 
@@ -196,10 +196,24 @@ public class MainController {
         } else {
             System.exit(0);
         }
-
     }
 
     public void onLoadGuideEditorSave() {
         guideEditorSave.onLoad();
+    }
+
+
+    public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: access) {
+            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+        for (Thumbnail thumbnail: author) {
+            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+    }
+
+    public void openGuide(UUID uuid) {
+        guideManager.getGuide(uuid);
     }
 }

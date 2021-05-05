@@ -84,10 +84,10 @@ public class ModelDatabase {
         }
     }
 
-    public Thumbnail[] getCurrentThumbnails(UUID[] guideAccessUUID) {
+    public Thumbnail[] getThumbnailsFromUUID(UUID[] guideUUIDS) {
         Thumbnail[] returnValues = null;
         ArrayList<Thumbnail> temp = new ArrayList<>();
-        for (UUID uuid: guideAccessUUID) {
+        for (UUID uuid: guideUUIDS) {
             temp.add(getThumbnail(uuid));
         }
         returnValues = temp.toArray(new Thumbnail[0]);

@@ -139,8 +139,8 @@ public class UserDatabase {
     }
 
     public UUID[] getGuideUUIDAccess(User user) {
-        UUID[] returnValues = new UUID[0];
-        System.out.println(user.getEmail());
+        UUID[] returnValues;
+
         try {
             String query = "select get_all_access(?)";
             PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -160,27 +160,11 @@ public class UserDatabase {
             e.printStackTrace();
             returnValues = null;
         }
-        UUID[] author = getGuideUUIDAuthor(user);
-
-        if (returnValues != null && author != null) {
-            UUID[] temp = new UUID[author.length + returnValues.length];
-            for (int i = 0; i < temp.length; i++) {
-                if (i < returnValues.length){
-                    temp[i] = returnValues[i];
-                } else {
-                    temp[i] = author[i - returnValues.length];
-                }
-            }
-            returnValues = temp;
-        }
-
-        for (int i = 0; i < returnValues.length; i++) {
-            System.out.println("new : " + returnValues[i]);
-        }
         return returnValues;
     }
 
-    private UUID[] getGuideUUIDAuthor(User user) {
+
+    public UUID[] getGuideUUIDAuthor(User user) {
         UUID[] returnValues = null;
         System.out.println(user.getEmail());
         try {
@@ -230,4 +214,6 @@ public class UserDatabase {
         }
         return success;
     }
+
+
 }
