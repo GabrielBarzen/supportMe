@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class GuideBrowser implements JFXcontroller, Initializable {
 
@@ -25,7 +26,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         controller.setGuideBrowser(this);
     }
 
-    public void addThumbnail(String title, byte[] image, String description,UUID guideUUID) {
+    public void addThumbnailAuthor(String title, byte[] image, String description, UUID guideUUID) {
         ThumbnailItem item = null;
         AnchorPane anchorPane = null;
         try {
@@ -41,7 +42,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         if (item != null && anchorPane != null) {
             item.setData(title, image, description, thumbnailItems.size(), guideUUID, this);
             thumbnailItems.add(item);
-            updateThumbnailView(anchorPane);
+            flowPane.getChildren().add(anchorPane);
         }
     }
 
@@ -59,16 +60,34 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     }
 
-    public void updateThumbnailView(AnchorPane anchorPane) {
-        flowPane.getChildren().add(anchorPane);
-    }
-
     public void resetView() {
         thumbnailItems = new ArrayList<>();
         flowPane.getChildren().clear();
+        flowPaneSaved.getChildren().clear();
     }
 
     public void createNewGuide() {
+        System.out.println("ÄT BAJS");
         controller.createNewGuide();
+    }
+
+    public void addThumbnailAccess(String title, byte[] image, String description, UUID guideUUID) {
+        ThumbnailItem item = null;
+        AnchorPane anchorPane = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/thumbnail.fxml"));
+
+            anchorPane = loader.load();
+            item = loader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (item != null && anchorPane != null) {
+            item.setData(title, image, description, thumbnailItems.size(), guideUUID, this);
+            thumbnailItems.add(item);
+            flowPaneSaved.getChildren().add(anchorPane);
+        }
     }
 } //class end

@@ -223,17 +223,19 @@ public class MainController {
     }
 
     public void createNewGuide() {
-        toolbarController.createNewGuide();
+        initGuideEditor();
+        switchScene(SceneName.guideEditor);
+        System.out.println("ät mer bajs");
     }
 
 
     public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
         guideBrowser.resetView();
         for (Thumbnail thumbnail: access) {
-            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+            guideBrowser.addThumbnailAccess(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
         }
         for (Thumbnail thumbnail: author) {
-            guideBrowser.addThumbnail(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+            guideBrowser.addThumbnailAuthor(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
         }
     }
 
