@@ -7,51 +7,59 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Login">
    <children>
-      <Button fx:id="loginButton" layoutX="304.0" layoutY="361.0" mnemonicParsing="false" onAction="#userLogin" prefHeight="42.0" prefWidth="118.0"  text="Login" >
-         <font>
-            <Font name="Book Antiqua Bold" size="14.0" />
-         </font></Button>
-      <Button fx:id="registerButton" layoutX="304.0" layoutY="420.0" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="42.0" prefWidth="118.0"  text="Register" >
-         <font>
-            <Font name="Book Antiqua Bold" size="14.0" />
-         </font></Button>
-      <TextField fx:id="userEmail" layoutX="109.0" layoutY="370.0" promptText="Enter email">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="12.0" />
-         </font></TextField>
-      <PasswordField fx:id="password" layoutX="109.0" layoutY="417.0" promptText="Enter password">
-         <font>
-            <Font name="Book Antiqua Bold Italic" size="12.0" />
-         </font></PasswordField>
-      <Label layoutX="24.0" layoutY="372.0" text="Email" >
-         <font>
-            <Font name="Book Antiqua" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="24.0" layoutY="419.0" prefHeight="19.0" prefWidth="78.0" text="Password" >
-         <font>
-            <Font name="Book Antiqua" size="15.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-200.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="295.0" fitWidth="464.0" layoutX="-1.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/FinalLogotyp.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="42.0" fitWidth="68.0" layoutX="202.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/lock-icon.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="message" layoutX="24.0" layoutY="450.0" prefHeight="24.0" prefWidth="244.0" textFill="#9e0909">
+      <Label fx:id="message" focusTraversable="false" layoutX="101.0" layoutY="450.0" prefHeight="24.0" prefWidth="244.0">
          <font>
             <Font name="Book Antiqua" size="12.0" />
          </font>
       </Label>
+      <HBox layoutX="23.0" layoutY="312.0" prefHeight="150.0" prefWidth="400.0" spacing="25.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="12.0">
+               <children>
+                  <Label focusTraversable="false" prefHeight="30.0" text="Email">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label focusTraversable="false" prefHeight="30.0" prefWidth="78.0" text="Password">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="300.0" spacing="20.0">
+               <children>
+                  <TextField fx:id="userEmail" prefHeight="30.0" prefWidth="50.0" promptText="Enter email" />
+                  <PasswordField fx:id="password" prefHeight="30.0" prefWidth="50.0" promptText="Enter password" />
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+                     <children>
+                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="42.0" prefWidth="118.0" text="Register">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#userLogin" prefHeight="42.0" prefWidth="118.0" text="Login">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

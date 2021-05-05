@@ -21,16 +21,9 @@ public class Login implements JFXcontroller {
 
     private MainController controller;
 
-    private Stage stage;
-    private Scene scene;
-
     @FXML private TextField userEmail;
     @FXML private TextField password;
     @FXML private Label message;
-
-
-    private FileChooser fileChooser;
-    private File filePath;
 
 
     public void initData(MainController controller){
