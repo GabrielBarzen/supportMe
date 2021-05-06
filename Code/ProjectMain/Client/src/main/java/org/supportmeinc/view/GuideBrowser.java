@@ -7,6 +7,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
+import org.supportmeinc.SceneName;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,6 +55,12 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     public void openGuide(UUID uuid){
         controller.getGuide(uuid);
+    }
+
+    public void editGuide() {
+        controller.setNewGuideEditorModel();
+        controller.setEditGuide();
+        controller.switchScene(SceneName.guideEditor);
     }
 
     @Override

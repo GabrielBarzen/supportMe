@@ -29,6 +29,16 @@ public class GuideEditor {
         cardsList = new HashMap<>();
     }
 
+    public void setEditGuide(Guide guide) {
+        HashMap<UUID,Card> temp = new HashMap<>();
+        for (Card card : guide.getCards()) {
+            temp.put(card.getCardUUID(), card);
+        }
+        this.cardsList = temp;
+        this.guideUUID = guide.getGuideUUID();
+
+    }
+
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
         currentCard = new Card();
         currentCard.setTitle(title);
@@ -110,7 +120,6 @@ public class GuideEditor {
 
     public boolean checkCardLinksValid() {
         boolean boolReturn;
-
         int ok = 0;
 
         for (Card card : cardsList.values()) {
@@ -127,7 +136,6 @@ public class GuideEditor {
         } else {
             boolReturn = true;
         }
-
         return boolReturn;
     }
 }

@@ -287,6 +287,9 @@ public class MainController {
         return guideEditor.getOutputGuide().getGuideUUID();
     }
 
+    public void setEditGuide() {
+        guideEditor.setEditGuide();
+    }
 
     public boolean checkAccessList() {
         boolean retVal;
