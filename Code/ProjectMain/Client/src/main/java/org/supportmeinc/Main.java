@@ -30,7 +30,9 @@ public class Main extends Application {
         launch();
     }
 
-
+    public Connection getConnection() {
+        return connection;
+    }
 
     //Configuration methods//
     private void readConfig(URL url) {

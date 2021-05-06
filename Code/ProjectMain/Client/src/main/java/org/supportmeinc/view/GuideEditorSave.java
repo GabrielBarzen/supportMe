@@ -11,25 +11,24 @@ import org.supportmeinc.SceneName;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
 
 public class GuideEditorSave implements JFXcontroller, Initializable {
 
-    @FXML Button btnBack, btnSaveGuide, btnChooseFile;
+    @FXML Button btnBack, btnSaveGuide, btnChooseFile, btnRemoveAccess, btnAddAccess;
     @FXML TextField txtTitle, txtFilePath, txtAccess;
     @FXML TextArea txtDescription;
     @FXML ImageView imgPreview;
-    @FXML ListView<String> listView;
+    @FXML ListView<String> listViewCards;
+    @FXML ListView<String> listViewAccess;
+    private ArrayList<String> accessList = new ArrayList<>();
     private ArrayList<UUID> guideCardUUID = new ArrayList<>();
     private MainController controller;
     private Alert alert;
     private byte[] img = null;
 
     public GuideEditorSave() {
-        listView = new ListView();
+        listViewCards = new ListView();
     }
 
     public void initData(MainController controller) {
@@ -43,17 +42,42 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             String description = txtDescription.getText();
             UUID affirmUUID = null;
 
-            if(listView.getSelectionModel().getSelectedIndex() != -1) {
-                if (guideCardUUID.get(listView.getSelectionModel().getSelectedIndex()) != null) {
-                    affirmUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
+            if(listViewCards.getSelectionModel().getSelectedIndex() != -1) {
+                if (guideCardUUID.get(listViewCards.getSelectionModel().getSelectedIndex()) != null) {
+                    affirmUUID = guideCardUUID.get(listViewCards.getSelectionModel().getSelectedIndex());
                 }
             }
 
             if(affirmUUID != null) {
+                System.out.println("Kommer du hit tönt");
                 controller.packGuide(title, description, img, affirmUUID);
 
                 if(controller.saveGuide()) {
+                    ArrayList<String> accessServer = controller.getAccessList();
+                    if(accessServer != null) {
+                        ArrayList<String> temp = new ArrayList<>();
 
+                        Collections.sort(accessServer);
+                        Collections.sort(accessList);
+
+                        temp = accessList;
+                        temp.removeAll(accessServer);
+
+                        for (String str : temp) {
+                            controller.grantAccess(controller.getOutputGuideUUID(), str);
+                        }
+
+                        temp = controller.getAccessList();
+                        temp.removeAll(accessList);
+
+                        for (String str : temp) {
+                            controller.revokeAccess(controller.getOutputGuideUUID(), str);
+                        }
+                    } else {
+                        for (String str : accessList) {
+                            controller.grantAccess(controller.getOutputGuideUUID(), str);
+                        }
+                    }
                     alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Guide saved!");
                     alert.setHeaderText("Successful!");
@@ -94,7 +118,8 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         guideCardUUID = null;
         guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
 
-        listView.getItems().clear();
+        listViewCards.getItems().clear();
+        listViewAccess.getItems().clear();
         txtTitle.clear();
         txtDescription.clear();
         txtFilePath.clear();
@@ -103,9 +128,20 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         for (UUID uuid : guideCardUUID) {
             System.out.println(uuid);
             if(uuid != null) {
-                listView.getItems().add(controller.getCardTitle(uuid));
+                listViewCards.getItems().add(controller.getCardTitle(uuid));
             }
         }
+        
+        if(controller.checkAccessList()) {
+            for (String str : controller.getAccessList()) {
+                listViewAccess.getItems().add(str);
+            }
+        }
+
+        for (String str : accessList) {
+            listViewAccess.getItems().add(str);
+        }
+        
     }
 
     public void selectImage() {
@@ -129,6 +165,20 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             alert.setContentText("Selected file must be of type .png or .jpg, please try again");
             alert.show();
         }
+    }
+
+    public void addToAccessList() {
+        if(!txtAccess.getText().isBlank() && txtAccess.getText().contains("@") && txtAccess.getText().contains(".")) {
+            accessList.add(txtAccess.getText().split(" ")[0]);
+        }
+        repopulateLists();
+    }
+
+    public void removeFromAccessList() {
+        if(listViewAccess.getSelectionModel().isSelected(listViewAccess.getSelectionModel().getSelectedIndex())) {
+            accessList.remove(listViewAccess.getSelectionModel().getSelectedItem());
+        }
+        repopulateLists();
     }
 
     public void back() {
