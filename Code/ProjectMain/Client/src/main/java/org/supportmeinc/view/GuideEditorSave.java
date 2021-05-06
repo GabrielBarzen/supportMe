@@ -49,7 +49,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             }
 
             if(affirmUUID != null) {
-                System.out.println("Kommer du hit tönt");
                 controller.packGuide(title, description, img, affirmUUID);
 
                 if(controller.saveGuide()) {
@@ -120,9 +119,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
 
         listViewCards.getItems().clear();
         listViewAccess.getItems().clear();
-        txtTitle.clear();
-        txtDescription.clear();
-        txtFilePath.clear();
         txtAccess.clear();
 
         for (UUID uuid : guideCardUUID) {
@@ -168,8 +164,8 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     }
 
     public void addToAccessList() {
-        if(!txtAccess.getText().isBlank() && txtAccess.getText().contains("@") && txtAccess.getText().contains(".")) {
-            accessList.add(txtAccess.getText().split(" ")[0]);
+        if(!txtAccess.getText().isBlank()) {
+            accessList.add(txtAccess.getText());
         }
         repopulateLists();
     }

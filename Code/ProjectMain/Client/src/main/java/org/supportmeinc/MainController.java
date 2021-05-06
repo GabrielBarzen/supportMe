@@ -270,7 +270,12 @@ public class MainController {
     }
 
     public ArrayList<String> getAccessList() {
-        ArrayList<String> temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getGuideUUID()));
+        ArrayList<String> temp;
+        if(controller.getConnection().getAccessList(guideEditor.getGuideUUID()) != null) {
+            temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getGuideUUID()));
+        } else {
+            temp = null;
+        }
         return temp;
     }
 
