@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
+import org.supportmeinc.model.Connection;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.view.GuideEditorUi;
@@ -18,6 +19,8 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -37,12 +40,9 @@ public class MainController {
 
     private GuideEditorSave guideEditorSave;
 
-
-
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
         this.stage = stage;
-        System.out.println("gabbe = " + stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
@@ -254,7 +254,6 @@ public class MainController {
         }
     }
 
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -270,6 +269,38 @@ public class MainController {
         return guide;
     }
 
+    public ArrayList<String> getAccessList() {
+        ArrayList<String> temp;
+        if(controller.getConnection().getAccessList(guideEditor.getGuideUUID()) != null) {
+            temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getGuideUUID()));
+        } else {
+            temp = null;
+        }
+        return temp;
+    }
+
+    public Connection getConnection() {
+        return controller.getConnection();
+    }
+
+    public UUID getOutputGuideUUID() {
+        return guideEditor.getOutputGuide().getGuideUUID();
+    }
 
 
+    public boolean checkAccessList() {
+        boolean retVal;
+
+        retVal = getConnection().getAccessList(guideEditor.getGuideUUID()) != null;
+
+        return retVal;
+    }
+
+    public void grantAccess(UUID uuid, String email) {
+        getConnection().grantAccess(uuid, email);
+    }
+
+    public void revokeAccess(UUID uuid, String email) {
+        getConnection().revokeAccess(uuid, email);
+    }
 }

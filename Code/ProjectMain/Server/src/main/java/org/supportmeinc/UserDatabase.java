@@ -208,6 +208,7 @@ public class UserDatabase {
     }
 
     public boolean grantAccess(String userEmail, UUID guideUUID) {
+        System.out.println("granting acces to : " + userEmail + ", on guide : " + guideUUID);
         boolean success = false;
         try {
             String query = "select grant_access(?, ?)";
@@ -257,7 +258,9 @@ public class UserDatabase {
                 String uuid = rs.getString(1);
                 emails.add(uuid);
             }
-            accessEmailArray = emails.toArray(new String[0]);
+            if (emails.size() > 0) {
+                accessEmailArray = emails.toArray(new String[0]);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -96,20 +96,16 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof String) {
             String request = (String) object;
             String[] requestParts = request.split(":");
+            System.out.println(Arrays.toString(requestParts));
 
-            switch (requestParts[0]) {
-                case "grant":
-                    databaseManager.grantAccess(requestParts[2], UUID.fromString(requestParts[1]));
-                    break;
-                case "revoke":
-                    databaseManager.revokeAccess(requestParts[2], UUID.fromString(requestParts[1]));
-                    break;
-                case "getAccessList":
-                    userConnection.get(user).sendObject(databaseManager.getAccessList(requestParts[1]));
-                default:
-                    ServerLog.log("could not grant/revoke access to guide");
-                    break;
-            }
+            if (requestParts[0].equals("grant")) {
+                databaseManager.grantAccess(requestParts[2], UUID.fromString(requestParts[1]));
+            } else if (requestParts[0].equals("revoke")) {
+                databaseManager.revokeAccess(requestParts[2], UUID.fromString(requestParts[1]));
+            } else if (requestParts[0].equals("getAccessList")) {
+                userConnection.get(user).sendObject(databaseManager.getAccessList(requestParts[1]));
+            } else {ServerLog.log("could not grant/revoke access to guide");}
+
         }
     }
 }
