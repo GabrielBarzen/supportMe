@@ -244,6 +244,24 @@ public class UserDatabase {
         return success;
     }
 
+    public boolean removeGuide(UUID guideUUID){
+        boolean success = false;
+        try {
+            String query = "select remove_guide(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guideUUID);
+
+            ResultSet rs = statement.executeQuery();
+
+            if(rs.next()){
+                success = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
+
     public String[] getAccessList(UUID guideUUID) {
         String[] accessEmailArray = null;
 
