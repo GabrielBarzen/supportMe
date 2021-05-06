@@ -92,6 +92,6 @@ public class DatabaseManager {
     }
 
     public String[] getAccessList(String requestPart) {
-        return userDatabase.getAccessList();
+        return userDatabase.getAccessList(UUID.fromString(requestPart));
     }
 }
