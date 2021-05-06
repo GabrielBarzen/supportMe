@@ -1,6 +1,5 @@
 package org.supportmeinc.view;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,9 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
 import org.supportmeinc.ImageUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,10 +25,9 @@ public class ThumbnailItem {
     @FXML private MenuItem cancelItem = new MenuItem();
 
     private UUID guideUUID;
-    private int listIndex; //represents index in list of thumbnails in GuideBrowser
+    private GuideBrowser guideBrowser;
 
-    public void setData(String title, byte[] image, String text, int listIndex, UUID guideUUID, GuideBrowser guideBrowser) {
-        this.listIndex = listIndex;
+    public void setData(String title, byte[] image, String text, UUID guideUUID, GuideBrowser guideBrowser) {
         this.guideUUID = guideUUID;
 
         lblTitle.setText(title);
@@ -81,10 +76,12 @@ public class ThumbnailItem {
                 contextMenu.show(anchPane, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());
             }
         });
+        this.guideBrowser = guideBrowser;
     }
 
     private void open() {
-
+        System.out.println("Guide to open: " + guideUUID);
+        guideBrowser.openGuide(guideUUID);
     }
 
     private void edit() {
@@ -111,11 +108,7 @@ public class ThumbnailItem {
         System.out.println("cancel");
     }
 
-
-    public int returnIndex() { //TODO connect class with GuideBrowser to return listIndex when clicking a thumbnail
-        System.out.println(listIndex);
-        return listIndex;
+    public void setSelectedGuide() {
+        guideBrowser.setCurrentUUID(guideUUID);
     }
-
-
 }

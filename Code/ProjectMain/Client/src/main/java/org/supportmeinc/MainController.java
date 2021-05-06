@@ -42,7 +42,6 @@ public class MainController {
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
         this.stage = stage;
-        System.out.println("gabbe = " + stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
@@ -75,7 +74,7 @@ public class MainController {
                     AnchorPane scene = new AnchorPane(loadFXML(sceneName));
                     scenes.put(sceneName, scene);
                 } catch (IOException e) {
-
+                    e.printStackTrace();
                 }
             }
         }
@@ -160,7 +159,10 @@ public class MainController {
         return guideEditor.getCardImage(uuid);
     }
 
-    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {this.guideEditorUi = guideEditorUi; }
+    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {
+        this.guideEditorUi = guideEditorUi;
+    }
+
     public void setNewGuideEditorModel() {
         this.guideEditor = new GuideEditor(this);
         guideEditorUi.repopulateLists();
@@ -270,6 +272,8 @@ public class MainController {
         return guide;
     }
 
+    public void openGuide(UUID uuid) {
 
-
+        switchScene(SceneName.guideViewer);
+    }
 }
