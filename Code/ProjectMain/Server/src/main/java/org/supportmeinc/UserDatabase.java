@@ -177,7 +177,6 @@ public class UserDatabase {
             while (rs.next()){
                 UUID uuid = (UUID) rs.getObject(1);
                 UUIDList.add(uuid);
-                System.out.println("Author of : " + uuid);
             }
             returnValues = UUIDList.toArray(new UUID[0]);
 
@@ -257,7 +256,6 @@ public class UserDatabase {
             while (rs.next()){
                 String uuid = rs.getString(1);
                 emails.add(uuid);
-                System.out.println("Author of : " + uuid);
             }
             accessEmailArray = emails.toArray(new String[0]);
 
