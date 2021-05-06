@@ -63,9 +63,8 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void editGuide() {
-        controller.setNewGuideEditorModel();
-        controller.setEditGuide();
-        controller.switchScene(SceneName.guideEditor);
+        controller.setEditGuide(currentUUID);
+
     }
 
     @Override

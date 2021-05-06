@@ -32,7 +32,9 @@ public class GuideEditor {
     public void setEditGuide(Guide guide) {
         HashMap<UUID,Card> temp = new HashMap<>();
         for (Card card : guide.getCards()) {
-            temp.put(card.getCardUUID(), card);
+            if(!(card.getNegUUID() == null && card.getAffirmUUID() != null)) {
+                temp.put(card.getCardUUID(), card);
+            }
         }
         this.cardsList = temp;
         this.guideUUID = guide.getGuideUUID();

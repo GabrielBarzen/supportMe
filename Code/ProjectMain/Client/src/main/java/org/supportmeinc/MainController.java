@@ -289,8 +289,12 @@ public class MainController {
         return guideEditor.getOutputGuide().getGuideUUID();
     }
 
-    public void setEditGuide() {
-//        guideEditor.setEditGuide();
+    public void setEditGuide(UUID uuid) {
+        Guide guide = guideManager.getGuide(uuid);
+        guideEditor = new GuideEditor(this);
+        guideEditor.setEditGuide(guide);
+        switchScene(SceneName.guideEditor);
+        guideEditorUi.repopulateLists();
     }
 
     public boolean checkAccessList() {
