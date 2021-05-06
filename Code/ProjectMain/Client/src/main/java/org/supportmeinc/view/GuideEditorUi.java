@@ -58,14 +58,9 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         cmbNo.getItems().clear();
         listView.getItems().clear();
 
-        for (UUID uuid : guideCardUUID) {
-            System.out.println(uuid);
-        }
-
         guideCardUUID.removeIf(uuid -> uuid == cardUUID);
 
         for (UUID uuid : guideCardUUID) {
-            System.out.println(uuid);
             if(uuid != null) {
                 cmbYes.getItems().add(controller.getCardTitle(uuid));
                 cmbNo.getItems().add(controller.getCardTitle(uuid));
@@ -131,7 +126,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         String fileName = file.toString();
         int index = fileName.lastIndexOf(".");
         String extension = fileName.substring(index+1);
-        System.out.println(extension);
 
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
             byte[] byteFile = ImageUtils.toBytes(file);
@@ -173,7 +167,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
       
         controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
-        System.out.println("saving : " + cardUUID);
 
         createNewCard();
 
@@ -190,13 +183,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 img = controller.getCardImage(cardUUID);
                 yesUUID = controller.getCardAffirmUUID(cardUUID);
                 noUUID = controller.getCardNegUUID(cardUUID);
-
-                System.out.println("yes : " + yesUUID);
-                System.out.println("no : " + noUUID);
-
-                System.out.println("opening : " + cardUUID);
-                System.out.println(text);
-                System.out.println(title);
 
                 txtCardText.setText(text);
                 txtCardTitle.setText(title);

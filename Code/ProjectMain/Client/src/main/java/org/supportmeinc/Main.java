@@ -83,7 +83,6 @@ public class Main extends Application {
             guideManager = new GuideManager(connection);
         } catch (IOException e) {
             guideManager = new GuideManager();
-            System.out.println("Cannot create a connection, starting in offline mode");
         }
         return guideManager;
     }

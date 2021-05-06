@@ -28,22 +28,16 @@ public class Connection {
 
     public Connection(String ip, int port, User user) throws IOException {
         this.user = user;
-
-        System.out.println("starting connection");
         socket = new Socket(ip, port);
-        System.out.println("starting connected");
-        System.out.println("opening streams");
+
         outputStream = new ObjectOutputStream(this.socket.getOutputStream());
         inputStream = new ObjectInputStream(this.socket.getInputStream());
-        System.out.println("Starting threads");
 
         send = new Send();
         receive = new Receive();
-        System.out.println("threads created");
 
         send.start();
         receive.start();
-        System.out.println("threads started");
 
     }
 
@@ -52,7 +46,6 @@ public class Connection {
     }
 
     private void send(Object object){
-        System.out.println("SEND:::::::::::::::::::::::" + object.getClass());
         sendBuffer.put(object);
     }
 
@@ -75,7 +68,6 @@ public class Connection {
             returnAccess = (Thumbnail[]) returnAccessObject;
             success = true;
         } else {
-            System.out.println("error in Connection.getThumbnails accessThumbnails");
             success = false;
         }
 
@@ -85,7 +77,6 @@ public class Connection {
             returnAuthor = (Thumbnail[]) returnAuthorObject;
             success = true;
         } else {
-            System.out.println("error in Connection.getThumbnails authorThumbnails");
             success = false;
         }
 
@@ -163,23 +154,23 @@ public class Connection {
             try {
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
-                    System.out.println("received user obj from server");
+
                 } else {
-                    System.out.println("Invalid login or other error");
+
                 }
 
                 while (!Thread.interrupted()) {
-                    System.out.println("RECIEVCEDDE SOCKET IS CLOSED:::::: " + socket.isClosed());
+
                     Object object = inputStream.readObject();
                     receiveBuffer.put(object);
-                    System.out.println("loop check receive");
+
 
                 }
             } catch (IOException e) {
                 try {
                     disconnect();
                 } catch (IOException ex){
-                    System.out.println("Disconnected ");
+
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -194,14 +185,13 @@ public class Connection {
             send(user);
             try {
                 while (!Thread.interrupted()) {
-                    System.out.println("EN FÖRRSTA FIN RAD");
+
                     Object object = sendBuffer.get();
-                    System.out.println("SENDING:::::::::::::::::::::::" + object.getClass());
-                    System.out.println("SOCKET IS CLOSED:::::: " + socket.isClosed());
+
                     outputStream.writeObject(object);
-                    System.out.println("EN ANDRA FIN RAD");
+
                     outputStream.flush();
-                    System.out.println("EN TREDJE FIN RAD");
+
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

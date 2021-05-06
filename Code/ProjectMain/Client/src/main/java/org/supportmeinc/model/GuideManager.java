@@ -83,7 +83,6 @@ public class GuideManager implements ThumbnailListener{
 
     public boolean saveGuide(Guide guide) {
 	    boolean success = connection.saveGuide(guide);
-        System.out.println(success);
         return success;
     }
 

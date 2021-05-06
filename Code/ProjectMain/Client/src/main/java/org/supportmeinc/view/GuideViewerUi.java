@@ -46,17 +46,11 @@ public class GuideViewerUi implements JFXcontroller {
     }
 
     public void lastCard() {
-//        btnNo.setDisable(true);
-//        btnNo.setVisible(false);
-//        btnYes.setDisable(true);
-//        btnYes.setVisible(false);
-//        btnExit.setDisable(true);
-//        btnExit.setVisible(false);
+
 
         hBox.getChildren().clear();
-        Button button = new Button("FINISH GUIDE YO");
+        Button button = new Button("Finish guide!");
         button.setPrefSize(69, 69);
         hBox.getChildren().setAll(button);
-        System.out.println("Hallå kommer det en ny knappe elleer?");
     }
 }

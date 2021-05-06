@@ -123,7 +123,6 @@ public class GuideEditor {
         int ok = 0;
 
         for (Card card : cardsList.values()) {
-            System.out.println(cardsList.values());
             if (card.getNegUUID() == null && card.getAffirmUUID() == null){
                 ok++;
             } else if (card.getNegUUID() == null || card.getAffirmUUID() == null) {

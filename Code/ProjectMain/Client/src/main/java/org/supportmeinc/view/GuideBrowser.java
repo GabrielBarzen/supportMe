@@ -55,12 +55,10 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
 
     public void openGuide(UUID uuid) { //called from Right-click context menu in GuideBrowser-GUI
-        System.out.println("GuideBrowser: TO OPEN: " + uuid);
         controller.openGuide(uuid);
     }
 
     public void openGuide() { //called from Open Guide button in GuideBrowser-GUI
-        System.out.println("GuideBrowser: TO OPEN: " + currentUUID);
         controller.openGuide(currentUUID);
     }
 
