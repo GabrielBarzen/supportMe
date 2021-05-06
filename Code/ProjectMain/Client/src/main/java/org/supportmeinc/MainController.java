@@ -3,7 +3,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.Connection;
@@ -40,7 +39,6 @@ public class MainController {
     private GuideViewerUi guideViewerUi;
     private GuideEditorSave guideEditorSave;
     private GuideViewer guideViewer;
-
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
@@ -287,6 +285,15 @@ public class MainController {
 
     public Connection getConnection() {
         return controller.getConnection();
+    }
+
+    public void logout() {
+        try {
+            getConnection().disconnect();
+            stage.setScene(new Scene(loadFXML(SceneName.login)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public UUID getOutputGuideUUID() {

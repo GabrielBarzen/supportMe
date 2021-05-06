@@ -21,6 +21,10 @@ public class Toolbar implements JFXcontroller {
        controller.refreshThumbnails();
     }
 
+    public void logout() {
+        controller.logout();
+    }
+
     public void createNewGuide() {
         controller.initGuideEditor();
         borderPane.setCenter(controller.getScenes(SceneName.guideEditor));
