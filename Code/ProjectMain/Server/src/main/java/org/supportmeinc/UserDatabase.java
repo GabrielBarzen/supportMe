@@ -258,7 +258,9 @@ public class UserDatabase {
                 String uuid = rs.getString(1);
                 emails.add(uuid);
             }
-            accessEmailArray = emails.toArray(new String[0]);
+            if (emails.size() > 0) {
+                accessEmailArray = emails.toArray(new String[0]);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
