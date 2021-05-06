@@ -28,7 +28,8 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     private byte[] img = null;
 
     public GuideEditorSave() {
-        listViewCards = new ListView();
+        listViewCards = new ListView<>();
+        listViewAccess = new ListView<>();
     }
 
     public void initData(MainController controller) {
@@ -54,7 +55,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                 if(controller.saveGuide()) {
                     ArrayList<String> accessServer = controller.getAccessList();
                     if(accessServer != null) {
-                        ArrayList<String> temp = new ArrayList<>();
+                        ArrayList<String> temp;
 
                         Collections.sort(accessServer);
                         Collections.sort(accessList);
@@ -83,6 +84,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                     alert.setContentText("Guide is saved");
                     alert.show();
 
+                    controller.refreshThumbnails();
                     controller.switchScene(SceneName.guideBrowser);
                     controller.setNewGuideEditorModel();
 
@@ -136,7 +138,13 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         for (String str : accessList) {
             listViewAccess.getItems().add(str);
         }
-        
+
+        if(controller.checkGuide()) {
+            txtTitle.setText(controller.getGuideTitle());
+            txtDescription.setText(controller.getGuideDescription());
+            imgPreview.setImage(ImageUtils.toImage(controller.getImg()));
+            img = controller.getImg();
+        }
     }
 
     public void selectImage() {

@@ -3,6 +3,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.Connection;
@@ -313,5 +314,27 @@ public class MainController {
 
     public void revokeAccess(UUID uuid, String email) {
         getConnection().revokeAccess(uuid, email);
+    }
+
+    public String getGuideTitle() {
+        return guideEditor.getGuideTitle();
+    }
+
+    public String getGuideDescription() {
+        return guideEditor.getGuideDescription();
+    }
+
+    public byte[] getImg() {
+        return guideEditor.getOutputGuide().getThumbnail().getImage();
+    }
+
+    public boolean checkGuide() {
+        boolean retVal;
+        if(guideEditor.getOutputGuide() == null) {
+            retVal = false;
+        } else {
+            retVal = true;
+        }
+        return retVal;
     }
 }

@@ -8,6 +8,7 @@ import shared.User;
 import java.io.*;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 
