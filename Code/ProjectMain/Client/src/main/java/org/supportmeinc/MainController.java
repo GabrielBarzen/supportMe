@@ -265,8 +265,9 @@ public class MainController {
         return removeUser;
     }
 
-    public void openGuide(UUID uuid) {
-        guideManager.getGuide(uuid);
+    public Guide getGuide(UUID uuid) {
+        Guide guide = guideManager.getGuide(uuid);
+        return guide;
     }
 
 

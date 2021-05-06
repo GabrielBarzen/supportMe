@@ -52,7 +52,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
 
     public void openGuide(UUID uuid){
-        controller.openGuide(uuid);
+        controller.getGuide(uuid);
     }
 
     @Override
