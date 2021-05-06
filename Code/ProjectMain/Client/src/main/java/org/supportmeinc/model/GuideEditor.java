@@ -38,6 +38,7 @@ public class GuideEditor {
         }
         this.cardsList = temp;
         this.guideUUID = guide.getGuideUUID();
+        this.outputGuide = guide;
 
     }
 
@@ -139,5 +140,13 @@ public class GuideEditor {
             boolReturn = true;
         }
         return boolReturn;
+    }
+
+    public String getGuideTitle() {
+        return outputGuide.getThumbnail().getTitle();
+    }
+
+    public String getGuideDescription() {
+        return outputGuide.getThumbnail().getTitle();
     }
 }
