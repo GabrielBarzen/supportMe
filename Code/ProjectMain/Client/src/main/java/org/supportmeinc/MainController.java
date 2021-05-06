@@ -8,11 +8,13 @@ import javafx.stage.*;
 import org.supportmeinc.model.Connection;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
+import org.supportmeinc.model.GuideViewer;
 import org.supportmeinc.view.GuideEditorUi;
 import org.supportmeinc.view.GuideBrowser;
 import org.supportmeinc.view.JFXcontroller;
 import org.supportmeinc.view.Toolbar;
 import org.supportmeinc.view.*;
+import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
@@ -29,16 +31,15 @@ public class MainController {
     private Main controller;
     private HashMap<SceneName, AnchorPane> scenes;
     private Stage stage;
-    private Scene toolbar;
     private Toolbar toolbarController;
     private GuideManager guideManager;
     private GuideEditor guideEditor;
     private GuideEditorUi guideEditorUi;
     private GuideBrowser guideBrowser;
-
-    private User user;
-
+    private GuideViewerUi guideViewerUi;
     private GuideEditorSave guideEditorSave;
+    private GuideViewer guideViewer;
+
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
@@ -75,7 +76,7 @@ public class MainController {
                     AnchorPane scene = new AnchorPane(loadFXML(sceneName));
                     scenes.put(sceneName, scene);
                 } catch (IOException e) {
-
+                    e.printStackTrace();
                 }
             }
         }
@@ -160,7 +161,10 @@ public class MainController {
         return guideEditor.getCardImage(uuid);
     }
 
-    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {this.guideEditorUi = guideEditorUi; }
+    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {
+        this.guideEditorUi = guideEditorUi;
+    }
+
     public void setNewGuideEditorModel() {
         this.guideEditor = new GuideEditor(this);
         guideEditorUi.repopulateLists();
@@ -254,19 +258,17 @@ public class MainController {
         }
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {
-        User removeUser = user;
-        user = null;
-        return removeUser;
-    }
-
-    public Guide getGuide(UUID uuid) {
+    public void openGuide(UUID uuid) {
         Guide guide = guideManager.getGuide(uuid);
-        return guide;
+        guideViewer = new GuideViewer(guide);
+
+//        guideViewerUi.startGuide();
+//        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
+        switchScene(SceneName.guideViewer);
+    }
+
+    public void setGuideViewer(GuideViewerUi guideViewerUi) {
+        this.guideViewerUi = guideViewerUi;
     }
 
     public ArrayList<String> getAccessList() {
