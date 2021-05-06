@@ -256,14 +256,22 @@ public class MainController {
 
     public void openGuide(UUID uuid) {
         Guide guide = guideManager.getGuide(uuid);
-        guideViewer = new GuideViewer(guide);
-
-//        guideViewerUi.startGuide();
-//        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
+        guideViewer = new GuideViewer(guide, this);
+        Card card = guide.getDescriptionCard();
+        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
         switchScene(SceneName.guideViewer);
+    }
+
+    public void getNext(boolean choice) {
+        Card card = guideViewer.getNext(choice);
+        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
     }
 
     public void setGuideViewer(GuideViewerUi guideViewerUi) {
         this.guideViewerUi = guideViewerUi;
+    }
+
+    public void lastCard() {
+        guideViewerUi.lastCard();
     }
 }
