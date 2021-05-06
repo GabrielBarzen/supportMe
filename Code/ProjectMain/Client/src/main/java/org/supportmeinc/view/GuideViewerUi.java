@@ -56,6 +56,7 @@ public class GuideViewerUi implements JFXcontroller {
         hBox.getChildren().clear();
         Button button = new Button("FINISH GUIDE YO");
         button.setPrefSize(69, 69);
-        hBox.getChildren().add(button);
+        hBox.getChildren().setAll(button);
+        System.out.println("Hallå kommer det en ny knappe elleer?");
     }
 }

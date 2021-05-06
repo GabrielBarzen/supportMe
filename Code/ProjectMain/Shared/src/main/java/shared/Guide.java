@@ -46,7 +46,6 @@ public class Guide implements Serializable {
     }
 
     public Card getCard(UUID cardUUID){
-
         return cards.get(cardUUID);
     }
 
