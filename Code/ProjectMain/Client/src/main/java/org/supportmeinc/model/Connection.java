@@ -52,6 +52,7 @@ public class Connection {
     }
 
     private void send(Object object){
+        System.out.println("SEND:::::::::::::::::::::::" + object.getClass());
         sendBuffer.put(object);
     }
 
@@ -168,7 +169,7 @@ public class Connection {
                 }
 
                 while (!Thread.interrupted()) {
-
+                    System.out.println("RECIEVCEDDE SOCKET IS CLOSED:::::: " + socket.isClosed());
                     Object object = inputStream.readObject();
                     receiveBuffer.put(object);
                     System.out.println("loop check receive");
@@ -193,14 +194,19 @@ public class Connection {
             send(user);
             try {
                 while (!Thread.interrupted()) {
-                        outputStream.writeObject(sendBuffer.get());
-                        outputStream.flush();
-                        System.out.println("loop check send");
+                    System.out.println("EN FÖRRSTA FIN RAD");
+                    Object object = sendBuffer.get();
+                    System.out.println("SENDING:::::::::::::::::::::::" + object.getClass());
+                    System.out.println("SOCKET IS CLOSED:::::: " + socket.isClosed());
+                    outputStream.writeObject(object);
+                    System.out.println("EN ANDRA FIN RAD");
+                    outputStream.flush();
+                    System.out.println("EN TREDJE FIN RAD");
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e){
-
+                e.printStackTrace();
             }
         }
     }

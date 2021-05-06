@@ -81,9 +81,10 @@ public class GuideManager implements ThumbnailListener{
         return returnGuide;
     }
 
-    public void saveGuide(Guide guide) {
+    public boolean saveGuide(Guide guide) {
 	    boolean success = connection.saveGuide(guide);
         System.out.println(success);
+        return success;
     }
 
     public User getCurrentUser() {

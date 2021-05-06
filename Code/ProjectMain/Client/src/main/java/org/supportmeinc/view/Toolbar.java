@@ -14,13 +14,11 @@ public class Toolbar implements JFXcontroller {
     public void initData(MainController controller){
         this.controller = controller;
         controller.registerToolbar(this);
-        //controller.registerController(this);
     }
 
     public void homeButton() {
        borderPane.setCenter(controller.getScenes(SceneName.guideBrowser));
        controller.refreshThumbnails();
-//        controller.testCard();
     }
 
     public void createNewGuide() {

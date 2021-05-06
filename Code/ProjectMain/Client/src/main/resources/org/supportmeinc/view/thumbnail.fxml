@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.ThumbnailItem">
+<AnchorPane fx:id="anchPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.ThumbnailItem">
     <children>
-      <VBox fx:id="vBox" onMouseClicked="#returnIndex" prefHeight="360.0" prefWidth="262.0">
+      <VBox fx:id="vBox" onMouseClicked="#setSelectedGuide" prefHeight="360.0" prefWidth="262.0">
          <children>
                 <Label fx:id="lblTitle" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="267.0" scaleShape="false" text="Thumbnail Title" wrapText="true">
                     <font>

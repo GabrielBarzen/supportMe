@@ -22,7 +22,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     @FXML ListView<String> listViewCards;
     @FXML ListView<String> listViewAccess;
     private ArrayList<String> accessList = new ArrayList<>();
-    private ArrayList<UUID> guideCardUUID = new ArrayList<>();
+            private ArrayList<UUID> guideCardUUID = new ArrayList<>();
     private MainController controller;
     private Alert alert;
     private byte[] img = null;
