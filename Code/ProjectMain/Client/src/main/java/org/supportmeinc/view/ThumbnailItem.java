@@ -83,12 +83,11 @@ public class ThumbnailItem {
     }
 
     private void open() {
-        System.out.println("Guide to open: " + guideUUID);
         guideBrowser.openGuide(guideUUID);
     }
 
     private void edit() {
-        System.out.println("edit " + lblTitle.getText());
+        guideBrowser.editGuide();
     }
 
     private void delete() {
@@ -101,14 +100,14 @@ public class ThumbnailItem {
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isEmpty() || result.get() != ButtonType.OK) {
         } else {
-            System.out.println("do delete");
+
             guideBrowser.deleteGuide();
         }
 
     }
 
     private void cancel() {
-        System.out.println("cancel");
+
     }
 
     public void setSelectedGuide() {

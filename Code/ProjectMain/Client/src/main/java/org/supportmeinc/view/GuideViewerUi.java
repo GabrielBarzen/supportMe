@@ -28,7 +28,7 @@ public class GuideViewerUi implements JFXcontroller {
     }
 
     public GuideViewerUi(){
-        System.out.println("created cardViewer");
+
     }
 
     public void setCard(String title, byte[] image, String text) {
