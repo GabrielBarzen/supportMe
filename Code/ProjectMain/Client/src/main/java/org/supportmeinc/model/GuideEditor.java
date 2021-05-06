@@ -12,12 +12,17 @@ import java.util.UUID;
 
 public class GuideEditor {
 
+    private Guide outputGuide;
     private HashMap<UUID,Card> cardsList;
     private Card currentCard;
-    private Guide outputGuide;
     private Card descriptionCard;
+    private UUID guideUUID = UUID.randomUUID();
     private Thumbnail thumbnail;
     private MainController controller;
+
+    public UUID getGuideUUID() {
+        return guideUUID;
+    }
 
     public GuideEditor(MainController controller) {
         this.controller = controller;
@@ -88,12 +93,13 @@ public class GuideEditor {
     public byte[] getCardImage(UUID uuid){
         return cardsList.get(uuid).getImage();
     }
+
     public Guide getOutputGuide() {
         return outputGuide;
     }
 
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        Guide returnGuide = new Guide();
+        Guide returnGuide = new Guide(guideUUID);
         setDescription(title, description, img, affirmUUID, returnGuide);
         returnGuide.setCards(cardsList.values().toArray(new Card[0]));
         returnGuide.setDescriptionCard(descriptionCard);

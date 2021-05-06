@@ -43,7 +43,6 @@ public class MainController {
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
         this.stage = stage;
-        System.out.println("gabbe = " + stage);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
@@ -271,7 +270,7 @@ public class MainController {
     }
 
     public ArrayList<String> getAccessList() {
-        ArrayList<String> temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getOutputGuide().getGuideUUID()));
+        ArrayList<String> temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getGuideUUID()));
         return temp;
     }
 
@@ -287,7 +286,7 @@ public class MainController {
     public boolean checkAccessList() {
         boolean retVal;
 
-        retVal = getConnection().getAccessList(guideEditor.getOutputGuide().getGuideUUID()) != null;
+        retVal = getConnection().getAccessList(guideEditor.getGuideUUID()) != null;
 
         return retVal;
     }

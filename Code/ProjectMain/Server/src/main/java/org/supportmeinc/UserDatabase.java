@@ -209,6 +209,7 @@ public class UserDatabase {
     }
 
     public boolean grantAccess(String userEmail, UUID guideUUID) {
+        System.out.println("granting acces to : " + userEmail + ", on guide : " + guideUUID);
         boolean success = false;
         try {
             String query = "select grant_access(?, ?)";
