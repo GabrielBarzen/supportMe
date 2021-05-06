@@ -40,7 +40,7 @@ public class GuideEditor {
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
-        currentCard = new Card();
+        currentCard = new Card(cardUUID);
         currentCard.setTitle(title);
         currentCard.setText(description);
         currentCard.setAffirmUUID(affirmUUID);

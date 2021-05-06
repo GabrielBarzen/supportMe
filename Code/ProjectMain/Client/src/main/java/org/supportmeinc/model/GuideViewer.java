@@ -18,27 +18,41 @@ public class GuideViewer {
         System.out.println(currentCard.getCardUUID());
         this.mainController = mainController;
         System.out.println(Arrays.toString(currentGuide.getCards()));
+        for (Card card: currentGuide.getCards()) {
+            System.out.println("uuids in card array : " + card.getTitle() + " , " + card.getCardUUID());
+        }
     }
 
+
+
     public Card getNext(boolean choice) {
-        Card returnCard;
-        System.out.println("KORRTTITITTLES " + currentCard);
-        System.out.println("KORRUUUUUUUUID: " + currentCard.getCardUUID());
-        if (currentCard.getAffirmUUID() != null && currentCard.getNegUUID() != null) {
-            if (choice) {
-                returnCard = currentGuide.getCard(currentCard.getAffirmUUID());
+        System.out.println("Cards in guide " + Arrays.toString(currentGuide.getCards()));
+        System.out.println("Cards in guide " + currentCard);
+
+        Card nextCard = null;
+        System.out.println("Current card : " + currentCard);
+        if (currentCard != null) {
+            if (currentCard.getAffirmUUID() != null && currentCard.getNegUUID() != null) {
+                System.out.print("Setting next card");
+                if (choice) {
+                    System.out.println("to true card");
+                    nextCard = currentGuide.getCard(currentCard.getAffirmUUID());
+                } else {
+                    System.out.println("to false card");
+                    nextCard = currentGuide.getCard(currentCard.getNegUUID());
+                }
+            } else if (currentCard.getAffirmUUID() != null && currentCard.getNegUUID() == null) {
+                System.out.println("Setting next card to guide start");
+                System.out.println("Next afirm card before get: " + currentCard.getAffirmUUID());
+                nextCard = currentGuide.getCard(currentCard.getAffirmUUID());
+                System.out.println("Next afirm card after get: " + nextCard.getCardUUID());
             } else {
-                returnCard = currentGuide.getCard(currentCard.getNegUUID());
+                System.out.println("end guide");
             }
-            currentCard = returnCard;
-        } else if (currentCard.getAffirmUUID() != null && currentCard.getNegUUID() == null) {
-            returnCard = currentGuide.getCard(currentCard.getAffirmUUID());
-            System.out.println("Slut på guiden");
-            currentCard = returnCard;
+            System.out.println("setting card to : " + nextCard);
+            currentCard = nextCard;
         }
-        if (currentCard.getAffirmUUID() == null && currentCard.getNegUUID() == null) {
-            mainController.lastCard();
-        }
-        return currentCard;
+
+        return nextCard;
     }
 }
