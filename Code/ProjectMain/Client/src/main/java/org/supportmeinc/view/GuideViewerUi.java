@@ -46,8 +46,6 @@ public class GuideViewerUi implements JFXcontroller {
     }
 
     public void lastCard() {
-
-
         hBox.getChildren().clear();
         Button button = new Button("Finish guide!");
         button.setPrefSize(69, 69);
