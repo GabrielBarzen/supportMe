@@ -177,7 +177,6 @@ public class UserDatabase {
             while (rs.next()){
                 UUID uuid = (UUID) rs.getObject(1);
                 UUIDList.add(uuid);
-                System.out.println("Author of : " + uuid);
             }
             returnValues = UUIDList.toArray(new UUID[0]);
 
@@ -244,7 +243,25 @@ public class UserDatabase {
         return success;
     }
 
-    public String[] getAccessList() {
-        return null; //TODO query for getting access list
+    public String[] getAccessList(UUID guideUUID) {
+        String[] accessEmailArray = null;
+
+        try {
+            String query = "select get_access_list_for_guide(?)";
+            PreparedStatement statement = dbConnection.prepareStatement(query);
+            statement.setObject(1, guideUUID);
+
+            ResultSet rs = statement.executeQuery();
+            ArrayList<String> emails = new ArrayList<>();
+            while (rs.next()){
+                String uuid = rs.getString(1);
+                emails.add(uuid);
+            }
+            accessEmailArray = emails.toArray(new String[0]);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accessEmailArray;
     }
 }
