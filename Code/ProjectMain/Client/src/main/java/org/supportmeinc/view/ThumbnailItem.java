@@ -26,10 +26,11 @@ public class ThumbnailItem {
 
     private UUID guideUUID;
     private GuideBrowser guideBrowser;
+    private boolean author;
 
-    public void setData(String title, byte[] image, String text, UUID guideUUID, GuideBrowser guideBrowser) {
+    public void setData(String title, byte[] image, String text, UUID guideUUID, GuideBrowser guideBrowser, boolean author) {
         this.guideUUID = guideUUID;
-
+        this.author = author;
         lblTitle.setText(title);
         imgThumb.setImage(ImageUtils.toImage(image));
         lblText.setText(text);
@@ -65,8 +66,10 @@ public class ThumbnailItem {
         });
 
         contextMenu.getItems().add(openItem);
-        contextMenu.getItems().add(editItem);
-        contextMenu.getItems().add(deleteItem);
+        if (author) {
+            contextMenu.getItems().add(editItem);
+            contextMenu.getItems().add(deleteItem);
+        }
         contextMenu.getItems().add(cancelItem);
 
         anchPane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -80,12 +83,11 @@ public class ThumbnailItem {
     }
 
     private void open() {
-        System.out.println("Guide to open: " + guideUUID);
         guideBrowser.openGuide(guideUUID);
     }
 
     private void edit() {
-        System.out.println("edit " + lblTitle.getText());
+        guideBrowser.editGuide();
     }
 
     private void delete() {
@@ -97,19 +99,19 @@ public class ThumbnailItem {
         alert.setY(anchPane.getLayoutY());
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isEmpty() || result.get() != ButtonType.OK) {
-            System.out.println("dont delete");
         } else {
-            System.out.println("do delete");
+
+            guideBrowser.deleteGuide();
         }
 
     }
 
     private void cancel() {
-        System.out.println("cancel");
+
     }
 
     public void setSelectedGuide() {
-        guideBrowser.setCurrentUUID(guideUUID);
+        guideBrowser.setSelectedThumbnail(guideUUID, author);
         anchPane.setStyle("-fx-border-color: black");
     }
 }

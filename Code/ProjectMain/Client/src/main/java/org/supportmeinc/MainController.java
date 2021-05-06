@@ -98,20 +98,13 @@ public class MainController {
     public Parent loadFXML(SceneName sceneName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
 
         String resourceName = sceneName.name();
-        System.out.println(getClass().getResource("view/" + resourceName + ".fxml"));
-        System.out.println(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
-        System.out.println();
-
         String fxml = String.valueOf(getClass().getResource("view/" + resourceName + ".fxml"));
         String styleSheet = String.valueOf(getClass().getResource("view/stylesheets/" + resourceName + "Style.css"));
 
         FXMLLoader fxmlLoader = new FXMLLoader(new URL(fxml));
         Parent root = fxmlLoader.load();
-
-        System.out.println("fxml item : " + root.getClass());
         JFXcontroller jfXcontroller = fxmlLoader.getController();
         jfXcontroller.initData(this);
-
         root.getStylesheets().add(styleSheet);
 
         return root;
@@ -189,15 +182,12 @@ public class MainController {
 
     public boolean saveGuide() {
         Guide guide = guideEditor.getOutputGuide();
-        System.out.println("maincontrollerr SAVE GUIDE");
-        System.out.println("GUIDE TITLE " + guide.getThumbnail().getTitle());
+
         if (guide != null) {
-            System.out.println("INNAN SAVE");
             boolean success = guideManager.saveGuide(guide);
-            System.out.println("SAVE LYCKAS " + success);
             return true;
         } else {
-            System.out.println("något annat "); //TODO alert user if guide error
+            //TODO alert user if guide error
             return false;
         }
     }
@@ -217,7 +207,6 @@ public class MainController {
     public void login(String email, String pass) {
         guideManager = controller.Login(email, pass);
         if (guideManager != null) {
-            System.out.println("Logged in successfully");
             try {
                 stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
             } catch (IOException e) {
@@ -231,7 +220,6 @@ public class MainController {
     public void registerUser(User user) {
         guideManager = controller.register(user);
         if (guideManager != null) {
-            System.out.println("Logged in successfully");
             try {
                 stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
             } catch (IOException e) {
@@ -251,7 +239,9 @@ public class MainController {
         switchScene(SceneName.guideEditor);
     }
 
-
+    public void deleteGuide(UUID uuid) {
+        guideManager.deleteGuide(uuid);
+    }
     public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
         guideBrowser.resetView();
         for (Thumbnail thumbnail: access) {
@@ -301,8 +291,12 @@ public class MainController {
         return guideEditor.getOutputGuide().getGuideUUID();
     }
 
-    public void setEditGuide() {
-//        guideEditor.setEditGuide();
+    public void setEditGuide(UUID uuid) {
+        Guide guide = guideManager.getGuide(uuid);
+        guideEditor = new GuideEditor(this);
+        guideEditor.setEditGuide(guide);
+        switchScene(SceneName.guideEditor);
+        guideEditorUi.repopulateLists();
     }
 
     public boolean checkAccessList() {

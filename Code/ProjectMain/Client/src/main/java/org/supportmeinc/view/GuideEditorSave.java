@@ -22,7 +22,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     @FXML ListView<String> listViewCards;
     @FXML ListView<String> listViewAccess;
     private ArrayList<String> accessList = new ArrayList<>();
-            private ArrayList<UUID> guideCardUUID = new ArrayList<>();
+    private ArrayList<UUID> guideCardUUID = new ArrayList<>();
     private MainController controller;
     private Alert alert;
     private byte[] img = null;
@@ -122,7 +122,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         txtAccess.clear();
 
         for (UUID uuid : guideCardUUID) {
-            System.out.println(uuid);
             if(uuid != null) {
                 listViewCards.getItems().add(controller.getCardTitle(uuid));
             }
@@ -145,7 +144,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         String fileName = file.toString();
         int index = fileName.lastIndexOf(".");
         String extension = fileName.substring(index+1);
-        System.out.println(extension);
 
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
             byte[] byteFile = ImageUtils.toBytes(file);
