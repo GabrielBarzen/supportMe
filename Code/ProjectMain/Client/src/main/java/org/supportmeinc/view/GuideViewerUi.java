@@ -10,20 +10,20 @@ import org.supportmeinc.MainController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GuideViewer implements JFXcontroller, Initializable {
+public class GuideViewerUi implements JFXcontroller {
 
-    MainController controller;
+    private MainController controller;
 
     @FXML private Label cardTitle;
     @FXML private ImageView cardImage;
     @FXML private Label cardText;
-    @FXML private VBox box;
 
     public void initData(MainController controller){
         this.controller = controller;
+        controller.setGuideViewer(this);
     }
 
-    public GuideViewer(){
+    public GuideViewerUi(){
         System.out.println("created cardViewer");
     }
 
@@ -33,9 +33,11 @@ public class GuideViewer implements JFXcontroller, Initializable {
         cardText.setText(text);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        cardImage.fitHeightProperty().bind(box.heightProperty()); TODO previously used for binding imageView size with other component, might be used later
-//        cardImage.fitWidthProperty().bind(box.widthProperty()); TODO previously used for binding imageView size with other component, might be used later
+    public void noSelected() {
+
+    }
+
+    public void yesSelected() {
+
     }
 }

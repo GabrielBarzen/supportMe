@@ -10,7 +10,6 @@ public class Guide implements Serializable {
     private final UUID guideUUID;
     private Card descriptionCard;
     private HashMap<UUID,Card> cards;
-    private UUID currentCard;
     private String authorEmail;
 
     public void setThumbnail(Thumbnail thumbnail) {
@@ -36,10 +35,6 @@ public class Guide implements Serializable {
 
     public UUID getGuideUUID() {
         return guideUUID;
-    }
-
-    public Card getCurrentCard() {
-        return cards.get(currentCard);
     }
 
     public Card getDescriptionCard() {

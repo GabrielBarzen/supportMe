@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import org.supportmeinc.ImageUtils;
 import java.util.Optional;
 import java.util.UUID;
@@ -110,5 +110,6 @@ public class ThumbnailItem {
 
     public void setSelectedGuide() {
         guideBrowser.setCurrentUUID(guideUUID);
+        anchPane.setStyle("-fx-border-color: black");
     }
 }
