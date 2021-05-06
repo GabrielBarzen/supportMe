@@ -239,7 +239,9 @@ public class MainController {
         switchScene(SceneName.guideEditor);
     }
 
-
+    public void deleteGuide(UUID uuid) {
+        guideManager.deleteGuide(uuid);
+    }
     public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
         guideBrowser.resetView();
         for (Thumbnail thumbnail: access) {

@@ -3,5 +3,6 @@ package org.supportmeinc.model;
 public enum requestType {
     grant,
     getAccessList,
-    revoke
+    revoke,
+    removeGuide
 }

@@ -31,8 +31,8 @@
          <children>
             <Button fx:id="btn1" mnemonicParsing="false" onAction="#openGuide" prefHeight="43.0" prefWidth="120.0" text="Open guide" />
             <Button fx:id="btn2" mnemonicParsing="false" onAction="#createNewGuide" prefHeight="43.0" prefWidth="115.0" text="Create new guide" />
-            <Button fx:id="btn3" mnemonicParsing="false" onAction="#editGuide" prefHeight="43.0" prefWidth="95.0" text="Edit guide" />
-            <Button fx:id="btn4" mnemonicParsing="false" prefHeight="43.0" prefWidth="95.0" text="Delete guide">
+            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editGuide" prefHeight="43.0" prefWidth="95.0" text="Edit guide" />
+            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="43.0" prefWidth="95.0" text="Delete guide">
                <HBox.margin>
                   <Insets right="430.0" />
                </HBox.margin>

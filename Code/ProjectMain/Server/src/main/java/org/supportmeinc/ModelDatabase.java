@@ -327,8 +327,11 @@ public class ModelDatabase {
 
     }
 
+    public boolean removeGuide(UUID uuid){
+        return removeGuide(new Guide(uuid));
+    }
 
-    private boolean removeGuide(Guide guide) {
+    public boolean removeGuide(Guide guide) {
         boolean success = false;
         try {
             String query = "select remove_guide(?)";

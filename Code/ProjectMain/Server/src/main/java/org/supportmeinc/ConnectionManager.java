@@ -104,6 +104,8 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
                 databaseManager.revokeAccess(requestParts[2], UUID.fromString(requestParts[1]));
             } else if (requestParts[0].equals("getAccessList")) {
                 userConnection.get(user).sendObject(databaseManager.getAccessList(requestParts[1]));
+            } else if (requestParts[0].equals("removeGuide")) {
+                databaseManager.removeGuide(requestParts[1]);
             } else {ServerLog.log("could not grant/revoke access to guide");}
 
         }

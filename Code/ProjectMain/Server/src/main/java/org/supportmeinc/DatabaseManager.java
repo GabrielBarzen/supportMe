@@ -94,4 +94,11 @@ public class DatabaseManager {
     public String[] getAccessList(String requestPart) {
         return userDatabase.getAccessList(UUID.fromString(requestPart));
     }
+
+    public void removeGuide(String requestPart) {
+        boolean success = userDatabase.removeGuide(UUID.fromString(requestPart));
+        if (success) {
+            modelDatabase.removeGuide(UUID.fromString(requestPart));
+        }
+    }
 }

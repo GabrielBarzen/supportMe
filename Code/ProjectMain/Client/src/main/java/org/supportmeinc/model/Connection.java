@@ -95,6 +95,11 @@ public class Connection {
         send(request);
     }
 
+    public void removeGuide(UUID uuid) { // revoke access to email on guide from uuid
+        String request = requestBuilder(requestType.removeGuide, uuid.toString());
+        send(request);
+    }
+
     public String[] getAccessList(UUID uuid) { // get access list from guide uuid, null if no access on guide is granted
         String[] returnArray = null;
         String request = requestBuilder(requestType.getAccessList, uuid.toString());

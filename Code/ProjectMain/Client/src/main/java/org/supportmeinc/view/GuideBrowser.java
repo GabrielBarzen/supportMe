@@ -2,6 +2,7 @@ package org.supportmeinc.view;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -23,6 +24,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     @FXML private FlowPane flowPane, flowPaneSaved;
     @FXML private ScrollPane scrollPane;
+    @FXML private Button btnEdit, btnDelete;
 
     public void initData(MainController controller){
         this.controller = controller;
@@ -43,7 +45,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         }
 
         if (item != null && anchorPane != null) {
-            item.setData(title, image, description, guideUUID, this);
+            item.setData(title, image, description, guideUUID, this, true);
             thumbnailItems.add(item);
             flowPane.getChildren().add(anchorPane);
         }
@@ -64,8 +66,12 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     public void editGuide() {
         controller.setEditGuide(currentUUID);
-
     }
+
+    public void deleteGuide() {
+        controller.deleteGuide(currentUUID);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,8 +88,10 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         controller.createNewGuide();
     }
 
-    public void setCurrentUUID(UUID currentUUID) { //called when thumbnail is clicked
+    public void setSelectedThumbnail(UUID currentUUID, boolean author) { //called when thumbnail is clicked
         this.currentUUID = currentUUID;
+        btnEdit.setVisible(author);
+        btnDelete.setVisible(author);
     }
 
     public void addThumbnailAccess(String title, byte[] image, String description, UUID guideUUID) {
@@ -100,7 +108,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         }
 
         if (item != null && anchorPane != null) {
-            item.setData(title, image, description, guideUUID, this);
+            item.setData(title, image, description, guideUUID, this, false);
             thumbnailItems.add(item);
             flowPaneSaved.getChildren().add(anchorPane);
         }

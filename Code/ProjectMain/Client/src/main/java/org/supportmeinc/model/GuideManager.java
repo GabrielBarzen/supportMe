@@ -130,5 +130,9 @@ public class GuideManager implements ThumbnailListener{
             }
         }
     }
+
+    public void deleteGuide(UUID uuid) {
+	    connection.removeGuide(uuid);
+    }
 }
 
