@@ -257,6 +257,7 @@ public class MainController {
         Guide guide = guideManager.getGuide(uuid);
         guideViewer = new GuideViewer(guide, this);
         Card card = guide.getDescriptionCard();
+        guideViewerUi.firstCard();
         guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
         switchScene(SceneName.guideViewer);
     }
@@ -330,11 +331,7 @@ public class MainController {
 
     public boolean checkGuide() {
         boolean retVal;
-        if(guideEditor.getOutputGuide() == null) {
-            retVal = false;
-        } else {
-            retVal = true;
-        }
+        retVal = guideEditor.getOutputGuide() != null;
         return retVal;
     }
 }

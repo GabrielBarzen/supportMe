@@ -43,6 +43,9 @@ public class GuideViewer {
             }
             currentCard = nextCard;
         }
+        if (currentCard.getAffirmUUID() == null && currentCard.getNegUUID() == null) {
+            mainController.lastCard();
+        }
 
         return nextCard;
     }
