@@ -12,16 +12,31 @@ import java.util.UUID;
 
 public class GuideEditor {
 
+    private Guide outputGuide;
     private HashMap<UUID,Card> cardsList;
     private Card currentCard;
-    private Guide outputGuide;
     private Card descriptionCard;
+    private UUID guideUUID = UUID.randomUUID();
     private Thumbnail thumbnail;
     private MainController controller;
+
+    public UUID getGuideUUID() {
+        return guideUUID;
+    }
 
     public GuideEditor(MainController controller) {
         this.controller = controller;
         cardsList = new HashMap<>();
+    }
+
+    public void setEditGuide(Guide guide) {
+        HashMap<UUID,Card> temp = new HashMap<>();
+        for (Card card : guide.getCards()) {
+            temp.put(card.getCardUUID(), card);
+        }
+        this.cardsList = temp;
+        this.guideUUID = guide.getGuideUUID();
+
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
@@ -88,12 +103,13 @@ public class GuideEditor {
     public byte[] getCardImage(UUID uuid){
         return cardsList.get(uuid).getImage();
     }
+
     public Guide getOutputGuide() {
         return outputGuide;
     }
 
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        Guide returnGuide = new Guide();
+        Guide returnGuide = new Guide(guideUUID);
         setDescription(title, description, img, affirmUUID, returnGuide);
         returnGuide.setCards(cardsList.values().toArray(new Card[0]));
         returnGuide.setDescriptionCard(descriptionCard);
@@ -104,7 +120,6 @@ public class GuideEditor {
 
     public boolean checkCardLinksValid() {
         boolean boolReturn;
-
         int ok = 0;
 
         for (Card card : cardsList.values()) {
@@ -121,7 +136,6 @@ public class GuideEditor {
         } else {
             boolReturn = true;
         }
-
         return boolReturn;
     }
 }

@@ -66,14 +66,14 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="218.0" prefWidth="553.0">
                                        <children>
-                                          <ListView fx:id="listView" fixedCellSize="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ListView fx:id="listViewCards" fixedCellSize="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                 </content>
                               </ScrollPane>
                               <Label text="User access" />
                               <TextField fx:id="txtAccess" promptText="Please add users you'd like to have access to your guide, separate emails with &quot;,&quot;..." />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="555.0" text="Add user">
+                              <Button fx:id="btnAddAccess" mnemonicParsing="false" onAction="#addToAccessList" prefHeight="25.0" prefWidth="555.0" text="Add user">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -83,12 +83,12 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="553.0">
                                        <children>
-                                          <ListView fx:id="listView1" fixedCellSize="40.0" prefHeight="161.0" prefWidth="553.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ListView fx:id="listViewAccess" fixedCellSize="40.0" prefHeight="161.0" prefWidth="553.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                 </content>
                               </ScrollPane>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="555.0" text="Remove user" />
+                              <Button fx:id="btnRemoveAccess" mnemonicParsing="false" onAction="#removeFromAccessList" prefHeight="25.0" prefWidth="555.0" text="Remove user" />
                            </children>
                         </VBox>
                      </children>

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
+import org.supportmeinc.model.Connection;
 import org.supportmeinc.model.GuideEditor;
 import org.supportmeinc.model.GuideManager;
 import org.supportmeinc.model.GuideViewer;
@@ -20,6 +21,8 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -36,6 +39,7 @@ public class MainController {
     private GuideViewerUi guideViewerUi;
     private GuideEditorSave guideEditorSave;
     private GuideViewer guideViewer;
+
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
@@ -265,5 +269,43 @@ public class MainController {
 
     public void setGuideViewer(GuideViewerUi guideViewerUi) {
         this.guideViewerUi = guideViewerUi;
+    }
+
+    public ArrayList<String> getAccessList() {
+        ArrayList<String> temp;
+        if(controller.getConnection().getAccessList(guideEditor.getGuideUUID()) != null) {
+            temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getGuideUUID()));
+        } else {
+            temp = null;
+        }
+        return temp;
+    }
+
+    public Connection getConnection() {
+        return controller.getConnection();
+    }
+
+    public UUID getOutputGuideUUID() {
+        return guideEditor.getOutputGuide().getGuideUUID();
+    }
+
+    public void setEditGuide() {
+        guideEditor.setEditGuide();
+    }
+
+    public boolean checkAccessList() {
+        boolean retVal;
+
+        retVal = getConnection().getAccessList(guideEditor.getGuideUUID()) != null;
+
+        return retVal;
+    }
+
+    public void grantAccess(UUID uuid, String email) {
+        getConnection().grantAccess(uuid, email);
+    }
+
+    public void revokeAccess(UUID uuid, String email) {
+        getConnection().revokeAccess(uuid, email);
     }
 }
