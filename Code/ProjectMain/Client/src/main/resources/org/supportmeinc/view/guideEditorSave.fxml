@@ -29,13 +29,13 @@
                         <VBox prefHeight="200.0" prefWidth="595.0" spacing="5.0" HBox.hgrow="NEVER">
                            <children>
                               <Label text="Title" />
-                              <TextField fx:id="txtTitle" promptText="Please enter title..." />
+                              <TextField fx:id="txtTitle" onKeyTyped="#updateTitlePreview" promptText="Please enter title..." />
                               <Label text="Description">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </Label>
-                              <TextArea fx:id="txtDescription" prefHeight="95.0" prefWidth="555.0" promptText="Please enter description..." />
+                              <TextArea fx:id="txtDescription" onKeyTyped="#updateTextPreview" prefHeight="95.0" prefWidth="555.0" promptText="Please enter description..." />
                               <Label text="Image" />
                               <ImageView fx:id="imgPreview" fitHeight="316.0" fitWidth="555.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
