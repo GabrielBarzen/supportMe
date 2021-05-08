@@ -72,6 +72,14 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         controller.deleteGuide(currentUUID);
     }
 
+    public void downloadGuide() {
+        controller.downloadGuide(currentUUID);
+    }
+
+    public void downloadGuide(UUID uuid) {
+        controller.downloadGuide(uuid);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,6 +103,26 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void addThumbnailAccess(String title, byte[] image, String description, UUID guideUUID) {
+        ThumbnailItem item = null;
+        AnchorPane anchorPane = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/thumbnail.fxml"));
+
+            anchorPane = loader.load();
+            item = loader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (item != null && anchorPane != null) {
+            item.setData(title, image, description, guideUUID, this, false);
+            thumbnailItems.add(item);
+            flowPaneSaved.getChildren().add(anchorPane);
+        }
+    }
+
+    public void addThumbnailDownloaded(String title, byte[] image, String description, UUID guideUUID) {
         ThumbnailItem item = null;
         AnchorPane anchorPane = null;
         try {

@@ -1,14 +1,13 @@
 package org.supportmeinc.model;
 
+import org.supportmeinc.MainController;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
 
 import java.io.*;
-import java.net.ConnectException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 
@@ -18,14 +17,12 @@ public class GuideManager implements ThumbnailListener{
     private Guide[] guides;
     private Thumbnail[] accessThumbnails;
     private Thumbnail[] authorThumbnails;
+    private Thumbnail[] downloadThumbnails;
     private Connection connection;
     private ArrayList<Card> cardArrayList;
     private Semaphore newAccess = new Semaphore(0);
     private Semaphore newAuthor = new Semaphore(0);
-
-	public GuideManager() {
-        getDownloadedThumbnails();
-    }
+    private MainController controller;
 
     public GuideManager(Connection connection) {
         this.connection = connection;
@@ -34,11 +31,19 @@ public class GuideManager implements ThumbnailListener{
         connection.setGuideManager(this);
     }
 
-    public ArrayList<Thumbnail> getDownloadedThumbnails() {
-	    String username = "user"; //TODO byt mot framtida lösning
+    public GuideManager(User user) {
+        getDownloadedThumbnails(user);
+        //setThumbnails(downloadThumbnails);
+    }
+
+    private void setThumbnails(Thumbnail[] downloadThumbnails) {
+        controller.setThumbnailInView(downloadThumbnails);
+    }
+
+    public Thumbnail[] getDownloadedThumbnails(User user) {
         ArrayList<Thumbnail> thumbnails = new ArrayList<>();
 	    try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username + ".dat"));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(user.getUserName() + ".dat"));
             Object obj = ois.readObject();
             ArrayList<Guide> guides = new ArrayList<>();
             while (obj != null) {
@@ -56,7 +61,11 @@ public class GuideManager implements ThumbnailListener{
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return thumbnails;
+	    Thumbnail[] thumbnailArray = new Thumbnail[thumbnails.size()];
+        for (int i = 0; i < thumbnailArray.length; i++) {
+            thumbnailArray[i] = thumbnails.get(i);
+        }
+        return thumbnailArray;
     }
 
     public Card getCard(boolean choice) {
@@ -93,7 +102,6 @@ public class GuideManager implements ThumbnailListener{
 
     @Override
     public void thumbnailsReceived(Thumbnail[] access, Thumbnail[] author) {
-
 	    this.accessThumbnails = access;
         this.authorThumbnails = author;
         newAccess.release();
@@ -134,6 +142,14 @@ public class GuideManager implements ThumbnailListener{
 
     public void deleteGuide(UUID uuid) {
 	    connection.removeGuide(uuid);
+    }
+
+    public void downloadGuide(UUID uuid) {
+        connection.downloadGuide(uuid);
+    }
+
+    public void setController(MainController controller) {
+        this.controller = controller;
     }
 }
 

@@ -37,6 +37,7 @@
                   <Insets right="430.0" />
                </HBox.margin>
             </Button>
+            <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#downloadGuide" prefHeight="43.0" prefWidth="95.0" text="Download guide" />
             <TextField prefHeight="43.0" />
             <Button fx:id="btn41" mnemonicParsing="false" prefHeight="43.0" prefWidth="95.0" text="Search" />
          </children>

@@ -191,6 +191,10 @@ public class MainController {
         }
     }
 
+    public void downloadGuide(UUID uuid) {
+        guideManager.downloadGuide(uuid);
+    }
+
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
         guideEditor.packGuide(title, description, img, affirmUUID);
     }
@@ -248,6 +252,13 @@ public class MainController {
         }
         for (Thumbnail thumbnail: author) {
             guideBrowser.addThumbnailAuthor(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+    }
+
+    public void setThumbnailInView(Thumbnail[] download) {
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: download) {
+            guideBrowser.addThumbnailDownloaded(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
         }
     }
 

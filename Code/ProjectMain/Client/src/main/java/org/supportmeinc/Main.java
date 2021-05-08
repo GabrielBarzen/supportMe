@@ -25,6 +25,7 @@ public class Main extends Application {
     private String ip;
     private Connection connection;
     private org.supportmeinc.model.GuideEditor guideEditor;
+    private GuideManager guideManager;
 
     public static void main(String[] args) {
         launch();
@@ -73,6 +74,8 @@ public class Main extends Application {
 //        replaceWithUserFromLoginScreen.setNewUser(false);
 
         this.mainController = new MainController(stage, this);
+        while (guideManager == null) {}
+        guideManager.setController(mainController);
     }
 
     public GuideManager Login (String email, String userPassword){
@@ -82,8 +85,9 @@ public class Main extends Application {
             connection = new Connection(ip, port, user); //Todo : replace with user from login screen
             guideManager = new GuideManager(connection);
         } catch (IOException e) {
-            guideManager = new GuideManager();
+            guideManager = new GuideManager(user);
         }
+        //guideManager.setController(mainController);
         return guideManager;
     }
 

@@ -5,9 +5,7 @@ import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.UUID;
@@ -57,6 +55,12 @@ public class Connection {
             retGuide = (Guide) guide;
         }
         return retGuide;
+    }
+
+    public Guide getGuide(UUID uuid) throws InterruptedException {
+        Guide guide;
+        guide = guideManager.getGuide(uuid);
+        return guide;
     }
 
     public void getThumbnails(Thumbnail[] thumbnails) throws InterruptedException{
@@ -152,6 +156,17 @@ public class Connection {
         return user;
     }
 
+    public void downloadGuide(UUID uuid) {
+        Guide guide;
+        try {
+            guide = getGuide(uuid);
+            outputStream = new ObjectOutputStream(new FileOutputStream(user.getUserName()+ ".dat"));
+            outputStream.writeObject(guide);
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private class Receive extends Thread {
 
         @Override
@@ -159,9 +174,9 @@ public class Connection {
             try {
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
-
+                    //Vad är de här till för???
                 } else {
-
+                    //VA???
                 }
 
                 while (!Thread.interrupted()) {
