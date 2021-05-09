@@ -74,11 +74,9 @@ public class Main extends Application {
 //        replaceWithUserFromLoginScreen.setNewUser(false);
 
         this.mainController = new MainController(stage, this);
-        while (guideManager == null) {}
-        guideManager.setController(mainController);
     }
 
-    public GuideManager Login (String email, String userPassword){
+    public GuideManager Login (String email, String userPassword) {
         User user = new User(email, userPassword);
         GuideManager guideManager;
         try {

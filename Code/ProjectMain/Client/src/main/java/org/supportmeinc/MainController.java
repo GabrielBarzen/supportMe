@@ -222,6 +222,7 @@ public class MainController {
 
     public void registerUser(User user) {
         guideManager = controller.register(user);
+        guideManager.setController(this);
         if (guideManager != null) {
             try {
                 stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
