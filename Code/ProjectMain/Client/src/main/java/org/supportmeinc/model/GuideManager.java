@@ -135,5 +135,17 @@ public class GuideManager implements ThumbnailListener{
     public void deleteGuide(UUID uuid) {
 	    connection.removeGuide(uuid);
     }
+
+
+    public void grantAccess(UUID uuid, String email) {
+	    connection.grantAccess(uuid, email);
+    }
+    public void revokeAccess(UUID uuid, String email) {
+        connection.revokeAccess(uuid, email);
+    }
+
+    public String[] getAccesList(UUID guideUUID) {
+	    return connection.getAccessList(guideUUID);
+    }
 }
 

@@ -148,4 +148,8 @@ public class GuideEditor {
     public String getGuideDescription() {
         return outputGuide.getThumbnail().getTitle();
     }
+
+    public Card getCard(UUID uuid){
+        return cardsList.get(uuid);
+    }
 }

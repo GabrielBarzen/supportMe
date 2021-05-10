@@ -62,42 +62,20 @@ public class Main extends Application {
         }
     }
 
-    //Model methods//
-    private MainController mainController;
+
 
     @Override
     public void start(Stage stage) {
         readConfig(getClass().getResource("config.conf"));
-
-//        User replaceWithUserFromLoginScreen = new User("Nicholas","6nice9","NiCeRdIcErDeLuXePrOfUsIoNeXTrEaMSdReaAMS", ImageUtils.toBytes("FinalLogotyp.png"));
-//        replaceWithUserFromLoginScreen.setNewUser(false);
-
-        this.mainController = new MainController(stage, this);
+        new MainController(stage, this);
     }
 
-    public GuideManager Login (String email, String userPassword){
-        User user = new User(email, userPassword);
-        GuideManager guideManager;
-        try {
-            connection = new Connection(ip, port, user); //Todo : replace with user from login screen
-            guideManager = new GuideManager(connection);
-        } catch (IOException e) {
-            guideManager = new GuideManager();
-        }
-        return guideManager;
+    public String getIp() {
+        return ip;
     }
 
-
-    public GuideManager register(User user) {
-        GuideManager guideManager = null;
-        try {
-            connection = new Connection(ip, port, user); //Todo : replace with user from login screen
-            guideManager = new GuideManager(connection);
-        } catch (IOException e) {
-            System.exit(1);
-            e.printStackTrace();
-        }
-        return guideManager;
+    public int getPort() {
+        return port;
     }
 }
 

@@ -12,7 +12,6 @@ import org.supportmeinc.SceneName;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -40,8 +39,38 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
 
     public GuideEditorUi() {
-        this.listView = new ListView<>();
+        resetList();
+    }
+
+    public void resetList() {
+        listView = new ListView<>();
         guideCardUUID = new ArrayList<>();
+    }
+
+    public void addToCardList(UUID cardToAdd) {
+        UUID card = cardToAdd;
+        guideCardUUID.add(cardToAdd);
+        String title = controller.getCardTitle(card);
+        if (!(listView.getItems().contains(title))) {
+            if (controller.hasAffirmativeUUID(card) && controller.hasNegativeUUID(card)) {
+                listView.getItems().add(title + " : 2");
+            } else if (controller.hasAffirmativeUUID(card) || controller.hasNegativeUUID(card)) {
+                listView.getItems().add(title + " : 1");
+            } else {
+                listView.getItems().add(title + " : 0");
+            }
+        }
+        resetView();
+    }
+
+    public void removeFromCardList(UUID cardToAdd) {
+        UUID card = cardToAdd;
+        guideCardUUID.remove(cardToAdd);
+        String title = controller.getCardTitle(card);
+        listView.getItems().remove(title + " : 0");
+        listView.getItems().remove(title + " : 1");
+        listView.getItems().remove(title + " : 2");
+        resetView();
     }
 
     public void initData(MainController controller){
@@ -50,23 +79,11 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         controller.setGuideEditorUi(this);
     }
 
-    public void repopulateLists() {
-        guideCardUUID = null;
-        guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
-
+    public void resetView() {
         cmbYes.getItems().clear();
         cmbNo.getItems().clear();
-        listView.getItems().clear();
-
-        guideCardUUID.removeIf(uuid -> uuid == cardUUID);
-
-        for (UUID uuid : guideCardUUID) {
-            if(uuid != null) {
-                cmbYes.getItems().add(controller.getCardTitle(uuid));
-                cmbNo.getItems().add(controller.getCardTitle(uuid));
-                listView.getItems().add(controller.getCardTitle(uuid));
-            }
-        }
+        cmbYes.getItems().addAll(listView.getItems());
+        cmbNo.getItems().addAll(listView.getItems());
     }
 
     public void updateTitlePreview() {
@@ -167,39 +184,39 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
       
         controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
-
+        addToCardList(cardUUID);
         createNewCard();
-
-        repopulateLists();
+        resetView();
     }
 
     public void loadCardOnListSelection() {
-        if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
-            if(listView.getSelectionModel().getSelectedItem() != null) {
-                cardUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
+        cardUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
+        if (cardUUID != null) {
+            removeFromCardList(cardUUID);
 
-                title = controller.getCardTitle(cardUUID);
-                text = controller.getCardText(cardUUID);
-                img = controller.getCardImage(cardUUID);
-                yesUUID = controller.getCardAffirmUUID(cardUUID);
-                noUUID = controller.getCardNegUUID(cardUUID);
+            title = controller.getCardTitle(cardUUID);
+            text = controller.getCardText(cardUUID);
+            img = controller.getCardImage(cardUUID);
+            yesUUID = controller.getCardAffirmUUID(cardUUID);
+            noUUID = controller.getCardNegUUID(cardUUID);
 
-                txtCardText.setText(text);
-                txtCardTitle.setText(title);
-                imgPreview.setImage(ImageUtils.toImage(img));
-                txtFilePath.clear();
+            txtCardText.setText(text);
+            txtCardTitle.setText(title);
+            imgPreview.setImage(ImageUtils.toImage(img));
+            txtFilePath.clear();
 
-                updateComboboxPreview();
-                updateTextPreview();
-                updateTitlePreview();
-                repopulateLists();
-            }
+            updateComboboxPreview();
+            updateTextPreview();
+            updateTitlePreview();
+            resetView();
         }
     }
 
     public void removeCard() {
-        if(listView.getSelectionModel().isSelected(listView.getSelectionModel().getSelectedIndex())) {
-            controller.removeCard(guideCardUUID.get(listView.getSelectionModel().getSelectedIndex()));
+        UUID cardUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
+        if(cardUUID != null) {
+            controller.removeCard(cardUUID);
+            removeFromCardList(cardUUID);
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No card selected");
@@ -207,7 +224,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             alert.setContentText("Please select a card to be deleted");
             alert.show();
         }
-        repopulateLists();
+        resetView();
     }
 
     @Override
