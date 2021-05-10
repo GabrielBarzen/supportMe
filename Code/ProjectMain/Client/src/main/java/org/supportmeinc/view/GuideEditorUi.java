@@ -40,8 +40,24 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
 
     public GuideEditorUi() {
-        this.listView = new ListView<>();
+        resetList();
+    }
+
+    public void resetList() {
+        listView = new ListView<>();
         guideCardUUID = new ArrayList<>();
+    }
+
+    public void addToCardList(UUID cardToAdd) {
+        UUID card = cardToAdd;
+        String title = controller.getCardTitle(card);
+        listView.getItems().add(title);
+    }
+
+    public void removeFromCardList(UUID cardToAdd) {
+        UUID card = cardToAdd;
+        String title = controller.getCardTitle(card);
+        listView.getItems().remove(title);
     }
 
     public void initData(MainController controller){
@@ -169,7 +185,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
 
         createNewCard();
-
         repopulateLists();
     }
 
