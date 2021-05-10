@@ -21,8 +21,6 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -212,7 +210,7 @@ public class MainController {
 
     public void setNewGuideEditorModel() {
         this.guideEditor = new GuideEditor(this);
-        guideEditorUi.repopulateLists();
+        guideEditorUi.resetView();
         guideEditorSave.repopulateLists();
     }
 
@@ -271,7 +269,7 @@ public class MainController {
         guideEditor = new GuideEditor(this);
         guideEditor.setEditGuide(guide);
         switchScene(SceneName.guideEditor);
-        guideEditorUi.repopulateLists();
+        guideEditorUi.resetView();
     }
 
     //Manages access to guide given uuid and email, grant/revoke access with grantAccess boolean
@@ -327,5 +325,15 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean hasAffirmativeUUID(UUID cardUUID) {
+        Card card = guideEditor.getCard(cardUUID);
+        return card.getAffirmUUID() != null;
+    }
+
+    public boolean hasNegativeUUID(UUID cardUUID) {
+        Card card = guideEditor.getCard(cardUUID);
+        return card.getNegUUID() != null;
     }
 }
