@@ -190,25 +190,28 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void loadCardOnListSelection() {
-        cardUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
-        if (cardUUID != null) {
-            removeFromCardList(cardUUID);
+        int selectedIndex = listView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex > -1) {
+            cardUUID = guideCardUUID.get(selectedIndex);
+            if (cardUUID != null) {
+                removeFromCardList(cardUUID);
 
-            title = controller.getCardTitle(cardUUID);
-            text = controller.getCardText(cardUUID);
-            img = controller.getCardImage(cardUUID);
-            yesUUID = controller.getCardAffirmUUID(cardUUID);
-            noUUID = controller.getCardNegUUID(cardUUID);
+                title = controller.getCardTitle(cardUUID);
+                text = controller.getCardText(cardUUID);
+                img = controller.getCardImage(cardUUID);
+                yesUUID = controller.getCardAffirmUUID(cardUUID);
+                noUUID = controller.getCardNegUUID(cardUUID);
 
-            txtCardText.setText(text);
-            txtCardTitle.setText(title);
-            imgPreview.setImage(ImageUtils.toImage(img));
-            txtFilePath.clear();
+                txtCardText.setText(text);
+                txtCardTitle.setText(title);
+                imgPreview.setImage(ImageUtils.toImage(img));
+                txtFilePath.clear();
 
-            updateComboboxPreview();
-            updateTextPreview();
-            updateTitlePreview();
-            resetView();
+                updateComboboxPreview();
+                updateTextPreview();
+                updateTitlePreview();
+                resetView();
+            }
         }
     }
 
