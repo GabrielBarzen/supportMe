@@ -39,7 +39,6 @@ public class GuideEditor {
         this.cardsList = temp;
         this.guideUUID = guide.getGuideUUID();
         this.outputGuide = guide;
-
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
