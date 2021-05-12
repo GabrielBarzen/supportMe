@@ -270,6 +270,11 @@ public class MainController {
         guideEditor.setEditGuide(guide);
         switchScene(SceneName.guideEditor);
         guideEditorUi.resetView();
+        guideEditorUi.updateEditGuide();
+
+        for (Card card: guideEditor.getCardsList().values()) {
+            guideEditorUi.addToCardList(card.getCardUUID());
+        }
     }
 
     //Manages access to guide given uuid and email, grant/revoke access with grantAccess boolean

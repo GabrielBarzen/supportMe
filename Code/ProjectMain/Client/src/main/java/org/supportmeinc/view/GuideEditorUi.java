@@ -86,6 +86,10 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         cmbNo.getItems().addAll(listView.getItems());
     }
 
+    public void updateEditGuide() {
+
+    }
+
     public void updateTitlePreview() {
         String cardTitle = txtCardTitle.getText();
 

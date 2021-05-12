@@ -158,6 +158,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                 listViewAccess.getItems().add(str);
             }
         }
+
         if(accessList != null) {
             for (String str : accessList) {
                 listViewAccess.getItems().add(str);
