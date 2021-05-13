@@ -37,6 +37,35 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         controller.setGuideEditorSave(this);
     }
 
+    public void updateTitlePreview() {
+        String guideTitle = txtTitle.getText();
+
+        if (guideTitle.length() > 20) {
+            guideTitle = guideTitle.substring(0, 20);
+            txtTitle.setText(guideTitle);
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Guide title warning");
+            alert.setHeaderText("Can't create guide with title longer than 20 characters");
+            alert.setContentText("Please select a shorter title");
+            alert.show();
+        }
+    }
+
+    public void updateTextPreview() {
+        String guideText = txtDescription.getText();
+
+        if (guideText.length() > 160) {
+            guideText = guideText.substring(0, 160);
+            txtDescription.setText(guideText);
+
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Guide text limit warning");
+            alert.setHeaderText("Can't create guide with text longer than 160 characters");
+            alert.show();
+        }
+    }
+
     public void saveGuide() {
         if(!(txtTitle.getText().isBlank() || txtDescription.getText().isBlank())) {
             String title = txtTitle.getText();
@@ -53,30 +82,24 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                 controller.packGuide(title, description, img, affirmUUID);
 
                 if(controller.saveGuide()) {
-                    ArrayList<String> accessServer = controller.getAccessList();
-                    if(accessServer != null) {
-                        ArrayList<String> temp;
+                    ArrayList<String> accessServer = new ArrayList<>(Arrays.asList(controller.getAccessList()));
+                    ArrayList<String> temp;
 
-                        Collections.sort(accessServer);
-                        Collections.sort(accessList);
+                    Collections.sort(accessServer);
+                    Collections.sort(accessList);
 
-                        temp = accessList;
-                        temp.removeAll(accessServer);
+                    temp = accessList;
+                    temp.removeAll(accessServer);
 
-                        for (String str : temp) {
-                            controller.grantAccess(controller.getOutputGuideUUID(), str);
-                        }
+                    for (String str : temp) {
+                        controller.manageAccess(controller.getOutputGuideUUID(), str, true);
+                    }
 
-                        temp = controller.getAccessList();
-                        temp.removeAll(accessList);
+                    temp = accessServer;
+                    temp.removeAll(accessList);
 
-                        for (String str : temp) {
-                            controller.revokeAccess(controller.getOutputGuideUUID(), str);
-                        }
-                    } else {
-                        for (String str : accessList) {
-                            controller.grantAccess(controller.getOutputGuideUUID(), str);
-                        }
+                    for (String str : temp) {
+                        controller.manageAccess(controller.getOutputGuideUUID(), str, false);
                     }
                     alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Guide saved!");
@@ -128,18 +151,21 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                 listViewCards.getItems().add(controller.getCardTitle(uuid));
             }
         }
-        
-        if(controller.checkAccessList()) {
-            for (String str : controller.getAccessList()) {
+
+        String[] accessList = controller.getAccessList();
+        if(accessList != null) {
+            for (String str : accessList) {
                 listViewAccess.getItems().add(str);
             }
         }
 
-        for (String str : accessList) {
-            listViewAccess.getItems().add(str);
+        if(accessList != null) {
+            for (String str : accessList) {
+                listViewAccess.getItems().add(str);
+            }
         }
 
-        if(controller.checkGuide()) {
+        if(controller.getOutputGuideUUID() != null) {
             txtTitle.setText(controller.getGuideTitle());
             txtDescription.setText(controller.getGuideDescription());
             imgPreview.setImage(ImageUtils.toImage(controller.getImg()));

@@ -59,9 +59,7 @@ public class Register implements JFXcontroller {
             rMessage.setText("Passwords does not match!");
         }
         else {
-            User user = new User(mail,userNameString,pass,image);
-            user.setNewUser(true);
-            controller.registerUser(user);
+            controller.registerUser(mail,userNameString,pass,image);
         }
     }
 

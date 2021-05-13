@@ -85,7 +85,7 @@ public class GuideManager implements ThumbnailListener{
         return null;
     }
 
-    public void getThumbnails() {
+    public void refreshThumbnails() {
 	    try {
 	        connection.getThumbnails(accessThumbnails);
         } catch (InterruptedException e) {
@@ -181,6 +181,21 @@ public class GuideManager implements ThumbnailListener{
 
     public void setController(MainController controller) {
         this.controller = controller;
+    }
+
+    public void grantAccess(UUID uuid, String email) {
+	    connection.grantAccess(uuid, email);
+    }
+    public void revokeAccess(UUID uuid, String email) {
+        connection.revokeAccess(uuid, email);
+    }
+
+    public String[] getAccessList(UUID guideUUID) {
+	    return connection.getAccessList(guideUUID);
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }
 

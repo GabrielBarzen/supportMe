@@ -21,8 +21,6 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -63,11 +61,45 @@ public class MainController {
         populateScenes();
         guideEditor = new GuideEditor(this);
     }
-
-    public void setGuideBrowser(GuideBrowser guideBrowser) {
-        this.guideBrowser = guideBrowser;
+    // Methods for handling user management
+    public void login(String email, String pass) {
+        User user = new User(email, pass);
+        handleUserLoginRegister(user);
     }
 
+    public void registerUser(String email, String userNameString, String pass, byte[] image) {
+        User user = new User(email, userNameString, pass, image);
+        user.setNewUser(true);
+        handleUserLoginRegister(user);
+    }
+
+    public void handleUserLoginRegister(User user) {
+        try {
+            Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
+            guideManager = new GuideManager(connection);
+        } catch (IOException e) {
+            System.out.println("Could not connect");
+            if(user.isNewUser()) {
+                System.out.println("Shutting down");
+                System.exit(0);
+            } else {
+                System.out.println("Attempting offline mode");
+                guideManager = new GuideManager(user);
+            }
+        }
+
+        if (guideManager != null) {
+            try {
+                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.exit(0);
+        }
+    }
+
+    //Stage and scene start and setup
     public void populateScenes() {
         for (SceneName sceneName : SceneName.values()) {
             if(!(sceneName.equals(SceneName.login) || sceneName.equals(SceneName.register) || sceneName.equals(SceneName.toolbar))) {
@@ -79,19 +111,6 @@ public class MainController {
                 }
             }
         }
-    }
-
-    public UUID createNewCard() {
-        guideEditor.createNewCard();
-        return guideEditor.getCurrentCard().getCardUUID();
-    }
-
-    public AnchorPane getScenes(SceneName scene) {
-        return scenes.get(scene);
-    }
-
-    public void registerToolbar(Toolbar toolbar) {
-        this.toolbarController = toolbar;
     }
 
     public Parent loadFXML(SceneName sceneName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
@@ -109,6 +128,18 @@ public class MainController {
         return root;
     }
 
+    public void setGuideBrowser(GuideBrowser guideBrowser) {
+        this.guideBrowser = guideBrowser;
+    }
+
+    public AnchorPane getScenes(SceneName scene) {
+        return scenes.get(scene);
+    }
+
+    public void registerToolbar(Toolbar toolbar) {
+        this.toolbarController = toolbar;
+    }
+
     public void switchScene(SceneName sceneName) {
         toolbarController.swapScene(scenes.get(sceneName));
     }
@@ -119,10 +150,47 @@ public class MainController {
         stage.show();
     }
 
-    public File jfxFileChooser() {
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        return selectedFile;
+    //GuideBrowser methods
+    public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: access) {
+            guideBrowser.addThumbnailAccess(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+        for (Thumbnail thumbnail: author) {
+            guideBrowser.addThumbnailAuthor(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+    }
+    public void setThumbnailInView(Thumbnail[] downloaded) {
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: downloaded) {
+            guideBrowser.addThumbnailDownloaded(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+    }
+
+    public void openGuide(UUID uuid) {
+        Guide guide = guideManager.getGuide(uuid);
+        guideViewer = new GuideViewer(guide, this);
+        Card card = guide.getDescriptionCard();
+        guideViewerUi.firstCard();
+        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
+        switchScene(SceneName.guideViewer);
+    }
+
+    //Guide editor methods
+    public boolean saveGuide() {
+        Guide guide = guideEditor.getOutputGuide();
+        boolean success = false;
+        if (guide != null) {
+            success = guideManager.saveGuide(guide);
+        } else {
+            //TODO alert user if guide error
+        }
+        return success;
+    }
+
+    public UUID createNewCard() {
+        guideEditor.createNewCard();
+        return guideEditor.getCurrentCard().getCardUUID();
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
@@ -137,6 +205,119 @@ public class MainController {
         return guideEditor.getCardsList().keySet().toArray(new UUID[0]);
     }
 
+    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {
+        this.guideEditorUi = guideEditorUi;
+    }
+
+    public void setNewGuideEditorModel() {
+        this.guideEditor = new GuideEditor(this);
+        guideEditorUi.resetView();
+        guideEditorSave.repopulateLists();
+    }
+
+    public void initGuideEditor() {
+        guideEditorUi.createNewCard();
+    }
+
+
+    public void refreshThumbnails() {
+        try {
+            if (guideManager.getConnection() != null) {
+                guideManager.refreshThumbnails();
+                Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
+                Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
+                setThumbnailInView(accessThumbnails, authorThumbnails);
+            } else {
+                Thumbnail[] downloadThumbnails = guideManager.getDownloadThumbnails();
+                setThumbnailInView(downloadThumbnails);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
+        this.guideEditorSave = guideEditorSave;
+    }
+
+
+
+
+    public void downloadGuide(UUID uuid) {
+        guideManager.downloadGuide(uuid);
+    }
+
+
+    public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
+        guideEditor.packGuide(title, description, img, affirmUUID);
+    }
+
+    public boolean checkCardLinksValid() {
+        return guideEditor.checkCardLinksValid();
+    }
+
+    public String getAuthor() {
+        return guideManager.getCurrentUser().getEmail();
+    }
+
+
+
+    public void onLoadGuideEditorSave() {
+        guideEditorSave.onLoad();
+    }
+
+    public void createNewGuide() {
+        initGuideEditor();
+        switchScene(SceneName.guideEditor);
+    }
+
+    public void deleteGuide(UUID uuid) {
+        guideManager.deleteGuide(uuid);
+    }
+
+
+
+
+    public void getNext(boolean choice) {
+        Card card = guideViewer.getNext(choice);
+        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
+    }
+
+    public void setGuideViewer(GuideViewerUi guideViewerUi) {
+        this.guideViewerUi = guideViewerUi;
+    }
+
+    public void lastCard() {
+        guideViewerUi.lastCard();
+    }
+
+    public String[] getAccessList() {
+        return guideManager.getAccessList(guideEditor.getGuideUUID());
+    }
+
+    public void setEditGuide(UUID uuid) {
+        Guide guide = guideManager.getGuide(uuid);
+        guideEditor = new GuideEditor(this);
+        guideEditor.setEditGuide(guide);
+        switchScene(SceneName.guideEditor);
+        guideEditorUi.resetView();
+        guideEditorUi.updateEditGuide();
+
+        for (Card card: guideEditor.getCardsList().values()) {
+            guideEditorUi.addToCardList(card.getCardUUID());
+        }
+    }
+
+    //Manages access to guide given uuid and email, grant/revoke access with grantAccess boolean
+    public void manageAccess(UUID uuid, String email, boolean grantAccess) {
+        if (grantAccess) {
+            guideManager.grantAccess(uuid, email);
+        } else {
+            guideManager.revokeAccess(uuid, email);
+        }
+    }
+
+    //Passthrough getters and setters for guideEditor
     public String getCardTitle(UUID uuid) {
         return guideEditor.getCardTitle(uuid);
     }
@@ -152,214 +333,43 @@ public class MainController {
     public byte[] getCardImage(UUID uuid) {
         return guideEditor.getCardImage(uuid);
     }
-
-    public void setGuideEditorUi(GuideEditorUi guideEditorUi) {
-        this.guideEditorUi = guideEditorUi;
+    public String getGuideTitle() {
+        return guideEditor.getGuideTitle();
+    }
+    public String getGuideDescription() {
+        return guideEditor.getGuideDescription();
+    }
+    public byte[] getImg() {
+        return guideEditor.getOutputGuide().getThumbnail().getImage();
+    }
+    public UUID getOutputGuideUUID() {
+        return guideEditor.getOutputGuide().getGuideUUID();
     }
 
-    public void setNewGuideEditorModel() {
-        this.guideEditor = new GuideEditor(this);
-        guideEditorUi.repopulateLists();
-        guideEditorSave.repopulateLists();
+    //GUID util methods
+    public File jfxFileChooser() {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        return selectedFile;
     }
 
-    public void initGuideEditor() {
-        guideEditorUi.createNewCard();
-    }
-
-    public void refreshThumbnails() {
-        try {
-            if (getConnection() != null) {
-                guideManager.getThumbnails();
-                Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
-                Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
-                setThumbnailInView(accessThumbnails, authorThumbnails);
-            } else {
-                Thumbnail[] downloadThumbnails = guideManager.getDownloadThumbnails();
-                setThumbnailInView(downloadThumbnails);
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
-        this.guideEditorSave = guideEditorSave;
-    }
-
-    public boolean saveGuide() {
-        Guide guide = guideEditor.getOutputGuide();
-
-        if (guide != null) {
-            boolean success = guideManager.saveGuide(guide);
-            return true;
-        } else {
-            //TODO alert user if guide error
-            return false;
-        }
-    }
-
-    public void downloadGuide(UUID uuid) {
-        guideManager.downloadGuide(uuid);
-    }
-
-    public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        guideEditor.packGuide(title, description, img, affirmUUID);
-    }
-
-    public boolean checkCardLinksValid() {
-        return guideEditor.checkCardLinksValid();
-    }
-
-    public String getAuthor() {
-        return guideManager.getCurrentUser().getEmail();
-    }
-
-    public void login(String email, String pass) {
-        guideManager = controller.Login(email, pass);
-        if (guideManager != null) {
-            try {
-                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            guideManager = new GuideManager(new User()user);
-        }
-    }
-
-    public void registerUser(User user) {
-        guideManager = controller.register(user);
-        guideManager.setController(this);
-        if (guideManager != null) {
-            try {
-                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.exit(0);
-        }
-    }
-
-    public void onLoadGuideEditorSave() {
-        guideEditorSave.onLoad();
-    }
-
-    public void createNewGuide() {
-        initGuideEditor();
-        switchScene(SceneName.guideEditor);
-    }
-
-    public void deleteGuide(UUID uuid) {
-        guideManager.deleteGuide(uuid);
-    }
-    public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
-        guideBrowser.resetView();
-        for (Thumbnail thumbnail: access) {
-            guideBrowser.addThumbnailAccess(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
-        }
-        for (Thumbnail thumbnail: author) {
-            guideBrowser.addThumbnailAuthor(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
-        }
-    }
-
-    public void setThumbnailInView(Thumbnail[] download) {
-        guideBrowser.resetView();
-        for (Thumbnail thumbnail: download) {
-            guideBrowser.addThumbnailDownloaded(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
-        }
-    }
-
-    public void openGuide(UUID uuid) {
-        Guide guide = guideManager.getGuide(uuid);
-        guideViewer = new GuideViewer(guide, this);
-        Card card = guide.getDescriptionCard();
-        guideViewerUi.firstCard();
-        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
-        switchScene(SceneName.guideViewer);
-    }
-
-    public void getNext(boolean choice) {
-        Card card = guideViewer.getNext(choice);
-        guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
-    }
-
-    public void setGuideViewer(GuideViewerUi guideViewerUi) {
-        this.guideViewerUi = guideViewerUi;
-    }
-
-    public void lastCard() {
-        guideViewerUi.lastCard();
-    }
-
-    public ArrayList<String> getAccessList() {
-        ArrayList<String> temp;
-        if(controller.getConnection().getAccessList(guideEditor.getGuideUUID()) != null) {
-            temp = (ArrayList<String>) Arrays.asList(controller.getConnection().getAccessList(guideEditor.getGuideUUID()));
-        } else {
-            temp = null;
-        }
-        return temp;
-    }
-
-    public Connection getConnection() {
-        return controller.getConnection();
-    }
-
+    //Methods for handling logout and exits
     public void logout() {
         try {
-            getConnection().disconnect();
+            guideManager.disconnect();
             stage.setScene(new Scene(loadFXML(SceneName.login)));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public UUID getOutputGuideUUID() {
-        return guideEditor.getOutputGuide().getGuideUUID();
+    public boolean hasAffirmativeUUID(UUID cardUUID) {
+        Card card = guideEditor.getCard(cardUUID);
+        return card.getAffirmUUID() != null;
     }
 
-    public void setEditGuide(UUID uuid) {
-        Guide guide = guideManager.getGuide(uuid);
-        guideEditor = new GuideEditor(this);
-        guideEditor.setEditGuide(guide);
-        switchScene(SceneName.guideEditor);
-        guideEditorUi.repopulateLists();
-    }
-
-    public boolean checkAccessList() {
-        boolean retVal;
-
-        retVal = getConnection().getAccessList(guideEditor.getGuideUUID()) != null;
-
-        return retVal;
-    }
-
-    public void grantAccess(UUID uuid, String email) {
-        getConnection().grantAccess(uuid, email);
-    }
-
-    public void revokeAccess(UUID uuid, String email) {
-        getConnection().revokeAccess(uuid, email);
-    }
-
-    public String getGuideTitle() {
-        return guideEditor.getGuideTitle();
-    }
-
-    public String getGuideDescription() {
-        return guideEditor.getGuideDescription();
-    }
-
-    public byte[] getImg() {
-        return guideEditor.getOutputGuide().getThumbnail().getImage();
-    }
-
-    public boolean checkGuide() {
-        boolean retVal;
-        retVal = guideEditor.getOutputGuide() != null;
-        return retVal;
+    public boolean hasNegativeUUID(UUID cardUUID) {
+        Card card = guideEditor.getCard(cardUUID);
+        return card.getNegUUID() != null;
     }
 }
