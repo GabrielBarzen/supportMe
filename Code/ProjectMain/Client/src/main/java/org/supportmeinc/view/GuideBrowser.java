@@ -18,13 +18,14 @@ import java.util.UUID;
 
 public class GuideBrowser implements JFXcontroller, Initializable {
 
+
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
     private UUID currentUUID;
 
     @FXML private FlowPane flowPane, flowPaneSaved, flowPaneDownloaded;
     @FXML private ScrollPane scrollPane;
-    @FXML private Button btnEdit, btnDelete;
+    @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch;
 
     public void initData(MainController controller){
         this.controller = controller;
@@ -141,5 +142,11 @@ public class GuideBrowser implements JFXcontroller, Initializable {
             thumbnailItems.add(item);
             flowPaneDownloaded.getChildren().add(anchorPane);
         }
+    }
+
+    public void offlineMode() {
+        btnEdit.setDisable(true);
+        btnCreate.setDisable(true);
+        btnDownload.setDisable(true);
     }
 } //class end

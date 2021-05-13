@@ -24,6 +24,7 @@ public class GuideManager implements ThumbnailListener{
     private Semaphore newAccess = new Semaphore(0);
     private Semaphore newAuthor = new Semaphore(0);
     private MainController controller;
+    private boolean hasOfflineGuides = false;
 
     public GuideManager(Connection connection) {
         this.connection = connection;
@@ -39,7 +40,6 @@ public class GuideManager implements ThumbnailListener{
 
     public Thumbnail[] getDownloadedThumbnails(User user) {
         ArrayList<Thumbnail> thumbnails = new ArrayList<>();
-
 	    try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(user.getEmail() + ".dat"));
             ArrayList<Guide> guidesArrayList = new ArrayList<>();
@@ -52,7 +52,7 @@ public class GuideManager implements ThumbnailListener{
                         guidesArrayList.add(guide);
                     }
                 } while (ois.available() > 0);
-
+                hasOfflineGuides = true;
             } catch (EOFException e) {
                 e.printStackTrace();
             }
@@ -69,6 +69,7 @@ public class GuideManager implements ThumbnailListener{
             }
         } catch (FileNotFoundException e) {
 	        System.out.println("no downloaded guides");
+            hasOfflineGuides = false;
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
@@ -159,6 +160,10 @@ public class GuideManager implements ThumbnailListener{
         }
 
         return thumbnails;
+    }
+
+    public boolean isHasOfflineGuides() {
+        return hasOfflineGuides;
     }
 
     public void disconnect() {

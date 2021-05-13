@@ -81,10 +81,15 @@ public class MainController {
             System.out.println("Could not connect");
             if(user.isNewUser()) {
                 System.out.println("Shutting down");
-                System.exit(0);
+                System.exit(0); //TODO visa relevant alert (att användare inte kunde registreras pga uppkoppling till server)
             } else {
                 System.out.println("Attempting offline mode");
                 guideManager = new GuideManager(user);
+                if (!guideManager.isHasOfflineGuides()) {
+                    System.exit(0); //TODO visa relevant alert (att användare inte har några nedladdade guider)
+                } else {
+                    guideBrowser.offlineMode();
+                }
             }
         }
 
