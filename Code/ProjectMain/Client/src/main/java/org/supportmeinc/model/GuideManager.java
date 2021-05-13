@@ -63,7 +63,7 @@ public class GuideManager implements ThumbnailListener{
         return null;
     }
 
-    public void getThumbnails() {
+    public void refreshThumbnails() {
 	    try {
             connection.getThumbnails(accessThumbnails);
         } catch (InterruptedException e) {
@@ -93,7 +93,6 @@ public class GuideManager implements ThumbnailListener{
 
     @Override
     public void thumbnailsReceived(Thumbnail[] access, Thumbnail[] author) {
-
 	    this.accessThumbnails = access;
         this.authorThumbnails = author;
         newAccess.release();
