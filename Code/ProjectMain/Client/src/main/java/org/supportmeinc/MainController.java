@@ -225,7 +225,7 @@ public class MainController {
                 e.printStackTrace();
             }
         } else {
-            System.exit(0);
+            guideManager = new GuideManager(new User()user);
         }
     }
 
