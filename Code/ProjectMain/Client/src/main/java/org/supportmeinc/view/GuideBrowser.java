@@ -22,7 +22,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
     private UUID currentUUID;
 
-    @FXML private FlowPane flowPane, flowPaneSaved;
+    @FXML private FlowPane flowPane, flowPaneSaved, flowPaneDownloaded;
     @FXML private ScrollPane scrollPane;
     @FXML private Button btnEdit, btnDelete;
 
@@ -90,6 +90,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         thumbnailItems = new ArrayList<>();
         flowPane.getChildren().clear();
         flowPaneSaved.getChildren().clear();
+        flowPaneDownloaded.getChildren().clear();
     }
 
     public void createNewGuide() {
@@ -138,7 +139,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         if (item != null && anchorPane != null) {
             item.setData(title, image, description, guideUUID, this, false);
             thumbnailItems.add(item);
-            flowPaneSaved.getChildren().add(anchorPane);
+            flowPaneDownloaded.getChildren().add(anchorPane);
         }
     }
 } //class end

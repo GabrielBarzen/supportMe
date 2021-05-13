@@ -18,6 +18,7 @@ public class GuideManager implements ThumbnailListener{
     private Thumbnail[] accessThumbnails;
     private Thumbnail[] authorThumbnails;
     private Thumbnail[] downloadThumbnails;
+    private User user;
     private Connection connection;
     private ArrayList<Card> cardArrayList;
     private Semaphore newAccess = new Semaphore(0);
@@ -32,39 +33,50 @@ public class GuideManager implements ThumbnailListener{
     }
 
     public GuideManager(User user) {
-        getDownloadedThumbnails(user);
-        //setThumbnails(downloadThumbnails);
-    }
-
-    private void setThumbnails(Thumbnail[] downloadThumbnails) {
-        controller.setThumbnailInView(downloadThumbnails);
+        this.user = user;
+        this.downloadThumbnails = getDownloadedThumbnails(user);
     }
 
     public Thumbnail[] getDownloadedThumbnails(User user) {
         ArrayList<Thumbnail> thumbnails = new ArrayList<>();
+
 	    try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(user.getUserName() + ".dat"));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(user.getEmail() + ".dat"));
             Object obj = ois.readObject();
-            ArrayList<Guide> guides = new ArrayList<>();
-            while (obj != null) {
-                if (obj instanceof Guide) {
-                    Guide guide = (Guide) obj;
-                    guides.add(guide);
-                    obj = ois.readObject();
+            ArrayList<Guide> guidesArrayList = new ArrayList<>();
+            try {
+                do {
+                    if (obj instanceof Guide) {
+                        Guide guide = (Guide) obj;
+                        guidesArrayList.add(guide);
+                        obj = ois.readObject();
+
+                    }
                 }
+                    while (obj != null);
+            } catch (EOFException e) {
+                e.printStackTrace();
             }
-            if (guides.size() > 0) {
-                for (Guide guide : guides) {
+
+            guides = new Guide[guidesArrayList.size()];
+            for (int i = 0; i < guidesArrayList.size(); i++) {
+                guides[i] = guidesArrayList.get(i);
+            }
+
+            if (guidesArrayList.size() > 0) {
+                for (Guide guide : guidesArrayList) {
                     thumbnails.add(guide.getThumbnail());
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
 	    Thumbnail[] thumbnailArray = new Thumbnail[thumbnails.size()];
         for (int i = 0; i < thumbnailArray.length; i++) {
             thumbnailArray[i] = thumbnails.get(i);
         }
+
         return thumbnailArray;
     }
 
@@ -74,7 +86,7 @@ public class GuideManager implements ThumbnailListener{
 
     public void getThumbnails() {
 	    try {
-            connection.getThumbnails(accessThumbnails);
+	        connection.getThumbnails(accessThumbnails);
         } catch (InterruptedException e) {
 	        e.printStackTrace();
         }
@@ -82,9 +94,19 @@ public class GuideManager implements ThumbnailListener{
 
     public Guide getGuide(UUID uuid) {
         Guide returnGuide = null;
+
         try {
-            returnGuide = connection.getGuide(new Thumbnail(uuid));
-        } catch (InterruptedException e){
+            if (connection != null) {
+                returnGuide = connection.getGuide(new Thumbnail(uuid));
+            } else {
+                for (int i = 0; i < guides.length; i++) {
+                    if (guides[i].getGuideUUID().equals(uuid)) {
+                        returnGuide = guides[i];
+                        break;
+                    }
+                }
+            }
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -110,23 +132,31 @@ public class GuideManager implements ThumbnailListener{
 
     public Thumbnail[] getAccessThumbnails() {
 	    Thumbnail[] thumbnails = null;
+
         try {
             newAccess.acquire();
             thumbnails = accessThumbnails;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         return thumbnails;
+    }
+
+    public Thumbnail[] getDownloadThumbnails() {
+        return downloadThumbnails;
     }
 
     public Thumbnail[] getAuthorThumbnails() {
         Thumbnail[] thumbnails = null;
+
         try {
             newAuthor.acquire();
             thumbnails = authorThumbnails;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         return thumbnails;
     }
 

@@ -23,6 +23,8 @@
                   <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
                   <Label text="Saved guides" />
                   <FlowPane fx:id="flowPaneSaved" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
+                  <Label text="Downloaded guides" />
+                  <FlowPane fx:id="flowPaneDownloaded" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
                </children>
             </VBox>
          </content>

@@ -160,7 +160,7 @@ public class Connection {
         Guide guide;
         try {
             guide = getGuide(uuid);
-            outputStream = new ObjectOutputStream(new FileOutputStream(user.getUserName()+ ".dat"));
+            outputStream = new ObjectOutputStream(new FileOutputStream(user.getEmail()+ ".dat"));
             outputStream.writeObject(guide);
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();

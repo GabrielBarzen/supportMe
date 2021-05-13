@@ -24,6 +24,7 @@
 **/.idea/**
 # Generated files
 **/.idea/**/contentModel.xml
+**/*.dat
 
 # Sensitive or high-churn files
 **/.idea/**/dataSources/

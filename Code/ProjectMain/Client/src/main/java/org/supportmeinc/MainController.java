@@ -168,10 +168,19 @@ public class MainController {
     }
 
     public void refreshThumbnails() {
-        guideManager.getThumbnails();
-        Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
-        Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
-        setThumbnailInView(accessThumbnails, authorThumbnails);
+        try {
+            if (getConnection() != null) {
+                guideManager.getThumbnails();
+                Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
+                Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
+                setThumbnailInView(accessThumbnails, authorThumbnails);
+            } else {
+                Thumbnail[] downloadThumbnails = guideManager.getDownloadThumbnails();
+                setThumbnailInView(downloadThumbnails);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
 
