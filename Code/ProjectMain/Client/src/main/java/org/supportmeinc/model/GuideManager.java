@@ -1,7 +1,6 @@
 package org.supportmeinc.model;
 
 import org.supportmeinc.MainController;
-import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
@@ -13,6 +12,8 @@ import java.util.concurrent.Semaphore;
 
 public class GuideManager implements ThumbnailListener{
 
+    private User user;
+    private MainController controller;
     private Guide[] guides;
     private Thumbnail[] accessThumbnails;
     private Thumbnail[] authorThumbnails;
