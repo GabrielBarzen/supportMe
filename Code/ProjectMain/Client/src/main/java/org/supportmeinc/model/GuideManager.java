@@ -42,18 +42,17 @@ public class GuideManager implements ThumbnailListener{
 
 	    try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(user.getEmail() + ".dat"));
-            Object obj = ois.readObject();
             ArrayList<Guide> guidesArrayList = new ArrayList<>();
             try {
+                Object obj;
                 do {
+                    obj = ois.readObject();
                     if (obj instanceof Guide) {
                         Guide guide = (Guide) obj;
                         guidesArrayList.add(guide);
-                        obj = ois.readObject();
-
                     }
-                }
-                    while (obj != null);
+                } while (ois.available() > 0);
+
             } catch (EOFException e) {
                 e.printStackTrace();
             }
@@ -68,11 +67,13 @@ public class GuideManager implements ThumbnailListener{
                     thumbnails.add(guide.getThumbnail());
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (FileNotFoundException e) {
+	        System.out.println("no downloaded guides");
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
 
-	    Thumbnail[] thumbnailArray = new Thumbnail[thumbnails.size()];
+        Thumbnail[] thumbnailArray = new Thumbnail[thumbnails.size()];
         for (int i = 0; i < thumbnailArray.length; i++) {
             thumbnailArray[i] = thumbnails.get(i);
         }
