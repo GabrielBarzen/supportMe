@@ -39,7 +39,6 @@ public class Login implements JFXcontroller {
 
         } else {
              controller.login(email, pass);
-
         }
 
         controller.sceneSwitch(SceneName.toolbar, event);

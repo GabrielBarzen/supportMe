@@ -25,6 +25,7 @@ public class Main extends Application {
     private String ip;
     private Connection connection;
     private org.supportmeinc.model.GuideEditor guideEditor;
+    private GuideManager guideManager;
 
     public static void main(String[] args) {
         launch();
@@ -69,6 +70,7 @@ public class Main extends Application {
         readConfig(getClass().getResource("config.conf"));
         new MainController(stage, this);
     }
+
 
     public String getIp() {
         return ip;

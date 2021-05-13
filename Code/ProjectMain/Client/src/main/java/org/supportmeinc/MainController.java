@@ -75,14 +75,21 @@ public class MainController {
 
     public void handleUserLoginRegister(User user) {
         try {
-            Connection connection = new Connection(controller.getIp(), controller.getPort(), user); //Todo : replace with user from login screen
+            Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
             guideManager = new GuideManager(connection);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not connect");
             if(user.isNewUser()) {
-                System.exit(0);
+                System.out.println("Shutting down");
+                System.exit(0); //TODO visa relevant alert (att användare inte kunde registreras pga uppkoppling till server)
             } else {
-                guideManager = new GuideManager();
+                System.out.println("Attempting offline mode");
+                guideManager = new GuideManager(user);
+                if (!guideManager.isHasOfflineGuides()) {
+                    System.exit(0); //TODO visa relevant alert (att användare inte har några nedladdade guider)
+                } else {
+                    guideBrowser.offlineMode();
+                }
             }
         }
 
@@ -149,13 +156,6 @@ public class MainController {
     }
 
     //GuideBrowser methods
-    public void refreshThumbnails() {
-        guideManager.refreshThumbnails();
-        Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
-        Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
-        setThumbnailInView(accessThumbnails, authorThumbnails);
-    }
-
     public void setThumbnailInView(Thumbnail[] access, Thumbnail[] author) {
         guideBrowser.resetView();
         for (Thumbnail thumbnail: access) {
@@ -163,6 +163,12 @@ public class MainController {
         }
         for (Thumbnail thumbnail: author) {
             guideBrowser.addThumbnailAuthor(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
+        }
+    }
+    public void setThumbnailInView(Thumbnail[] downloaded) {
+        guideBrowser.resetView();
+        for (Thumbnail thumbnail: downloaded) {
+            guideBrowser.addThumbnailDownloaded(thumbnail.getTitle(), thumbnail.getImage(), thumbnail.getDescription(), thumbnail.getGuideUUID());
         }
     }
 
@@ -218,9 +224,34 @@ public class MainController {
         guideEditorUi.createNewCard();
     }
 
+
+    public void refreshThumbnails() {
+        try {
+            if (guideManager.getConnection() != null) {
+                guideManager.refreshThumbnails();
+                Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
+                Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
+                setThumbnailInView(accessThumbnails, authorThumbnails);
+            } else {
+                Thumbnail[] downloadThumbnails = guideManager.getDownloadThumbnails();
+                setThumbnailInView(downloadThumbnails);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
         this.guideEditorSave = guideEditorSave;
     }
+
+
+
+
+    public void downloadGuide(UUID uuid) {
+        guideManager.downloadGuide(uuid);
+    }
+
 
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
         guideEditor.packGuide(title, description, img, affirmUUID);
@@ -234,6 +265,8 @@ public class MainController {
         return guideManager.getCurrentUser().getEmail();
     }
 
+
+
     public void onLoadGuideEditorSave() {
         guideEditorSave.onLoad();
     }
@@ -246,6 +279,9 @@ public class MainController {
     public void deleteGuide(UUID uuid) {
         guideManager.deleteGuide(uuid);
     }
+
+
+
 
     public void getNext(boolean choice) {
         Card card = guideViewer.getNext(choice);
@@ -261,7 +297,7 @@ public class MainController {
     }
 
     public String[] getAccessList() {
-        return guideManager.getAccesList(guideEditor.getGuideUUID());
+        return guideManager.getAccessList(guideEditor.getGuideUUID());
     }
 
     public void setEditGuide(UUID uuid) {
