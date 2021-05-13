@@ -150,7 +150,7 @@ public class MainController {
 
     //GuideBrowser methods
     public void refreshThumbnails() {
-        guideManager.getThumbnails();
+        guideManager.refreshThumbnails();
         Thumbnail[] accessThumbnails = guideManager.getAccessThumbnails();
         Thumbnail[] authorThumbnails = guideManager.getAuthorThumbnails();
         setThumbnailInView(accessThumbnails, authorThumbnails);
