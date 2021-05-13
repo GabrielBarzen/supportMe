@@ -1,7 +1,6 @@
 package org.supportmeinc.model;
 
 import org.supportmeinc.MainController;
-import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
@@ -13,17 +12,15 @@ import java.util.concurrent.Semaphore;
 
 public class GuideManager implements ThumbnailListener{
 
-    private Guide currentGuide;
+    private User user;
+    private MainController controller;
     private Guide[] guides;
     private Thumbnail[] accessThumbnails;
     private Thumbnail[] authorThumbnails;
     private Thumbnail[] downloadThumbnails;
-    private User user;
     private Connection connection;
-    private ArrayList<Card> cardArrayList;
     private Semaphore newAccess = new Semaphore(0);
     private Semaphore newAuthor = new Semaphore(0);
-    private MainController controller;
     private boolean hasOfflineGuides = false;
 
     public GuideManager(Connection connection) {
@@ -80,10 +77,6 @@ public class GuideManager implements ThumbnailListener{
         }
 
         return thumbnailArray;
-    }
-
-    public Card getCard(boolean choice) {
-        return null;
     }
 
     public void refreshThumbnails() {

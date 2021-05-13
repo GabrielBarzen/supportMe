@@ -182,9 +182,18 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
             byte[] byteFile = ImageUtils.toBytes(file);
             Image image = ImageUtils.toImage(byteFile);
-            imgPreview.setImage(image);
-            txtFilePath.setText(fileName);
             img = ImageUtils.toBytes(file);
+            if (img.length < 5242880) {
+                imgPreview.setImage(image);
+                txtFilePath.setText(fileName);
+            }
+            else {
+                alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Image size warning");
+                alert.setHeaderText("Could not add selected image to Card");
+                alert.setContentText("Selected image cannot exceed 5 MB");
+                alert.show();
+            }
 
         } else {
             alert = new Alert(Alert.AlertType.WARNING);

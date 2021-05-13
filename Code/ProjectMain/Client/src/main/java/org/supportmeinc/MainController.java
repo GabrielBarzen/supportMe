@@ -284,7 +284,7 @@ public class MainController {
 
 
 
-    public void getNext(boolean choice) {
+    public void getNextCard(boolean choice) {
         Card card = guideViewer.getNext(choice);
         guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
     }

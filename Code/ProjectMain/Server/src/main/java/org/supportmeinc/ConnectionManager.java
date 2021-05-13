@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class ConnectionManager implements Runnable, ObjectReceivedListener{
+public class ConnectionManager implements Runnable, ObjectReceivedListener {
 
     private ServerSocket serverSocket;
     private Thread acceptConnectionThread;
@@ -25,7 +25,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         start();
     }
 
-    private void start(){
+    private void start() {
         if (acceptConnectionThread == null) {
             acceptConnectionThread = new Thread(this);
             acceptConnectionThread.start();
@@ -34,7 +34,7 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
 
     @Override
     public void run() {
-        while (!Thread.interrupted()){
+        while (!Thread.interrupted()) {
             ServerLog.log("awaiting connection");
             try {
                 Connection connection = new Connection(serverSocket.accept());
@@ -52,24 +52,16 @@ public class ConnectionManager implements Runnable, ObjectReceivedListener{
         if (object instanceof Connection) {
             Connection connection = (Connection) object;
             objectReceived(connection, user);
-        }
-
-        if (object instanceof Guide) {
+        } else if (object instanceof Guide) {
             Guide guide = (Guide) object;
             objectReceived(guide, user);
-        }
-
-        if (object instanceof Thumbnail) {
+        } else if (object instanceof Thumbnail) {
             Thumbnail thumbnail = (Thumbnail) object;
             objectReceived(thumbnail, user);
-        }
-
-        if (object instanceof Thumbnail[]) {
+        } else if (object instanceof Thumbnail[]) {
             Thumbnail[] thumbnails = (Thumbnail[]) object;
             objectReceived(thumbnails, user);
-        }
-
-        if (object instanceof String) {
+        } else if (object instanceof String) {
             String request = (String) object;
             objectReceived(request, user);
         }
