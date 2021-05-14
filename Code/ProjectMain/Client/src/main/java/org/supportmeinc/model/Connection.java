@@ -155,6 +155,9 @@ public class Connection {
     public User getUser() {
         return user;
     }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void downloadGuide(UUID uuid) {
         Guide guide;
@@ -174,9 +177,9 @@ public class Connection {
             try {
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
-                    //Vad är de här till för???
+                    setUser((User) userLogin);
                 } else {
-                    //VA???
+                    disconnect();
                 }
 
                 while (!Thread.interrupted()) {
