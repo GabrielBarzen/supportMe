@@ -39,11 +39,11 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
 
     public GuideEditorUi() {
-        resetList();
+
     }
 
     public void resetList() {
-        listView = new ListView<>();
+        listView.getItems().clear();
         guideCardUUID = new ArrayList<>();
     }
 
@@ -75,6 +75,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     public void initData(MainController controller){
         this.controller = controller;
+        resetList();
         listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         controller.setGuideEditorUi(this);
     }
@@ -84,10 +85,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         cmbNo.getItems().clear();
         cmbYes.getItems().addAll(listView.getItems());
         cmbNo.getItems().addAll(listView.getItems());
-    }
-
-    public void updateEditGuide() {
-
     }
 
     public void updateTitlePreview() {
@@ -231,8 +228,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     public void removeCard() {
         UUID cardUUID = guideCardUUID.get(listView.getSelectionModel().getSelectedIndex());
         if(cardUUID != null) {
-            controller.removeCard(cardUUID);
             removeFromCardList(cardUUID);
+            controller.removeCard(cardUUID);
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No card selected");

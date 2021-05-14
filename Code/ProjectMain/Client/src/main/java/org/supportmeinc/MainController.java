@@ -77,6 +77,7 @@ public class MainController {
         try {
             Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
             guideManager = new GuideManager(connection);
+            guideBrowser.onlineMode();
         } catch (IOException e) {
             System.out.println("Could not connect");
             if(user.isNewUser()) {
@@ -221,6 +222,9 @@ public class MainController {
     }
 
     public void initGuideEditor() {
+        guideEditor = new GuideEditor(this);
+        guideEditorUi.resetList();
+        guideEditorSave.repopulateLists();
         guideEditorUi.createNewCard();
     }
 
@@ -303,10 +307,10 @@ public class MainController {
     public void setEditGuide(UUID uuid) {
         Guide guide = guideManager.getGuide(uuid);
         guideEditor = new GuideEditor(this);
+        guideEditorUi.resetList();
         guideEditor.setEditGuide(guide);
         switchScene(SceneName.guideEditor);
-        guideEditorUi.resetView();
-        guideEditorUi.updateEditGuide();
+
 
         for (Card card: guideEditor.getCardsList().values()) {
             guideEditorUi.addToCardList(card.getCardUUID());
@@ -349,6 +353,9 @@ public class MainController {
     }
     public UUID getOutputGuideUUID() {
         return guideEditor.getOutputGuide().getGuideUUID();
+    }
+    public GuideEditor getGuideEditor() {
+        return guideEditor;
     }
 
     //GUID util methods
