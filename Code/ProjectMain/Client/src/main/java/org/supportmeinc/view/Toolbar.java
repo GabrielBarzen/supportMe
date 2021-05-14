@@ -1,19 +1,41 @@
 package org.supportmeinc.view;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
+
+import java.util.Arrays;
 
 public class Toolbar implements JFXcontroller {
 
     private MainController controller;
 
     @FXML private BorderPane borderPane;
+    @FXML private ImageView profilePicture;
+    @FXML private Label userName;
+    @FXML private Label viewTitle;
 
     public void initData(MainController controller){
         this.controller = controller;
         controller.registerToolbar(this);
+    }
+
+    public void setProfilePicture(byte[] imageBytes) {
+        Image image = ImageUtils.toImage(imageBytes);
+        profilePicture.setImage(image);
+    }
+
+    public void setUserName(String userName) {
+        this.userName.setText(userName);
+    }
+
+    public void setViewTitle(String title) {
+        this.viewTitle.setText(title);
     }
 
     public void homeButton() {

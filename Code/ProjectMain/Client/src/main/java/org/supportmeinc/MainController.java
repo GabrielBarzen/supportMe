@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.Connection;
@@ -101,6 +100,8 @@ public class MainController {
         if (guideManager != null) {
             try {
                 stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+                toolbarController.setProfilePicture(user.getImage());
+                toolbarController.setUserName(user.getUserName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
