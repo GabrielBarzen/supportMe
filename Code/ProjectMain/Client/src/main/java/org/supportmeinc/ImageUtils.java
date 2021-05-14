@@ -1,6 +1,5 @@
 package org.supportmeinc;
 import javafx.scene.image.Image;
-
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;

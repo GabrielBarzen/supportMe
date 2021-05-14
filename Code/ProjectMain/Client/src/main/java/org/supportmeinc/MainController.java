@@ -3,6 +3,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.Connection;
@@ -37,6 +39,8 @@ public class MainController {
     private GuideViewerUi guideViewerUi;
     private GuideEditorSave guideEditorSave;
     private GuideViewer guideViewer;
+
+    public Alert alertWarning = new Alert(Alert.AlertType.WARNING);
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
@@ -176,7 +180,7 @@ public class MainController {
         Guide guide = guideManager.getGuide(uuid);
         guideViewer = new GuideViewer(guide, this);
         Card card = guide.getDescriptionCard();
-        guideViewerUi.firstCard();
+        guideViewerUi.setStartButtons();
         guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
         switchScene(SceneName.guideViewer);
     }
@@ -195,7 +199,8 @@ public class MainController {
 
     public UUID createNewCard() {
         guideEditor.createNewCard();
-        return guideEditor.getCurrentCard().getCardUUID();
+        UUID returnUUID = guideEditor.getCurrentCard().getCardUUID();
+        return returnUUID;
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
@@ -207,7 +212,8 @@ public class MainController {
     }
 
     public UUID[] getGuideEditorCardUUIDs() {
-        return guideEditor.getCardsList().keySet().toArray(new UUID[0]);
+        UUID[] returnUUID = guideEditor.getCardsList().keySet().toArray(new UUID[0]);
+        return returnUUID;
     }
 
     public void setGuideEditorUi(GuideEditorUi guideEditorUi) {
@@ -352,10 +358,33 @@ public class MainController {
     }
 
     //GUID util methods
-    public File jfxFileChooser() {
+    public Image jfxImageChooser() {
+        Image image = null;
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
-        return selectedFile;
+        String fileName = selectedFile.toString();
+        int index = fileName.lastIndexOf(".");
+        String extension = fileName.substring(index+1);
+
+        if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
+            byte[] byteFile = ImageUtils.toBytes(selectedFile);
+            if (byteFile.length < 5242880) {
+                image = ImageUtils.toImage(byteFile);
+            }
+            else {
+                alertWarning.setTitle("Image size warning");
+                alertWarning.setHeaderText("Could not add selected image");
+                alertWarning.setContentText("Selected image cannot exceed 5 MB");
+                alertWarning.show();
+            }
+
+        } else {
+            alertWarning.setTitle("File type warning");
+            alertWarning.setHeaderText("Could not add selected image");
+            alertWarning.setContentText("Selected file must be of type .png or .jpg, please try again");
+            alertWarning.show();
+        }
+        return image;
     }
 
     //Methods for handling logout and exits
