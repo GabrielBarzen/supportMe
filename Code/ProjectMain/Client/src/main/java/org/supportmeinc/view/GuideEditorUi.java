@@ -142,7 +142,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void selectImage() {
-        Image image = controller.jfxImageChooser();
+        byte[] bytes = controller.jfxImageChooser();
+        Image image = ImageUtils.toImage(bytes);
         if (image != null) {
             imgPreview.setImage(image);
             txtFilePath.setText(image.toString());

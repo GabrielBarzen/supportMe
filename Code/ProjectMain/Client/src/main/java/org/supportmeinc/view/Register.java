@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
 
@@ -31,7 +32,8 @@ public class Register implements JFXcontroller {
     }
 
     public void chooseImage() {
-        this.imageFile = controller.jfxImageChooser();
+        this.image = controller.jfxImageChooser();
+        this.imageFile = ImageUtils.toImage(image);
         picturePreview.setImage(imageFile);
     }
 
@@ -49,7 +51,7 @@ public class Register implements JFXcontroller {
             rMessage.setText("Passwords does not match!");
         }
         else {
-            controller.registerUser(mail,userNameString,pass,image); //TODO currently BRICKED, fix inc Soon(TM)
+            controller.registerUser(mail,userNameString,pass,image);
         }
     }
 

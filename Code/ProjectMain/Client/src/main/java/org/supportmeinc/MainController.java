@@ -358,8 +358,9 @@ public class MainController {
     }
 
     //GUID util methods
-    public Image jfxImageChooser() {
-        Image image = null;
+
+    public byte[] jfxImageChooser() {
+        byte[] byteFile = null;
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(stage);
         String fileName = selectedFile.toString();
@@ -367,18 +368,15 @@ public class MainController {
         String extension = fileName.substring(index+1);
 
         if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
-            byte[] byteFile = ImageUtils.toBytes(selectedFile);
-            if (byteFile.length < 5242880) {
-                image = ImageUtils.toImage(byteFile);
-            }
-            else {
+            byteFile = ImageUtils.toBytes(selectedFile);
+            if (byteFile.length >= 5242880) {
+                byteFile = null;
                 alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Image size warning");
                 alert.setHeaderText("Could not add selected image");
                 alert.setContentText("Selected image cannot exceed 5 MB");
                 alert.show();
             }
-
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("File type warning");
@@ -386,7 +384,7 @@ public class MainController {
             alert.setContentText("Selected file must be of type .png or .jpg, please try again");
             alert.show();
         }
-        return image;
+        return byteFile;
     }
 
     //Methods for handling logout and exits
