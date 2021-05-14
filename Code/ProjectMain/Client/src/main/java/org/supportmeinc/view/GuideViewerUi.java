@@ -66,7 +66,7 @@ public class GuideViewerUi implements JFXcontroller {
         hBox.getChildren().add(btnExit);
     }
 
-    public void firstCard() {
+    public void setStartButtons() {
         hBox.getChildren().clear();
         Button button = new Button("Start Guide");
         button.setPrefSize(150, 45);
