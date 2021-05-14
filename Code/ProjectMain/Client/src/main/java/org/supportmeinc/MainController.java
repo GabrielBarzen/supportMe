@@ -77,6 +77,7 @@ public class MainController {
         try {
             Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
             guideManager = new GuideManager(connection);
+            guideBrowser.onlineMode();
         } catch (IOException e) {
             System.out.println("Could not connect");
             if(user.isNewUser()) {
