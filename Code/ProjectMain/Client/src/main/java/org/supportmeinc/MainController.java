@@ -40,7 +40,7 @@ public class MainController {
     private GuideEditorSave guideEditorSave;
     private GuideViewer guideViewer;
 
-    public Alert alertWarning = new Alert(Alert.AlertType.WARNING);
+    public Alert alert;
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
@@ -372,17 +372,19 @@ public class MainController {
                 image = ImageUtils.toImage(byteFile);
             }
             else {
-                alertWarning.setTitle("Image size warning");
-                alertWarning.setHeaderText("Could not add selected image");
-                alertWarning.setContentText("Selected image cannot exceed 5 MB");
-                alertWarning.show();
+                alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Image size warning");
+                alert.setHeaderText("Could not add selected image");
+                alert.setContentText("Selected image cannot exceed 5 MB");
+                alert.show();
             }
 
         } else {
-            alertWarning.setTitle("File type warning");
-            alertWarning.setHeaderText("Could not add selected image");
-            alertWarning.setContentText("Selected file must be of type .png or .jpg, please try again");
-            alertWarning.show();
+            alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("File type warning");
+            alert.setHeaderText("Could not add selected image");
+            alert.setContentText("Selected file must be of type .png or .jpg, please try again");
+            alert.show();
         }
         return image;
     }
