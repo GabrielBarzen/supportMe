@@ -55,10 +55,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         controller.downloadGuide(currentUUID);
     }
 
-    public void downloadGuide(UUID uuid) {
-        controller.downloadGuide(uuid);
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
