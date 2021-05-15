@@ -17,7 +17,7 @@
    <children>
       <ScrollPane fx:id="scrollPane" fitToWidth="true" focusTraversable="false" layoutX="5.0" layoutY="7.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="591.0" prefWidth="1200.0" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="7.0">
          <content>
-            <VBox prefHeight="569.0" prefWidth="1178.0">
+            <VBox fx:id="vNailBox" prefHeight="569.0" prefWidth="1178.0">
                <children>
                   <Label text="Your guides" />
                   <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />

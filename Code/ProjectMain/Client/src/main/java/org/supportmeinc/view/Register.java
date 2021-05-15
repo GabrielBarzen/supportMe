@@ -1,23 +1,15 @@
 package org.supportmeinc.view;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
-import shared.User;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Register implements JFXcontroller {
@@ -32,7 +24,7 @@ public class Register implements JFXcontroller {
     @FXML private Label rMessage;
 
     private byte[] image;
-    private File imageFile;
+    private Image imageFile;
 
     @Override
     public void initData(MainController controller) {
@@ -40,9 +32,9 @@ public class Register implements JFXcontroller {
     }
 
     public void chooseImage() {
-        this.imageFile = controller.jfxFileChooser();
-        image = ImageUtils.toBytes(imageFile);
-        picturePreview.setImage(ImageUtils.toImage(image));
+        this.image = controller.jfxImageChooser();
+        this.imageFile = ImageUtils.toImage(image);
+        picturePreview.setImage(imageFile);
     }
 
     public void userRegister() {

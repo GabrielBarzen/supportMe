@@ -156,13 +156,16 @@ public class Connection {
     public User getUser() {
         return user;
     }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void downloadGuide(UUID uuid) {
         Guide guide;
         try {
             guide = getGuide(uuid);
-            outputStream = new ObjectOutputStream(new FileOutputStream(user.getEmail()+ ".dat"));
-            outputStream.writeObject(guide);
+            ObjectOutputStream fileOutputStream = new ObjectOutputStream(new FileOutputStream(user.getEmail()+ ".dat"));
+            fileOutputStream.writeObject(guide);
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
@@ -175,9 +178,9 @@ public class Connection {
             try {
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
-                    //Vad är de här till för???
+                    setUser((User) userLogin);
                 } else {
-                    //VA???
+                    disconnect();
                 }
 
                 while (!Thread.interrupted()) {

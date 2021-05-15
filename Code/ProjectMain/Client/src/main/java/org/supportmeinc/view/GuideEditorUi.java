@@ -9,7 +9,6 @@ import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -28,7 +27,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     private ArrayList<UUID> guideCardUUID;
 
-    private Alert alert = new Alert(Alert.AlertType.WARNING);
+    private Alert alert;
 
     private String title = null;
     private String text = null;
@@ -140,33 +139,11 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void selectImage() {
-        File file = controller.jfxFileChooser();
-        String fileName = file.toString();
-        int index = fileName.lastIndexOf(".");
-        String extension = fileName.substring(index+1);
-
-        if (extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
-            byte[] byteFile = ImageUtils.toBytes(file);
-            Image image = ImageUtils.toImage(byteFile);
-            img = ImageUtils.toBytes(file);
-            if (img.length < 5242880) {
-                imgPreview.setImage(image);
-                txtFilePath.setText(fileName);
-            }
-            else {
-                alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Image size warning");
-                alert.setHeaderText("Could not add selected image to Card");
-                alert.setContentText("Selected image cannot exceed 5 MB");
-                alert.show();
-            }
-
-        } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("File type warning");
-            alert.setHeaderText("Could not add selected image to Card");
-            alert.setContentText("Selected file must be of type .png or .jpg, please try again");
-            alert.show();
+        byte[] bytes = controller.jfxImageChooser();
+        Image image = ImageUtils.toImage(bytes);
+        if (image != null) {
+            imgPreview.setImage(image);
+            txtFilePath.setText(image.toString());
         }
     }
 

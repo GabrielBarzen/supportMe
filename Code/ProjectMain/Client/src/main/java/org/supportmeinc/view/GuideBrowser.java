@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class GuideBrowser implements JFXcontroller, Initializable {
 
 
+    public VBox vNailBox;
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
     private UUID currentUUID;
@@ -30,6 +32,51 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     public void initData(MainController controller){
         this.controller = controller;
         controller.setGuideBrowser(this);
+    }
+
+
+
+    public void openGuide(UUID uuid) { //called from Right-click context menu in GuideBrowser-GUI
+        controller.openGuide(uuid);
+    }
+    public void openGuide() { //called from Open Guide button in GuideBrowser-GUI
+        controller.openGuide(currentUUID);
+    }
+
+    public void editGuide() {
+        controller.setEditGuide(currentUUID);
+    }
+
+    public void deleteGuide() {
+        controller.deleteGuide(currentUUID);
+        controller.refreshThumbnails();
+    }
+
+    public void downloadGuide() {
+        controller.downloadGuide(currentUUID);
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void resetView() {
+        thumbnailItems = new ArrayList<>();
+        flowPane.getChildren().clear();
+        flowPaneSaved.getChildren().clear();
+        flowPaneDownloaded.getChildren().clear();
+    }
+
+    public void createNewGuide() {
+        controller.createNewGuide();
+    }
+
+    public void setSelectedThumbnail(UUID currentUUID, boolean author) { //called when thumbnail is clicked
+        this.currentUUID = currentUUID;
+        btnEdit.setVisible(author);
+        btnDelete.setVisible(author);
     }
 
     public void addThumbnailAuthor(String title, byte[] image, String description, UUID guideUUID) {
@@ -54,55 +101,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     public GuideBrowser(){
 
-    }
-
-
-    public void openGuide(UUID uuid) { //called from Right-click context menu in GuideBrowser-GUI
-        controller.openGuide(uuid);
-    }
-
-    public void openGuide() { //called from Open Guide button in GuideBrowser-GUI
-        controller.openGuide(currentUUID);
-    }
-
-    public void editGuide() {
-        controller.setEditGuide(currentUUID);
-    }
-
-    public void deleteGuide() {
-        controller.deleteGuide(currentUUID);
-        controller.refreshThumbnails();
-    }
-
-    public void downloadGuide() {
-        controller.downloadGuide(currentUUID);
-    }
-
-    public void downloadGuide(UUID uuid) {
-        controller.downloadGuide(uuid);
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
-    public void resetView() {
-        thumbnailItems = new ArrayList<>();
-        flowPane.getChildren().clear();
-        flowPaneSaved.getChildren().clear();
-        flowPaneDownloaded.getChildren().clear();
-    }
-
-    public void createNewGuide() {
-        controller.createNewGuide();
-    }
-
-    public void setSelectedThumbnail(UUID currentUUID, boolean author) { //called when thumbnail is clicked
-        this.currentUUID = currentUUID;
-        btnEdit.setVisible(author);
-        btnDelete.setVisible(author);
     }
 
     public void addThumbnailAccess(String title, byte[] image, String description, UUID guideUUID) {
@@ -146,6 +144,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void offlineMode() {
+
         btnEdit.setDisable(true);
         btnCreate.setDisable(true);
         btnDownload.setDisable(true);
