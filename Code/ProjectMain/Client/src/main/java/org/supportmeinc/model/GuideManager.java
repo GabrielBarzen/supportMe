@@ -200,7 +200,7 @@ public class GuideManager implements ThumbnailListener{
 
     public void revokeSelfAccess(UUID id) {
         connection.revokeAccess(id, user.getEmail());
-        refreshThumbnails();
+        controller.refreshThumbnails();
     }
 }
 

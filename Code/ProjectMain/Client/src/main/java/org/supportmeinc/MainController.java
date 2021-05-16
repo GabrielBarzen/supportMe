@@ -81,6 +81,7 @@ public class MainController {
         try {
             Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
             guideManager = new GuideManager(connection, user);
+            guideManager.setController(this);
             guideBrowser.onlineMode();
         } catch (IOException e) {
             System.out.println("Could not connect");
