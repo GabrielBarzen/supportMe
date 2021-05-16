@@ -80,7 +80,7 @@ public class MainController {
     public void handleUserLoginRegister(User user) {
         try {
             Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
-            guideManager = new GuideManager(connection);
+            guideManager = new GuideManager(connection, user);
             guideBrowser.onlineMode();
         } catch (IOException e) {
             System.out.println("Could not connect");
@@ -412,5 +412,10 @@ public class MainController {
     public boolean hasNegativeUUID(UUID cardUUID) {
         Card card = guideEditor.getCard(cardUUID);
         return card.getNegUUID() != null;
+    }
+
+    public void removeSelfAccess(UUID id) {
+        guideManager.revokeSelfAccess(id);
+
     }
 }

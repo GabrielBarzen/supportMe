@@ -23,11 +23,13 @@ public class GuideManager implements ThumbnailListener{
     private Semaphore newAuthor = new Semaphore(0);
     private boolean hasOfflineGuides = false;
 
-    public GuideManager(Connection connection) {
+    public GuideManager(Connection connection, User user) {
+        this.user = user;
         this.connection = connection;
         connection.registerListener(this);
         accessThumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
+
     }
 
     public GuideManager(User user) {
@@ -194,6 +196,11 @@ public class GuideManager implements ThumbnailListener{
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void revokeSelfAccess(UUID id) {
+        connection.revokeAccess(id, user.getEmail());
+        refreshThumbnails();
     }
 }
 

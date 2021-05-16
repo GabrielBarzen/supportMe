@@ -1,4 +1,5 @@
 package org.supportmeinc.view;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,7 +28,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     @FXML private FlowPane flowPane, flowPaneSaved, flowPaneDownloaded;
     @FXML private ScrollPane scrollPane;
-    @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch;
+    @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch, btnRemoveSelfAccess;
 
     public void initData(MainController controller){
         this.controller = controller;
@@ -154,5 +155,10 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         btnEdit.setDisable(false);
         btnCreate.setDisable(false);
         btnDownload.setDisable(false);
+    }
+
+    public void removeSelfAccess(ActionEvent actionEvent) {
+        controller.removeSelfAccess(currentUUID);
+
     }
 } //class end
