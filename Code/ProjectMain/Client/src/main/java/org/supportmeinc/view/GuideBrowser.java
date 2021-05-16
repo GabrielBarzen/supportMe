@@ -49,6 +49,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
 
     public void deleteGuide() {
         controller.deleteGuide(currentUUID);
+        controller.refreshThumbnails();
     }
 
     public void downloadGuide() {
@@ -150,6 +151,8 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void onlineMode() {
-
+        btnEdit.setDisable(false);
+        btnCreate.setDisable(false);
+        btnDownload.setDisable(false);
     }
 } //class end

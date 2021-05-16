@@ -105,7 +105,7 @@ public class Connection {
     }
 
     public String[] getAccessList(UUID uuid) { // get access list from guide uuid, null if no access on guide is granted
-        String[] returnArray = null;
+        String[] returnArray = {};
         String request = requestBuilder(requestType.getAccessList, uuid.toString());
         send(request);
         try {
@@ -138,6 +138,7 @@ public class Connection {
 
         if(obj instanceof Boolean){
             success = (Boolean) obj;
+            System.out.println("Save guide: " + obj);
         }
         return success;
     }

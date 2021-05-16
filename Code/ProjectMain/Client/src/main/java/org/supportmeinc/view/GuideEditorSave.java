@@ -136,6 +136,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         repopulateLists();
     }
 
+
     public void repopulateLists() {
         guideCardUUID = null;
         guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
@@ -143,11 +144,20 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         listViewCards.getItems().clear();
         listViewAccess.getItems().clear();
         txtAccess.clear();
+        txtTitle.clear();
+        txtDescription.clear();
+        img = null;
 
         for (UUID uuid : guideCardUUID) {
             if(uuid != null) {
                 listViewCards.getItems().add(controller.getCardTitle(uuid));
             }
+        }
+
+        if(controller.getGuideEditor().getOutputGuide() != null) {
+            txtTitle.setText(controller.getGuideEditor().getOutputGuide().getThumbnail().getTitle());
+            txtDescription.setText(controller.getGuideEditor().getOutputGuide().getThumbnail().getDescription());
+            img = controller.getImg();
         }
 
         String[] accessList = controller.getAccessList();
@@ -163,7 +173,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             }
         }
 
-        if(controller.getOutputGuideUUID() != null) {
+        if(controller.getGuideEditor().getOutputGuide() != null) {
             txtTitle.setText(controller.getGuideTitle());
             txtDescription.setText(controller.getGuideDescription());
             imgPreview.setImage(ImageUtils.toImage(controller.getImg()));
