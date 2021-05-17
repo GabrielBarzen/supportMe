@@ -106,7 +106,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                     alert.show();
 
                     controller.refreshThumbnails();
-                    controller.switchScene(SceneName.guideBrowser);
+                    controller.toolbarSwitchSubscene(SceneName.guideBrowser);
                     controller.setNewGuideEditorModel();
 
                 } else {
@@ -205,7 +205,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     }
 
     public void back() {
-        controller.switchScene(SceneName.guideEditor);
+        controller.toolbarSwitchSubscene(SceneName.guideEditor);
     }
 
     @Override

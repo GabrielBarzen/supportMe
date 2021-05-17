@@ -2,18 +2,11 @@ package org.supportmeinc.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 
@@ -41,11 +34,11 @@ public class Login implements JFXcontroller {
              controller.login(email, pass);
         }
 
-        controller.sceneSwitch(SceneName.toolbar, event);
+        controller.switchLoginStage(SceneName.toolbar, event);
     }
 
     public void switchToRegister(javafx.event.ActionEvent event) throws IOException {
-        controller.sceneSwitch(SceneName.register, event);
+        controller.switchLoginStage(SceneName.register, event);
     }
 
 }
