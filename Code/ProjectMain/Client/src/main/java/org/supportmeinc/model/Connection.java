@@ -7,8 +7,8 @@ import shared.User;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Collection;
 import java.util.UUID;
+import java.util.concurrent.Semaphore;
 
 public class Connection {
 
@@ -20,6 +20,7 @@ public class Connection {
     private Receive receive;
     private Send send;
     private ThumbnailListener listener;
+    private Semaphore userReceived = new Semaphore(0);
 
     Buffer<Object> sendBuffer = new Buffer<>();
     Buffer<Object> receiveBuffer = new Buffer<>();
@@ -153,8 +154,17 @@ public class Connection {
         guideManager = manager;
     }
 
-    public User getUser() {
-        return user;
+    public User getUser()  {
+        try {
+            userReceived.acquire();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        User returnUser = user;
+        userReceived.release();
+
+        return returnUser;
     }
     public void setUser(User user) {
         this.user = user;
@@ -179,6 +189,7 @@ public class Connection {
                 Object userLogin = inputStream.readObject();
                 if (userLogin instanceof User){
                     setUser((User) userLogin);
+                    userReceived.release();
                 } else {
                     disconnect();
                 }
@@ -187,7 +198,6 @@ public class Connection {
 
                     Object object = inputStream.readObject();
                     receiveBuffer.put(object);
-
 
                 }
             } catch (IOException e) {

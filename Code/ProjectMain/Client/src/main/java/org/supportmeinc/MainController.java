@@ -22,6 +22,7 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -115,6 +116,14 @@ public class MainController {
         } else {
             System.exit(0);
         }
+    }
+
+    public byte[] getUserImage() {
+        return guideManager.getConnection().getUser().getImage();
+    }
+
+    public String getUsername() {
+        return guideManager.getConnection().getUser().getUserName();
     }
 
     //Stage and scene start and setup
