@@ -23,8 +23,7 @@ public class GuideManager implements ThumbnailListener{
     private Semaphore newAuthor = new Semaphore(0);
     private boolean hasOfflineGuides = false;
 
-    public GuideManager(Connection connection, User user) {
-        this.user = user;
+    public GuideManager(Connection connection) {
         this.connection = connection;
         connection.registerListener(this);
         accessThumbnails = new Thumbnail[0];
@@ -199,7 +198,7 @@ public class GuideManager implements ThumbnailListener{
     }
 
     public void revokeSelfAccess(UUID id) {
-        connection.revokeAccess(id, user.getEmail());
+        connection.revokeAccess(id, connection.getUser().getEmail());
         controller.refreshThumbnails();
     }
 }

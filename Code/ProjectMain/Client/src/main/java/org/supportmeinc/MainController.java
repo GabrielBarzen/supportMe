@@ -80,7 +80,7 @@ public class MainController {
     public void handleUserLoginRegister(User user) {
         try {
             Connection connection = new Connection(controller.getIp(), controller.getPort(), user);
-            guideManager = new GuideManager(connection, user);
+            guideManager = new GuideManager(connection);
             guideManager.setController(this);
             guideBrowser.onlineMode();
         } catch (IOException e) {
