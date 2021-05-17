@@ -9,8 +9,6 @@ import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
 
-import java.util.Arrays;
-
 public class Toolbar implements JFXcontroller {
 
     private MainController controller;
@@ -23,6 +21,8 @@ public class Toolbar implements JFXcontroller {
     public void initData(MainController controller){
         this.controller = controller;
         controller.registerToolbar(this);
+        setProfilePicture(controller.getUserImage());
+        setUserName(controller.getUsername());
     }
 
     public void setProfilePicture(byte[] imageBytes) {

@@ -22,6 +22,7 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -100,14 +101,20 @@ public class MainController {
         if (guideManager != null) {
             try {
                 stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
-                toolbarController.setProfilePicture(user.getImage());
-                toolbarController.setUserName(user.getUserName());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             System.exit(0);
         }
+    }
+
+    public byte[] getUserImage() {
+        return guideManager.getConnection().getUser().getImage();
+    }
+
+    public String getUsername() {
+        return guideManager.getConnection().getUser().getUserName();
     }
 
     //Stage and scene start and setup
