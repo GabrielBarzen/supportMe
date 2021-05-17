@@ -243,7 +243,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     public void saveGuide() {
         if(!listView.getItems().isEmpty() && controller.checkCardLinksValid()) {
-            controller.switchScene(SceneName.guideEditorSave);
+            controller.toolbarSwitchSubscene(SceneName.guideEditorSave);
             controller.onLoadGuideEditorSave();
         } else {
             alert = new Alert(Alert.AlertType.WARNING);
