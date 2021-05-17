@@ -26,6 +26,9 @@ public class Toolbar implements JFXcontroller {
     }
 
     public void setProfilePicture(byte[] imageBytes) {
+        if (imageBytes == null) {
+            imageBytes = ImageUtils.toBytes("FinalLogotyp.png");
+        }
         Image image = ImageUtils.toImage(imageBytes);
         profilePicture.setImage(image);
     }

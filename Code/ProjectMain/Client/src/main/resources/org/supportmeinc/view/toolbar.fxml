@@ -14,10 +14,7 @@
    <children>
       <BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox fx:id="tb" prefHeight="100.0" prefWidth="1143.0" spacing="15.0" BorderPane.alignment="CENTER">
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
+            <HBox fx:id="tb" prefHeight="100.0" prefWidth="1143.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox prefHeight="100.0" prefWidth="100.0">
                      <children>
@@ -25,30 +22,37 @@
                         <Button fx:id="homeButton" mnemonicParsing="false" onAction="#homeButton" prefHeight="25.0" prefWidth="100.0" text="My Guides" />
                      </children>
                   </VBox>
-                  <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="800.0" text="viewTitle">
+                  <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="795.0" text="viewTitle">
                      <font>
                         <Font name="System Bold" size="50.0" />
                      </font>
                   </Label>
-                  <VBox layoutX="20.0" layoutY="10.0" prefHeight="100.0" prefWidth="100.0">
+                  <HBox prefHeight="95.0" prefWidth="304.0" spacing="4.0">
                      <children>
-                        <ImageView fx:id="profilePicture" fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="userName" alignment="CENTER" prefHeight="25.0" prefWidth="100.0" text="Label" VBox.vgrow="NEVER" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                           <VBox.margin>
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="180.0">
+                           <children>
+                              <Label fx:id="userName" alignment="CENTER" prefHeight="48.0" prefWidth="174.0" text="Username" VBox.vgrow="NEVER">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="174.0" text="Logout">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <opaqueInsets>
                               <Insets />
-                           </VBox.margin>
-                        </ImageView>
-                        <Button fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="100.0" text="Logout" />
+                           </opaqueInsets>
+                        </VBox>
                      </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </VBox>
+                  </HBox>
                </children>
                <BorderPane.margin>
                   <Insets />
