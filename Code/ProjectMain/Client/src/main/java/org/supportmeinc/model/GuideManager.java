@@ -28,6 +28,7 @@ public class GuideManager implements ThumbnailListener{
         connection.registerListener(this);
         accessThumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
+
     }
 
     public GuideManager(User user) {
@@ -194,6 +195,11 @@ public class GuideManager implements ThumbnailListener{
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void revokeSelfAccess(UUID id) {
+        connection.revokeAccess(id, connection.getUser().getEmail());
+        controller.refreshThumbnails();
     }
 }
 
