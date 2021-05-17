@@ -73,9 +73,6 @@ public class UserDatabase {
         }
     }
 
-    public boolean getAuthor(UUID guideUUID){
-        return false;//TODO get author from guide
-    }
 
     public String getSalt(User user) {
         String returnValue = null;
