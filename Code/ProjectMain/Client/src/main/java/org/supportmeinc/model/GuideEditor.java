@@ -72,6 +72,7 @@ public class GuideEditor {
         currentCard = new Card();
     }
 
+    //Called from packGuide, creates a description card containing similar information to the thumbnail.
     public void setDescription(String title, String description, byte[] img, UUID affirmUUID, Guide guide) {
         Card card = new Card();
         card.setText(description);
