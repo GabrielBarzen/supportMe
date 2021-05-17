@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.Connection;
@@ -84,14 +83,22 @@ public class MainController {
             guideBrowser.onlineMode();
         } catch (IOException e) {
             System.out.println("Could not connect");
-            if(user.isNewUser()) {
+            if (user.isNewUser()) {
                 System.out.println("Shutting down");
-                System.exit(0); //TODO visa relevant alert (att användare inte kunde registreras pga uppkoppling till server)
+                alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error registering user");
+                alert.setHeaderText("No connection to server!");
+                alert.setContentText("Can't register new users in offline-mode, please try again when you are connected to the internet");
+                System.exit(0);
             } else {
                 System.out.println("Attempting offline mode");
                 guideManager = new GuideManager(user);
                 if (!guideManager.isHasOfflineGuides()) {
-                    System.exit(0); //TODO visa relevant alert (att användare inte har några nedladdade guider)
+                    alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Error getting offline-guides");
+                    alert.setHeaderText("No offline-guides available!");
+                    alert.setContentText("There does not seems to be any guides saved to be viewed offline, please try again when your internet is back and download the guides you would want access to.");
+                    System.exit(0);
                 } else {
                     guideBrowser.offlineMode();
                 }
@@ -112,7 +119,7 @@ public class MainController {
     //Stage and scene start and setup
     public void populateScenes() {
         for (SceneName sceneName : SceneName.values()) {
-            if(!(sceneName.equals(SceneName.login) || sceneName.equals(SceneName.register) || sceneName.equals(SceneName.toolbar))) {
+            if (!(sceneName.equals(SceneName.login) || sceneName.equals(SceneName.register) || sceneName.equals(SceneName.toolbar))) {
                 try {
                     AnchorPane scene = new AnchorPane(loadFXML(sceneName));
                     scenes.put(sceneName, scene);
@@ -123,7 +130,7 @@ public class MainController {
         }
     }
 
-    public Parent loadFXML(SceneName sceneName) throws IOException { //TODO Möjligtvis refactor --> Toolbar
+    public Parent loadFXML(SceneName sceneName) throws IOException {
 
         String resourceName = sceneName.name();
         String fxml = String.valueOf(getClass().getResource("view/" + resourceName + ".fxml"));
@@ -142,7 +149,7 @@ public class MainController {
         this.guideBrowser = guideBrowser;
     }
 
-    public AnchorPane getScenes(SceneName scene) {
+    public AnchorPane getScene(SceneName scene) {
         return scenes.get(scene);
     }
 
@@ -150,11 +157,11 @@ public class MainController {
         this.toolbarController = toolbar;
     }
 
-    public void switchScene(SceneName sceneName) {
+    public void toolbarSwitchSubscene(SceneName sceneName) {
         toolbarController.swapScene(scenes.get(sceneName));
     }
 
-    public void sceneSwitch(SceneName sceneName, Event event) throws IOException {
+    public void switchLoginStage(SceneName sceneName, Event event) throws IOException {
         Scene scene = new Scene(loadFXML(sceneName));
         stage.setScene(scene);
         stage.show();
@@ -183,10 +190,16 @@ public class MainController {
         Card card = guide.getDescriptionCard();
         guideViewerUi.setStartButtons();
         guideViewerUi.setCard(card.getTitle(), card.getImage(), card.getText());
-        switchScene(SceneName.guideViewer);
+        toolbarSwitchSubscene(SceneName.guideViewer);
     }
 
     //Guide editor methods
+
+    /*
+    Retrieves finalized guide from guideEditor.
+    If the guide is valid, aka not null, it attempts to save the guide to the server via guideManager.
+    If an error occurs it will alert the user of the error.
+     */
     public boolean saveGuide() {
         Guide guide = guideEditor.getOutputGuide();
         boolean success = false;
@@ -262,7 +275,7 @@ public class MainController {
         guideManager.downloadGuide(uuid);
     }
 
-
+    //Compiles the final guide into a finished guide object to be saved.
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
         guideEditor.packGuide(title, description, img, affirmUUID);
     }
@@ -283,7 +296,7 @@ public class MainController {
 
     public void createNewGuide() {
         initGuideEditor();
-        switchScene(SceneName.guideEditor);
+        toolbarSwitchSubscene(SceneName.guideEditor);
     }
 
     public void deleteGuide(UUID uuid) {
@@ -315,7 +328,7 @@ public class MainController {
         guideEditor = new GuideEditor(this);
         guideEditorUi.resetList();
         guideEditor.setEditGuide(guide);
-        switchScene(SceneName.guideEditor);
+        toolbarSwitchSubscene(SceneName.guideEditor);
 
 
         for (Card card: guideEditor.getCardsList().values()) {

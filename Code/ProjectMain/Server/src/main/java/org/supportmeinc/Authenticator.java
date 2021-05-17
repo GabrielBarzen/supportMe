@@ -24,20 +24,11 @@ public class Authenticator {
         User returnUser = null;
 
         if (user.isNewUser()) {
-            StringBuilder saltBuilder = new StringBuilder(20);
-
-            Random random = new Random();
-            char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789".toCharArray();
-
-            for (int i = 0; i < 20; i++) {
-                char c = chars[random.nextInt(chars.length)];
-                saltBuilder.append(c);
-            }
-
-            salt = saltBuilder.toString();
+            salt = saltBuilder();
         } else {
             salt = databaseManager.getSalt(user);
         }
+
         try {
             password = String.format("%s%s", salt, user.getPassword());
             passwordHash = hashSHA256(password);
@@ -57,6 +48,22 @@ public class Authenticator {
         }
 
         return returnUser;
+    }
+
+    private String saltBuilder(){
+        StringBuilder saltBuilder = new StringBuilder(20);
+        String retValue;
+
+        Random random = new Random();
+        char[] chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789".toCharArray();
+
+        for (int i = 0; i < 20; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            saltBuilder.append(c);
+        }
+
+        retValue = saltBuilder.toString();
+        return retValue;
     }
 
     private static String hashSHA256(String password) throws NoSuchAlgorithmException {

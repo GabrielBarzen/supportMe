@@ -52,7 +52,7 @@ public class GuideViewerUi implements JFXcontroller {
             @Override
             public void handle(ActionEvent event) {
                 resetButtons();
-                controller.switchScene(SceneName.guideBrowser);
+                controller.toolbarSwitchSubscene(SceneName.guideBrowser);
                 controller.refreshThumbnails();
             }
         });

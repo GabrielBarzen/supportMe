@@ -72,6 +72,7 @@ public class GuideEditor {
         currentCard = new Card();
     }
 
+    //Called from packGuide, creates a description card containing similar information to the thumbnail.
     public void setDescription(String title, String description, byte[] img, UUID affirmUUID, Guide guide) {
         Card card = new Card();
         card.setText(description);
@@ -110,6 +111,10 @@ public class GuideEditor {
         return outputGuide;
     }
 
+    /*
+    Takes in parameters to create the description card & thumbnail.
+    Creates and stores all data in a new Guide object as outputGuide.
+     */
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
         Guide returnGuide = new Guide(guideUUID);
         setDescription(title, description, img, affirmUUID, returnGuide);

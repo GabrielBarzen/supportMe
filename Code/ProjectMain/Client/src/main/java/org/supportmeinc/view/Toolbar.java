@@ -17,7 +17,7 @@ public class Toolbar implements JFXcontroller {
     }
 
     public void homeButton() {
-       borderPane.setCenter(controller.getScenes(SceneName.guideBrowser));
+       borderPane.setCenter(controller.getScene(SceneName.guideBrowser));
        controller.refreshThumbnails();
     }
 
@@ -27,11 +27,11 @@ public class Toolbar implements JFXcontroller {
 
     public void createNewGuide() {
         controller.initGuideEditor();
-        borderPane.setCenter(controller.getScenes(SceneName.guideEditor));
+        borderPane.setCenter(controller.getScene(SceneName.guideEditor));
     }
 
     public void guideViewer() {
-        borderPane.setCenter(controller.getScenes(SceneName.guideViewer));
+        borderPane.setCenter(controller.getScene(SceneName.guideViewer));
     }
 
     public void swapScene(AnchorPane pane) {
