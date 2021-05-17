@@ -39,9 +39,6 @@ public class DatabaseManager {
     }
 
     //UserDatabase methods//
-    public boolean getAuthor(UUID guideUUID){
-        return userDatabase.getAuthor(guideUUID);//TODO get author from guide
-    }
 
     public String getSalt(User user) {
         return userDatabase.getSalt(user);
