@@ -187,6 +187,12 @@ public class MainController {
     }
 
     //Guide editor methods
+
+    /*
+    Retrieves finalized guide from guideEditor.
+    If the guide is valid, aka not null, it attempts to save the guide to the server via guideManager.
+    If an error occurs it will alert the user of the error.
+     */
     public boolean saveGuide() {
         Guide guide = guideEditor.getOutputGuide();
         boolean success = false;
@@ -262,7 +268,7 @@ public class MainController {
         guideManager.downloadGuide(uuid);
     }
 
-
+    //Compiles the final guide into a finished guide object to be saved.
     public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
         guideEditor.packGuide(title, description, img, affirmUUID);
     }
