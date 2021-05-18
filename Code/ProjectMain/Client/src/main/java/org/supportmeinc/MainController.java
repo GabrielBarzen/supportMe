@@ -22,6 +22,7 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -109,7 +110,8 @@ public class MainController {
 
         if (guideManager != null) {
             try {
-                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+                switchLoginStage(SceneName.toolbar);
+                refreshThumbnails();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -179,10 +181,11 @@ public class MainController {
         toolbarController.swapScene(scenes.get(sceneName));
     }
 
-    public void switchLoginStage(SceneName sceneName, Event event) throws IOException {
+    public void switchLoginStage(SceneName sceneName) throws IOException {
         Scene scene = new Scene(loadFXML(sceneName));
         stage.setScene(scene);
         stage.show();
+        toolbarSwitchSubscene(SceneName.guideBrowser);
     }
 
     //GuideBrowser methods
@@ -282,12 +285,47 @@ public class MainController {
         }
     }
 
+    public void refreshThumbnails(String searchStr) {
+        ArrayList<Thumbnail> tempArrayList = new ArrayList<>();
+
+        try {
+            if (guideManager.getConnection() != null) {
+                guideManager.refreshThumbnails();
+
+                for (Thumbnail thumbnail : guideManager.getAccessThumbnails()) {
+                    if (thumbnail.getTitle().contains(searchStr)) {
+                        tempArrayList.add(thumbnail);
+                    }
+                }
+
+                Thumbnail[] accessThumbnails = tempArrayList.toArray(new Thumbnail[0]);
+
+                for (Thumbnail thumbnail : guideManager.getAuthorThumbnails()) {
+                    if (thumbnail.getTitle().contains(searchStr)) {
+                        tempArrayList.add(thumbnail);
+                    }
+                }
+
+                Thumbnail[] authorThumbnails = tempArrayList.toArray(new Thumbnail[0]);
+                setThumbnailInView(accessThumbnails, authorThumbnails);
+            } else {
+                for (Thumbnail thumbnail : guideManager.getDownloadThumbnails()) {
+                    if (thumbnail.getTitle().contains(searchStr)) {
+                        tempArrayList.add(thumbnail);
+                    }
+                }
+
+                Thumbnail[] downloadThumbnails = tempArrayList.toArray(new Thumbnail[0]);
+                setThumbnailInView(downloadThumbnails);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
         this.guideEditorSave = guideEditorSave;
     }
-
-
-
 
     public void downloadGuide(UUID uuid) {
         guideManager.downloadGuide(uuid);
@@ -305,8 +343,6 @@ public class MainController {
     public String getAuthor() {
         return guideManager.getCurrentUser().getEmail();
     }
-
-
 
     public void onLoadGuideEditorSave() {
         guideEditorSave.onLoad();

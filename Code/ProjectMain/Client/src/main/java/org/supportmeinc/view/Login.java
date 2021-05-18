@@ -23,7 +23,7 @@ public class Login implements JFXcontroller {
         this.controller = controller;
     }
 
-    public void userLogin(ActionEvent event) throws IOException {
+    public void userLogin() throws IOException {
         String email = userEmail.getText();
         String pass = password.getText();
 
@@ -33,12 +33,10 @@ public class Login implements JFXcontroller {
         } else {
              controller.login(email, pass);
         }
-
-        controller.switchLoginStage(SceneName.toolbar, event);
     }
 
-    public void switchToRegister(javafx.event.ActionEvent event) throws IOException {
-        controller.switchLoginStage(SceneName.register, event);
+    public void switchToRegister() throws IOException {
+        controller.switchLoginStage(SceneName.register);
     }
 
 }
