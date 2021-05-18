@@ -181,7 +181,6 @@ public class Connection {
             alert.setTitle("Guide successfully downloaded");
             alert.setHeaderText("Guide successfully saved to file.");
             alert.setContentText("Guide was successfully saved to file.");
-            System.exit(0);
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
