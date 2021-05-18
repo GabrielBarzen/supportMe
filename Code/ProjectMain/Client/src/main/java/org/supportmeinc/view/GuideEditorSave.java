@@ -177,6 +177,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
 
     public void selectImage() {
         byte[] bytes = controller.jfxImageChooser();
+        img = bytes;
         Image image = ImageUtils.toImage(bytes);
         if (image != null) {
             imgPreview.setImage(image);
