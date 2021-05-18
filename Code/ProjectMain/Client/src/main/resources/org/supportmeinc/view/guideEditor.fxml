@@ -151,7 +151,7 @@
                   <Button onAction="#saveGuide" fx:id="createCardButton" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="300.0" text="Save Guide" />
                   <AnchorPane layoutX="881.0" layoutY="2.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#save" prefHeight="24.0" prefWidth="300.0" text="Save Card" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveCard" prefHeight="24.0" prefWidth="300.0" text="Save Card" />
                      </children>
                   </AnchorPane>
 

@@ -106,7 +106,6 @@ public class GuideEditor {
     public byte[] getCardImage(UUID uuid){
         return cardsList.get(uuid).getImage();
     }
-
     public Guide getOutputGuide() {
         return outputGuide;
     }
