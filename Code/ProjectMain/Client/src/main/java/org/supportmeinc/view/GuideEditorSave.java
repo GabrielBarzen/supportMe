@@ -133,7 +133,17 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     }
 
     public void onLoad() {
+        accessList.addAll(Arrays.asList(controller.getAccessList()));
         repopulateLists();
+    }
+
+    public void clearGuideEditorSave() {
+        listViewCards.getItems().clear();
+        listViewAccess.getItems().clear();
+        txtAccess.clear();
+        txtTitle.clear();
+        txtDescription.clear();
+        img = null;
     }
 
 
@@ -141,12 +151,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         guideCardUUID = null;
         guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
 
-        listViewCards.getItems().clear();
-        listViewAccess.getItems().clear();
-        txtAccess.clear();
-        txtTitle.clear();
-        txtDescription.clear();
-        img = null;
+        clearGuideEditorSave();
 
         for (UUID uuid : guideCardUUID) {
             if(uuid != null) {
@@ -160,18 +165,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             img = controller.getImg();
         }
 
-        String[] accessList = controller.getAccessList();
-        if(accessList != null) {
-            for (String str : accessList) {
-                listViewAccess.getItems().add(str);
-            }
-        }
-
-        if(accessList != null) {
-            for (String str : accessList) {
-                listViewAccess.getItems().add(str);
-            }
-        }
+        updateAccessList();
 
         if(controller.getGuideEditor().getOutputGuide() != null) {
             txtTitle.setText(controller.getGuideTitle());
@@ -190,18 +184,29 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         }
     }
 
+    public void updateAccessList() {
+        if(accessList != null) {
+            listViewAccess.getItems().clear();
+            for (String str : accessList) {
+                listViewAccess.getItems().add(str);
+            }
+        }
+        txtAccess.clear();
+    }
+
     public void addToAccessList() {
         if(!txtAccess.getText().isBlank()) {
             accessList.add(txtAccess.getText());
+
         }
-        repopulateLists();
+        updateAccessList();
     }
 
     public void removeFromAccessList() {
         if(listViewAccess.getSelectionModel().isSelected(listViewAccess.getSelectionModel().getSelectedIndex())) {
             accessList.remove(listViewAccess.getSelectionModel().getSelectedItem());
         }
-        repopulateLists();
+        updateAccessList();
     }
 
     public void back() {
