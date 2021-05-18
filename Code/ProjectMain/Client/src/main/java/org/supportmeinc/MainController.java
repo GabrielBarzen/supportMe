@@ -119,11 +119,19 @@ public class MainController {
     }
 
     public byte[] getUserImage() {
-        return guideManager.getConnection().getUser().getImage();
+        byte[] userImage = null;
+        if (guideManager.getConnection() != null) {
+            userImage = guideManager.getConnection().getUser().getImage();
+        }
+        return userImage;
     }
 
     public String getUsername() {
-        return guideManager.getConnection().getUser().getUserName();
+        String userName = null;
+        if (guideManager.getConnection() != null) {
+            userName = guideManager.getConnection().getUser().getUserName();
+        }
+        return userName;
     }
 
     //Stage and scene start and setup
