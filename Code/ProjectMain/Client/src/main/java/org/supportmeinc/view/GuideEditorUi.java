@@ -140,6 +140,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     public void selectImage() {
         byte[] bytes = controller.jfxImageChooser();
+        img = bytes;
         Image image = ImageUtils.toImage(bytes);
         if (image != null) {
             imgPreview.setImage(image);
@@ -147,7 +148,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
     }
 
-    public void save() {
+    public void saveCard() {
         if(!txtCardTitle.getText().isBlank()) {
             title = txtCardTitle.getText();
         } else {
@@ -160,13 +161,15 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         }
 
         if(cmbYes.getSelectionModel().getSelectedIndex() != -1) {
-            if (guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex()) != null) {
-                yesUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
+            UUID cardUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
+            if (cardUUID != null) {
+                yesUUID = cardUUID;
             }
         }
         if(cmbNo.getSelectionModel().getSelectedIndex() != -1) {
-            if (guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex()) != null) {
-                noUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
+            UUID cardUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
+            if (cardUUID != null) {
+                noUUID = cardUUID;
             }
         }
       
