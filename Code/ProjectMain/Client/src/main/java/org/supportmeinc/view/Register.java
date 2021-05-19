@@ -45,7 +45,7 @@ public class Register implements JFXcontroller {
 
 
         if (userNameString.isEmpty() || mail.isEmpty() || pass.isEmpty() || rePass.isEmpty()) {
-            rMessage.setText("Please fill up all fields!");
+            rMessage.setText("Please fill out all fields!");
         }
         else if (!pass.equals(rePass)) {
             rMessage.setText("Passwords does not match!");

@@ -1,7 +1,5 @@
 package org.supportmeinc;
 
-
-
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -13,7 +11,6 @@ import java.sql.SQLException;
 
 import shared.*;
 
-import javax.xml.crypto.Data;
 import java.util.*;
 
 public class UserDatabase {
