@@ -1,6 +1,5 @@
 package org.supportmeinc.model;
 
-import javafx.scene.control.Alert;
 import org.supportmeinc.MainController;
 import shared.Guide;
 import shared.Thumbnail;
@@ -176,20 +175,7 @@ public class GuideManager implements ThumbnailListener{
     }
 
     public void downloadGuide(UUID uuid) {
-        boolean b = true;
-        for (int i = 0; i < guides.length; i++) {
-            if (downloadThumbnails[i].getGuideUUID() == uuid) {
-                b = false;
-            }
-        }
-        if (b) {
-            connection.downloadGuide(uuid);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Guide already in file");
-            alert.setHeaderText("Guide already exists in file.");
-            alert.setContentText("Guide does already exist in offline file");
-        }
+        connection.downloadGuide(uuid);
     }
 
     public void setController(MainController controller) {
