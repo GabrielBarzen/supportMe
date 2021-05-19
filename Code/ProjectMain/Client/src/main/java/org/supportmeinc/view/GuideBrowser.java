@@ -28,7 +28,7 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     @FXML private FlowPane flowPane, flowPaneSaved, flowPaneDownloaded;
     @FXML private ScrollPane scrollPane;
     @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch, btnRemoveSelfAccess;
-    @ FXML private TextField searchField;
+    @FXML private TextField searchField;
 
     public void initData(MainController controller){
         this.controller = controller;
