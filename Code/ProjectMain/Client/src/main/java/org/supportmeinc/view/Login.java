@@ -1,6 +1,5 @@
 package org.supportmeinc.view;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,7 +22,7 @@ public class Login implements JFXcontroller {
         this.controller = controller;
     }
 
-    public void userLogin() throws IOException {
+    public void userLogin() {
         String email = userEmail.getText();
         String pass = password.getText();
 

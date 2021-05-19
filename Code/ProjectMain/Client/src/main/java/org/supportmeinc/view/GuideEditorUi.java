@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.supportmeinc.AlertUtils;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
@@ -26,8 +27,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     @FXML private ListView<String> listView;
 
     private ArrayList<UUID> guideCardUUID;
-
-    private Alert alert;
 
     private String title = null;
     private String text = null;
@@ -93,11 +92,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             cardTitle = cardTitle.substring(0, 20);
             txtCardTitle.setText(cardTitle);
 
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Card title warning");
-            alert.setHeaderText("Can't create card with title longer than 20 characters");
-            alert.setContentText("Please select a shorter title");
-            alert.show();
+            AlertUtils.alertWarning("Card title warning", "Can't create card with title longer than 20 characters", "Please select a shorter title");
         }
 
         title = cardTitle;
@@ -111,11 +106,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             cardText = cardText.substring(0, 160);
             txtCardText.setText(cardText);
 
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Card text limit warning");
-            alert.setHeaderText("Can't create card with text longer than 160 characters");
-            alert.setContentText("If your card is two steps, please divide them");
-            alert.show();
+            AlertUtils.alertWarning("Card text limit warning", "Can't create card with text longer than 160 characters", "If your card is two steps, please divide them");
         }
 
         text = cardText;
@@ -152,11 +143,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         if(!txtCardTitle.getText().isBlank()) {
             title = txtCardTitle.getText();
         } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No title added");
-            alert.setHeaderText("Can't create card without title");
-            alert.setContentText("Please fill in title");
-            alert.show();
+            AlertUtils.alertWarning("No title added", "Can't create card without title", "Please fill in title");
             return;
         }
 
@@ -211,11 +198,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             removeFromCardList(cardUUID);
             controller.removeCard(cardUUID);
         } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("No card selected");
-            alert.setHeaderText("Couldn't remove card");
-            alert.setContentText("Please select a card to be deleted");
-            alert.show();
+            AlertUtils.alertWarning("No card selected", "Couldn't remove card", "Please select a card to be deleted");
         }
         resetView();
     }
@@ -249,12 +232,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             controller.toolbarSwitchSubscene(SceneName.guideEditorSave);
             controller.onLoadGuideEditorSave();
         } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Couldn't save cardlist");
-            alert.setContentText("Couldn't save cardlist due to no cards or missing links between cards");
-            alert.show();
+            AlertUtils.alertWarning("Couldn't save guide", "Couldn't save guide due to no cards or missing links between cards", "Please make sure there are no more than one card missing links");
         }
     }
-
-
 }
