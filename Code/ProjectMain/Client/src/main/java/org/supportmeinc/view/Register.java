@@ -55,7 +55,7 @@ public class Register implements JFXcontroller {
         }
     }
 
-    public void switchToLogin(javafx.event.ActionEvent event) throws IOException {
-        controller.switchLoginStage(SceneName.login, event);
+    public void switchToLogin() throws IOException {
+        controller.switchLoginStage(SceneName.login);
     }
 }
