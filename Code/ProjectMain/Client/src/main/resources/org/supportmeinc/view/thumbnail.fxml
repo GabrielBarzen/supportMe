@@ -25,7 +25,7 @@
                               <Rectangle2D />
                           </viewport>
                       </ImageView>
-                      <Label fx:id="lblText" prefHeight="133.0" prefWidth="233.0" text="This is a thumbnail text with information about thumbnails yo thumbnails heard you like thumbnails so we put some thumbnails in your thumbnails that cool dog?" wrapText="true">
+                      <Label fx:id="lblText" alignment="CENTER" contentDisplay="CENTER" prefHeight="133.0" prefWidth="233.0" text="Hello?" textAlignment="JUSTIFY" wrapText="true">
                           <font>
                               <Font size="14.0" />
                           </font>
