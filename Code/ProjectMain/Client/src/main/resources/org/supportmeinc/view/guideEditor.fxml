@@ -67,7 +67,7 @@
                <children>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="listView" fixedCellSize="30.0" prefHeight="567.0" prefWidth="297.0" />
+                        <ListView fx:id="cardList" onMouseClicked="#openCard" fixedCellSize="30.0" prefHeight="567.0" prefWidth="297.0" />
                      </content></ScrollPane>
                </children>
             </AnchorPane>
@@ -89,7 +89,7 @@
                               <TextField fx:id="txtFilePath" disable="true" editable="false" layoutY="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                               <Button fx:id="btnSelectImg" alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Select Image" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" />
                               <Label layoutX="3.0" layoutY="4.0" text="Image" />
-                              <Button fx:id="btnRemoveImg" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="53.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Remove Image" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+                              <Button fx:id="btnRemoveImg" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="53.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="25.0" prefWidth="140.0" text="Remove Image" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -121,7 +121,7 @@
 
                            </children>
                         </AnchorPane>
-                        <Button fx:id="btnFirstCard" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveGuide" prefHeight="24.0" prefWidth="300.0" text="Set as first card" />
+                        <Button fx:id="btnFirstCard" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#setFirstCard" prefHeight="24.0" prefWidth="300.0" text="Set as first card" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -160,10 +160,9 @@
          <bottom>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAddCard" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#loadCardOnListSelection" prefHeight="24.0" prefWidth="140.0" text="Add card" AnchorPane.bottomAnchor="0.0" />
+                  <Button fx:id="btnAddCard" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#addNewCard" prefHeight="24.0" prefWidth="140.0" text="Add card" AnchorPane.bottomAnchor="0.0" />
                   <Button fx:id="btnRemoveCard" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="24.0" prefWidth="140.0" text="Remove card" AnchorPane.bottomAnchor="0.0" />
                   <Button fx:id="btnFinalizeGuide" alignment="CENTER" contentDisplay="CENTER" layoutX="885.0" layoutY="1.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="24.0" prefWidth="290.0" text="Finalize guide" AnchorPane.bottomAnchor="0.0" />
-
                </children>
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
