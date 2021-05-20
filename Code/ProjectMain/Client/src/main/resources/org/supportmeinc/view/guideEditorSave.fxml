@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -26,7 +25,37 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="595.0" spacing="5.0" HBox.hgrow="NEVER">
+                        <BorderPane prefHeight="742.0" prefWidth="595.0">
+                           <top>
+                              <AnchorPane BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="lblTitlePreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                           </top>
+                           <bottom>
+                              <VBox alignment="CENTER" prefHeight="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="lblGuideTextPreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="102.0" prefWidth="463.0" text="Guide Text" textAlignment="JUSTIFY" wrapText="true">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </bottom>
+                           <center>
+                              <ImageView fx:id="imgPreview" fitHeight="317.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                        <VBox prefHeight="200.0" prefWidth="595.0" spacing="5.0">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                            <children>
                               <Label text="Title" />
                               <TextField fx:id="txtTitle" onKeyTyped="#updateTitlePreview" promptText="Please enter title..." />
@@ -37,11 +66,6 @@
                               </Label>
                               <TextArea fx:id="txtDescription" onKeyTyped="#updateTextPreview" prefHeight="95.0" prefWidth="555.0" promptText="Please enter description..." />
                               <Label text="Image" />
-                              <ImageView fx:id="imgPreview" fitHeight="316.0" fitWidth="555.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../../../../../../../../../138.jpg" />
-                                 </image>
-                              </ImageView>
                               <HBox prefHeight="34.0" prefWidth="555.0" spacing="10.0">
                                  <children>
                                     <Button fx:id="btnChooseFile" mnemonicParsing="false" onAction="#selectImage" prefWidth="120.0" text="Choose File" />
@@ -51,26 +75,6 @@
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                           </children>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="595.0" spacing="5.0">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                           <children>
-                              <Label text="Choose starting card" />
-                              <ScrollPane prefHeight="220.0" prefWidth="555.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="218.0" prefWidth="553.0">
-                                       <children>
-                                          <ListView fx:id="listViewCards" fixedCellSize="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </ScrollPane>
                               <Label text="User access" />
                               <TextField fx:id="txtAccess" promptText="Please add users you'd like to have access to your guide, separate emails with &quot;,&quot;..." />
                               <Button fx:id="btnAddAccess" mnemonicParsing="false" onAction="#addToAccessList" prefHeight="25.0" prefWidth="555.0" text="Add user">
@@ -99,26 +103,40 @@
          <bottom>
             <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="50.0" prefWidth="595.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#back" text="Back" />
-                        <Button fx:id="btnSaveGuide" mnemonicParsing="false" onAction="#saveGuide" text="Save Guide" />
+                        <Button fx:id="btnSaveGuide" alignment="CENTER" contentDisplay="CENTER" layoutX="198.0" layoutY="12.0" mnemonicParsing="false" onAction="#saveGuide" prefWidth="100.0" text="Save Guide" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.0" />
                      </children>
-                  </HBox>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="50.0" prefWidth="595.0" AnchorPane.leftAnchor="0.0">
+                     <children>
+                        <Button fx:id="btnBack" layoutX="198.0" layoutY="12.0" mnemonicParsing="false" onAction="#back" prefWidth="100.0" text="Back" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.0" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </bottom>
          <top>
             <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="50.0" prefWidth="595.0" AnchorPane.leftAnchor="0.0">
                      <children>
-                        <Label text="Guide Info">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="12.0" text="Preview" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.0">
                            <font>
-                              <Font size="16.0" />
-                           </font></Label>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
                      </children>
-                  </HBox>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="50.0" prefWidth="595.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="14.0" prefWidth="100.0" text="Guide properties" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </top>
