@@ -172,11 +172,7 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
         btnCreate.setDisable(false);
         btnDownload.setDisable(false);
     }
-
-    public void removeSelfAccess(ActionEvent actionEvent) {
-        controller.removeSelfAccess(currentUUID);
-
-    }
+    
 
     public void search() {
         controller.refreshThumbnails(searchField.getText());
