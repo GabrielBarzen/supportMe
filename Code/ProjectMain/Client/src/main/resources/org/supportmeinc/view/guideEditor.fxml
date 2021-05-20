@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -75,39 +75,53 @@
          <right>
             <AnchorPane prefHeight="200.0" prefWidth="300.0">
                <children>
-                  <VBox prefHeight="650.0" prefWidth="300.0" spacing="35.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox prefHeight="650.0" prefWidth="300.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TextField fx:id="txtCardTitle" onKeyTyped="#updateTitlePreview" prefWidth="290.0" promptText="Add card title..." />
-                        <AnchorPane prefHeight="53.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="37.0" prefWidth="290.0">
                            <children>
-                              <TextField fx:id="txtFilePath" disable="true" editable="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                              <Button alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="27.0" mnemonicParsing="false" onAction="#selectImage" text="Select File" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Label layoutX="3.0" layoutY="1.0" text="Title" />
+                              <Label fx:id="lblTitleLength" alignment="CENTER_RIGHT" layoutX="239.0" layoutY="1.0" prefHeight="17.0" prefWidth="49.0" text="0/30" />
+                              <TextField fx:id="txtCardTitle" layoutY="19.0" onKeyTyped="#updateTitlePreview" prefWidth="290.0" promptText="Add card title..." />
                            </children>
                         </AnchorPane>
-                        <TextArea fx:id="txtCardText" onKeyTyped="#updateTextPreview" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." wrapText="true" />
-                        <AnchorPane prefHeight="80.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="87.0" prefWidth="290.0">
+                           <children>
+                              <TextField fx:id="txtFilePath" disable="true" editable="false" layoutY="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Button fx:id="btnSelectImg" alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Select Image" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" />
+                              <Label layoutX="3.0" layoutY="4.0" text="Image" />
+                              <Button fx:id="btnRemoveImg" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="53.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Remove Image" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <AnchorPane prefHeight="50.0" prefWidth="290.0">
+                                 <children>
+                                    <Label layoutX="2.0" layoutY="2.0" text="Description" />
+                                    <Label fx:id="lblDescLength" alignment="CENTER_RIGHT" layoutX="227.0" layoutY="2.0" prefHeight="17.0" prefWidth="61.0" text="0/160" />
+                                 </children>
+                              </AnchorPane>
+                              <TextArea fx:id="txtCardText" onKeyTyped="#updateTextPreview" prefHeight="200.0" prefWidth="200.0" promptText="Add card description..." wrapText="true" />
+                           </children>
+                        </VBox>
+                        <AnchorPane prefHeight="60.0" prefWidth="290.0">
                            <children>
 
                               <Label layoutX="8.0" layoutY="9.0" text="YES CARD" AnchorPane.leftAnchor="5.0" />
-                              <ComboBox fx:id="cmbYes" layoutX="140.0" layoutY="5.0" prefWidth="150.0" />
+                              <ComboBox fx:id="cmbYes" layoutX="89.0" layoutY="5.0" prefHeight="25.0" prefWidth="200.0" promptText="Choose available card" />
                               <Label fx:id="yesCardSelected" layoutX="8.0" layoutY="39.0" prefHeight="17.0" prefWidth="280.0" AnchorPane.leftAnchor="5.0" />
 
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="80.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="60.0" prefWidth="290.0">
                            <children>
 
                               <Label layoutX="14.0" layoutY="9.0" text="NO CARD" AnchorPane.leftAnchor="5.0" />
-                              <ComboBox fx:id="cmbNo" layoutX="140.0" layoutY="5.0" prefWidth="150.0" />
+                              <ComboBox fx:id="cmbNo" layoutX="90.0" layoutY="5.0" prefHeight="25.0" prefWidth="200.0" promptText="Choose available card" />
                               <Label fx:id="noCardSelected" layoutX="7.0" layoutY="38.0" prefHeight="17.0" prefWidth="280.0" AnchorPane.leftAnchor="5.0" />
 
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="26.0" prefWidth="290.0">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </AnchorPane>
+                        <Button fx:id="btnFirstCard" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveGuide" prefHeight="24.0" prefWidth="300.0" text="Set as first card" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -122,7 +136,7 @@
          <top>
             <HBox alignment="CENTER" minHeight="50.0" minWidth="1180.0" prefHeight="50.0" prefWidth="200.0" spacing="360.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Cardlist" textAlignment="CENTER">
+                  <Label text="Cards" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -144,16 +158,11 @@
             </HBox>
          </top>
          <bottom>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" mnemonicParsing="false" onAction="#loadCardOnListSelection" prefHeight="24.0" prefWidth="150.0" text="Edit Card" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="2.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="24.0" prefWidth="150.0" text="Remove Card" />
-                  <Button onAction="#saveGuide" fx:id="createCardButton" alignment="CENTER" contentDisplay="CENTER" layoutX="440.0" layoutY="2.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="300.0" text="Save Guide" />
-                  <AnchorPane layoutX="881.0" layoutY="2.0">
-                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveCard" prefHeight="24.0" prefWidth="300.0" text="Save Card" />
-                     </children>
-                  </AnchorPane>
+                  <Button fx:id="btnAddCard" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#loadCardOnListSelection" prefHeight="24.0" prefWidth="140.0" text="Add card" AnchorPane.bottomAnchor="0.0" />
+                  <Button fx:id="btnRemoveCard" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="24.0" prefWidth="140.0" text="Remove card" AnchorPane.bottomAnchor="0.0" />
+                  <Button fx:id="btnFinalizeGuide" alignment="CENTER" contentDisplay="CENTER" layoutX="885.0" layoutY="1.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="24.0" prefWidth="290.0" text="Finalize guide" AnchorPane.bottomAnchor="0.0" />
 
                </children>
                <BorderPane.margin>

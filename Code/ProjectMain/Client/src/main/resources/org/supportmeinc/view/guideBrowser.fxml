@@ -15,9 +15,9 @@
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
    <children>
-      <ScrollPane fx:id="scrollPane" fitToWidth="true" focusTraversable="false" layoutX="5.0" layoutY="7.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="591.0" prefWidth="1200.0" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="7.0">
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" focusTraversable="false" layoutX="5.0" layoutY="7.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="591.0" prefWidth="1200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="7.0">
          <content>
-            <VBox fx:id="vNailBox" prefHeight="569.0" prefWidth="1178.0">
+            <VBox fx:id="vNailBox" prefHeight="600.0" prefWidth="1178.0">
                <children>
                   <Label text="Your guides" />
                   <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
@@ -29,7 +29,7 @@
             </VBox>
          </content>
          </ScrollPane>
-      <HBox alignment="CENTER_LEFT" layoutX="9.0" layoutY="596.0" prefHeight="60.0" prefWidth="1180.0" spacing="10.0">
+      <HBox alignment="CENTER_LEFT" layoutX="9.0" layoutY="612.0" prefHeight="50.0" prefWidth="1180.0" spacing="10.0">
          <children>
             <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#openGuide" prefHeight="43.0" prefWidth="120.0" text="Open guide" />
             <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewGuide" prefHeight="43.0" prefWidth="115.0" text="Create new guide" />

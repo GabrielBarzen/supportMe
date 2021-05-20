@@ -7,56 +7,42 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Toolbar">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Toolbar">
    <children>
       <BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <HBox fx:id="tb" prefHeight="100.0" prefWidth="1143.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fitHeight="75.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="homeButton" mnemonicParsing="false" onAction="#homeButton" prefHeight="25.0" prefWidth="100.0" text="My Guides" />
-                     </children>
-                  </VBox>
-                  <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="795.0" text="viewTitle">
+                  <Button fx:id="homeButton" mnemonicParsing="false" onAction="#homeButton" prefHeight="100.0" prefWidth="100.0" text="Home" />
+                  <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="790.0" text="viewTitle">
                      <font>
-                        <Font name="System Bold" size="50.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="95.0" prefWidth="304.0" spacing="4.0">
+                  <HBox prefHeight="95.0" prefWidth="320.0" spacing="4.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="100.0" prefWidth="180.0">
-                           <children>
-                              <Label fx:id="userName" alignment="CENTER" prefHeight="48.0" prefWidth="174.0" text="Username" VBox.vgrow="NEVER">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="48.0" prefWidth="174.0" text="Logout">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </VBox>
+                        <Label fx:id="userName" alignment="CENTER" prefHeight="100.0" prefWidth="100.0" text="Username">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="100.0" text="Logout">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
          </top>
       </BorderPane>
