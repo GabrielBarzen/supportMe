@@ -28,7 +28,7 @@ public class GuideManager implements ThumbnailListener{
         connection.registerListener(this);
         accessThumbnails = new Thumbnail[0];
         connection.setGuideManager(this);
-
+        this.downloadThumbnails = getDownloadedThumbnails(connection.getUser());
     }
 
     public GuideManager(User user) {
@@ -94,7 +94,9 @@ public class GuideManager implements ThumbnailListener{
         try {
             if (connection != null) {
                 returnGuide = connection.getGuide(new Thumbnail(uuid));
-            } else {
+                System.out.println(returnGuide.getGuideUUID());
+            }
+            else {
                 for (int i = 0; i < guides.length; i++) {
                     if (guides[i].getGuideUUID().equals(uuid)) {
                         returnGuide = guides[i];
@@ -107,6 +109,12 @@ public class GuideManager implements ThumbnailListener{
         }
 
         return returnGuide;
+    }
+
+    public Thumbnail getThumbnail(UUID uuid) {
+        Guide guide = getGuide(uuid);
+        Thumbnail thumbnail = guide.getThumbnail();
+        return thumbnail;
     }
 
     public boolean saveGuide(Guide guide) {

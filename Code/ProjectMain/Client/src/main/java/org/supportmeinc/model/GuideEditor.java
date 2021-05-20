@@ -121,6 +121,7 @@ public class GuideEditor {
         returnGuide.setDescriptionCard(descriptionCard);
         returnGuide.setThumbnail(thumbnail);
         returnGuide.setAuthor(controller.getAuthor());
+        System.out.println(controller.getAuthor());
         this.outputGuide = returnGuide;
     }
 

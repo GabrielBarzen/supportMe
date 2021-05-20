@@ -306,6 +306,10 @@ public class MainController {
         return guideManager.getCurrentUser().getEmail();
     }
 
+    public String getAuthorOfGuide(UUID uuid) {
+        return guideManager.getGuide(uuid).getAuthorEmail();
+    }
+
 
 
     public void onLoadGuideEditorSave() {
@@ -318,6 +322,7 @@ public class MainController {
     }
 
     public void deleteGuide(UUID uuid) {
+        System.out.println("Deleted the guide: " + guideManager.getGuide(uuid));
         guideManager.deleteGuide(uuid);
     }
 
@@ -446,7 +451,12 @@ public class MainController {
     }
 
     public void removeSelfAccess(UUID id) {
+        System.out.println("Removed the guide: " + guideManager.getGuide(id).getGuideUUID());
         guideManager.revokeSelfAccess(id);
 
+    }
+
+    public GuideManager getGuideManager() {
+        return guideManager;
     }
 }
