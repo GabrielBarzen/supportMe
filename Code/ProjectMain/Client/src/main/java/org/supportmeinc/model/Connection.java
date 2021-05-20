@@ -2,6 +2,7 @@ package org.supportmeinc.model;
 
 
 import javafx.scene.control.Alert;
+import org.supportmeinc.AlertUtils;
 import shared.Guide;
 import shared.Thumbnail;
 import shared.User;
@@ -177,17 +178,13 @@ public class Connection {
             guide = getGuide(uuid);
             ObjectOutputStream fileOutputStream = new ObjectOutputStream(new FileOutputStream(user.getEmail()+ ".dat"));
             fileOutputStream.writeObject(guide);
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Guide successfully downloaded");
-            alert.setHeaderText("Guide successfully saved to file.");
-            alert.setContentText("Guide was successfully saved to file.");
+            AlertUtils.alertWarning("Guide successfully downloaded", "Guide successfully saved to file.", "Guide was successfully saved to file.");
+            System.exit(0);
+
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Guide couldn't be downloaded");
-        alert.setHeaderText("Guide could not find file");
-        alert.setContentText("Guide could not save guide to file.");
+        AlertUtils.alertWarning("Guide couldn't be downloaded", "Guide could not find file", "Guide could not save guide to file.");
     }
 
     private class Receive extends Thread {

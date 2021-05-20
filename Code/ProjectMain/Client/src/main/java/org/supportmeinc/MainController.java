@@ -1,9 +1,8 @@
 package org.supportmeinc;
-import javafx.event.Event;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.*;
 import org.supportmeinc.model.Connection;
@@ -22,7 +21,7 @@ import shared.User;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -39,8 +38,6 @@ public class MainController {
     private GuideViewerUi guideViewerUi;
     private GuideEditorSave guideEditorSave;
     private GuideViewer guideViewer;
-
-    public Alert alert;
 
     public MainController(Stage stage, Main controller) {
         this.controller = controller;
@@ -87,19 +84,15 @@ public class MainController {
             System.out.println("Could not connect");
             if (user.isNewUser()) {
                 System.out.println("Shutting down");
-                alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Error registering user");
-                alert.setHeaderText("No connection to server!");
-                alert.setContentText("Can't register new users in offline-mode, please try again when you are connected to the internet");
+                AlertUtils.alertError("Error registering user", "No connection to server!", "Can't register new users in offline-mode, please try again when you are connected to the internet");
                 System.exit(0);
             } else {
                 System.out.println("Attempting offline mode");
                 guideManager = new GuideManager(user);
                 if (!guideManager.isHasOfflineGuides()) {
-                    alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Error getting offline-guides");
-                    alert.setHeaderText("No offline-guides available!");
-                    alert.setContentText("There does not seems to be any guides saved to be viewed offline, please try again when your internet is back and download the guides you would want access to.");
+                    AlertUtils.alertError("Error getting offline-guides", "No offline-guides available!",
+                            "There does not seems to be any guides saved to be viewed offline, please try again when your internet is back and download the guides you would want access to");
+
                     System.exit(0);
                 } else {
                     guideBrowser.offlineMode();
@@ -109,7 +102,8 @@ public class MainController {
 
         if (guideManager != null) {
             try {
-                stage.setScene(new Scene(loadFXML(SceneName.toolbar)));
+                switchLoginStage(SceneName.toolbar);
+                refreshThumbnails();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -179,10 +173,11 @@ public class MainController {
         toolbarController.swapScene(scenes.get(sceneName));
     }
 
-    public void switchLoginStage(SceneName sceneName, Event event) throws IOException {
+    public void switchLoginStage(SceneName sceneName) throws IOException {
         Scene scene = new Scene(loadFXML(sceneName));
         stage.setScene(scene);
         stage.show();
+        toolbarSwitchSubscene(SceneName.guideBrowser);
     }
 
     //GuideBrowser methods
@@ -282,12 +277,47 @@ public class MainController {
         }
     }
 
+    public void refreshThumbnails(String searchStr) {
+        ArrayList<Thumbnail> tempArrayList = new ArrayList<>();
+
+        try {
+            if (guideManager.getConnection() != null) {
+                guideManager.refreshThumbnails();
+
+                for (Thumbnail thumbnail : guideManager.getAccessThumbnails()) {
+                    if (thumbnail.getTitle().contains(searchStr)) {
+                        tempArrayList.add(thumbnail);
+                    }
+                }
+
+                Thumbnail[] accessThumbnails = tempArrayList.toArray(new Thumbnail[0]);
+
+                for (Thumbnail thumbnail : guideManager.getAuthorThumbnails()) {
+                    if (thumbnail.getTitle().contains(searchStr)) {
+                        tempArrayList.add(thumbnail);
+                    }
+                }
+
+                Thumbnail[] authorThumbnails = tempArrayList.toArray(new Thumbnail[0]);
+                setThumbnailInView(accessThumbnails, authorThumbnails);
+            } else {
+                for (Thumbnail thumbnail : guideManager.getDownloadThumbnails()) {
+                    if (thumbnail.getTitle().contains(searchStr)) {
+                        tempArrayList.add(thumbnail);
+                    }
+                }
+
+                Thumbnail[] downloadThumbnails = tempArrayList.toArray(new Thumbnail[0]);
+                setThumbnailInView(downloadThumbnails);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setGuideEditorSave(GuideEditorSave guideEditorSave) {
         this.guideEditorSave = guideEditorSave;
     }
-
-
-
 
     public void downloadGuide(UUID uuid) {
         guideManager.downloadGuide(uuid);
@@ -306,11 +336,10 @@ public class MainController {
         return guideManager.getCurrentUser().getEmail();
     }
 
+
     public String getAuthorOfGuide(UUID uuid) {
         return guideManager.getGuide(uuid).getAuthorEmail();
     }
-
-
 
     public void onLoadGuideEditorSave() {
         guideEditorSave.onLoad();
@@ -325,9 +354,6 @@ public class MainController {
         System.out.println("Deleted the guide: " + guideManager.getGuide(uuid));
         guideManager.deleteGuide(uuid);
     }
-
-
-
 
     public void getNextCard(boolean choice) {
         Card card = guideViewer.getNext(choice);
@@ -414,18 +440,11 @@ public class MainController {
             byteFile = ImageUtils.toBytes(selectedFile);
             if (byteFile.length >= 5242880) {
                 byteFile = null;
-                alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Image size warning");
-                alert.setHeaderText("Could not add selected image");
-                alert.setContentText("Selected image cannot exceed 5 MB");
-                alert.show();
+
+                AlertUtils.alertWarning("Image size warning", "Could not add selected image", "Selected image cannot exceed 5 MB");
             }
         } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("File type warning");
-            alert.setHeaderText("Could not add selected image");
-            alert.setContentText("Selected file must be of type .png or .jpg, please try again");
-            alert.show();
+            AlertUtils.alertWarning("File type warning", "Could not add selected image", "Selected file must be of type .png or .jpg, please try again");
         }
         return byteFile;
     }

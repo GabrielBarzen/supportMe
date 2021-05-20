@@ -1,12 +1,10 @@
 package org.supportmeinc.model;
 
-import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import shared.Card;
 import shared.Guide;
 import shared.Thumbnail;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 

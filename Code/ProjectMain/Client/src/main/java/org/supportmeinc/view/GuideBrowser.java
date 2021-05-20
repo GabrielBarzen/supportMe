@@ -5,21 +5,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
 import org.supportmeinc.model.GuideManager;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class GuideBrowser implements JFXcontroller, Initializable {
-
+public class GuideBrowser implements JFXcontroller, Initializable { //Class begin
 
     public VBox vNailBox;
     private MainController controller;
@@ -30,17 +29,17 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     @FXML private FlowPane flowPane, flowPaneSaved, flowPaneDownloaded;
     @FXML private ScrollPane scrollPane;
     @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch;
+    @FXML private TextField searchField;
 
     public void initData(MainController controller){
         this.controller = controller;
         controller.setGuideBrowser(this);
     }
 
-
-
     public void openGuide(UUID uuid) { //called from Right-click context menu in GuideBrowser-GUI
         controller.openGuide(uuid);
     }
+
     public void openGuide() { //called from Open Guide button in GuideBrowser-GUI
         controller.openGuide(currentUUID);
     }
@@ -74,7 +73,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     public void downloadGuide() {
         controller.downloadGuide(currentUUID);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -164,7 +162,6 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void offlineMode() {
-
         btnEdit.setDisable(true);
         btnCreate.setDisable(true);
         btnDownload.setDisable(true);
@@ -174,5 +171,14 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         btnEdit.setDisable(false);
         btnCreate.setDisable(false);
         btnDownload.setDisable(false);
+    }
+
+    public void removeSelfAccess(ActionEvent actionEvent) {
+        controller.removeSelfAccess(currentUUID);
+
+    }
+
+    public void search() {
+        controller.refreshThumbnails(searchField.getText());
     }
 } //class end

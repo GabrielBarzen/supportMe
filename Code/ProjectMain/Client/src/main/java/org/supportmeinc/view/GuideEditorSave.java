@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.supportmeinc.AlertUtils;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
@@ -22,7 +23,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     private ArrayList<String> accessList = new ArrayList<>();
     private ArrayList<UUID> guideCardUUID = new ArrayList<>();
     private MainController controller;
-    private Alert alert;
     private byte[] img = null;
 
     public GuideEditorSave() {
@@ -42,11 +42,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             guideTitle = guideTitle.substring(0, 20);
             txtTitle.setText(guideTitle);
 
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Guide title warning");
-            alert.setHeaderText("Can't create guide with title longer than 20 characters");
-            alert.setContentText("Please select a shorter title");
-            alert.show();
+            AlertUtils.alertWarning("Guide title warning", "Can't create guide with title longer than 20 characters", "Please select a shorter title");
         }
     }
 
@@ -57,10 +53,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             guideText = guideText.substring(0, 160);
             txtDescription.setText(guideText);
 
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Guide text limit warning");
-            alert.setHeaderText("Can't create guide with text longer than 160 characters");
-            alert.show();
+            AlertUtils.alertWarning("Guide text limit warning", "Over 160 characters","Can't create guide with text longer than 160 characters");
         }
     }
 
@@ -99,36 +92,20 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                     for (String str : temp) {
                         controller.manageAccess(controller.getOutputGuideUUID(), str, false);
                     }
-                    alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Guide saved!");
-                    alert.setHeaderText("Successful!");
-                    alert.setContentText("Guide is saved");
-                    alert.show();
+                    AlertUtils.alertConfirmation("Guide saved!", "Successful!", "Guide is saved!");
 
                     controller.refreshThumbnails();
                     controller.toolbarSwitchSubscene(SceneName.guideBrowser);
                     controller.setNewGuideEditorModel();
 
                 } else {
-                    alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Guide couldn't be saved");
-                    alert.setHeaderText("Warning!");
-                    alert.setContentText("Guide couldn't be saved to server, please check connection");
-                    alert.show();
+                    AlertUtils.alertWarning("Guide couldn't be saved", "Warning!", "Guide couldn't be saved to server, please check connection");
                 }
             } else {
-                alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Could not save guide");
-                alert.setHeaderText("Starting card not chosen");
-                alert.setContentText("Please select a starting card");
-                alert.show();
+                AlertUtils.alertWarning("Could not save guide", "Starting card not chosen", "Please select a starting card");
             }
         } else {
-            alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Could not save guide");
-            alert.setHeaderText("No title or description");
-            alert.setContentText("Please fill in a title and a description!");
-            alert.show();
+            AlertUtils.alertWarning("Could not save guide", "No title or description", "Please fill in a title and a description!");
         }
     }
 
