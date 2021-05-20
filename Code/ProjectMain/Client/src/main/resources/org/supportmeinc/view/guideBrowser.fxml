@@ -39,7 +39,6 @@
                   <Insets right="430.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnRemoveSelfAccess" mnemonicParsing="false" onAction="#removeSelfAccess" prefHeight="43.0" prefWidth="150.0" text="Remove" />
             <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#downloadGuide" prefHeight="43.0" prefWidth="95.0" text="Download guide" />
             <TextField fx:id="searchField" prefHeight="43.0" />
             <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" prefHeight="43.0" prefWidth="95.0" text="Search" />

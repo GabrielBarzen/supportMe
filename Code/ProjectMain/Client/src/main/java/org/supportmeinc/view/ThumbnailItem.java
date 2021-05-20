@@ -111,7 +111,15 @@ public class ThumbnailItem {
     }
 
     public void setSelectedGuide() {
-        guideBrowser.setSelectedThumbnail(guideUUID, author);
+        guideBrowser.setSelectedThumbnail(this);
         anchPane.setStyle("-fx-border-color: black");
+    }
+
+    public boolean getAuthor() {
+        return author;
+    }
+
+    public UUID getUUID() {
+        return guideUUID;
     }
 }

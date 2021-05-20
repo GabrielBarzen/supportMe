@@ -178,9 +178,9 @@ public class Connection {
             guide = getGuide(uuid);
             ObjectOutputStream fileOutputStream = new ObjectOutputStream(new FileOutputStream(user.getEmail()+ ".dat"));
             fileOutputStream.writeObject(guide);
-
             AlertUtils.alertWarning("Guide successfully downloaded", "Guide successfully saved to file.", "Guide was successfully saved to file.");
             System.exit(0);
+
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }

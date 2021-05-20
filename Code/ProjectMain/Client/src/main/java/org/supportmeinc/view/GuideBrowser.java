@@ -1,8 +1,8 @@
 package org.supportmeinc.view;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -11,23 +11,24 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
-
+import org.supportmeinc.model.GuideManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class GuideBrowser implements JFXcontroller, Initializable {
+public class GuideBrowser implements JFXcontroller, Initializable { //Class begin
 
     public VBox vNailBox;
     private MainController controller;
     private ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>();
     private UUID currentUUID;
+    private ThumbnailItem thumbnailItem;
 
     @FXML private FlowPane flowPane, flowPaneSaved, flowPaneDownloaded;
     @FXML private ScrollPane scrollPane;
-    @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch, btnRemoveSelfAccess;
+    @FXML private Button btnEdit, btnDelete, btnOpen, btnCreate, btnDownload, btnSearch;
     @FXML private TextField searchField;
 
     public void initData(MainController controller){
@@ -48,7 +49,24 @@ public class GuideBrowser implements JFXcontroller, Initializable {
     }
 
     public void deleteGuide() {
-        controller.deleteGuide(currentUUID);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        boolean bool = thumbnailItem.getAuthor();
+
+        if (bool) {
+            controller.deleteGuide(currentUUID);
+            alert.setTitle("Your  guide was deleted");
+            alert.setHeaderText("Your guide was deleted from your list");
+            alert.setContentText("The selected guide has been deleted");
+            alert.show();
+        }
+        else {
+            controller.removeSelfAccess(currentUUID);
+            alert.setTitle("The guide was removed");
+            alert.setHeaderText("The guide was removed from the list");
+            alert.setContentText("The selected guide has been removed");
+            alert.show();
+        }
+
         controller.refreshThumbnails();
     }
 
@@ -72,10 +90,11 @@ public class GuideBrowser implements JFXcontroller, Initializable {
         controller.createNewGuide();
     }
 
-    public void setSelectedThumbnail(UUID currentUUID, boolean author) { //called when thumbnail is clicked
-        this.currentUUID = currentUUID;
-        btnEdit.setVisible(author);
-        btnDelete.setVisible(author);
+    public void setSelectedThumbnail(ThumbnailItem thumbnailItem) { //called when thumbnail is clicked
+        this.currentUUID = thumbnailItem.getUUID();
+        this.thumbnailItem = thumbnailItem;
+        btnEdit.setVisible(thumbnailItem.getAuthor());
+        //btnDelete.setVisible(author);
     }
 
     public void addThumbnailAuthor(String title, byte[] image, String description, UUID guideUUID) {
