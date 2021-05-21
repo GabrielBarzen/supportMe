@@ -57,6 +57,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     public void initializeEditor() {
         resetList();
         createNewCard();
+        setFirstCard(null);
     }
 
     public void resetList() {

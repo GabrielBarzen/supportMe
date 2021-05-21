@@ -160,6 +160,7 @@ public class GuideEditor {
 
     public void setFirstCard(UUID cardUUID) {
         this.firstCard = cardUUID;
+        System.out.println(firstCard);
     }
 
     public UUID getFirstCard() {
