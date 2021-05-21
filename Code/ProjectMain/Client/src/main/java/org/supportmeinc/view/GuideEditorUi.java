@@ -264,14 +264,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
 
 
-    public void saveGuide() {
-        if(!cardList.getItems().isEmpty() && controller.checkCardLinksValid()) {
-            controller.toolbarSwitchSubscene(SceneName.guideEditorSave);
-            controller.onLoadGuideEditorSave();
-        } else {
-            AlertUtils.alertWarning("Couldn't save guide", "Couldn't save guide due to no cards or missing links between cards", "Please make sure there are no more than one card missing links");
-        }
-    }
+
 
     public void removeImage(ActionEvent actionEvent) {
         imgPreview.setImage(null);
@@ -326,5 +319,14 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             }
         }
 
+    }
+
+    public void finalizeGuide(ActionEvent actionEvent) {
+        if(!cardList.getItems().isEmpty() && controller.checkCardLinksValid()) {
+            controller.toolbarSwitchSubscene(SceneName.guideEditorSave);
+            controller.onLoadGuideEditorSave();
+        } else {
+            AlertUtils.alertWarning("Couldn't save guide", "Couldn't save guide due to no cards or missing links between cards", "Please make sure there are no more than one card missing links");
+        }
     }
 }
