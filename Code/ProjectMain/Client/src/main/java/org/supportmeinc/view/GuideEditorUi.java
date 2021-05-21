@@ -41,6 +41,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     private UUID cardUUID;
     private byte[] img = null;
     private boolean loaded = false;
+    private boolean modified = false;
 
     public void initData(MainController controller){
         this.controller = controller;
@@ -118,6 +119,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void updateTitlePreview() {
+        modified = true;
         String cardTitle = txtCardTitle.getText();
 
         if (cardTitle.length() > 20) {
@@ -132,6 +134,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void updateTextPreview() {
+        modified = true;
         String cardText = txtCardText.getText();
 
         if (cardText.length() > 160) {
@@ -146,6 +149,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void updateComboboxPreview() {
+        modified = true;
         yesCardSelected.setText("");
         noCardSelected.setText("");
         if(yesUUID != null) {
@@ -205,8 +209,13 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             }
 
 
+//        } else if (modified) {
         } else {
-            clear = AlertUtils.alertConfirmation("No title added", "Can't create card without title", "Discard changes?");
+            if (modified) {
+                clear = AlertUtils.alertConfirmation("No title added", "Can't create card without title", "Discard changes?");
+            } else {
+                clear = true;
+            }
         }
 
         return clear;
@@ -295,6 +304,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         txtFilePath.clear();
 
         cardUUID = controller.createNewCard();
+        modified = false;
     }
 
     public void openCard(MouseEvent mouseEvent) {
