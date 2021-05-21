@@ -72,7 +72,9 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         } else {
             cardMap.put(key, cardValue);
         }
-        cardList.getItems().add(key);
+        if (!cardList.getItems().contains(key)) {
+            cardList.getItems().add(key);
+        }
 
         System.out.println("called cardList.getItems().add("+key+") in addcardtoMap");
         resetView();
@@ -188,12 +190,12 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                     noUUID = cardUUID;
                 }
             }
-            if (!(cardList.getItems().contains(title)) && !loaded) {
+            if (loaded || (!loaded && !cardList.getItems().contains(title))) {
                 controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
 //            addToCardList(cardUUID);
                 addCardToMap(cardUUID);
                 clear = true;
-            } else {
+            } else if (!loaded && cardList.getItems().contains(title)){
                 clear = AlertUtils.alertConfirmation("Card Exists with title", "You already have a card with this title!", "Replace card or cancel?");
                 if (clear) {
                     controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
