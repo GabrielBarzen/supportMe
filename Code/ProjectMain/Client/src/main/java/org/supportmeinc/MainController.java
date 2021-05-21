@@ -253,12 +253,7 @@ public class MainController {
         guideEditorSave.repopulateLists();
     }
 
-    public void initGuideEditor() {
-        guideEditor = new GuideEditor(this);
-        guideEditorUi.resetList();
-        guideEditorSave.repopulateLists();
-        guideEditorUi.createNewCard();
-    }
+
 
 
     public void refreshThumbnails() {
@@ -324,8 +319,8 @@ public class MainController {
     }
 
     //Compiles the final guide into a finished guide object to be saved.
-    public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
-        guideEditor.packGuide(title, description, img, affirmUUID);
+    public void packGuide(String title, String description, byte[] img) {
+        guideEditor.packGuide(title, description, img);
     }
 
     public boolean checkCardLinksValid() {
@@ -346,7 +341,9 @@ public class MainController {
     }
 
     public void createNewGuide() {
-        initGuideEditor();
+        guideEditor = new GuideEditor(this);
+        guideEditorSave.repopulateLists();
+        guideEditorUi.initializeEditor();
         toolbarSwitchSubscene(SceneName.guideEditor);
     }
 
@@ -381,7 +378,8 @@ public class MainController {
 
 
         for (Card card: guideEditor.getCardsList().values()) {
-            guideEditorUi.addToCardList(card.getCardUUID());
+//            guideEditorUi.addToCardList(card.getCardUUID());
+            guideEditorUi.addCardToMap(card.getCardUUID());
         }
     }
 
@@ -477,5 +475,13 @@ public class MainController {
 
     public GuideManager getGuideManager() {
         return guideManager;
+    }
+
+    public void setEditorFirstCard(UUID cardUUID) {
+        guideEditor.setFirstCard(cardUUID);
+    }
+
+    public UUID getEditorFirstCard() {
+        return guideEditor.getFirstCard();
     }
 }

@@ -70,7 +70,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             }
 
             if(affirmUUID != null) {
-                controller.packGuide(title, description, img, affirmUUID);
+                controller.packGuide(title, description, img);
 
                 if(controller.saveGuide()) {
                     ArrayList<String> accessServer = new ArrayList<>(Arrays.asList(controller.getAccessList()));
@@ -125,9 +125,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
 
 
     public void repopulateLists() {
-        guideCardUUID = null;
-        guideCardUUID = new ArrayList<>(Arrays.asList(controller.getGuideEditorCardUUIDs()));
-
         clearGuideEditorSave();
 
         for (UUID uuid : guideCardUUID) {

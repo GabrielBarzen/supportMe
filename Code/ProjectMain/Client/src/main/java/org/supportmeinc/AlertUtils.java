@@ -1,6 +1,9 @@
 package org.supportmeinc;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
 
 public class AlertUtils {
 
@@ -20,13 +23,17 @@ public class AlertUtils {
         alert.show();
     }
 
-    public static void alertConfirmation(String title, String header, String description) {
+    public static boolean alertConfirmation(String title, String header, String description) {
+        boolean returnBoolean;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(description);
-        alert.show();
+        Optional<ButtonType> result = alert.showAndWait();
+        returnBoolean = result.isPresent() && result.get() == ButtonType.OK;
+        return returnBoolean;
     }
+
 
     public static void alertError(String title, String header, String description) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -17,6 +17,7 @@ public class GuideEditor {
     private UUID guideUUID = UUID.randomUUID();
     private Thumbnail thumbnail;
     private MainController controller;
+    private UUID firstCard;
 
     public UUID getGuideUUID() {
         return guideUUID;
@@ -49,8 +50,10 @@ public class GuideEditor {
 
         if (cardsList.containsKey(cardUUID)){
             cardsList.replace(cardUUID, currentCard);
+            System.out.println("replaced");
         } else {
             cardsList.put(cardUUID, currentCard);
+            System.out.println("put");
         }
     }
 
@@ -71,13 +74,13 @@ public class GuideEditor {
     }
 
     //Called from packGuide, creates a description card containing similar information to the thumbnail.
-    public void setDescription(String title, String description, byte[] img, UUID affirmUUID, Guide guide) {
+    public void setDescription(String title, String description, byte[] img, Guide guide) {
         Card card = new Card();
         card.setText(description);
         card.setTitle(title);
         card.setImage(img);
         card.setNegUUID(null);
-        card.setAffirmUUID(affirmUUID);
+        card.setAffirmUUID(firstCard);
         cardsList.put(card.getCardUUID(), card);
 
         Thumbnail thumbnail = new Thumbnail(guide.getGuideUUID());
@@ -112,9 +115,9 @@ public class GuideEditor {
     Takes in parameters to create the description card & thumbnail.
     Creates and stores all data in a new Guide object as outputGuide.
      */
-    public void packGuide(String title, String description, byte[] img, UUID affirmUUID) {
+    public void packGuide(String title, String description, byte[] img) {
         Guide returnGuide = new Guide(guideUUID);
-        setDescription(title, description, img, affirmUUID, returnGuide);
+        setDescription(title, description, img, returnGuide);
         returnGuide.setCards(cardsList.values().toArray(new Card[0]));
         returnGuide.setDescriptionCard(descriptionCard);
         returnGuide.setThumbnail(thumbnail);
@@ -153,5 +156,14 @@ public class GuideEditor {
 
     public Card getCard(UUID uuid){
         return cardsList.get(uuid);
+    }
+
+    public void setFirstCard(UUID cardUUID) {
+        this.firstCard = cardUUID;
+        System.out.println(firstCard);
+    }
+
+    public UUID getFirstCard() {
+        return firstCard;
     }
 }
