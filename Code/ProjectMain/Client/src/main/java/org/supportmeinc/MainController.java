@@ -170,7 +170,7 @@ public class MainController {
     }
 
     public void toolbarSwitchSubscene(SceneName sceneName) {
-        toolbarController.swapScene(scenes.get(sceneName));
+        toolbarController.swapScene(scenes.get(sceneName), sceneName);
     }
 
     public void switchLoginStage(SceneName sceneName) throws IOException {
