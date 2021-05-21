@@ -161,4 +161,8 @@ public class GuideEditor {
     public void setFirstCard(UUID cardUUID) {
         this.firstCard = cardUUID;
     }
+
+    public UUID getFirstCard() {
+        return firstCard;
+    }
 }

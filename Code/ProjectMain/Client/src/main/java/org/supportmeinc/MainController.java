@@ -378,7 +378,8 @@ public class MainController {
 
 
         for (Card card: guideEditor.getCardsList().values()) {
-            guideEditorUi.addToCardList(card.getCardUUID());
+//            guideEditorUi.addToCardList(card.getCardUUID());
+            guideEditorUi.addCardToMap(card.getCardUUID());
         }
     }
 
@@ -478,5 +479,9 @@ public class MainController {
 
     public void setEditorFirstCard(UUID cardUUID) {
         guideEditor.setFirstCard(cardUUID);
+    }
+
+    public UUID getEditorFirstCard() {
+        return guideEditor.getFirstCard();
     }
 }
