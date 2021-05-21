@@ -7,29 +7,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Toolbar">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.Toolbar">
    <children>
       <BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox fx:id="tb" prefHeight="100.0" prefWidth="1143.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="tb" prefHeight="100.0" prefWidth="1143.0" spacing="775.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="homeButton" mnemonicParsing="false" onAction="#homeButton" prefHeight="100.0" prefWidth="100.0" text="Home" />
-                  <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="790.0" text="viewTitle">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="95.0" prefWidth="320.0" spacing="4.0">
+                  <Button fx:id="homeButton" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#homeButton" prefHeight="100.0" prefWidth="100.0" text="Home" />
+                  <HBox prefHeight="100.0" prefWidth="310.0" spacing="4.0">
                      <children>
-                        <Label fx:id="userName" alignment="CENTER" prefHeight="100.0" prefWidth="100.0" text="Username">
+                        <Label fx:id="userName" alignment="CENTER" focusTraversable="false" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" text="Username">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="100.0" text="Logout">
+                        <VBox alignment="CENTER" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fx:id="profilePicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="logout" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="100.0" text="Logout">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -46,5 +46,10 @@
             </HBox>
          </top>
       </BorderPane>
+      <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="10.0" prefHeight="100.0" prefWidth="976.0" text="viewTitle">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -37,30 +37,43 @@ public class Toolbar implements JFXcontroller {
         this.userName.setText(userName);
     }
 
-    public void setViewTitle(String title) {
+    private void setViewTitle(String title) {
         this.viewTitle.setText(title);
     }
 
     public void homeButton() {
        borderPane.setCenter(controller.getScene(SceneName.guideBrowser));
        controller.refreshThumbnails();
+       setViewTitle("Guide Browser");
     }
 
     public void logout() {
         controller.logout();
     }
 
-    public void createNewGuide() {
-        controller.initGuideEditor();
-        borderPane.setCenter(controller.getScene(SceneName.guideEditor));
-    }
-
-    public void guideViewer() {
-        borderPane.setCenter(controller.getScene(SceneName.guideViewer));
-    }
-
-    public void swapScene(AnchorPane pane) {
+    public void swapScene(AnchorPane pane, SceneName sceneName) {
         borderPane.setCenter(pane);
+        String name = returnSceneName(sceneName);
+        setViewTitle(name);
+    }
+
+    private String returnSceneName(SceneName sceneName) {
+        String returnName = "";
+        switch (sceneName) {
+            case guideViewer:
+                returnName = "Guide Viewer";
+                break;
+            case guideBrowser:
+                returnName = "Guide Browser";
+                break;
+            case guideEditor:
+                returnName = "Guide Editor";
+                break;
+            case guideEditorSave:
+                returnName = "Save Guide";
+                break;
+        }
+        return returnName;
     }
 
 } //class end
