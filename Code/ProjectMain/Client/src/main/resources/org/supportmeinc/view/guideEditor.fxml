@@ -67,7 +67,7 @@
                <children>
                   <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="cardList" onMouseClicked="#openCard" fixedCellSize="30.0" prefHeight="567.0" prefWidth="297.0" />
+                        <ListView fx:id="cardList" fixedCellSize="30.0" onMouseClicked="#openCard" prefHeight="567.0" prefWidth="297.0" />
                      </content></ScrollPane>
                </children>
             </AnchorPane>
@@ -162,7 +162,7 @@
                <children>
                   <Button fx:id="btnAddCard" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#addNewCard" prefHeight="24.0" prefWidth="140.0" text="Add card" AnchorPane.bottomAnchor="0.0" />
                   <Button fx:id="btnRemoveCard" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="1.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="24.0" prefWidth="140.0" text="Remove card" AnchorPane.bottomAnchor="0.0" />
-                  <Button fx:id="btnFinalizeGuide" alignment="CENTER" contentDisplay="CENTER" layoutX="885.0" layoutY="1.0" mnemonicParsing="false" onAction="#finalizeGuide" prefHeight="24.0" prefWidth="290.0" text="Finalize guide" AnchorPane.bottomAnchor="0.0" />
+                  <Button fx:id="btnFinalizeGuide" alignment="CENTER" contentDisplay="CENTER" layoutX="885.0" layoutY="1.0" mnemonicParsing="false" onAction="#finalizeCheck" prefHeight="24.0" prefWidth="290.0" text="Finalize guide" AnchorPane.bottomAnchor="0.0" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
