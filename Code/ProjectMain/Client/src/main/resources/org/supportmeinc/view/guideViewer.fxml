@@ -49,7 +49,7 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnExit" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="90.0" text="Exit guide">
+                        <Button fx:id="btnBack" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backSelected" prefHeight="35.0" prefWidth="90.0" text="&lt;---">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
