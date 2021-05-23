@@ -48,6 +48,10 @@ public class GuideViewerUi implements JFXcontroller {
         controller.previousCard();
     }
 
+    public void exitSelected() {
+        //TODO Reset and go back to Guide Browser
+    }
+
     public void lastCard() {
         hBox.getChildren().clear();
         Button button = new Button("Finish Guide");

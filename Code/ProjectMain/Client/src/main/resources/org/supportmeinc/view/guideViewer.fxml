@@ -57,6 +57,11 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
+                        <Button fx:id="btnExit" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitSelected" prefHeight="35.0" prefWidth="90.0" text="Exit Guide">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>
