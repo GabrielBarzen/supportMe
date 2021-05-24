@@ -275,7 +275,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         controller.setEditorFirstCard(cardUUID);
     }
 
-    public void addNewCard(ActionEvent actionEvent) {
+    public void addNewCard() {
         saveCard();
         createNewCard();
     }
@@ -321,7 +321,15 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     }
 
-    public void finalizeGuide(ActionEvent actionEvent) {
+    public void finalizeCheck() {
+        if(saveCard()) {
+            finalizeGuide();
+        } else {
+            AlertUtils.alertWarning("Couldn't finalize guide", "Please make sure you've finished your cars before moving on", "något blaha här");
+        }
+    }
+
+    public void finalizeGuide() {
         if(!cardList.getItems().isEmpty() && controller.checkCardLinksValid()) {
             controller.toolbarSwitchSubscene(SceneName.guideEditorSave);
             controller.onLoadGuideEditorSave();

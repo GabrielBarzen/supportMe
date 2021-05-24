@@ -484,4 +484,11 @@ public class MainController {
     public UUID getEditorFirstCard() {
         return guideEditor.getFirstCard();
     }
+
+    public void previousCard() {
+        Card previousCard = guideViewer.previousCard();
+        if (previousCard != null) {
+            guideViewerUi.setCard(previousCard.getTitle(), previousCard.getImage(), previousCard.getText());
+        }
+    }
 }

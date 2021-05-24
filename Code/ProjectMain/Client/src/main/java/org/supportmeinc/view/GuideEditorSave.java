@@ -18,15 +18,14 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     @FXML TextField txtTitle, txtFilePath, txtAccess;
     @FXML TextArea txtDescription;
     @FXML ImageView imgPreview;
-    @FXML ListView<String> listViewCards;
+    @FXML Label lblGuideTextPreview, lblTitlePreview;
     @FXML ListView<String> listViewAccess;
     private ArrayList<String> accessList = new ArrayList<>();
-    private ArrayList<UUID> guideCardUUID = new ArrayList<>();
     private MainController controller;
     private byte[] img = null;
+    private boolean pressedBack = false;
 
     public GuideEditorSave() {
-        listViewCards = new ListView<>();
         listViewAccess = new ListView<>();
     }
 
@@ -42,8 +41,11 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             guideTitle = guideTitle.substring(0, 20);
             txtTitle.setText(guideTitle);
 
+
             AlertUtils.alertWarning("Guide title warning", "Can't create guide with title longer than 20 characters", "Please select a shorter title");
         }
+
+        lblTitlePreview.setText(guideTitle);
     }
 
     public void updateTextPreview() {
@@ -53,21 +55,18 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             guideText = guideText.substring(0, 160);
             txtDescription.setText(guideText);
 
+
             AlertUtils.alertWarning("Guide text limit warning", "Over 160 characters","Can't create guide with text longer than 160 characters");
         }
+
+        lblGuideTextPreview.setText(guideText);
     }
 
     public void saveGuide() {
         if(!(txtTitle.getText().isBlank() || txtDescription.getText().isBlank())) {
             String title = txtTitle.getText();
             String description = txtDescription.getText();
-            UUID affirmUUID = null;
-
-            if(listViewCards.getSelectionModel().getSelectedIndex() != -1) {
-                if (guideCardUUID.get(listViewCards.getSelectionModel().getSelectedIndex()) != null) {
-                    affirmUUID = guideCardUUID.get(listViewCards.getSelectionModel().getSelectedIndex());
-                }
-            }
+            UUID affirmUUID = controller.getEditorFirstCard();
 
             if(affirmUUID != null) {
                 controller.packGuide(title, description, img);
@@ -92,8 +91,8 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                     for (String str : temp) {
                         controller.manageAccess(controller.getOutputGuideUUID(), str, false);
                     }
+                    pressedBack = false;
                     AlertUtils.alertConfirmation("Guide saved!", "Successful!", "Guide is saved!");
-
                     controller.refreshThumbnails();
                     controller.toolbarSwitchSubscene(SceneName.guideBrowser);
                     controller.setNewGuideEditorModel();
@@ -115,7 +114,6 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     }
 
     public void clearGuideEditorSave() {
-        listViewCards.getItems().clear();
         listViewAccess.getItems().clear();
         txtAccess.clear();
         txtTitle.clear();
@@ -125,12 +123,8 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
 
 
     public void repopulateLists() {
-        clearGuideEditorSave();
-
-        for (UUID uuid : guideCardUUID) {
-            if(uuid != null) {
-                listViewCards.getItems().add(controller.getCardTitle(uuid));
-            }
+        if(!pressedBack) {
+            clearGuideEditorSave();
         }
 
         if(controller.getGuideEditor().getOutputGuide() != null) {
@@ -185,6 +179,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     }
 
     public void back() {
+        this.pressedBack = true;
         controller.toolbarSwitchSubscene(SceneName.guideEditor);
     }
 

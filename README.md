@@ -12,7 +12,7 @@ Projektet är baserat runt en idé om teknisk support för dina nära och kära.
 # Hämta projekt Till intellij
 0. Kontrollera att ```java --version``` åtminstånde ger ```15.0.1```
 
-1. Hämta projektet från gighub genom kommandot ```git clone https://github.com/GabrielModin/supportMe``` eller via github-desktop.
+1. Hämta projektet från github genom kommandot ```git clone https://github.com/GabrielModin/supportMe``` eller via github-desktop.
 
 2. Öppna projektet som ligger under sökvägen {download dir}/supportMe/Code/ProjectMain i intellij
 
