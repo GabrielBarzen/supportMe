@@ -20,16 +20,16 @@
             <VBox fx:id="vNailBox" prefHeight="600.0" prefWidth="1178.0">
                <children>
                   <Label text="Your guides" />
-                  <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
+                  <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  vgap="25.0" />
                   <Label text="Saved guides" />
-                  <FlowPane fx:id="flowPaneSaved" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
+                  <FlowPane fx:id="flowPaneSaved" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  vgap="25.0" />
                   <Label text="Downloaded guides" />
-                  <FlowPane fx:id="flowPaneDownloaded" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #000000;" vgap="25.0" />
+                  <FlowPane fx:id="flowPaneDownloaded" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  vgap="25.0" />
                </children>
             </VBox>
          </content>
          </ScrollPane>
-      <HBox alignment="CENTER_LEFT" layoutX="9.0" layoutY="612.0" prefHeight="50.0" prefWidth="1180.0" spacing="10.0">
+      <HBox fx:id="btnMenu" alignment="CENTER_LEFT" layoutX="9.0" layoutY="612.0" prefHeight="50.0" prefWidth="1180.0" spacing="10.0">
          <children>
             <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#openGuide" prefHeight="43.0" prefWidth="120.0" text="Open guide" />
             <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewGuide" prefHeight="43.0" prefWidth="115.0" text="Create new guide" />

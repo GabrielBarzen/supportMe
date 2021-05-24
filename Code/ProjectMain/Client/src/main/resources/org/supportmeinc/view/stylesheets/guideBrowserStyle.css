@@ -1,1 +1,20 @@
 @import "global.css";
+
+.button {
+    -fx-background-color: #999999;
+    -fx-text-fill: #050505;
+}
+#scrollPane {
+    -fx-background-color: #b1b1b1;
+}
+
+.scroll-pane{
+    -fx-background-color: #b1b1b1;
+}
+
+#vNailBox {
+    -fx-background-color: #b1b1b1;
+    -fx-spacing: 10;
+    -fx-font-size: 18;
+    -fx-padding: 5;
+}
