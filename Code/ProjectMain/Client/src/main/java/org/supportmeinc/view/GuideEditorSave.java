@@ -91,8 +91,8 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                     for (String str : temp) {
                         controller.manageAccess(controller.getOutputGuideUUID(), str, false);
                     }
+                    pressedBack = false;
                     AlertUtils.alertConfirmation("Guide saved!", "Successful!", "Guide is saved!");
-
                     controller.refreshThumbnails();
                     controller.toolbarSwitchSubscene(SceneName.guideBrowser);
                     controller.setNewGuideEditorModel();
