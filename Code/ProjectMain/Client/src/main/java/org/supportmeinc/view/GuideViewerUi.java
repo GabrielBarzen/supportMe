@@ -18,7 +18,7 @@ public class GuideViewerUi implements JFXcontroller {
     @FXML private Label cardTitle;
     @FXML private ImageView cardImage;
     @FXML private Label cardText;
-    @FXML private Button btnYes, btnNo, btnExit;
+    @FXML private Button btnYes, btnNo, btnBack;
     @FXML private HBox hBox;
 
     public void initData(MainController controller){
@@ -44,6 +44,14 @@ public class GuideViewerUi implements JFXcontroller {
         controller.getNextCard(true);
     }
 
+    public void backSelected() {
+        controller.previousCard();
+    }
+
+    public void exitSelected() {
+        //TODO Reset and go back to Guide Browser
+    }
+
     public void lastCard() {
         hBox.getChildren().clear();
         Button button = new Button("Finish Guide");
@@ -63,7 +71,7 @@ public class GuideViewerUi implements JFXcontroller {
         hBox.getChildren().clear();
         hBox.getChildren().add(btnYes);
         hBox.getChildren().add(btnNo);
-        hBox.getChildren().add(btnExit);
+        hBox.getChildren().add(btnBack);
     }
 
     public void setStartButtons() {
