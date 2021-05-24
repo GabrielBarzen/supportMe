@@ -42,11 +42,11 @@
                                  </font></Label>
                               <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
                                  <children>
-                                    <Button disable="true" mnemonicParsing="false" text="Yes">
+                                    <Button fx:id="btnYesEditor" disable="true" mnemonicParsing="false" text="Yes">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font></Button>
-                                    <Button disable="true" mnemonicParsing="false" text="No">
+                                    <Button fx:id="btnNoEditor" disable="true" mnemonicParsing="false" text="No">
                                        <font>
                                           <Font name="System Bold" size="18.0" />
                                        </font></Button>

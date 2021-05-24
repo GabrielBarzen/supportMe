@@ -1,1 +1,10 @@
 @import "global.css";
+#btnNo {
+    -fx-background-color: #fc6464;
+    -fx-text-fill: #050505;
+}
+
+#btnYes {
+    -fx-background-color: #a2ff7a;
+    -fx-text-fill: #050505;
+}

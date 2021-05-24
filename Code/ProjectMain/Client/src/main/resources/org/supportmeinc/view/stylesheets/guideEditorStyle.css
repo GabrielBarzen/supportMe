@@ -1,1 +1,14 @@
 @import "global.css";
+.button {
+    -fx-background-color: #999999;
+    -fx-text-fill: #050505;
+}
+#btnYesEditor {
+    -fx-background-color: #4cff00;
+    -fx-text-fill: #050505;
+}
+
+#btnNoEditor {
+    -fx-background-color: #ff0000;
+    -fx-text-fill: #050505;
+}
