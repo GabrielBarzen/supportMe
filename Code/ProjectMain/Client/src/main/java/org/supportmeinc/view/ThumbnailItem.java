@@ -27,8 +27,10 @@ public class ThumbnailItem {
     private UUID guideUUID;
     private GuideBrowser guideBrowser;
     private boolean author;
+    private String defaulStyle = "-fx-background-color: #aaaaaa;-fx-border-color:#a1a1a1 ; -fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-border-width: 2";
 
     public void setData(String title, byte[] image, String text, UUID guideUUID, GuideBrowser guideBrowser, boolean author) {
+        anchPane.setStyle(defaulStyle);
         this.guideUUID = guideUUID;
         this.author = author;
         lblTitle.setText(title);
@@ -112,7 +114,7 @@ public class ThumbnailItem {
 
     public void setSelectedGuide() {
         guideBrowser.setSelectedThumbnail(this);
-        anchPane.setStyle("-fx-border-color: black");
+        anchPane.setStyle("-fx-border-color: #444444; -fx-border-radius: 5 5 5 5; -fx-background-radius: 5 5 5 5; -fx-border-width: 2; -fx-background-color: #9e9e9e");
     }
 
     public boolean getAuthor() {
@@ -121,5 +123,10 @@ public class ThumbnailItem {
 
     public UUID getUUID() {
         return guideUUID;
+    }
+
+    public void deSelected() {
+        anchPane.setStyle(defaulStyle);
+
     }
 }

@@ -18,50 +18,6 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <AnchorPane prefHeight="200.0" prefWidth="580.0" BorderPane.alignment="CENTER">
-               <children>
-                  <BorderPane prefHeight="742.0" prefWidth="595.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <top>
-                        <AnchorPane BorderPane.alignment="CENTER">
-                           <children>
-                              <Label fx:id="lblTitlePreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font name="System Bold" size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                     </top>
-                     <bottom>
-                        <VBox alignment="CENTER" prefHeight="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Label fx:id="lblCardTextPreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="102.0" prefWidth="463.0" text="cardText" textAlignment="JUSTIFY" wrapText="true">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font></Label>
-                              <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
-                                 <children>
-                                    <Button fx:id="btnYesEditor" disable="true" mnemonicParsing="false" text="Yes">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font></Button>
-                                    <Button fx:id="btnNoEditor" disable="true" mnemonicParsing="false" text="No">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font></Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </bottom>
-                     <center>
-                        <ImageView fx:id="imgPreview" fitHeight="317.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                     </center>
-                  </BorderPane>
-               </children>
-            </AnchorPane>
-         </center>
          <left>
             <AnchorPane prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <children>
@@ -172,6 +128,49 @@
                </padding>
             </AnchorPane>
          </bottom>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox fx:id="cardPreview" alignment="CENTER" layoutX="21.0" layoutY="24.0" prefHeight="510.0" prefWidth="538.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane>
+                           <children>
+                              <Label fx:id="lblTitlePreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="System Bold" size="36.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <ImageView fx:id="imgPreview" fitHeight="317.0" fitWidth="538.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox alignment="CENTER" prefHeight="200.0">
+                           <children>
+                              <Label fx:id="lblCardTextPreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="102.0" prefWidth="463.0" text="cardText" textAlignment="JUSTIFY" wrapText="true">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
+                                 <children>
+                                    <Button fx:id="btnYesEditor" disable="true" mnemonicParsing="false" text="Yes">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnNoEditor" disable="true" mnemonicParsing="false" text="No">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

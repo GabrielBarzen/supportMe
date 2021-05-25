@@ -12,3 +12,12 @@
     -fx-background-color: #ff0000;
     -fx-text-fill: #050505;
 }
+#cardPreview {
+    -fx-background-color: #aaaaaa;
+    -fx-border-color:#a1a1a1;
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+    -fx-border-width: 2;
+    -fx-end-margin: 5;
+    -fx-start-margin: 5;
+}
