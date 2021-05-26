@@ -37,12 +37,12 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
     public void updateTitlePreview() {
         String guideTitle = txtTitle.getText();
 
-        if (guideTitle.length() > 20) {
-            guideTitle = guideTitle.substring(0, 20);
+        if (guideTitle.length() > 30) {
+            guideTitle = guideTitle.substring(0, 30);
             txtTitle.setText(guideTitle);
 
 
-            AlertUtils.alertWarning("Guide title warning", "Can't create guide with title longer than 20 characters", "Please select a shorter title");
+            AlertUtils.alertWarning("Guide title warning", "Can't create guide with title longer than 30 characters", "Please select a shorter title");
         }
 
         lblTitlePreview.setText(guideTitle);

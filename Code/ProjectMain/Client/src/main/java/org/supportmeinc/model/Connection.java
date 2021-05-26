@@ -8,7 +8,10 @@ import shared.Thumbnail;
 import shared.User;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 
@@ -29,7 +32,8 @@ public class Connection {
 
     public Connection(String ip, int port, User user) throws IOException {
         this.user = user;
-        socket = new Socket(ip, port);
+        socket = new Socket();
+        socket.connect(new InetSocketAddress(ip, port), 1000);
 
         outputStream = new ObjectOutputStream(this.socket.getOutputStream());
         inputStream = new ObjectInputStream(this.socket.getInputStream());
@@ -179,12 +183,11 @@ public class Connection {
             ObjectOutputStream fileOutputStream = new ObjectOutputStream(new FileOutputStream(user.getEmail()+ ".dat"));
             fileOutputStream.writeObject(guide);
             AlertUtils.alertWarning("Guide successfully downloaded", "Guide successfully saved to file.", "Guide was successfully saved to file.");
-            System.exit(0);
 
         } catch (InterruptedException | IOException e) {
+            AlertUtils.alertWarning("Guide couldn't be downloaded", "Guide could not find file", "Guide could not save guide to file.");
             e.printStackTrace();
         }
-        AlertUtils.alertWarning("Guide couldn't be downloaded", "Guide could not find file", "Guide could not save guide to file.");
     }
 
     private class Receive extends Thread {

@@ -14,12 +14,12 @@
    <children>
       <BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox fx:id="toolBar" prefHeight="100.0" prefWidth="1143.0" spacing="775.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="toolBar" prefHeight="100.0" prefWidth="1143.0" spacing="650.0" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="homeButton" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#homeButton" prefHeight="100.0" prefWidth="100.0" text="Home" />
-                  <HBox prefHeight="100.0" prefWidth="310.0" spacing="4.0">
+                  <HBox prefHeight="100.0" prefWidth="500.0" spacing="4.0">
                      <children>
-                        <Label fx:id="userName" alignment="CENTER" focusTraversable="false" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" text="Username">
+                        <Label fx:id="userName" alignment="CENTER" focusTraversable="false" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="300.0" text="Username">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -46,7 +46,7 @@
             </HBox>
          </top>
       </BorderPane>
-      <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="10.0" prefHeight="100.0" prefWidth="976.0" text="viewTitle">
+      <Label fx:id="viewTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="10.0" prefHeight="100.0" prefWidth="976.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
