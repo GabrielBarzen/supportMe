@@ -23,7 +23,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     @FXML private Label lblTitlePreview, lblCardTextPreview, yesCardSelected, noCardSelected, lblDescLength, lblTitleLength;
     @FXML private ImageView imgPreview;
-    @FXML private TextField txtCardTitle, txtFilePath;
+    @FXML private TextField txtCardTitle;
     @FXML private TextArea txtCardText;
     @FXML private ComboBox<String> cmbYes, cmbNo;
     @FXML private ListView<String> cardList;
@@ -150,7 +150,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         Image image = ImageUtils.toImage(bytes);
         if (image != null) {
             imgPreview.setImage(image);
-            txtFilePath.setText(image.toString());
         }
     }
 
@@ -160,14 +159,12 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             title = txtCardTitle.getText();
             System.out.println("saving: " + title);
             if(cmbYes.getSelectionModel().getSelectedIndex() != -1) {
-//                UUID cardUUID = guideCardUUID.get(cmbYes.getSelectionModel().getSelectedIndex());
                 UUID cardUUID = cardMap.get(cmbYes.getSelectionModel().getSelectedItem());
                 if (cardUUID != null) {
                     yesUUID = cardUUID;
                 }
             }
             if(cmbNo.getSelectionModel().getSelectedIndex() != -1) {
-//                UUID cardUUID = guideCardUUID.get(cmbNo.getSelectionModel().getSelectedIndex());
                 UUID cardUUID = cardMap.get(cmbNo.getSelectionModel().getSelectedItem());
                 if (cardUUID != null) {
                     noUUID = cardUUID;
@@ -175,20 +172,17 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             }
             if (loaded || (!loaded && !cardList.getItems().contains(title))) {
                 controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
-//            addToCardList(cardUUID);
                 addCardToMap(cardUUID);
                 clear = true;
             } else if (!loaded && cardList.getItems().contains(title)){
                 clear = AlertUtils.alertConfirmation("Card Exists with title", "You already have a card with this title!", "Replace card or cancel?");
                 if (clear) {
                     controller.saveCard(title, text, img, yesUUID, noUUID, cardUUID);
-//            addToCardList(cardUUID);
                     addCardToMap(cardUUID);
                 }
             }
 
 
-//        } else if (modified) {
         } else {
             if (modified) {
                 clear = AlertUtils.alertConfirmation("No title added", "Can't create card without title", "Discard changes?");
@@ -213,7 +207,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         txtCardText.setText(text);
         txtCardTitle.setText(title);
         imgPreview.setImage(ImageUtils.toImage(img));
-        txtFilePath.clear();
 
         updateComboboxPreview();
         updateTextPreview();
@@ -222,10 +215,8 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     }
 
     public void removeCard() {
-//        UUID cardUUID = guideCardUUID.get(cardList.getSelectionModel().getSelectedIndex());
         UUID cardUUID = cardMap.get(cardList.getSelectionModel().getSelectedItem());
         if(cardUUID != null) {
-//            removeFromCardList(cardUUID);
             removeCardFromMap(cardUUID);
             controller.removeCard(cardUUID);
             loadCardInfo(controller.getEditorFirstCard());
@@ -273,7 +264,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
         updateTitlePreview();
         updateTextPreview();
-        txtFilePath.clear();
 
         cardUUID = controller.createNewCard();
         modified = false;
@@ -287,11 +277,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
                 UUID selectedUUID = cardMap.get(item);
                 System.out.println(selectedUUID);
                 loadCardInfo(selectedUUID);
-//            int index = cardList.getSelectionModel().getSelectedIndex();
-//            if (index > -1) {
-//                UUID selectedUUID = guideCardUUID.get(index);
-//                System.out.println(selectedUUID);
-//                loadCardInfo(selectedUUID);
             } else {
                 AlertUtils.alertConfirmation("No card selected", "You have not selected a card", "Select a card from the card-list");
             }

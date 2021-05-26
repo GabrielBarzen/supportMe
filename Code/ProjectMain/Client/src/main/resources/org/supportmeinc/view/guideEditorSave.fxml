@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="670.0" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorSave">
+<AnchorPane maxHeight="670.0" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorSave">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -54,37 +54,43 @@
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
                            <children>
-                              <Label text="Title" />
-                              <TextField fx:id="txtTitle" onKeyTyped="#updateTitlePreview" promptText="Please enter title..." />
-                              <Label text="Description">
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </Label>
-                              <TextArea fx:id="txtDescription" onKeyTyped="#updateTextPreview" prefHeight="95.0" prefWidth="555.0" promptText="Please enter description..." />
+                              <AnchorPane prefHeight="64.0" prefWidth="555.0">
+                                 <children>
+                                    <Label layoutX="3.0" layoutY="13.0" text="Title" />
+                                    <TextField fx:id="txtTitle" layoutY="31.0" onKeyTyped="#updateTitlePreview" prefWidth="555.0" promptText="Please enter title..." />
+                                    <Label fx:id="lblTitleLength" alignment="TOP_RIGHT" contentDisplay="TOP" layoutX="496.0" layoutY="13.0" prefHeight="17.0" prefWidth="59.0" text="0/30" textAlignment="RIGHT" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="131.0" prefWidth="555.0">
+                                 <children>
+                                    <Label layoutY="11.0" text="Description" />
+                                    <TextArea fx:id="txtDescription" layoutY="29.0" onKeyTyped="#updateTextPreview" prefHeight="99.0" prefWidth="555.0" promptText="Please enter description..." wrapText="true" />
+                                    <Label fx:id="lblTextLength" alignment="CENTER_RIGHT" layoutX="483.0" layoutY="11.0" prefHeight="17.0" prefWidth="72.0" text="0/160" />
+                                 </children>
+                              </AnchorPane>
                               <Label text="Image" />
                               <HBox prefHeight="34.0" prefWidth="555.0" spacing="10.0">
                                  <children>
-                                    <Button fx:id="btnChooseFile" mnemonicParsing="false" onAction="#selectImage" prefWidth="120.0" text="Choose File" />
-                                    <TextField fx:id="txtFilePath" editable="false" prefHeight="25.0" prefWidth="449.0" promptText="Choose file...." />
+                                    <Button fx:id="btnChooseFile" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="275.0" text="Choose File" />
+                                    <Button fx:id="btnRemoveImage" mnemonicParsing="false" onAction="#removeImage" prefHeight="25.0" prefWidth="275.0" text="Remove Image" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
                               <Label text="User access" />
-                              <TextField fx:id="txtAccess" promptText="Please add users you'd like to have access to your guide, separate emails with &quot;,&quot;..." />
+                              <TextField fx:id="txtAccess" promptText="Enter the email of a user you would like to give access to this guide, then press &quot;Add user&quot;" />
                               <Button fx:id="btnAddAccess" mnemonicParsing="false" onAction="#addToAccessList" prefHeight="25.0" prefWidth="555.0" text="Add user">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </Button>
                               <Label layoutX="30.0" layoutY="343.0" text="Added users" />
-                              <ScrollPane prefHeight="160.0" prefWidth="200.0">
+                              <ScrollPane prefHeight="144.0" prefWidth="555.0">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="553.0">
                                        <children>
-                                          <ListView fx:id="listViewAccess" fixedCellSize="40.0" prefHeight="161.0" prefWidth="553.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <ListView fx:id="listViewAccess" fixedCellSize="40.0" prefHeight="160.0" prefWidth="553.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                 </content>

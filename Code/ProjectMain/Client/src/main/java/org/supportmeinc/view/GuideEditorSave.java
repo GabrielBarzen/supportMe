@@ -15,10 +15,10 @@ import java.util.*;
 public class GuideEditorSave implements JFXcontroller, Initializable {
 
     @FXML Button btnBack, btnSaveGuide, btnChooseFile, btnRemoveAccess, btnAddAccess;
-    @FXML TextField txtTitle, txtFilePath, txtAccess;
+    @FXML TextField txtTitle, txtAccess;
     @FXML TextArea txtDescription;
     @FXML ImageView imgPreview;
-    @FXML Label lblGuideTextPreview, lblTitlePreview;
+    @FXML Label lblGuideTextPreview, lblTitlePreview, lblTitleLength, lblTextLength;
     @FXML ListView<String> listViewAccess;
     private ArrayList<String> accessList = new ArrayList<>();
     private MainController controller;
@@ -41,10 +41,10 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             guideTitle = guideTitle.substring(0, 30);
             txtTitle.setText(guideTitle);
 
-
             AlertUtils.alertWarning("Guide title warning", "Can't create guide with title longer than 30 characters", "Please select a shorter title");
         }
 
+        lblTitleLength.setText(guideTitle.length() + "/30");
         lblTitlePreview.setText(guideTitle);
     }
 
@@ -59,6 +59,7 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
             AlertUtils.alertWarning("Guide text limit warning", "Over 160 characters","Can't create guide with text longer than 160 characters");
         }
 
+        lblTextLength.setText(guideText.length() + "/160");
         lblGuideTextPreview.setText(guideText);
     }
 
@@ -92,19 +93,19 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
                         controller.manageAccess(controller.getOutputGuideUUID(), str, false);
                     }
                     pressedBack = false;
-                    AlertUtils.alertConfirmation("Guide saved!", "Successful!", "Guide is saved!");
+                    AlertUtils.alertInformation("Guide saved", "Your Guide has been saved", "Successful!");
                     controller.refreshThumbnails();
                     controller.toolbarSwitchSubscene(SceneName.guideBrowser);
                     controller.setNewGuideEditorModel();
 
                 } else {
-                    AlertUtils.alertWarning("Guide couldn't be saved", "Warning!", "Guide couldn't be saved to server, please check connection");
+                    AlertUtils.alertWarning("Save warning", "Guide could not be saved", "Guide could not be saved, please check connection");
                 }
             } else {
                 AlertUtils.alertWarning("Could not save guide", "Starting card not chosen", "Please select a starting card");
             }
         } else {
-            AlertUtils.alertWarning("Could not save guide", "No title or description", "Please fill in a title and a description!");
+            AlertUtils.alertWarning("Could not save guide", "No title or description", "Please fill in a title and a description");
         }
     }
 
@@ -149,8 +150,12 @@ public class GuideEditorSave implements JFXcontroller, Initializable {
         Image image = ImageUtils.toImage(bytes);
         if (image != null) {
             imgPreview.setImage(image);
-            txtFilePath.setText(image.toString());
         }
+    }
+
+    public void removeImage() {
+        imgPreview.setImage(null);
+        img = null;
     }
 
     public void updateAccessList() {

@@ -15,13 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideEditorUi">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <AnchorPane prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="580.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="600.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="580.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <ListView fx:id="cardList" fixedCellSize="30.0" onMouseClicked="#openCard" prefHeight="567.0" prefWidth="297.0" />
                      </content></ScrollPane>
@@ -40,11 +40,10 @@
                               <TextField fx:id="txtCardTitle" layoutY="19.0" onKeyTyped="#updateTitlePreview" prefWidth="290.0" promptText="Add card title..." />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="87.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="65.0" prefWidth="290.0">
                            <children>
-                              <TextField fx:id="txtFilePath" disable="true" editable="false" layoutY="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                               <Button fx:id="btnSelectImg" alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Select Image" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" />
-                              <Label layoutX="3.0" layoutY="4.0" text="Image" />
+                              <Label layoutX="-2.0" text="Image" />
                               <Button fx:id="btnRemoveImg" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="53.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="25.0" prefWidth="140.0" text="Remove Image" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
@@ -135,7 +134,7 @@
                      <children>
                         <AnchorPane>
                            <children>
-                              <Label fx:id="lblTitlePreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" text="Label" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Label fx:id="lblTitlePreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font name="System Bold" size="36.0" />
                                  </font>
@@ -145,7 +144,7 @@
                         <ImageView fx:id="imgPreview" fitHeight="317.0" fitWidth="538.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox alignment="CENTER" prefHeight="200.0">
                            <children>
-                              <Label fx:id="lblCardTextPreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="102.0" prefWidth="463.0" text="cardText" textAlignment="JUSTIFY" wrapText="true">
+                              <Label fx:id="lblCardTextPreview" alignment="CENTER" contentDisplay="CENTER" prefHeight="102.0" prefWidth="463.0" textAlignment="JUSTIFY" wrapText="true">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

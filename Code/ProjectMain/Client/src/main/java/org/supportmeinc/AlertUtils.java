@@ -43,5 +43,12 @@ public class AlertUtils {
         alert.show();
     }
 
+    public static void alertInformation(String title, String header, String description) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(description);
+        alert.show();
+    }
 
 }
