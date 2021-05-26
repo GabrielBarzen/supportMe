@@ -280,7 +280,7 @@ public class MainController {
                 guideManager.refreshThumbnails();
 
                 for (Thumbnail thumbnail : guideManager.getAccessThumbnails()) {
-                    if (thumbnail.getTitle().contains(searchStr)) {
+                    if (thumbnail.getTitle().toUpperCase().contains(searchStr.toUpperCase())) {
                         tempArrayList.add(thumbnail);
                     }
                 }
@@ -288,7 +288,7 @@ public class MainController {
                 Thumbnail[] accessThumbnails = tempArrayList.toArray(new Thumbnail[0]);
 
                 for (Thumbnail thumbnail : guideManager.getAuthorThumbnails()) {
-                    if (thumbnail.getTitle().contains(searchStr)) {
+                    if (thumbnail.getTitle().toUpperCase().contains(searchStr.toUpperCase())) {
                         tempArrayList.add(thumbnail);
                     }
                 }
@@ -297,7 +297,7 @@ public class MainController {
                 setThumbnailInView(accessThumbnails, authorThumbnails);
             } else {
                 for (Thumbnail thumbnail : guideManager.getDownloadThumbnails()) {
-                    if (thumbnail.getTitle().contains(searchStr)) {
+                    if (thumbnail.getTitle().toUpperCase().contains(searchStr.toUpperCase())) {
                         tempArrayList.add(thumbnail);
                     }
                 }

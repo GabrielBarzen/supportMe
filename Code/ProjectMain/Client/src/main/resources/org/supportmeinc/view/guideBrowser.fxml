@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideBrowser">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.supportmeinc.view.GuideBrowser">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
@@ -20,28 +20,28 @@
             <VBox fx:id="vNailBox" prefHeight="600.0" prefWidth="1178.0">
                <children>
                   <Label text="Your guides" />
-                  <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  vgap="25.0" />
+                  <FlowPane fx:id="flowPane" alignment="CENTER_LEFT" hgap="25.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
                   <Label text="Saved guides" />
-                  <FlowPane fx:id="flowPaneSaved" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  vgap="25.0" />
+                  <FlowPane fx:id="flowPaneSaved" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
                   <Label text="Downloaded guides" />
-                  <FlowPane fx:id="flowPaneDownloaded" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  vgap="25.0" />
+                  <FlowPane fx:id="flowPaneDownloaded" alignment="CENTER_LEFT" hgap="25.0" layoutX="10.0" layoutY="27.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="25.0" />
                </children>
             </VBox>
          </content>
          </ScrollPane>
       <HBox fx:id="btnMenu" alignment="CENTER_LEFT" layoutX="9.0" layoutY="612.0" prefHeight="50.0" prefWidth="1180.0" spacing="10.0">
          <children>
-            <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#openGuide" prefHeight="43.0" prefWidth="120.0" text="Open guide" />
-            <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewGuide" prefHeight="43.0" prefWidth="115.0" text="Create new guide" />
-            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editGuide" prefHeight="43.0" prefWidth="95.0" text="Edit guide" />
-            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="43.0" prefWidth="95.0" text="Delete guide">
+            <Button fx:id="btnOpen" mnemonicParsing="false" onAction="#openGuide" prefHeight="43.0" prefWidth="145.0" text="Open guide" />
+            <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewGuide" prefHeight="43.0" prefWidth="176.0" text="Create new guide" />
+            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#editGuide" prefHeight="43.0" prefWidth="134.0" text="Edit guide" />
+            <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#downloadGuide" prefHeight="43.0" prefWidth="170.0" text="Download guide" />
+            <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteGuide" prefHeight="43.0" prefWidth="162.0" text="Delete guide">
                <HBox.margin>
-                  <Insets right="430.0" />
+                  <Insets right="268.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnDownload" mnemonicParsing="false" onAction="#downloadGuide" prefHeight="43.0" prefWidth="95.0" text="Download guide" />
-            <TextField fx:id="searchField" prefHeight="43.0" />
-            <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" prefHeight="43.0" prefWidth="95.0" text="Search" />
+            <TextField fx:id="searchField" prefHeight="43.0" prefWidth="210.0" />
+            <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" prefHeight="43.0" prefWidth="147.0" text="Search" />
          </children>
          <opaqueInsets>
             <Insets />

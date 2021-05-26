@@ -96,7 +96,7 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
         }
         this.currentUUID = thumbnailItem.getUUID();
         this.thumbnailItem = thumbnailItem;
-        btnEdit.setVisible(thumbnailItem.getAuthor());
+        btnEdit.setDisable(!thumbnailItem.getAuthor());
         //btnDelete.setVisible(author);
     }
 
@@ -168,12 +168,14 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
         btnEdit.setDisable(true);
         btnCreate.setDisable(true);
         btnDownload.setDisable(true);
+        btnDelete.setDisable(true);
     }
 
     public void onlineMode() {
         btnEdit.setDisable(false);
         btnCreate.setDisable(false);
         btnDownload.setDisable(false);
+        btnDelete.setDisable(false);
     }
     
 
