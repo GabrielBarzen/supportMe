@@ -4,5 +4,8 @@
     /*-fx-background-color: #969CA4;*/
     -fx-background-color: #6f6f6f;
     -fx-text-fill: #050505;
-
+}
+#imgProfilePicture {
+    -fx-border-radius: 2 2 2 2;
+    -fx-background-radius: 2 2 2 2;
 }

@@ -83,7 +83,7 @@ public class GuideEditor {
         card.setAffirmUUID(firstCard);
         cardsList.put(card.getCardUUID(), card);
 
-        Thumbnail thumbnail = new Thumbnail(guide.getGuideUUID());
+        Thumbnail thumbnail = new Thumbnail(guideUUID);
         thumbnail.setDescription(card.getText());
         thumbnail.setTitle(card.getTitle());
         thumbnail.setImage(card.getImage());

@@ -14,7 +14,7 @@ public class Toolbar implements JFXcontroller {
     private MainController controller;
 
     @FXML private BorderPane borderPane;
-    @FXML private ImageView profilePicture;
+    @FXML private ImageView imgProfilePicture;
     @FXML private Label userName;
     @FXML private Label viewTitle;
 
@@ -30,7 +30,7 @@ public class Toolbar implements JFXcontroller {
             imageBytes = ImageUtils.toBytes("FinalLogotyp.png");
         }
         Image image = ImageUtils.toImage(imageBytes);
-        profilePicture.setImage(image);
+        imgProfilePicture.setImage(image);
     }
 
     public void setUserName(String userName) {
