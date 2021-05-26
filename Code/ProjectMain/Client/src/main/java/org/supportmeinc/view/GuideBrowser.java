@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import org.supportmeinc.AlertUtils;
 import org.supportmeinc.Main;
 import org.supportmeinc.MainController;
 import org.supportmeinc.model.GuideManager;
@@ -54,18 +55,13 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
 
         if (bool) {
             controller.deleteGuide(currentUUID);
-            alert.setTitle("Your  guide was deleted");
-            alert.setHeaderText("Your guide was deleted from your list");
-            alert.setContentText("The selected guide has been deleted");
-            alert.show();
+            AlertUtils.alertInformation("Guide deleted", "Selected Guide was deleted", "Success!");
         }
         else {
             controller.removeSelfAccess(currentUUID);
-            alert.setTitle("The guide was removed");
-            alert.setHeaderText("The guide was removed from the list");
-            alert.setContentText("The selected guide has been removed");
-            alert.show();
+            AlertUtils.alertInformation("Guide removed", "Selected Guide was removed from your list", "Success");
         }
+        alert.show();
 
         controller.refreshThumbnails();
     }
