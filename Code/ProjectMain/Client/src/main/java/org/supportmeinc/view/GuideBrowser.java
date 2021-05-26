@@ -59,9 +59,6 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
         }
         else {
             controller.removeSelfAccess(currentUUID);
-            alert.setTitle("The guide was removed");
-            alert.setHeaderText("The guide was removed from the list");
-            alert.setContentText("The selected guide has been removed");
             AlertUtils.alertInformation("Guide removed", "Selected Guide was removed from your list", "Success");
         }
         alert.show();
