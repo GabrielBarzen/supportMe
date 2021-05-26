@@ -1,9 +1,16 @@
 .root {
-    -fx-background-color: #d7cec7;
+    -fx-background-color: #A7A7A7;
 }
+
+#toolBar {
+    -fx-background-color: #444444;
+}
+.label {
+    -fx-text-fill: #050505;
+}
+
 .button{
-    -fx-border: none;
-    -fx-background-color: #f3f3f3;
+    -fx-background-color: #999999;
     -fx-padding: 4px 4px;
     -fx-text-align: center;
     -fx-text-decoration: none;
@@ -15,12 +22,10 @@
 
 .button:hover {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
-    -fx-background-color: #dedede;
+    -fx-background-color: #767676;
 }
-.scroll-bar {
-    -fx-background-color: #f3f3f3;
-    -fx-border-color: #f3f3f3;
-    -fx-progress-color: #f3f3f3;
-    -fx-border: none;
-    -fx-display: inline-block;
+
+.button:pressed {
+    -fx-background-color: #656565;
 }
+

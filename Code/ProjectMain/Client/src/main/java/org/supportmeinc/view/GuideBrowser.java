@@ -91,6 +91,9 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
     }
 
     public void setSelectedThumbnail(ThumbnailItem thumbnailItem) { //called when thumbnail is clicked
+        if (this.thumbnailItem != null) {
+            this.thumbnailItem.deSelected();
+        }
         this.currentUUID = thumbnailItem.getUUID();
         this.thumbnailItem = thumbnailItem;
         btnEdit.setVisible(thumbnailItem.getAuthor());

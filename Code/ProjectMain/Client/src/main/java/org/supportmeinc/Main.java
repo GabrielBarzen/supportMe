@@ -73,10 +73,12 @@ public class Main extends Application {
 
 
     public String getIp() {
+        System.out.println(ip);
         return ip;
     }
 
     public int getPort() {
+        System.out.println(port);
         return port;
     }
 }

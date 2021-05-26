@@ -1,7 +1,8 @@
 @import "global.css";
-#example {
 
-}
-#tb {
-    -fx-background-color: white;
+.button {
+    /*-fx-background-color: #969CA4;*/
+    -fx-background-color: #6f6f6f;
+    -fx-text-fill: #050505;
+
 }
