@@ -177,7 +177,7 @@ public class MainController {
         Scene scene = new Scene(loadFXML(sceneName));
         stage.setScene(scene);
         stage.show();
-        toolbarSwitchSubscene(SceneName.guideBrowser);
+//        toolbarSwitchSubscene(SceneName.guideBrowser);
     }
 
     //GuideBrowser methods
