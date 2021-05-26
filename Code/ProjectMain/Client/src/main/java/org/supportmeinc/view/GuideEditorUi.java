@@ -1,6 +1,5 @@
 package org.supportmeinc.view;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,19 +11,17 @@ import org.supportmeinc.AlertUtils;
 import org.supportmeinc.ImageUtils;
 import org.supportmeinc.MainController;
 import org.supportmeinc.SceneName;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
-import java.util.function.UnaryOperator;
 
 public class GuideEditorUi implements JFXcontroller, Initializable {
 
     private MainController controller;
 
-    @FXML private Label lblTitlePreview, lblCardTextPreview, yesCardSelected, noCardSelected;
+    @FXML private Label lblTitlePreview, lblCardTextPreview, yesCardSelected, noCardSelected, lblDescLength, lblTitleLength;
     @FXML private ImageView imgPreview;
     @FXML private TextField txtCardTitle, txtFilePath;
     @FXML private TextArea txtCardText;
@@ -32,7 +29,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
     @FXML private ListView<String> cardList;
 
     private CardMap<String, UUID> cardMap;
-//    private ArrayList<UUID> guideCardUUID;
 
     private String title = null;
     private String text = null;
@@ -62,7 +58,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     public void resetList() {
         cardList.getItems().clear();
-//        guideCardUUID = new ArrayList<>();
         cardMap = new CardMap<>();
     }
 
@@ -89,26 +84,6 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         resetView();
     }
 
-//    public void addToCardList(UUID cardToAdd) {
-//        UUID card = cardToAdd;
-//        guideCardUUID.add(cardToAdd);
-//        String title = controller.getCardTitle(card);
-//        if (!(cardList.getItems().contains(title))){
-//            cardList.getItems().add(title);
-//        }
-//        resetView();
-//    }
-//
-//    public void removeFromCardList(UUID cardToAdd) {
-//        UUID card = cardToAdd;
-//        guideCardUUID.remove(cardToAdd);
-//        String title = controller.getCardTitle(card);
-//        cardList.getItems().remove(title);
-//        resetView();
-//    }
-
-
-
     public void resetView() {
         cmbYes.getItems().clear();
         cmbNo.getItems().clear();
@@ -123,13 +98,14 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         modified = true;
         String cardTitle = txtCardTitle.getText();
 
-        if (cardTitle.length() > 20) {
-            cardTitle = cardTitle.substring(0, 20);
+        if (cardTitle.length() > 30) {
+            cardTitle = cardTitle.substring(0, 30);
             txtCardTitle.setText(cardTitle);
 
-            AlertUtils.alertWarning("Card title warning", "Can't create card with title longer than 20 characters", "Please select a shorter title");
+            AlertUtils.alertWarning("Card title warning", "Can't create card with title longer than 30 characters", "Please select a shorter title");
         }
 
+        lblTitleLength.setText(cardTitle.length() + "/30");
         title = cardTitle;
         lblTitlePreview.setText(cardTitle);
     }
@@ -138,6 +114,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         modified = true;
         String cardText = txtCardText.getText();
 
+
         if (cardText.length() > 160) {
             cardText = cardText.substring(0, 160);
             txtCardText.setText(cardText);
@@ -145,6 +122,7 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
             AlertUtils.alertWarning("Card text limit warning", "Can't create card with text longer than 160 characters", "If your card is two steps, please divide them");
         }
 
+        lblDescLength.setText(cardText.length() + "/160");
         text = cardText;
         lblCardTextPreview.setText(cardText);
     }
