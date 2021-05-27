@@ -129,16 +129,17 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
 
     public void updateComboboxPreview() {
         modified = true;
-        yesCardSelected.setText("");
-        noCardSelected.setText("");
-        if(yesUUID != null) {
-            yesCardSelected.setText("Selected: " + controller.getCardTitle(yesUUID));
+        String getYesTitle =  controller.getCardTitle(yesUUID);
+        String getNoTitle = controller.getCardTitle(noUUID);
+
+        if(getYesTitle != null) {
+            yesCardSelected.setText("Selected: " + getYesTitle);
         } else {
             yesCardSelected.setText("Selected: ");
         }
 
-        if(noUUID != null) {
-            noCardSelected.setText("Selected: " + controller.getCardTitle(noUUID));
+        if(getNoTitle != null) {
+            noCardSelected.setText("Selected: " + getNoTitle);
         } else {
             noCardSelected.setText("Selected: ");
         }

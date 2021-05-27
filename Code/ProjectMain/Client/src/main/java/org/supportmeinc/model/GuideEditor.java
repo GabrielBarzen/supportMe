@@ -31,13 +31,12 @@ public class GuideEditor {
     public void setEditGuide(Guide guide) {
         HashMap<UUID,Card> temp = new HashMap<>();
         for (Card card : guide.getCards()) {
-            if(!(card.getNegUUID() == null && card.getAffirmUUID() != null)) {
-                temp.put(card.getCardUUID(), card);
-            }
+            temp.put(card.getCardUUID(), card);
         }
         this.cardsList = temp;
         this.guideUUID = guide.getGuideUUID();
         this.outputGuide = guide;
+        this.firstCard = guide.getDescriptionCard().getAffirmUUID();
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
@@ -71,6 +70,7 @@ public class GuideEditor {
 
     public void createNewCard() {
         currentCard = new Card();
+        cardsList.put(currentCard.getCardUUID(), currentCard);
     }
 
     //Called from packGuide, creates a description card containing similar information to the thumbnail.
@@ -93,7 +93,12 @@ public class GuideEditor {
     }
 
     public String getCardTitle(UUID uuid) {
-        return cardsList.get(uuid).getTitle();
+        String retVal = null;
+
+        if(cardsList.containsKey(uuid)) {
+            retVal = cardsList.get(uuid).getTitle();
+        }
+        return retVal;
     }
     public String getCardText(UUID uuid){
         return cardsList.get(uuid).getText();
