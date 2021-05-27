@@ -74,7 +74,6 @@ public class GuideEditor {
 
     public void createNewCard() {
         currentCard = new Card();
-        cardsList.put(currentCard.getCardUUID(), currentCard);
     }
 
     //Called from packGuide, creates a description card containing similar information to the thumbnail.
