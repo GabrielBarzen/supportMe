@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.*;
+import org.supportmeinc.AlertUtils;
 import org.supportmeinc.ImageUtils;
 import java.util.Optional;
 import java.util.UUID;
@@ -93,16 +94,9 @@ public class ThumbnailItem {
     }
 
     private void delete() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete");
-        alert.setHeaderText("Are you sure you wish to delete this guide?");
-        alert.setContentText("You have chosen to delete the guide" + lblTitle.getText() + "are you sure you wish to delete it?");
-        alert.setX(anchPane.getLayoutX());
-        alert.setY(anchPane.getLayoutY());
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.isEmpty() || result.get() != ButtonType.OK) {
-        } else {
+        boolean confirmDelete = AlertUtils.alertConfirmation("Delete guide", "Are you sure you wish to delete this guide?", "Are you sure you wish to delete selected guide?");
 
+        if(confirmDelete) {
             guideBrowser.deleteGuide();
         }
 

@@ -19,11 +19,11 @@
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <AnchorPane prefHeight="580.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="550.0" prefHeight="439.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="580.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane hbarPolicy="NEVER" maxHeight="550.0" prefHeight="550.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ListView fx:id="cardList" fixedCellSize="30.0" onMouseClicked="#openCard" prefHeight="567.0" prefWidth="297.0" />
+                        <ListView fx:id="cardList" fixedCellSize="30.0" onMouseClicked="#openCard" prefHeight="550.0" prefWidth="297.0" />
                      </content></ScrollPane>
                </children>
             </AnchorPane>
@@ -33,17 +33,17 @@
                <children>
                   <VBox prefHeight="650.0" prefWidth="300.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane prefHeight="37.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="51.0" prefWidth="290.0">
                            <children>
                               <Label layoutX="3.0" layoutY="1.0" text="Title" />
                               <Label fx:id="lblTitleLength" alignment="CENTER_RIGHT" layoutX="239.0" layoutY="1.0" prefHeight="17.0" prefWidth="49.0" text="0/30" />
                               <TextField fx:id="txtCardTitle" layoutY="19.0" onKeyTyped="#updateTitlePreview" prefWidth="290.0" promptText="Add card title..." />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="65.0" prefWidth="290.0">
+                        <AnchorPane prefHeight="64.0" prefWidth="290.0">
                            <children>
-                              <Button fx:id="btnSelectImg" alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Select Image" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" />
                               <Label layoutX="-2.0" text="Image" />
+                              <Button fx:id="btnSelectImg" alignment="CENTER" contentDisplay="CENTER" layoutY="51.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="25.0" prefWidth="140.0" text="Select Image" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" />
                               <Button fx:id="btnRemoveImg" alignment="CENTER" contentDisplay="CENTER" layoutX="139.0" layoutY="53.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="25.0" prefWidth="140.0" text="Remove Image" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
@@ -130,7 +130,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="cardPreview" alignment="CENTER" layoutX="21.0" layoutY="24.0" prefHeight="510.0" prefWidth="538.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                  <VBox fx:id="cardPreview" alignment="CENTER" layoutX="21.0" layoutY="24.0" prefHeight="592.0" prefWidth="540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane>
                            <children>

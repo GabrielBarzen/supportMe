@@ -50,7 +50,6 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
     }
 
     public void deleteGuide() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         boolean bool = thumbnailItem.getAuthor();
 
         if (bool) {
@@ -61,7 +60,6 @@ public class GuideBrowser implements JFXcontroller, Initializable { //Class begi
             controller.removeSelfAccess(currentUUID);
             AlertUtils.alertInformation("Guide removed", "Selected Guide was removed from your list", "Success");
         }
-        alert.show();
 
         controller.refreshThumbnails();
     }
