@@ -72,6 +72,7 @@ public class MainController {
         User user = new User(email, userNameString, pass, image);
         user.setNewUser(true);
         handleUserLoginRegister(user);
+
     }
 
     public void handleUserLoginRegister(User user) {
@@ -92,7 +93,6 @@ public class MainController {
                 if (!guideManager.isHasOfflineGuides()) {
                     AlertUtils.alertError("Error getting offline-guides", "No offline-guides available!",
                             "There does not seems to be any guides saved to be viewed offline, please try again when your internet is back and download the guides you would want access to");
-
                     System.exit(0);
                 } else {
                     guideBrowser.offlineMode();
@@ -110,6 +110,7 @@ public class MainController {
         } else {
             System.exit(0);
         }
+        toolbarSwitchSubscene(SceneName.guideBrowser);
     }
 
     public byte[] getUserImage() {
