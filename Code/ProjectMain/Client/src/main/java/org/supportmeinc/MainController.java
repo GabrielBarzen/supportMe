@@ -379,7 +379,10 @@ public class MainController {
 
         for (Card card: guideEditor.getCardsList().values()) {
 //            guideEditorUi.addToCardList(card.getCardUUID());
-            guideEditorUi.addCardToMap(card.getCardUUID());
+            Card dCard = guideEditor.getDescriptionCard();
+            if(!(card.getCardUUID() == dCard.getCardUUID())) {
+                guideEditorUi.addCardToMap(card.getCardUUID());
+            }
         }
     }
 
