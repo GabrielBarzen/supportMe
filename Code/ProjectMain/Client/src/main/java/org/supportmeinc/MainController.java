@@ -72,6 +72,7 @@ public class MainController {
         User user = new User(email, userNameString, pass, image);
         user.setNewUser(true);
         handleUserLoginRegister(user);
+
     }
 
     public void handleUserLoginRegister(User user) {
@@ -98,6 +99,7 @@ public class MainController {
                     guideBrowser.offlineMode();
                 }
             }
+            toolbarSwitchSubscene(SceneName.guideBrowser);
         }
 
         if (guideManager != null) {
