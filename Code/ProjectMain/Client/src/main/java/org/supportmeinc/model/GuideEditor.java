@@ -126,6 +126,11 @@ public class GuideEditor {
     Creates and stores all data in a new Guide object as outputGuide.
      */
     public void packGuide(String title, String description, byte[] img) {
+        for (Card card : cardsList.values()) {
+            if (card.getTitle() == null) {
+                removeCard(card.getCardUUID());
+            }
+        }
         if (descriptionCard != null) {
             cardsList.remove(descriptionCard.getCardUUID());
         }
@@ -137,7 +142,7 @@ public class GuideEditor {
         returnGuide.setAuthor(controller.getAuthor());
         System.out.println(controller.getAuthor());
         this.outputGuide = returnGuide;
-        
+
     }
 
     public boolean checkCardLinksValid() {
