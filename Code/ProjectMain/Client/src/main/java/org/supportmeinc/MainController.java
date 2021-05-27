@@ -381,7 +381,7 @@ public class MainController {
         for (Card card: guideEditor.getCardsList().values()) {
 //            guideEditorUi.addToCardList(card.getCardUUID());
             Card dCard = guideEditor.getDescriptionCard();
-            if(!(card.getCardUUID() == dCard.getCardUUID())) {
+            if(!(card.getCardUUID().equals(dCard.getCardUUID()))) {
                 guideEditorUi.addCardToMap(card.getCardUUID());
             }
         }
