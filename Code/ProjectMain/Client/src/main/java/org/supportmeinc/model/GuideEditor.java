@@ -36,6 +36,7 @@ public class GuideEditor {
             }
         }
         this.cardsList = temp;
+        this.descriptionCard = guide.getDescriptionCard();
         this.guideUUID = guide.getGuideUUID();
         this.outputGuide = guide;
     }
@@ -95,6 +96,7 @@ public class GuideEditor {
     public String getCardTitle(UUID uuid) {
         return cardsList.get(uuid).getTitle();
     }
+
     public String getCardText(UUID uuid){
         return cardsList.get(uuid).getText();
     }
@@ -161,6 +163,10 @@ public class GuideEditor {
     public void setFirstCard(UUID cardUUID) {
         this.firstCard = cardUUID;
         System.out.println(firstCard);
+    }
+
+    public Card getDescriptionCard() {
+        return descriptionCard;
     }
 
     public UUID getFirstCard() {
