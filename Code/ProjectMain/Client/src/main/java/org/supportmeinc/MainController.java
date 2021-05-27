@@ -373,18 +373,19 @@ public class MainController {
     public void setEditGuide(UUID uuid) {
         Guide guide = guideManager.getGuide(uuid);
         guideEditor = new GuideEditor(this);
-        guideEditorUi.resetList();
+        guideEditorUi.clear();
         guideEditor.setEditGuide(guide);
-        toolbarSwitchSubscene(SceneName.guideEditor);
-
 
         for (Card card: guideEditor.getCardsList().values()) {
-//            guideEditorUi.addToCardList(card.getCardUUID());
+//          guideEditorUi.addToCardList(card.getCardUUID());
             Card dCard = guideEditor.getDescriptionCard();
             if(!(card.getCardUUID() == dCard.getCardUUID())) {
                 guideEditorUi.addCardToMap(card.getCardUUID());
             }
         }
+
+        guideEditorUi.createNewCard();
+        toolbarSwitchSubscene(SceneName.guideEditor);
     }
 
     //Manages access to guide given uuid and email, grant/revoke access with grantAccess boolean

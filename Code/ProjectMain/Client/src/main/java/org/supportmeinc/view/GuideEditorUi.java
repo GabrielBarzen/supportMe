@@ -60,6 +60,28 @@ public class GuideEditorUi implements JFXcontroller, Initializable {
         cardList.getItems().clear();
         cardMap = new CardMap<>();
     }
+    public void clear() {
+
+
+        lblCardTextPreview.setText("");
+        lblTitlePreview.setText("");
+        txtCardTitle.clear();
+        txtCardText.clear();
+        imgPreview.setImage(null);
+        updateTextPreview();
+        updateTitlePreview();
+        updateComboboxPreview();
+        resetList();
+
+        title = null;
+        text = null;
+        yesUUID = null;
+        noUUID = null;
+        cardUUID = null;
+        img = null;
+        loaded = false;
+        modified = false;
+    }
 
     public void addCardToMap(UUID cardValue) {
         String key = controller.getCardTitle(cardValue);

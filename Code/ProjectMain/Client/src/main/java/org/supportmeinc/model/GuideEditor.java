@@ -35,6 +35,7 @@ public class GuideEditor {
         }
         this.cardsList = temp;
         this.descriptionCard = guide.getDescriptionCard();
+        System.out.println("Set desc card to :" + descriptionCard.getCardUUID());
         this.guideUUID = guide.getGuideUUID();
         this.outputGuide = guide;
         this.firstCard = guide.getDescriptionCard().getAffirmUUID();
@@ -138,10 +139,13 @@ public class GuideEditor {
         int ok = 0;
 
         for (Card card : cardsList.values()) {
-            if (card.getNegUUID() == null && card.getAffirmUUID() == null){
-                ok++;
-            } else if (card.getNegUUID() == null || card.getAffirmUUID() == null) {
-                ok = -1;
+            if (!(card.getCardUUID() == descriptionCard.getCardUUID())) {
+                if (card.getNegUUID() == null && card.getAffirmUUID() == null) {
+                    ok++;
+                } else if (card.getNegUUID() == null || card.getAffirmUUID() == null) {
+                    ok = -1;
+                    System.out.println("invalid card lings for: " + card.getTitle() + ":" + card.getCardUUID());
+                }
             }
         }
 
