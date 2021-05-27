@@ -16,6 +16,7 @@ public class CardMap<S, U> extends HashMap<S, U> {
                 oldKey = entry.getKey();
             }
         }
+
         if (oldKey != null) {
             remove(oldKey);
             put(newKey, value);

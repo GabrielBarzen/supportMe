@@ -377,6 +377,7 @@ public class MainController {
         guideEditor.setEditGuide(guide);
 
         for (Card card: guideEditor.getCardsList().values()) {
+            System.out.println("adding card to map : " + card.getTitle() + ":" + card.getCardUUID());
 //          guideEditorUi.addToCardList(card.getCardUUID());
             Card dCard = guideEditor.getDescriptionCard();
             if(!(card.getCardUUID().equals(dCard.getCardUUID()))) {

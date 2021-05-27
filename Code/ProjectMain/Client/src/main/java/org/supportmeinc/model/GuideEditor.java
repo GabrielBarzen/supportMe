@@ -42,19 +42,21 @@ public class GuideEditor {
     }
 
     public void saveCard(String title, String description, byte[] img, UUID affirmUUID, UUID negativeUUID, UUID cardUUID) {
-        currentCard = new Card(cardUUID);
-        currentCard.setTitle(title);
-        currentCard.setText(description);
-        currentCard.setAffirmUUID(affirmUUID);
-        currentCard.setNegUUID(negativeUUID);
-        currentCard.setImage(img);
+        if (title != null) {
+            currentCard = new Card(cardUUID);
+            currentCard.setTitle(title);
+            currentCard.setText(description);
+            currentCard.setAffirmUUID(affirmUUID);
+            currentCard.setNegUUID(negativeUUID);
+            currentCard.setImage(img);
 
-        if (cardsList.containsKey(cardUUID)){
-            cardsList.replace(cardUUID, currentCard);
-            System.out.println("replaced");
-        } else {
-            cardsList.put(cardUUID, currentCard);
-            System.out.println("put");
+            if (cardsList.containsKey(cardUUID)) {
+                cardsList.replace(cardUUID, currentCard);
+                System.out.println("replaced");
+            } else {
+                cardsList.put(cardUUID, currentCard);
+                System.out.println("put");
+            }
         }
     }
 
@@ -124,6 +126,9 @@ public class GuideEditor {
     Creates and stores all data in a new Guide object as outputGuide.
      */
     public void packGuide(String title, String description, byte[] img) {
+        if (descriptionCard != null) {
+            cardsList.remove(descriptionCard.getCardUUID());
+        }
         Guide returnGuide = new Guide(guideUUID);
         setDescription(title, description, img, returnGuide);
         returnGuide.setCards(cardsList.values().toArray(new Card[0]));
@@ -132,20 +137,30 @@ public class GuideEditor {
         returnGuide.setAuthor(controller.getAuthor());
         System.out.println(controller.getAuthor());
         this.outputGuide = returnGuide;
+        
     }
 
     public boolean checkCardLinksValid() {
         boolean boolReturn;
         int ok = 0;
+        HashMap<UUID,Card> compareList = cardsList;
 
-        for (Card card : cardsList.values()) {
-            if (!(card.getCardUUID() == descriptionCard.getCardUUID())) {
+        if (descriptionCard != null) {
+            compareList.remove(descriptionCard.getCardUUID());
+        }
+
+        for (Card card : compareList.values()) {
+            if (card.getTitle() != null) {
+
+                System.out.println("Card: " + card.getTitle() + ":" + card.getCardUUID());
                 if (card.getNegUUID() == null && card.getAffirmUUID() == null) {
                     ok++;
+                    System.out.println("End card: " + card.getTitle() + ":" + card.getCardUUID());
                 } else if (card.getNegUUID() == null || card.getAffirmUUID() == null) {
                     ok = -1;
-                    System.out.println("invalid card lings for: " + card.getTitle() + ":" + card.getCardUUID());
+                    System.out.println("Invalid card links for: " + card.getTitle() + ":" + card.getCardUUID());
                 }
+
             }
         }
 
