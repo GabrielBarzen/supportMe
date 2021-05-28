@@ -11,10 +11,12 @@ public class CardMap<S, U> extends HashMap<S, U> {
         S oldKey = null;
 
         for (Entry<S, U> entry : entrySet()) {
+            System.out.println("Key for entry : " + entry.getKey());
             if (entry.getValue().equals(value)) {
                 oldKey = entry.getKey();
             }
         }
+
         if (oldKey != null) {
             remove(oldKey);
             put(newKey, value);
