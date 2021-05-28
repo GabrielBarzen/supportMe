@@ -238,6 +238,12 @@ public class Connection {
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                try {
+                    disconnect();
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             } catch (IOException e){
                 e.printStackTrace();
             }
