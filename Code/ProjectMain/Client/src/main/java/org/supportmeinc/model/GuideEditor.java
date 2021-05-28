@@ -1,5 +1,6 @@
 package org.supportmeinc.model;
 
+import org.supportmeinc.AlertUtils;
 import org.supportmeinc.MainController;
 import shared.Card;
 import shared.Guide;
@@ -54,6 +55,11 @@ public class GuideEditor {
         } else {
             cardsList.put(cardUUID, currentCard);
             System.out.println("put");
+        }
+        for (Card card : cardsList.values()) {
+            if (card.getTitle() == null) {
+                cardsList.remove(card.getCardUUID());
+            }
         }
     }
 
@@ -140,8 +146,11 @@ public class GuideEditor {
         for (Card card : cardsList.values()) {
             if (card.getNegUUID() == null && card.getAffirmUUID() == null){
                 ok++;
+                System.out.println("Card set as first: " + card.getTitle());
             } else if (card.getNegUUID() == null || card.getAffirmUUID() == null) {
                 ok = -1;
+                System.out.println("Card missing links");
+                AlertUtils.alertError("Card : " + card.getTitle() + " missing links", "The card only contains one reference to another card", "Please ensure that the card contains both upcoming cards!");
             }
         }
 
