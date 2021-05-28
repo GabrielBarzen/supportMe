@@ -332,7 +332,6 @@ public class MainController {
         return guideManager.getCurrentUser().getEmail();
     }
 
-
     public String getAuthorOfGuide(UUID uuid) {
         return guideManager.getGuide(uuid).getAuthorEmail();
     }
