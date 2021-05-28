@@ -56,11 +56,7 @@ public class GuideEditor {
             cardsList.put(cardUUID, currentCard);
             System.out.println("put");
         }
-        for (Card card : cardsList.values()) {
-            if (card.getTitle() == null) {
-                cardsList.remove(card.getCardUUID());
-            }
-        }
+
     }
 
     public void removeCard(UUID cardUUID) {
@@ -140,6 +136,11 @@ public class GuideEditor {
     }
 
     public boolean checkCardLinksValid() {
+        for (Card card : cardsList.values()) {
+            if (card.getTitle() == null) {
+                cardsList.remove(card.getCardUUID());
+            }
+        }
         boolean boolReturn;
         int ok = 0;
 
